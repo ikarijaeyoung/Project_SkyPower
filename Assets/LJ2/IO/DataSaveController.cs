@@ -17,5 +17,10 @@ namespace IO
         {
             saveHandle.Load(ref target);
         }
+
+        public static void Delete<T>(T target) where T : SaveData
+        {
+            saveHandle.Delete(target);
+        }
     }
 }

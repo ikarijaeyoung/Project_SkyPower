@@ -168,6 +168,18 @@ namespace IO
 
             target = JsonUtility.FromJson<T>(jsonString);
         }
+
+        public void Delete<T>(T target) where T : SaveData
+        {
+            string filePath = GetFilePath(target.GetType().ToString());
+            string jsonString = File.ReadAllText(filePath);
+
+            if (!IsFileAccessible(filePath)) return;
+
+            if (IsFileEmpty(jsonString)) return;
+
+            File.Delete(filePath);
+        }
         
     } 
 }

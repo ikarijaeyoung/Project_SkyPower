@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class UITest : MonoBehaviour
 {
     private LinkedList<int> test = new LinkedList<int>();
-    [SerializeField] public UnityEngine.UI.Button testButton;
+    [SerializeField] public Button testButton;
+    [SerializeField] public ScrollRect scrollRect;
     
 
     // Start is called before the first frame update
@@ -38,5 +39,6 @@ public class UITest : MonoBehaviour
 
     private void CreateButton()
     {
+
     }
 }

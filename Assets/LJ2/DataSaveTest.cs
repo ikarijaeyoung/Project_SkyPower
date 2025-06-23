@@ -25,9 +25,10 @@ public class DataSaveTest : MonoBehaviour
 
     private void Start()
     {
-        //Load();
         Save();
         Load();
+        Delete();
+        Debug.Log(jsonLoad.Hp.ToString());
     }
 
     private void Save()
@@ -43,6 +44,12 @@ public class DataSaveTest : MonoBehaviour
 
         DataSaveController.Load(ref jsonLoad);
         Debug.Log($"Hp = {jsonLoad.Hp}");
+    }
+
+    private void Delete()
+    {
+        DataSaveController.Delete(jsonLoad);
+        
     }
 }
 
