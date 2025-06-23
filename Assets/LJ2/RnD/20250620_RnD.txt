@@ -1,0 +1,21 @@
+아이템  
+	scriptable object로 구현
+		name
+		gameObject Prefab
+		sprite(인벤토리 아이템)
+		num(갯수, 인벤토리 아이템)
+	아이템 별 기능을 가지는 같은 이름의 함수 구현	
+		즉발 아이템
+			(가칭) Interact 로 Use 호출
+		인벤토리 아이템
+			(가칭) Interact 로 인벤토리에 보관			
+			Use 로 사용
+
+인벤토리
+	게임 입장 전 선택한 아이템에 한해 아이템 사용 키를 눌러 사용
+	인게임 재화는 int로 저장
+	
+JSON 세이브파일
+	binary 관련 부분 간소화
+		binarySave, saveType 구분 삭제, saveHandler, JsonHandler, DataSaveController 결합
+	
