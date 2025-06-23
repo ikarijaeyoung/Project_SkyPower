@@ -30,4 +30,9 @@ public class GameManagerSO : ScriptableObject
         isGamePaused = false;
         Time.timeScale = 1f;
     }
+
+    public void ResetScore()
+    {
+        score = 0;
+    }
 }

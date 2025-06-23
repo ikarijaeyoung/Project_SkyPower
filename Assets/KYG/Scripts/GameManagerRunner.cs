@@ -8,7 +8,9 @@ public class GameManagerRunner : MonoBehaviour
 
     void Start()
     {
+        gameManager.ResetScore(); // 게임 재시작 시점에 초기화
         // 시작 시 게임 재개 상태로 초기화
         gameManager.ResumeGame();
+        
     }
 }

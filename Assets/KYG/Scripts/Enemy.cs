@@ -29,7 +29,7 @@ namespace Assets.KYG.Scripts
                 // 총알 비활성화
                 poolManager.Despawn("Bullet", collision.gameObject);
 
-                gameManager.AddScore(100);
+                gameManager.AddScore(10);
 
                 // 적 비활성화 (풀 반환)
                 poolManager.Despawn(poolKey, gameObject);
