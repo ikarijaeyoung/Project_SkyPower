@@ -17,7 +17,9 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GameObject bullet = poolManager.Spawn(bulletKey, transform.position, Quaternion.identity);
+            Vector3 spawnPos = transform.position + transform.forward * 1f; // 총구 위치
+            Quaternion spawnRot = transform.rotation; // 방향 유지
+            GameObject bullet = poolManager.Spawn(bulletKey, spawnPos, spawnRot);
         }
     }
 }

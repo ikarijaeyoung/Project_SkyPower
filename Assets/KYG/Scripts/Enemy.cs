@@ -6,31 +6,33 @@ namespace Assets.KYG.Scripts
 {
     public class Enemy : MonoBehaviour
     {
-        [SerializeField] public float speed;
+        [SerializeField] private float speed;
 
         public GameManagerSO gameManager;
-
         public ObjectPoolManagerSO poolManager;
+        public string poolKey = "Enemy"; // 풀 키
 
-        // Update is called once per frame
         void Update()
         {
             transform.Translate(Vector3.down * speed * Time.deltaTime);
 
             if (transform.position.y < -6f)
-
-                Destroy(gameObject);
-
-
+            {
+                poolManager.Despawn(poolKey, gameObject);
+            }
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerEnter(Collider collision) // 3D용 콜라이더 이벤트
         {
             if (collision.CompareTag("Bullet"))
             {
-                collision.gameObject.SetActive(false);
+                // 총알 비활성화
+                poolManager.Despawn("Bullet", collision.gameObject);
+
                 gameManager.AddScore(100);
-                Destroy(gameObject);
+
+                // 적 비활성화 (풀 반환)
+                poolManager.Despawn(poolKey, gameObject);
             }
         }
     }
