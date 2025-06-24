@@ -4,18 +4,27 @@ using UnityEngine;
 
 namespace JYL
 {
-    public class BulletController : MonoBehaviour
+    public class BulletController : PooledObject
     {
-        [SerializeField] GameObject bulletPrefab;
-        void Start()
+        public Rigidbody[] rigs;
+        public Transform[] childTransforms;
+        public Vector3[] childPosOrigin;
+        void Awake()
         {
-
+            rigs = GetComponentsInChildren<Rigidbody>();
         }
 
         void Update()
         {
 
         }
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.layer == 1<<7)
+            {
+                ReturnToPool();
+            }
+        }
+
     }
 }
-
