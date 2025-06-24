@@ -5,7 +5,7 @@ using YSK;
 namespace YSK
 {
     /// <summary>
-    /// 프로토타입 시연용 테스트 UI
+    /// 테스트용 UI (실제 씬 전환 사용)
     /// </summary>
     public class TestUI : MonoBehaviour
     {
@@ -17,7 +17,7 @@ namespace YSK
         [SerializeField] private Button quitButton;
         
         [Header("Stage Selection")]
-        [SerializeField] private Button[] stageButtons;
+        [SerializeField] private Button[] stageButtons = new Button[4]; // 4개의 스테이지 버튼
         
         #region Unity Lifecycle
         
