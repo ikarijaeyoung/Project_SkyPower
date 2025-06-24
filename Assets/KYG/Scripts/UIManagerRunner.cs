@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManagerRunner : MonoBehaviour
+namespace KYG
 {
-    public UIManagerSO uiManager;
-    public GameObject pausePanel;
-
-    void Awake()
+    public class UIManagerRunner : MonoBehaviour
     {
-        uiManager.Init(pausePanel);
+        public UIManagerSO uiManager;
+        public GameObject pausePanel;
+
+        void Awake()
+        {
+            uiManager.Init(pausePanel);
+        }
     }
 }
+

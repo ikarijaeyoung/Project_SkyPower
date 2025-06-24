@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "InputManager", menuName = "Managers/InputManager")]
-public class InputManagerSO : ScriptableObject
+namespace KYG
 {
-    public KeyCode pauseKey = KeyCode.Escape;
-
-    // 일시 정지 키 입력 확인
-    public bool IsPausePressed()
+    [CreateAssetMenu(fileName = "InputManager", menuName = "Managers/InputManager")]
+    public class InputManagerSO : ScriptableObject
     {
-        return Input.GetKeyDown(pauseKey);
+        public KeyCode pauseKey = KeyCode.Escape;
+
+        // 일시 정지 키 입력 확인
+        public bool IsPausePressed()
+        {
+            return Input.GetKeyDown(pauseKey);
+        }
     }
 }

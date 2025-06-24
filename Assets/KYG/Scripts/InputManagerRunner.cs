@@ -2,25 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputManagerRunner : MonoBehaviour
+namespace KYG
 {
-    public InputManagerSO inputManager;
-    public GameManagerSO gameManager;
-    public UIManagerSO uiManager;
-
-    void Update()
+    public class InputManagerRunner : MonoBehaviour
     {
-        if (inputManager.IsPausePressed())
+        public InputManagerSO inputManager;
+        public GameManagerSO gameManager;
+        public UIManagerSO uiManager;
+
+        void Update()
         {
-            if (gameManager.isGamePaused)
+            if (inputManager.IsPausePressed())
             {
-                gameManager.ResumeGame();
-                uiManager.ShowPauseUI(false);
-            }
-            else
-            {
-                gameManager.PauseGame();
-                uiManager.ShowPauseUI(true);
+                if (gameManager.isGamePaused)
+                {
+                    gameManager.ResumeGame();
+                    uiManager.ShowPauseUI(false);
+                }
+                else
+                {
+                    gameManager.PauseGame();
+                    uiManager.ShowPauseUI(true);
+                }
             }
         }
     }

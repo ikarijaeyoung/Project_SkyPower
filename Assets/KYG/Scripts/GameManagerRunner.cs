@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManagerRunner : MonoBehaviour
+namespace KYG
 {
-    public GameManagerSO gameManager;
-
-    void Start()
+    public class GameManagerRunner : MonoBehaviour
     {
-        gameManager.ResetScore(); // 게임 재시작 시점에 초기화
-        // 시작 시 게임 재개 상태로 초기화
-        gameManager.ResumeGame();
-        
+        public GameManagerSO gameManager;
+
+        void Start()
+        {
+            gameManager.ResetScore(); // 게임 재시작 시점에 초기화
+                                      // 시작 시 게임 재개 상태로 초기화
+            gameManager.ResumeGame();
+
+        }
     }
 }

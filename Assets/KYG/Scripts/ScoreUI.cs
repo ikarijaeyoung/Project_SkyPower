@@ -2,15 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class ScoreUI : MonoBehaviour
+namespace KYG
 {
-    public GameManagerSO gameManager;
-    public TMPro.TextMeshPro scoreText;
 
-    // Update is called once per frame
-    void Update()
+
+    public class ScoreUI : MonoBehaviour
     {
-        scoreText.text = $"Score: {gameManager.score}";
+        public GameManagerSO gameManager;
+        public TMPro.TextMeshPro scoreText;
+
+        // Update is called once per frame
+        void Update()
+        {
+            scoreText.text = $"Score: {gameManager.score}";
+        }
     }
 }
