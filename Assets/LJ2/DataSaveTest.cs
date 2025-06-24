@@ -21,35 +21,31 @@ public class SaveDataSample : SaveData
 public class DataSaveTest : MonoBehaviour
 {
     private SaveDataSample jsonSave;
-    private SaveDataSample jsonLoad;
+    private SaveDataSample jsonLoad = new();
 
     private void Start()
     {
-        Save();
-        Load();
-        Delete();
-        Debug.Log(jsonLoad.Hp.ToString());
+        
     }
 
-    private void Save()
+    public void Save()
     {
         jsonSave = new(50);
 
-        DataSaveController.Save(jsonSave);
+        DataSaveController.Save(jsonSave, 0);
     }
 
-    private void Load()
+    public void Load()
     {
-        jsonLoad = new();
-
-        DataSaveController.Load(ref jsonLoad);
+        DataSaveController.Load(ref jsonLoad, 0);
         Debug.Log($"Hp = {jsonLoad.Hp}");
     }
 
-    private void Delete()
+    public void Delete()
     {
-        DataSaveController.Delete(jsonLoad);
-        
+        DataSaveController.Delete(jsonLoad, 0);
+        Debug.Log(jsonLoad.Hp.ToString());
+
     }
 }
 

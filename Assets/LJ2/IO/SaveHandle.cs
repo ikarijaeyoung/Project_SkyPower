@@ -126,9 +126,9 @@ namespace IO
         /// </summary>
         /// <param name="fileName">The name of the file. 파일 이름.</param>
         /// <returns>Returns the full file path. 전체 파일 경로를 반환한다.</returns>
-        private static string GetFilePath(string fileName)
+        private static string GetFilePath(string fileName, int index)
         {
-            return Path.Combine(BasePath, $"{fileName}.json");
+            return Path.Combine(BasePath, $"{fileName}_{index}.json");
         }
 
         /// <summary>
@@ -137,11 +137,11 @@ namespace IO
         /// </summary>
         /// <typeparam name="T">The type of data to save. 저장할 데이터의 타입.</typeparam>
         /// <param name="target">The data object to save. 저장할 데이터 객체.</param>
-        public void Save<T>(T target) where T : SaveData
+        public void Save<T>(T target, int index) where T : SaveData
         {
             Directory.CreateDirectory(BasePath);
 
-            string filePath = GetFilePath(target.FileName);
+            string filePath = GetFilePath(target.FileName, index);
             string jsonString = JsonUtility.ToJson(target);
 
             if (IsFileEmpty(jsonString)) return;
@@ -157,9 +157,9 @@ namespace IO
         /// </summary>
         /// <typeparam name="T">The type of data to load. 불러올 데이터의 타입.</typeparam>
         /// <param name="target">The data object to load into. 데이터를 불러올 객체.</param>
-        public void Load<T>(ref T target) where T : SaveData, new()
+        public void Load<T>(ref T target, int index) where T : SaveData, new()
         {
-            string filePath = GetFilePath(target.GetType().ToString());
+            string filePath = GetFilePath(target.GetType().ToString(), index);
             string jsonString = File.ReadAllText(filePath);
 
             if (!IsFileAccessible(filePath)) return;
@@ -169,9 +169,9 @@ namespace IO
             target = JsonUtility.FromJson<T>(jsonString);
         }
 
-        public void Delete<T>(T target) where T : SaveData
+        public void Delete<T>(T target, int index) where T : SaveData
         {
-            string filePath = GetFilePath(target.GetType().ToString());
+            string filePath = GetFilePath(target.GetType().ToString(), index);
             string jsonString = File.ReadAllText(filePath);
 
             if (!IsFileAccessible(filePath)) return;
