@@ -3,21 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using IO;
 
-public class SaveDataSample : SaveData
-{
-    [field: SerializeField] public int Hp {  get; set; }
-
-    public SaveDataSample() 
-    { 
-        Hp = 100;
-    }
-
-    public SaveDataSample(int hp)
-    {
-        Hp = hp;
-    }
-}
-
 public class DataSaveTest : MonoBehaviour
 {
     private SaveDataSample jsonSave;
@@ -28,23 +13,23 @@ public class DataSaveTest : MonoBehaviour
         
     }
 
-    public void Save()
+    public void Save(int index)
     {
-        jsonSave = new(50);
+        //jsonSave = new(50);
 
-        DataSaveController.Save(jsonSave, 0);
+        DataSaveController.Save(jsonSave, index);
     }
 
-    public void Load()
+    public void Load(int index)
     {
-        DataSaveController.Load(ref jsonLoad, 0);
-        Debug.Log($"Hp = {jsonLoad.Hp}");
+        DataSaveController.Load(ref jsonLoad, index);
+        //Debug.Log($"Hp = {jsonLoad.Hp}");
     }
 
-    public void Delete()
+    public void Delete(int index)
     {
-        DataSaveController.Delete(jsonLoad, 0);
-        Debug.Log(jsonLoad.Hp.ToString());
+        DataSaveController.Delete(jsonLoad, index);
+        //Debug.Log(jsonLoad.Hp.ToString());
 
     }
 }

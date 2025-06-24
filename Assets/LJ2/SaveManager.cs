@@ -7,18 +7,38 @@ namespace LJ2
 {
     public class SaveManager : MonoBehaviour
     {
-        public void Save(SaveData target, int index)
+        private static SaveManager instance;
+        public static SaveManager Instance { get { return instance; } }
+
+        private void Awake()
         {
-            DataSaveController.Save(target, index);
+            if (instance == null)
+            {
+                instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
 
-        public void Load(SaveData target, int index)
+
+        public PlayerSave player;
+
+        public void Save(int index)
         {
-            //DataSaveController.Load(ref target, index);
+            DataSaveController.Save(player.saveDataSample, index);
         }
-        public void Delete(SaveData target, int index)
+
+        public void Load(int index)
         {
-            DataSaveController.Delete(target, index);
+            DataSaveController.Load(ref player.saveDataSample, index);
+        }
+
+        public void Delete(int index)
+        {
+            DataSaveController.Delete(player.saveDataSample, index);
         }
     }
 }
