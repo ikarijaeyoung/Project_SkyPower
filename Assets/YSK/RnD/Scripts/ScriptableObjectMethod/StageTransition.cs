@@ -152,7 +152,7 @@ namespace YSK
             isTransitioning = true;
             
             // 게임 시작인지 스테이지 전환인지 판단
-            GameStateManager gameStateManager = FindObjectOfType<GameStateManager>();
+            GameStateManager gameStateManager = GameStateManager.Instance;
             
             if (isGameStart)
             {
