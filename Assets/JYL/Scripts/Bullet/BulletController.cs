@@ -1,17 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace JYL
 {
-    public class BulletController : PooledObject
+    public class BulletController : MonoBehaviour
     {
-        public Rigidbody[] rigs;
-        public Transform[] childTransforms;
-        public Vector3[] childPosOrigin;
+        public Rigidbody rig;
         void Awake()
         {
-            rigs = GetComponentsInChildren<Rigidbody>();
+            rig = GetComponent<Rigidbody>();
+            rig.constraints = RigidbodyConstraints.FreezeRotation;
+            rig.useGravity = false;
         }
 
         void Update()
@@ -20,10 +18,7 @@ namespace JYL
         }
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.layer == 1<<7)
-            {
-                ReturnToPool();
-            }
+            gameObject.SetActive(false);
         }
 
     }

@@ -15,44 +15,63 @@ namespace JYL
         [SerializeField] float bulletReturnTimer = 2f;
         [SerializeField] List<ObjectPool> bulletPools;
 
-        private ObjectPool curBulletPool;
+        private int poolIndex = 0;
+        private ObjectPool curBulletPool => bulletPools[poolIndex];
 
         private void Awake()
         {
-            curBulletPool = bulletPools[0];
         }
         private void Update()
         {
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                FireBullet();
+                switch (poolIndex)
+                {
+                    case 0:
+                        Fire1();
+                        break;
+                    case 1:
+                        Fire1();
+                        break;
+
+                }
             }
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                curBulletPool = bulletPools[0];
+                poolIndex = 0;
             }
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                curBulletPool = bulletPools[1];
+                poolIndex = 1;
             }
         }
+
         private void PlayerMove()
         {
 
         }
-        private void FireBullet()
+
+        private void Fire1()
         {
-            BulletController bullet = curBulletPool.ObjectOut() as BulletController;
+            BulletPrefabController bullet = curBulletPool.ObjectOut() as BulletPrefabController;
             bullet.transform.position = muzzlePoint.position;
-            bullet.transform.forward = muzzlePoint.forward;
             bullet.ReturnToPool(bulletReturnTimer);
-            foreach(Rigidbody rig in bullet.rigs)
+            foreach(BulletInfo info in bullet.bullet)
             {
-                rig.velocity = Vector3.zero;
-                rig.AddForce(playerModel.fireSpeed * muzzlePoint.forward, ForceMode.Impulse);
+                if(info.rig == null)
+                {
+                    continue;
+                }
+                info.trans.gameObject.SetActive(true);
+                info.trans.position = info.originPos;
+                info.rig.velocity = Vector3.zero;
+                info.rig.AddForce(playerModel.fireSpeed * muzzlePoint.forward, ForceMode.Impulse);
             }
+        }
+        private void Fire2()
+        {
+
         }
     }
 }
-
