@@ -10,17 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0e5a231cbc9c7d4d85769f3bb00b2d5, type: 3}
-  m_Name: Stage1
+  m_Name: Stage4
   m_EditorClassIdentifier: 
-  stageID: 1
-  stageName: Stage1
+  stageID: 4
+  stageName: Stage3
   sceneName: RnDBaseStageScene
-  duration: 300
+  duration: 500
   mapPrefabs:
-  - {fileID: 255603948662158416, guid: 362c57ffea7d3bb48b6a9f390332d77c, type: 3}
-  - {fileID: 7668984884236379141, guid: 56f251c5778277c4ca0472a6d0f91b9c, type: 3}
-  - {fileID: 8380167807526418686, guid: f57e2afa53beb734f85838d709b918a7, type: 3}
-  - {fileID: 8380167807526418686, guid: 99ad706c52e03b449b4e9c858dfd610b, type: 3}
+  - {fileID: 255603948662158416, guid: a5195e74c05235f4897aa802bfb6a25d, type: 3}
+  - {fileID: 7668984884236379141, guid: 94bbef344085d844d84ba30e59f4fabe, type: 3}
+  - {fileID: 8380167807526418686, guid: f58e5c46a8da8a74e899d311c0684644, type: 3}
   subStages:
   - subStageID: 0
     subStageName: 
