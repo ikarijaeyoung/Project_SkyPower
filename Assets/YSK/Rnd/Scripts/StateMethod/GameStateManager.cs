@@ -53,8 +53,8 @@ namespace YSK
         
         private void Start()
         {
-            // GameSceneManager가 먼저 초기화되도록 약간의 지연
-            Invoke(nameof(InitializeGame), 0.1f);
+            // 지연 시간을 줄여서 더 빠르게 초기화
+            Invoke(nameof(InitializeGame), 0.05f);
         }
         
         #endregion
@@ -89,15 +89,17 @@ namespace YSK
         /// </summary>
         public void SetGameState(GameState newState)
         {
-            if (currentGameState == newState) return;
-            
+            // 같은 상태라도 이벤트를 트리거하도록 수정
             GameState previousState = currentGameState;
             currentGameState = newState;
             
             OnGameStateChanged?.Invoke(newState);
             
-            // 상태별 처리
-            HandleGameStateChange(previousState, newState);
+            // 상태별 처리 (이전 상태와 다른 경우에만)
+            if (previousState != newState)
+            {
+                HandleGameStateChange(previousState, newState);
+            }
         }
         
         private void HandleGameStateChange(GameState previousState, GameState newState)
@@ -414,6 +416,23 @@ namespace YSK
         public StageTransition GetStageTransition()
         {
             return stageTransition;
+        }
+        
+        /// <summary>
+        /// 현재 스테이지를 클리어하고 다음 스테이지로 진행합니다.
+        /// </summary>
+        public void ClearCurrentStage()
+        {
+            Debug.Log("현재 스테이지 클리어 처리");
+            
+            if (stageManager != null)
+            {
+                stageManager.ClearCurrentStageAndNext();
+            }
+            else
+            {
+                Debug.LogError("StageManager가 null입니다!");
+            }
         }
         
         #endregion

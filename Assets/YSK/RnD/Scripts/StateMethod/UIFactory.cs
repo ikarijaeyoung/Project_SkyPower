@@ -1103,18 +1103,61 @@ namespace YSK
         /// </summary>
         private void EnsureEventSystemExists()
         {
-            // 이미 EventSystem이 있는지 확인
+            // 이미 EventSystem이 있는지 확인 (모든 씬에서 검색)
             EventSystem existingEventSystem = FindObjectOfType<EventSystem>();
+            
             if (existingEventSystem == null)
             {
-                Debug.Log("EventSystem이 없습니다. 생성합니다.");
+                Debug.Log("EventSystem이 없습니다. DontDestroyOnLoad로 생성합니다.");
                 GameObject eventSystem = new GameObject("EventSystem");
                 eventSystem.AddComponent<EventSystem>();
                 eventSystem.AddComponent<StandaloneInputModule>();
+                DontDestroyOnLoad(eventSystem);
             }
             else
             {
-                Debug.Log($"기존 EventSystem 발견: {existingEventSystem.name}");
+                Debug.Log($"기존 EventSystem 발견: {existingEventSystem.name} (씬: {existingEventSystem.gameObject.scene.name})");
+                
+                // 기존 EventSystem이 DontDestroyOnLoad에 있으면 그대로 사용
+                if (existingEventSystem.gameObject.scene.name == "DontDestroyOnLoad")
+                {
+                    Debug.Log("기존 EventSystem이 이미 DontDestroyOnLoad에 있습니다.");
+                }
+                else
+                {
+                    // 기존 EventSystem을 DontDestroyOnLoad로 이동
+                    Debug.Log("기존 EventSystem을 DontDestroyOnLoad로 이동합니다.");
+                    DontDestroyOnLoad(existingEventSystem.gameObject);
+                }
+            }
+            
+            // 현재 씬의 다른 EventSystem들 제거 (DontDestroyOnLoad 제외)
+            RemoveDuplicateEventSystems();
+        }
+        
+        private void RemoveDuplicateEventSystems()
+        {
+            EventSystem[] allEventSystems = FindObjectsOfType<EventSystem>();
+            EventSystem dontDestroyEventSystem = null;
+            
+            // DontDestroyOnLoad의 EventSystem 찾기
+            foreach (EventSystem es in allEventSystems)
+            {
+                if (es.gameObject.scene.name == "DontDestroyOnLoad")
+                {
+                    dontDestroyEventSystem = es;
+                    break;
+                }
+            }
+            
+            // 다른 EventSystem들 제거
+            foreach (EventSystem es in allEventSystems)
+            {
+                if (es != dontDestroyEventSystem && es.gameObject.scene.name != "DontDestroyOnLoad")
+                {
+                    Debug.Log($"중복 EventSystem 제거: {es.name} (씬: {es.gameObject.scene.name})");
+                    Destroy(es.gameObject);
+                }
             }
         }
         

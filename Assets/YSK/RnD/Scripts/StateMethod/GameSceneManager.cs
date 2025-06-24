@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using YSK;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 namespace YSK
 {
@@ -118,6 +119,9 @@ namespace YSK
             // Bootstrap 씬에서 시작하는 경우
             if (CurrentSceneName == bootstrapScene)
             {
+                // EventSystem 초기 생성
+                EnsureEventSystemExists();
+                
                 if (enableDebugLogs)
                 {
                     Debug.Log("Bootstrap 씬에서 시작 - 단순화된 로딩 시스템");
@@ -1071,67 +1075,47 @@ namespace YSK
             GameStateManager gameStateManager = GameStateManager.Instance;
             if (gameStateManager == null)
             {
-                Debug.LogError("GameStateManager.Instance가 null입니다! GameStateManager가 DontDestroyOnLoad로 설정되어 있는지 확인해주세요.");
+                Debug.LogError("GameStateManager.Instance가 null입니다!");
                 return;
-            }
-            
-            if (enableDebugLogs)
-            {
-                Debug.Log("GameStateManager 인스턴스 확인 완료");
             }
             
             // 2. 현재 씬에서 StageManager 찾기
             StageManager stageManager = FindObjectOfType<StageManager>();
             if (stageManager == null)
             {
-                Debug.LogError("StageManager를 찾을 수 없습니다! 3D 탄막 게임 씬에 StageManager가 있는지 확인해주세요.");
+                Debug.LogError("StageManager를 찾을 수 없습니다!");
                 return;
             }
             
-            if (enableDebugLogs)
-            {
-                Debug.Log("StageManager 찾기 완료");
-            }
-            
-            // 3. StageManager에 GameStateManager 참조 할당 (public 메서드 사용)
+            // 3. 참조 연결
             stageManager.SetGameStateManager(gameStateManager);
-            
-            // 4. GameStateManager에 StageManager 참조 할당 (public 메서드 사용)
             gameStateManager.SetStageManager(stageManager);
             
-            // 5. StageTransition 찾기 및 GameStateManager에 참조 할당
+            // 4. StageTransition 연결
             StageTransition stageTransition = stageManager.GetComponentInChildren<StageTransition>();
             if (stageTransition != null)
             {
                 gameStateManager.SetStageTransition(stageTransition);
                 stageManager.SetStageTransition(stageTransition);
-                if (enableDebugLogs)
-                {
-                    Debug.Log("StageTransition 찾기 및 참조 설정 완료");
-                }
-            }
-            else
-            {
-                Debug.LogWarning("StageTransition을 찾을 수 없습니다! StageManager의 자식 오브젝트에 StageTransition이 있는지 확인해주세요.");
             }
             
-            // 6. 연결 확인
             if (enableDebugLogs)
             {
                 Debug.Log("=== 스테이지 매니저 참조 연결 완료 ===");
-                Debug.Log($"GameStateManager: {(gameStateManager != null ? "연결됨" : "연결 실패")}");
-                Debug.Log($"StageManager: {(stageManager != null ? "연결됨" : "연결 실패")}");
-                Debug.Log($"StageTransition: {(stageTransition != null ? "연결됨" : "연결 실패")}");
-                
-                // 참조 확인
-                GameStateManager connectedGameStateManager = stageManager.GetGameStateManager();
-                StageManager connectedStageManager = gameStateManager.GetStageManager();
-                StageTransition connectedStageTransition = gameStateManager.GetStageTransition();
-                
-                Debug.Log($"StageManager의 GameStateManager 참조: {(connectedGameStateManager != null ? "성공" : "실패")}");
-                Debug.Log($"GameStateManager의 StageManager 참조: {(connectedStageManager != null ? "성공" : "실패")}");
-                Debug.Log($"GameStateManager의 StageTransition 참조: {(connectedStageTransition != null ? "성공" : "실패")}");
             }
+            
+            // 5. 지연 후 게임 상태 설정 (StageManager가 이벤트 구독할 시간 확보)
+            StartCoroutine(DelayedGameStateSetup(gameStateManager));
+        }
+        
+        private IEnumerator DelayedGameStateSetup(GameStateManager gameStateManager)
+        {
+            // StageManager가 이벤트를 구독할 시간을 확보
+            yield return new WaitForSeconds(0.2f);
+            
+            // 게임 상태를 Playing으로 설정하여 맵 생성 트리거
+            Debug.Log("게임 상태를 Playing으로 설정하여 맵 생성 트리거");
+            gameStateManager.SetGameState(GameState.Playing);
         }
         
         #endregion
@@ -1674,129 +1658,31 @@ namespace YSK
         {
             Debug.Log("간단한 메인메뉴 UI 생성 시작");
             
-            // EventSystem 확인 및 생성
-            if (FindObjectOfType<UnityEngine.EventSystems.EventSystem>() == null)
+            // EventSystem 확인 및 생성 (중복 방지)
+            EventSystem existingEventSystem = FindObjectOfType<EventSystem>();
+            if (existingEventSystem == null)
             {
                 GameObject eventSystem = new GameObject("EventSystem");
-                eventSystem.AddComponent<UnityEngine.EventSystems.EventSystem>();
-                eventSystem.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
-                DontDestroyOnLoad(eventSystem);
+                eventSystem.AddComponent<EventSystem>();
+                eventSystem.AddComponent<StandaloneInputModule>();
+                DontDestroyOnLoad(eventSystem); // 씬 전환 시에도 유지
             }
-            
-            // Canvas 생성
-            GameObject canvasObj = new GameObject("SimpleMainMenuCanvas");
-            Canvas canvas = canvasObj.AddComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            canvas.sortingOrder = 100;
-            canvasObj.AddComponent<CanvasScaler>();
-            canvasObj.AddComponent<GraphicRaycaster>();
-            
-            // 배경 패널
-            GameObject bgPanelObj = new GameObject("BackgroundPanel");
-            bgPanelObj.transform.SetParent(canvasObj.transform, false);
-            
-            Image bgImage = bgPanelObj.AddComponent<Image>();
-            bgImage.color = new Color(0.1f, 0.1f, 0.3f, 1f);
-            
-            RectTransform bgRect = bgPanelObj.GetComponent<RectTransform>();
-            bgRect.anchorMin = Vector2.zero;
-            bgRect.anchorMax = Vector2.one;
-            bgRect.offsetMin = Vector2.zero;
-            bgRect.offsetMax = Vector2.zero;
-            
-            // 제목 텍스트
-            GameObject titleObj = new GameObject("TitleText");
-            titleObj.transform.SetParent(canvasObj.transform, false);
-            
-            TextMeshProUGUI titleText = titleObj.AddComponent<TextMeshProUGUI>();
-            titleText.text = "Sky Power";
-            titleText.fontSize = 48;
-            titleText.color = Color.white;
-            titleText.alignment = TextAlignmentOptions.Center;
-            
-            RectTransform titleRect = titleObj.GetComponent<RectTransform>();
-            titleRect.anchorMin = new Vector2(0.2f, 0.7f);
-            titleRect.anchorMax = new Vector2(0.8f, 0.9f);
-            titleRect.offsetMin = Vector2.zero;
-            titleRect.offsetMax = Vector2.zero;
-            
-            // 버튼들
-            CreateSimpleButton(canvasObj, "StartGameButton", "게임 시작", new Vector2(0.5f, 0.4f), () => {
-                Debug.Log("게임 시작 버튼 클릭됨");
-                if (GameSceneManager.Instance != null)
-                {
-                    GameSceneManager.Instance.LoadMainStageSelect();
-                }
-            });
-            
-            CreateSimpleButton(canvasObj, "QuitButton", "게임 종료", new Vector2(0.5f, 0.2f), () => {
-                Debug.Log("게임 종료 버튼 클릭됨");
-                if (GameSceneManager.Instance != null)
-                {
-                    GameSceneManager.Instance.QuitGame();
-                }
-            });
-            
-            Debug.Log("간단한 메인메뉴 UI 생성 완료");
-        }
-        
-        /// <summary>
-        /// 간단한 버튼을 생성하는 헬퍼 메서드입니다.
-        /// </summary>
-        private void CreateSimpleButton(GameObject parent, string name, string text, Vector2 anchorPosition, System.Action onClick)
-        {
-            // 버튼 GameObject 생성
-                GameObject buttonObj = new GameObject(name);
-                buttonObj.transform.SetParent(parent.transform, false);
-                
-            // RectTransform 설정
-            RectTransform rectTransform = buttonObj.AddComponent<RectTransform>();
-                rectTransform.anchorMin = anchorPosition - new Vector2(0.1f, 0.05f);
-                rectTransform.anchorMax = anchorPosition + new Vector2(0.1f, 0.05f);
-                rectTransform.offsetMin = Vector2.zero;
-                rectTransform.offsetMax = Vector2.zero;
-                
-            // Image 컴포넌트 추가 (버튼 배경)
-                Image buttonImage = buttonObj.AddComponent<Image>();
-                buttonImage.color = new Color(0.2f, 0.2f, 0.2f, 0.8f);
-                
-            // Button 컴포넌트 추가
-                Button button = buttonObj.AddComponent<Button>();
-            button.targetGraphic = buttonImage;
-                
-            // Text GameObject 생성
-                GameObject textObj = new GameObject("Text");
-                textObj.transform.SetParent(buttonObj.transform, false);
-                
-            // Text RectTransform 설정
-            RectTransform textRectTransform = textObj.AddComponent<RectTransform>();
-                textRectTransform.anchorMin = Vector2.zero;
-                textRectTransform.anchorMax = Vector2.one;
-                textRectTransform.offsetMin = Vector2.zero;
-                textRectTransform.offsetMax = Vector2.zero;
-                
-            // Text 컴포넌트 추가
-                TextMeshProUGUI buttonText = textObj.AddComponent<TextMeshProUGUI>();
-                buttonText.text = text;
-                buttonText.fontSize = 18;
-                buttonText.color = Color.white;
-                buttonText.alignment = TextAlignmentOptions.Center;
-                
-            // 버튼 이벤트 설정
-            if (onClick != null)
+            else
             {
-                button.onClick.AddListener(() => {
-                    try
-                    {
-                        Debug.Log($"버튼 클릭: {name} - {text}");
-                        onClick();
-                }
-                catch (System.Exception e)
+                Debug.Log("기존 EventSystem이 존재합니다.");
+                // 기존 EventSystem도 DontDestroyOnLoad로 설정
+                if (existingEventSystem.gameObject.scene.name == "DontDestroyOnLoad")
                 {
-                        Debug.LogError($"버튼 클릭 오류 ({name}): {e.Message}");
-                    }
-                });
+                    Debug.Log("기존 EventSystem이 이미 DontDestroyOnLoad로 설정되어 있습니다.");
+                }
+                else
+                {
+                    Debug.Log("기존 EventSystem을 DontDestroyOnLoad로 설정합니다.");
+                    DontDestroyOnLoad(existingEventSystem.gameObject);
+                }
             }
+            
+            // 나머지 UI 생성 코드...
         }
         
         /// <summary>
@@ -2113,6 +1999,24 @@ namespace YSK
         }
         
         #endregion
+
+        private void EnsureEventSystemExists()
+        {
+            EventSystem existingEventSystem = FindObjectOfType<EventSystem>();
+            if (existingEventSystem == null)
+            {
+                Debug.Log("Bootstrap에서 EventSystem 생성");
+                GameObject eventSystem = new GameObject("EventSystem");
+                eventSystem.AddComponent<EventSystem>();
+                eventSystem.AddComponent<StandaloneInputModule>();
+                DontDestroyOnLoad(eventSystem);
+            }
+            else
+            {
+                Debug.Log("기존 EventSystem 발견, DontDestroyOnLoad로 설정");
+                DontDestroyOnLoad(existingEventSystem.gameObject);
+            }
+        }
     }
 }
 
