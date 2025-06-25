@@ -13,6 +13,7 @@ namespace YSK
         public string stageName;
         public string sceneName;
         public float duration;
+        public bool mainStageLock;
         
         [Header("Map Settings")]
         public List<GameObject> mapPrefabs;
@@ -29,6 +30,9 @@ namespace YSK
         [Tooltip("서브 스테이지별 난이도 증가량")]
         [Range(0, 2)]
         public float difficultyIncreasePerSubStage = 0.2f;
+
+        
+
     }
     
     [System.Serializable]
@@ -37,7 +41,9 @@ namespace YSK
         [Header("Sub Stage Info")]
         public int subStageID;
         public string subStageName;
-        
+        public bool subStageLock;
+        public int subStageScore = 0;
+
         [Header("Map Override")]
         [Tooltip("이 서브 스테이지 전용 맵 프리팹 (null이면 기본 맵 사용)")]
         public List<GameObject> customMapPrefabs;

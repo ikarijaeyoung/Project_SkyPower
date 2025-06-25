@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4791420168121709598}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Map_Stage1_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 5978947967023747745}
   - component: {fileID: 6585610369646196118}
   - component: {fileID: 3380062091372105846}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: MapObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,8 +61,8 @@ Transform:
   m_GameObject: {fileID: 4552923679219834921}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.78, y: 0, z: 5.03}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -2.78, y: 2.5, z: 5.03}
+  m_LocalScale: {x: 1, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4791420168121709598}
@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 6480057554932583782}
   - component: {fileID: 7677499545929745799}
   - component: {fileID: 6437886448350313772}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
