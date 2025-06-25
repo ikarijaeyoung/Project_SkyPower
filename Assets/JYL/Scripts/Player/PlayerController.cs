@@ -15,27 +15,47 @@ namespace JYL
         [SerializeField] float bulletReturnTimer = 2f;
         [SerializeField] List<ObjectPool> bulletPools;
 
+        private int level;
+        private int hp;
+
         private int poolIndex = 0;
         private ObjectPool curBulletPool => bulletPools[poolIndex];
 
-        private void Awake()
+        private void OnEnable()
         {
+            //CreatePlayer();
         }
         private void Update()
         {
+            PlayerHandler();
+            Debug.Log($"{curBulletPool}");
+        }
 
+        private void FixedUpdate()
+        {
+            PlayerMove();
+        }
+
+        private void LateUpdate()
+        {
+            // 애니메이션 - 궁극기 등
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            
+        }
+        //private void CreatePlayer(CharacterController character)
+        //{
+        // 플레이어 생성
+        //}
+
+
+        private void PlayerHandler()
+        {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                switch (poolIndex)
-                {
-                    case 0:
-                        Fire1();
-                        break;
-                    case 1:
-                        Fire1();
-                        break;
-
-                }
+                Fire();
             }
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
@@ -45,6 +65,12 @@ namespace JYL
             {
                 poolIndex = 1;
             }
+            if(Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                poolIndex = 2;
+            }
+            //UseUlt
+            //Parry
         }
 
         private void PlayerMove()
@@ -52,7 +78,7 @@ namespace JYL
 
         }
 
-        private void Fire1()
+        private void Fire()
         {
             BulletPrefabController bullet = curBulletPool.ObjectOut() as BulletPrefabController;
             bullet.transform.position = muzzlePoint.position;
@@ -66,12 +92,16 @@ namespace JYL
                 info.trans.gameObject.SetActive(true);
                 info.trans.position = info.originPos;
                 info.rig.velocity = Vector3.zero;
-                info.rig.AddForce(playerModel.fireSpeed * muzzlePoint.forward, ForceMode.Impulse);
+                info.rig.AddForce(playerModel.fireSpeed * info.trans.forward, ForceMode.Impulse);
             }
         }
-        private void Fire2()
-        {
-
-        }
+        //private void UseUlt()
+        //{
+             // 궁극기
+        //}
+        //private void Parry(CharacterController character)
+        //{
+              // 들어온 캐릭터에 따른 패링스킬 사용
+        //}
     }
 }
