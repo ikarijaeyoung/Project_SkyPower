@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3111642540280398503}
   - component: {fileID: 2108488146828265904}
   - component: {fileID: 77372305660245580}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FlyEnemyBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7715130198389869489}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,7 +146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4398885731801022728}
   - component: {fileID: 1579580377331602160}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FlyEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +183,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 72c7a16f41e10724ea5cb264d8d4275b, type: 2}
-  enemyDropItemData: {fileID: 0}
   bulletPatternData: {fileID: 11400000, guid: 6b6c29da7b2d7ca4aa3042f4d20c2210, type: 2}
   isMoving: 0
   firePoint: {fileID: 7715130198389869489}
