@@ -97,7 +97,7 @@ namespace YSK
                 Debug.Log("메인스테이지 버튼 클릭됨");
                 if (GameSceneManager.Instance != null)
                 {
-                    GameSceneManager.Instance.LoadMainStageSelect();
+                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.MainStageSelect);
                 }
                 else
                 {
@@ -109,7 +109,7 @@ namespace YSK
                 Debug.Log("무한스테이지 버튼 클릭됨");
                 if (GameSceneManager.Instance != null)
                 {
-                    GameSceneManager.Instance.LoadEndlessStage();
+                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.EndlessStage);
                 }
                 else
                 {
@@ -121,7 +121,7 @@ namespace YSK
                 Debug.Log("상점 버튼 클릭됨");
                 if (GameSceneManager.Instance != null)
                 {
-                    GameSceneManager.Instance.LoadStore();
+                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.Store);
                 }
                 else
                 {
@@ -133,7 +133,7 @@ namespace YSK
                 Debug.Log("파티 버튼 클릭됨");
                 if (GameSceneManager.Instance != null)
                 {
-                    GameSceneManager.Instance.LoadPartyScene();
+                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.Party);
                 }
                 else
                 {
@@ -220,7 +220,7 @@ namespace YSK
                         Debug.Log($"스테이지 {stageID} 버튼 클릭됨");
                         if (GameSceneManager.Instance != null)
                         {
-                            GameSceneManager.Instance.LoadGameScene(stageID);
+                            GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.BaseStage, stageID);
                         }
                         else
                         {
@@ -234,7 +234,7 @@ namespace YSK
                 Debug.Log("뒤로가기 버튼 클릭됨");
                 if (GameSceneManager.Instance != null)
                 {
-                    GameSceneManager.Instance.LoadMainMenu();
+                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.MainMenu);
                 }
                 else
                 {
@@ -325,7 +325,7 @@ namespace YSK
                 Debug.Log("결과화면 버튼 클릭됨");
                 if (GameSceneManager.Instance != null)
                 {
-                    GameSceneManager.Instance.LoadResultScene(1500, true);
+                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.Result, score: 1500, isWin: true);
                 }
                 else
                 {
@@ -420,7 +420,7 @@ namespace YSK
                 Debug.Log("다시하기 버튼 클릭됨");
                 if (GameSceneManager.Instance != null)
                 {
-                    GameSceneManager.Instance.LoadGameScene(currentStageID);
+                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.BaseStage, currentStageID);
                 }
                 else
                 {
@@ -432,7 +432,7 @@ namespace YSK
                 Debug.Log("메인메뉴 버튼 클릭됨");
                 if (GameSceneManager.Instance != null)
                 {
-                    GameSceneManager.Instance.LoadMainMenu();
+                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.MainMenu);
                 }
                 else
                 {
@@ -507,7 +507,7 @@ namespace YSK
                         Debug.Log($"캐릭터 {charID} 선택됨");
                         if (GameSceneManager.Instance != null)
                         {
-                            GameSceneManager.Instance.LoadMainStageSelect();
+                            GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.MainStageSelect);
                         }
                         else
                         {
@@ -521,7 +521,7 @@ namespace YSK
                 Debug.Log("뒤로가기 버튼 클릭됨");
                 if (GameSceneManager.Instance != null)
                 {
-                    GameSceneManager.Instance.LoadMainMenu();
+                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.MainMenu);
                 }
                 else
                 {
@@ -599,7 +599,7 @@ namespace YSK
                             // 선택된 메인 스테이지 정보 저장
                             PlayerPrefs.SetInt("SelectedMainStage", stageID);
                             PlayerPrefs.Save();
-                            GameSceneManager.Instance.LoadSubStageSelect();
+                            GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.SubStageSelect);
                         }
                         else
                         {
@@ -613,7 +613,7 @@ namespace YSK
                 Debug.Log("뒤로가기 버튼 클릭됨");
                 if (GameSceneManager.Instance != null)
                 {
-                    GameSceneManager.Instance.LoadMainMenu();
+                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.MainMenu);
                 }
                 else
                 {
@@ -690,7 +690,7 @@ namespace YSK
                         {
                             // 선택된 메인 스테이지 정보 가져오기 (기본값: 1)
                             int selectedMainStage = PlayerPrefs.GetInt("SelectedMainStage", 1);
-                            GameSceneManager.Instance.LoadBaseStage(selectedMainStage, stageID);
+                            GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.BaseStage, selectedMainStage, stageID);
                         }
                         else
                         {
@@ -704,7 +704,7 @@ namespace YSK
                 Debug.Log("뒤로가기 버튼 클릭됨");
                 if (GameSceneManager.Instance != null)
                 {
-                    GameSceneManager.Instance.LoadMainStageSelect();
+                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.MainStageSelect);
                 }
                 else
                 {
@@ -795,7 +795,7 @@ namespace YSK
                 Debug.Log("메인메뉴로 이동");
                 if (GameSceneManager.Instance != null)
                 {
-                    GameSceneManager.Instance.LoadMainMenu();
+                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.MainMenu);
                 }
                 else
                 {
@@ -874,7 +874,7 @@ namespace YSK
                 Debug.Log("메인메뉴로 이동");
                 if (GameSceneManager.Instance != null)
                 {
-                    GameSceneManager.Instance.LoadMainMenu();
+                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.MainMenu);
                 }
                 else
                 {
@@ -957,7 +957,7 @@ namespace YSK
                 Debug.Log("뒤로가기 버튼 클릭됨");
                 if (GameSceneManager.Instance != null)
                 {
-                    GameSceneManager.Instance.LoadMainMenu();
+                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.MainMenu);
                 }
                 else
                 {

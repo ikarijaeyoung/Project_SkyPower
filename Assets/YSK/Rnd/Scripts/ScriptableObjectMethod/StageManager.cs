@@ -751,7 +751,7 @@ namespace YSK
             // 결과 화면으로 이동
             if (GameSceneManager.Instance != null)
             {
-                GameSceneManager.Instance.LoadResultScene(1000, true); // 예시 점수
+                //GameSceneManager.Instance.LoadResultScene(1000, true); // 예시 점수
             }
         }
 
