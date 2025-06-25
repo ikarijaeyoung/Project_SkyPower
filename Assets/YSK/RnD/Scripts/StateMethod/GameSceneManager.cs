@@ -1525,7 +1525,7 @@ namespace YSK
             pressKeyObj.SetActive(false);
             
             // 참조 저장을 위한 태그 설정
-            loadingObj.tag = "BootstrapLoadingScreen";
+            // loadingObj.tag = "BootstrapLoadingScreen"; // 이 라인을 제거하거나 주석 처리
             
             return loadingObj;
         }
