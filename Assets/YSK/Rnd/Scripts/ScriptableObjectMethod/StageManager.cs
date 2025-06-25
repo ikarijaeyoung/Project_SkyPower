@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using YSK;
+using System.Collections;
 
 namespace YSK
 {
@@ -36,14 +37,48 @@ namespace YSK
 
         private void Start()
         {
+            Debug.Log("=== StageManager Start 시작 ===");
+            
             InitializeComponents();
+            
+            // GameStateManager가 준비될 때까지 대기
+            StartCoroutine(WaitForGameStateManager());
+            
+            Debug.Log("=== StageManager Start 완료 ===");
+        }
 
-            // GameStateManager 이벤트 구독
-            if (gameStateManager != null)
+        private IEnumerator WaitForGameStateManager()
+        {
+            Debug.Log("=== WaitForGameStateManager 시작 ===");
+            
+            int waitCount = 0;
+            // GameStateManager가 준비될 때까지 대기
+            while (GameStateManager.Instance == null)
             {
-                GameStateManager.OnStageChanged += OnStageChanged;
-                GameStateManager.OnGameStateChanged += OnGameStateChanged;
+                waitCount++;
+                if (waitCount % 60 == 0) // 1초마다 로그
+                {
+                    Debug.Log($"GameStateManager 대기 중... ({waitCount}프레임)");
+                }
+                yield return null;
             }
+            
+            Debug.Log($"GameStateManager 발견! ({waitCount}프레임 대기)");
+            
+            // 이벤트 구독
+            GameStateManager.OnStageChanged += OnStageChanged;
+            GameStateManager.OnGameStateChanged += OnGameStateChanged;
+            
+            Debug.Log("StageManager 이벤트 구독 완료");
+            
+            // GameStateManager가 이미 Playing 상태라면 강제로 맵 생성 트리거
+            if (GameStateManager.Instance.CurrentGameState == GameState.Playing)
+            {
+                Debug.Log("GameStateManager가 이미 Playing 상태입니다. 맵 생성 트리거");
+                OnGameStateChanged(GameState.Playing);
+            }
+            
+            Debug.Log("=== WaitForGameStateManager 완료 ===");
         }
 
         private void Update()
@@ -55,11 +90,8 @@ namespace YSK
         private void OnDestroy()
         {
             // 이벤트 구독 해제
-            if (gameStateManager != null)
-            {
-                GameStateManager.OnStageChanged -= OnStageChanged;
-                GameStateManager.OnGameStateChanged -= OnGameStateChanged;
-            }
+            GameStateManager.OnStageChanged -= OnStageChanged;
+            GameStateManager.OnGameStateChanged -= OnGameStateChanged;
         }
 
         #endregion
@@ -78,17 +110,20 @@ namespace YSK
         /// </summary>
         private void OnGameStateChanged(GameState newState)
         {
-            Debug.Log($"OnGameStateChanged: {newState}");
+            Debug.Log($"=== OnGameStateChanged 호출: {newState} ===");
 
             switch (newState)
             {
                 case GameState.Playing:
+                    Debug.Log($"Playing 상태 처리 시작 - spawnedMaps.Count: {spawnedMaps.Count}");
+                    
                     // 이미 스테이지가 로드되어 있지 않은 경우에만 로드
                     if (spawnedMaps.Count == 0)
                     {
                         Debug.Log("게임 시작: 스테이지 로드");
                         // PlayerPrefs에서 메인 스테이지 정보 가져오기
                         int mainStageID = PlayerPrefs.GetInt("SelectedMainStage", 1);
+                        Debug.Log($"PlayerPrefs에서 가져온 메인 스테이지: {mainStageID}");
                         LoadStage(mainStageID);
                     }
                     else
@@ -104,6 +139,8 @@ namespace YSK
                     ClearAllMaps();
                     break;
             }
+            
+            Debug.Log($"=== OnGameStateChanged 완료: {newState} ===");
         }
 
         /// <summary>
@@ -176,62 +213,59 @@ namespace YSK
                 else if (Input.GetKeyDown(KeyCode.Alpha2)) HandleKey(2);
                 else if (Input.GetKeyDown(KeyCode.Alpha3)) HandleKey(3);
                 else if (Input.GetKeyDown(KeyCode.Alpha4)) HandleKey(4);
+                else if (Input.GetKeyDown(KeyCode.Alpha5)) HandleKey(5);
             }
         }
 
         private void HandleKey(int keyNumber)
         {
-            if (stageControl == null)
-            {
-                Debug.LogError("StageTransition이 초기화되지 않았습니다!");
-                return;
-            }
-
             switch (keyNumber)
             {
                 case 1:
-                    Debug.Log("1번 키: 첫 번째 스테이지 로드");
-                    stageControl.StartStageTransition(1, false);
+                    Debug.Log("1번 키: 스테이지 클리어 및 다음 스테이지로");
+                    ClearCurrentStageAndNext();
                     break;
-
                 case 2:
-                    Debug.Log("2번 키: 두 번째 스테이지 로드");
-                    stageControl.StartStageTransition(2, false);
+                    Debug.Log("2번 키: 강제 맵 생성 테스트");
+                    ForceTestMapGeneration();
                     break;
-
                 case 3:
-                    Debug.Log("3번 키: 세 번째 스테이지 로드");
-                    stageControl.StartStageTransition(3, false);
+                    Debug.Log("3번 키: 스테이지 진행 상태 초기화");
+                    ResetStageProgress();
                     break;
-
                 case 4:
-                    Debug.Log("4번 키: 네 번째 스테이지 로드");
-                    stageControl.StartStageTransition(4, false);
+                    Debug.Log("4번 키: 2-3으로 강제 이동");
+                    ForceStage(2, 3);
                     break;
-
+                case 5:
+                    Debug.Log("5번 키: 현재 상태 정보 출력");
+                    DebugCurrentState();
+                    break;
                 default:
                     Debug.LogWarning("알 수 없는 키 입력");
                     break;
             }
         }
 
-        private void LoadStage(int stageID)
+        private void LoadStage(int mainStageID, int subStageID = 1)
         {
-            Debug.Log($"LoadStage 호출: 스테이지 {stageID}");
+            Debug.Log($"=== LoadStage 시작: 메인 스테이지 {mainStageID}, 서브 스테이지 {subStageID} ===");
 
             // 기존 맵 정리
             ClearAllMaps();
 
-            // PlayerPrefs에서 메인 스테이지와 서브 스테이지 정보 가져오기
-            int mainStageID = PlayerPrefs.GetInt("SelectedMainStage", 1);
-            int subStageID = PlayerPrefs.GetInt("SelectedSubStage", 1);
+            // PlayerPrefs 업데이트
+            PlayerPrefs.SetInt("SelectedMainStage", mainStageID);
+            PlayerPrefs.SetInt("SelectedSubStage", subStageID);
+            PlayerPrefs.Save();
 
             Debug.Log($"스테이지 정보 - 메인: {mainStageID}, 서브: {subStageID}");
 
             // 스테이지 데이터 리스트가 비어있는지 확인
             if (stageDataList == null || stageDataList.Count == 0)
             {
-                Debug.LogError("스테이지 데이터 리스트가 비어있습니다! Inspector에서 StageData를 할당해주세요.");
+                Debug.LogError("스테이지 데이터 리스트가 비어있습니다!");
+                Debug.LogError("StageManager의 Inspector에서 StageDataList에 StageData 에셋들을 추가해주세요!");
                 return;
             }
 
@@ -242,12 +276,15 @@ namespace YSK
 
             if (currentStage == null)
             {
-                Debug.LogError($"Main Stage ID {mainStageID} not found! 사용 가능한 스테이지: {string.Join(", ", stageDataList.Select(s => s.stageID))}");
+                Debug.LogError($"Main Stage ID {mainStageID} not found!");
+                Debug.LogError($"사용 가능한 스테이지: {string.Join(", ", stageDataList.Select(s => s.stageID))}");
                 return;
             }
 
             Debug.Log($"메인 스테이지 {mainStageID} 데이터 로드 완료, 서브 스테이지 {subStageID} 맵 생성 시작");
             SpawnMaps();
+            
+            Debug.Log($"=== LoadStage 완료: 메인 스테이지 {mainStageID}, 서브 스테이지 {subStageID} ===");
         }
 
         private void SpawnMaps()
@@ -562,18 +599,18 @@ namespace YSK
             if (gameStateManager != null)
             {
                 Debug.Log("StageManager에 GameStateManager 참조 설정 완료");
-
-                // 이벤트 구독
+                
+                // 이벤트 구독 (중복 방지)
+                GameStateManager.OnStageChanged -= OnStageChanged;
+                GameStateManager.OnGameStateChanged -= OnGameStateChanged;
                 GameStateManager.OnStageChanged += OnStageChanged;
                 GameStateManager.OnGameStateChanged += OnGameStateChanged;
+                
+                Debug.Log("StageManager 이벤트 구독 완료 (SetGameStateManager에서)");
             }
             else
             {
                 Debug.LogWarning("StageManager에서 GameStateManager 참조가 null로 설정되었습니다.");
-
-                // 이벤트 구독 해제
-                GameStateManager.OnStageChanged -= OnStageChanged;
-                GameStateManager.OnGameStateChanged -= OnGameStateChanged;
             }
         }
 
@@ -611,6 +648,204 @@ namespace YSK
         public StageTransition GetStageTransition()
         {
             return stageControl;
+        }
+
+        /// <summary>
+        /// 현재 스테이지를 클리어하고 다음 스테이지로 전환합니다.
+        /// </summary>
+        public void ClearCurrentStageAndNext()
+        {
+            int currentMainStage = PlayerPrefs.GetInt("SelectedMainStage", 1);
+            int currentSubStage = PlayerPrefs.GetInt("SelectedSubStage", 1);
+            
+            Debug.Log($"스테이지 클리어: {currentMainStage}-{currentSubStage}");
+            
+            // 다음 스테이지 계산
+            var nextStage = CalculateNextStage(currentMainStage, currentSubStage);
+            
+            if (nextStage.isGameComplete)
+            {
+                Debug.Log("모든 스테이지 클리어! 게임 클리어 처리");
+                OnGameComplete();
+                return;
+            }
+            
+            // 다음 스테이지로 이동
+            LoadStage(nextStage.mainStage, nextStage.subStage);
+            Debug.Log($"다음 스테이지로 전환: {nextStage.mainStage}-{nextStage.subStage}");
+        }
+
+        /// <summary>
+        /// 다음 스테이지 정보를 계산합니다.
+        /// </summary>
+        /// <param name="currentMainStage">현재 메인 스테이지</param>
+        /// <param name="currentSubStage">현재 서브 스테이지</param>
+        /// <returns>다음 스테이지 정보</returns>
+        private (int mainStage, int subStage, bool isGameComplete) CalculateNextStage(int currentMainStage, int currentSubStage)
+        {
+            // 서브 스테이지 최대값 (5개)
+            const int MAX_SUB_STAGES = 5;
+            
+            // 다음 서브 스테이지 계산
+            int nextSubStage = currentSubStage + 1;
+            
+            // 서브 스테이지가 최대값을 넘으면 다음 메인 스테이지로
+            if (nextSubStage > MAX_SUB_STAGES)
+            {
+                int nextMainStage = currentMainStage + 1;
+                
+                // 메인 스테이지 최대값 (4개)
+                const int MAX_MAIN_STAGES = 4;
+                
+                // 메인 스테이지가 최대값을 넘으면 게임 클리어
+                if (nextMainStage > MAX_MAIN_STAGES)
+                {
+                    return (0, 0, true); // 게임 클리어
+                }
+                
+                // 다음 메인 스테이지의 첫 번째 서브 스테이지로
+                return (nextMainStage, 1, false);
+            }
+            else
+            {
+                // 같은 메인 스테이지의 다음 서브 스테이지로
+                return (currentMainStage, nextSubStage, false);
+            }
+        }
+
+        /// <summary>
+        /// 특정 메인 스테이지의 최대 서브 스테이지 수를 반환합니다.
+        /// </summary>
+        private int GetMaxSubStageCount(int mainStageID)
+        {
+            // StageData에서 실제 서브 스테이지 수를 가져오거나, 기본값 5 사용
+            StageData stageData = stageDataList?.Find(data => data.stageID == mainStageID);
+            if (stageData != null && stageData.subStages != null)
+            {
+                return stageData.subStages.Count;
+            }
+            return 5; // 기본값
+        }
+
+        /// <summary>
+        /// 전체 메인 스테이지 수를 반환합니다.
+        /// </summary>
+        private int GetMaxMainStageCount()
+        {
+            return stageDataList != null ? stageDataList.Count : 4; // 기본값
+        }
+
+        /// <summary>
+        /// 게임 클리어 시 호출됩니다.
+        /// </summary>
+        private void OnGameComplete()
+        {
+            Debug.Log("게임 클리어!");
+            
+            // GameStateManager에 게임 클리어 알림
+            if (gameStateManager != null)
+            {
+                gameStateManager.SetGameState(GameState.StageComplete);
+            }
+            
+            // 결과 화면으로 이동
+            if (GameSceneManager.Instance != null)
+            {
+                //GameSceneManager.Instance.LoadResultScene(1000, true); // 예시 점수
+            }
+        }
+
+        /// <summary>
+        /// 스테이지 진행을 테스트하는 메서드입니다.
+        /// </summary>
+        public void TestStageProgression()
+        {
+            Debug.Log("=== 스테이지 진행 테스트 ===");
+            
+            // 1-1부터 시작해서 모든 스테이지 진행 테스트
+            for (int mainStage = 1; mainStage <= 4; mainStage++)
+            {
+                for (int subStage = 1; subStage <= 5; subStage++)
+                {
+                    var nextStage = CalculateNextStage(mainStage, subStage);
+                    
+                    if (nextStage.isGameComplete)
+                    {
+                        Debug.Log($"{mainStage}-{subStage} → 게임 클리어!");
+                        break;
+                    }
+                    else
+                    {
+                        Debug.Log($"{mainStage}-{subStage} → {nextStage.mainStage}-{nextStage.subStage}");
+                    }
+                }
+            }
+            
+            Debug.Log("=== 스테이지 진행 테스트 완료 ===");
+        }
+
+        /// <summary>
+        /// 특정 스테이지로 강제 이동합니다 (테스트용).
+        /// </summary>
+        public void ForceStage(int mainStageID, int subStageID)
+        {
+            Debug.Log($"강제 스테이지 이동: {mainStageID}-{subStageID}");
+            LoadStage(mainStageID, subStageID);
+        }
+
+        /// <summary>
+        /// 스테이지 진행 상태를 초기화합니다 (테스트용).
+        /// </summary>
+        public void ResetStageProgress()
+        {
+            PlayerPrefs.SetInt("SelectedMainStage", 1);
+            PlayerPrefs.SetInt("SelectedSubStage", 1);
+            PlayerPrefs.Save();
+            
+            Debug.Log("스테이지 진행 상태 초기화: 1-1");
+        }
+
+        /// <summary>
+        /// 강제로 맵 생성을 테스트합니다.
+        /// </summary>
+        public void ForceTestMapGeneration()
+        {
+            Debug.Log("=== 강제 맵 생성 테스트 시작 ===");
+            
+            // 1. StageData 할당 확인
+            Debug.Log($"StageDataList 개수: {stageDataList?.Count ?? 0}");
+            if (stageDataList != null)
+            {
+                for (int i = 0; i < stageDataList.Count; i++)
+                {
+                    Debug.Log($"StageData[{i}]: ID={stageDataList[i]?.stageID}, Name={stageDataList[i]?.stageName}");
+                }
+            }
+            
+            // 2. PlayerPrefs 확인
+            int mainStage = PlayerPrefs.GetInt("SelectedMainStage", 1);
+            int subStage = PlayerPrefs.GetInt("SelectedSubStage", 1);
+            Debug.Log($"PlayerPrefs - Main: {mainStage}, Sub: {subStage}");
+            
+            // 3. 강제로 맵 생성
+            LoadStage(mainStage, subStage);
+            
+            Debug.Log("=== 강제 맵 생성 테스트 완료 ===");
+        }
+
+        /// <summary>
+        /// 현재 상태 정보를 출력합니다.
+        /// </summary>
+        private void DebugCurrentState()
+        {
+            Debug.Log("=== 현재 상태 정보 ===");
+            Debug.Log($"StageDataList: {(stageDataList != null ? stageDataList.Count : 0)}개");
+            Debug.Log($"CurrentStage: {(currentStage != null ? currentStage.stageName : "null")}");
+            Debug.Log($"SpawnedMaps: {spawnedMaps.Count}개");
+            Debug.Log($"MovingMaps: {movingMaps.Count}개");
+            Debug.Log($"GameStateManager: {(GameStateManager.Instance != null ? "존재" : "null")}");
+            Debug.Log($"PlayerPrefs - Main: {PlayerPrefs.GetInt("SelectedMainStage", 1)}, Sub: {PlayerPrefs.GetInt("SelectedSubStage", 1)}");
+            Debug.Log("=== 상태 정보 완료 ===");
         }
     }
 }
