@@ -1,3 +1,4 @@
+using LJ2;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ public class CharictorController : MonoBehaviour
 {
     public CharictorData charictorData;
 
-    public CharictorSave charictorSave;
+    public CharictorSave charictorSave = new();
 
     public int level;
     public int Hp;
@@ -18,6 +19,11 @@ public class CharictorController : MonoBehaviour
     public GameObject model;
     public Sprite image;
 
+    private void Start()
+    {
+        // 저장위치에 따른 index 변화 구현 필요
+        SaveManager.Instance.PlayerLoad(charictorSave, 0);
+    }
     private void SetParameter()
     {
         // Data의 값을 그대로 가져옴
