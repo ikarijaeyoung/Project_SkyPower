@@ -24,15 +24,6 @@ namespace JYL
                 bullet[i].originPos = transforms[i].position;
             }
         }
-        void Start()
-        {
-
-        }
-
-        void Update()
-        {
-
-        }
     }
 }
 
