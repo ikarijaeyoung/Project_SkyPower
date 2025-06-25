@@ -18,24 +18,24 @@ namespace JYL
         private int poolIndex = 0;
         private ObjectPool curBulletPool => bulletPools[poolIndex];
 
+        // 스킬
+        // private Parry 1 - 출전하는 서브캐릭 1의 패리스킬
+        // private Parry 2 - 출전하는 서브캐릭 2의 패리스킬
+
         private void Awake()
         {
         }
         private void Update()
         {
+            PlayerHandler();
+            Debug.Log($"{curBulletPool}");
+        }
 
+        private void PlayerHandler()
+        {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                switch (poolIndex)
-                {
-                    case 0:
-                        Fire1();
-                        break;
-                    case 1:
-                        Fire1();
-                        break;
-
-                }
+                Fire1();
             }
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
@@ -45,6 +45,13 @@ namespace JYL
             {
                 poolIndex = 1;
             }
+            if(Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                poolIndex = 2;
+            }
+            PlayerMove();
+            //UseUlt
+            //Parry
         }
 
         private void PlayerMove()
@@ -66,10 +73,14 @@ namespace JYL
                 info.trans.gameObject.SetActive(true);
                 info.trans.position = info.originPos;
                 info.rig.velocity = Vector3.zero;
-                info.rig.AddForce(playerModel.fireSpeed * muzzlePoint.forward, ForceMode.Impulse);
+                info.rig.AddForce(playerModel.fireSpeed * info.trans.forward, ForceMode.Impulse);
             }
         }
-        private void Fire2()
+        private void UseUlt()
+        {
+
+        }
+        private void Parry()
         {
 
         }
