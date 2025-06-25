@@ -13,11 +13,14 @@ namespace YSK
         
         [Header("Stage Management")]
         [SerializeField] private int currentStageID = 1;
-        [SerializeField] private int maxStageID = 10;
+        [SerializeField] private int maxStageID = 4;
         
         [Header("References")]
         [SerializeField] private StageManager stageManager;
         [SerializeField] private StageTransition stageTransition;
+        
+        // 싱글톤 패턴
+        public static GameStateManager Instance { get; private set; }
         
         // 이벤트
         public static event Action<GameState> OnGameStateChanged;
@@ -35,7 +38,17 @@ namespace YSK
         
         private void Awake()
         {
-            InitializeReferences();
+            // 싱글톤 설정
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+                InitializeReferences();
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
         
         private void Start()
@@ -133,22 +146,18 @@ namespace YSK
             SetStageState(StageProgressState.InProgress);
             SetGameState(GameState.Playing);
             
-            // 스테이지 전환 - 게임 시작으로 표시
-            if (stageTransition != null)
+            // PlayerPrefs에서 메인 스테이지와 서브 스테이지 정보 가져오기
+            int mainStageID = PlayerPrefs.GetInt("SelectedMainStage", 1);
+            int subStageID = PlayerPrefs.GetInt("SelectedSubStage", 1);
+            
+            // UI 텍스트 업데이트 - 메인-서브 형태로 표시
+            if (UIFactory.Instance != null)
             {
-                Debug.Log("StageTransition을 통한 게임 시작");
-                stageTransition.StartStageTransition(stageID, true);
+                UIFactory.Instance.UpdateStageText($"{mainStageID}-{subStageID}");
             }
             else
             {
-                Debug.LogWarning("StageTransition이 null입니다!");
-            }
-            
-            // UI 텍스트 업데이트
-            GameSceneManager gameSceneManager = FindObjectOfType<GameSceneManager>();
-            if (gameSceneManager != null)
-            {
-                gameSceneManager.UpdateStageText(stageID);
+                Debug.LogWarning("UIFactory를 찾을 수 없습니다!");
             }
             
             OnStageChanged?.Invoke(stageID);
@@ -351,6 +360,60 @@ namespace YSK
         public void OnPowerUpCollected()
         {
             SetPlayerState(PlayerState.PowerUp);
+        }
+        
+        /// <summary>
+        /// StageManager 참조를 설정합니다.
+        /// </summary>
+        /// <param name="newStageManager">설정할 StageManager 인스턴스</param>
+        public void SetStageManager(StageManager newStageManager)
+        {
+            stageManager = newStageManager;
+            
+            if (stageManager != null)
+            {
+                Debug.Log("GameStateManager에 StageManager 참조 설정 완료");
+            }
+            else
+            {
+                Debug.LogWarning("GameStateManager에서 StageManager 참조가 null로 설정되었습니다.");
+            }
+        }
+        
+        /// <summary>
+        /// 현재 설정된 StageManager 참조를 반환합니다.
+        /// </summary>
+        /// <returns>StageManager 인스턴스 또는 null</returns>
+        public StageManager GetStageManager()
+        {
+            return stageManager;
+        }
+        
+        /// <summary>
+        /// StageTransition 참조를 설정합니다.
+        /// </summary>
+        /// <param name="newStageTransition">설정할 StageTransition 인스턴스</param>
+        public void SetStageTransition(StageTransition newStageTransition)
+        {
+            stageTransition = newStageTransition;
+            
+            if (stageTransition != null)
+            {
+                Debug.Log("GameStateManager에 StageTransition 참조 설정 완료");
+            }
+            else
+            {
+                Debug.LogWarning("GameStateManager에서 StageTransition 참조가 null로 설정되었습니다.");
+            }
+        }
+        
+        /// <summary>
+        /// 현재 설정된 StageTransition 참조를 반환합니다.
+        /// </summary>
+        /// <returns>StageTransition 인스턴스 또는 null</returns>
+        public StageTransition GetStageTransition()
+        {
+            return stageTransition;
         }
         
         #endregion
