@@ -12,6 +12,16 @@ namespace KYG_skyPower
         {
             GameManagerSO.Instance.Init(); // 싱글톤 패턴을 통해 초기화
         }
+
+        private void Update()
+        {
+            if (Input.GetKeyUp(KeyCode.Escape))
+            {
+                if (GameManagerSO.Instance.isGamePaused)
+                    GameManagerSO.Instance.ResumeGame();
+                else GameManagerSO.Instance.PauseGame();
+            }
+        }
     }
 }
 

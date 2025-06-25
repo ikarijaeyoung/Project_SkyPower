@@ -26,15 +26,20 @@ namespace KYG_skyPower
         [SerializeField] private int defaultPlayerLives = 5; // 초기화 값 에디터에서 조정 가능
         [SerializeField] public int playerLives; // 플레이어 체력
         public bool isGameOver; // 게임 오버 여부
+        public bool isGamePaused;
 
+        [Header("Game Events")]
         public UnityEvent onGameOver;
         public UnityEvent<int> onScoreChanged; // 이벤트 기반 확장 코드
+        public UnityEvent onPause;
+        public UnityEvent onResume;
 
         public void Init() // 게임 초기화
         {
             score = 0;
             playerLives = defaultPlayerLives; // default값
             isGameOver = false;
+            isGamePaused = false;
             Debug.Log("Game Initialized"); // 디버그용 코드
         }
 
@@ -53,7 +58,29 @@ namespace KYG_skyPower
                 onGameOver?.Invoke();
             }
 
-        }       
+        }
+
+        public void PauseGame() // 게임 일시정지
+        {
+            if (!isGamePaused)
+            {
+                isGamePaused = true;
+                Time.timeScale = 0f;
+                onPause?.Invoke();
+                Debug.Log("Game Paused");
+            }
+        }
+
+        public void ResumeGame() // 게임 재개
+        {
+            if (isGamePaused)
+            {
+                isGamePaused = false;
+                Time.timeScale = 1f;
+                onResume?.Invoke();
+                Debug.Log("Game Resumed");
+            }
+        }
 
     }
 }
