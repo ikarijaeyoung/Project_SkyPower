@@ -20,6 +20,5 @@ namespace JYL
         {
             gameObject.SetActive(false);
         }
-
     }
 }
