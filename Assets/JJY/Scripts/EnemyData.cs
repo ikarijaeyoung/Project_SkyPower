@@ -6,8 +6,8 @@ using UnityEngine;
 public class EnemyData : ScriptableObject
 {
     [Header("Enemy Stats")]
-    public string EnemyName;
     public int maxHP; // 몬스터 종류에 따라 최대 체력이 다른가?
+    public Sprite enemyIcon;
 
     // Binary Tree Pattern을 여기서 어떻게 사용하나?
 
