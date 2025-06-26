@@ -11,6 +11,8 @@ namespace YSK
     {
         [Header("StageData")]
         [SerializeField] private List<StageData> stageDataList; // 모든 스테이지의 데이터
+        [SerializeField] private int maxMainStages = 4; // 메인 스테이지 최대값
+        [SerializeField] private int maxSubStages = 5; // 서브 스테이지 최대값
         private StageData currentStage;
         private List<GameObject> MapPrefabs;
 
@@ -21,10 +23,12 @@ namespace YSK
         [SerializeField] private float mapLength = 20;
 
         [Header("Transition Settings")]
+        [SerializeField] private bool enableTransition = true;
+        [SerializeField] private bool useFadeTransition = true;
         [SerializeField] private CanvasGroup fadePanel;
         [SerializeField] private float fadeDuration = 1f;
         [SerializeField] private AnimationCurve fadeCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-        [SerializeField] private Camera mainCamera;
+        [SerializeField] private Color fadeColor = Color.black;
 
         [Header("References")]
         //[SerializeField] private GameStateManager gameStateManager;
@@ -75,7 +79,6 @@ namespace YSK
         private void InitializeComponents()
         {
             FindTransformPoints();
-            FindMainCamera();
             InitializeFadePanel();
             //FindGameStateManager();
         }
@@ -105,25 +108,17 @@ namespace YSK
         }
 
         /// <summary>
-        /// MainCamera를 찾습니다.
-        /// </summary>
-        private void FindMainCamera()
-        {
-            if (mainCamera == null)
-            {
-                mainCamera = Camera.main;
-                if (mainCamera == null)
-                {
-                    Debug.LogError("Main Camera를 찾을 수 없습니다!");
-                }
-            }
-        }
-
-        /// <summary>
         /// 페이드 패널을 초기화합니다.
         /// </summary>
         private void InitializeFadePanel()
         {
+            // 전환 기능이 비활성화되어 있으면 페이드 패널을 생성하지 않음
+            if (!enableTransition || !useFadeTransition)
+            {
+                Debug.Log("전환 기능이 비활성화되어 페이드 패널을 생성하지 않습니다.");
+                return;
+            }
+            
             if (fadePanel == null)
             {
                 CreateFadePanel();
@@ -155,7 +150,7 @@ namespace YSK
             fadeObj.transform.SetParent(canvas.transform, false);
             
             Image fadeImage = fadeObj.AddComponent<Image>();
-            fadeImage.color = Color.black;
+            fadeImage.color = fadeColor;
             
             RectTransform rectTransform = fadeObj.GetComponent<RectTransform>();
             rectTransform.anchorMin = Vector2.zero;
@@ -447,6 +442,14 @@ namespace YSK
         {
             Debug.Log($"StageManager.StartStageTransition 호출: 스테이지 {newStageID}, 게임시작: {isGameStart}");
             
+            // 전환 기능이 비활성화되어 있으면 즉시 전환
+            if (!enableTransition)
+            {
+                Debug.Log("전환 기능이 비활성화되어 즉시 전환합니다.");
+                ChangeStage(newStageID);
+                return;
+            }
+            
             if (!isTransitioning)
             {
                 Debug.Log("스테이지 전환 코루틴 시작");
@@ -473,66 +476,37 @@ namespace YSK
             }
             else
             {
-                Debug.Log("스테이지 전환: 페이드 효과 사용");
-                // 페이드 아웃
-                yield return StartCoroutine(FadeOut());
-                
-                // 스테이지 전환
-                ChangeStage(newStageID);
-                
-                // 페이드 인
-                yield return StartCoroutine(FadeIn());
+                if (useFadeTransition)
+                {
+                    Debug.Log("스테이지 전환: 페이드 효과 사용");
+                    // 페이드 아웃
+                    yield return StartCoroutine(FadeOut());
+                    
+                    // 스테이지 전환
+                    ChangeStage(newStageID);
+                    
+                    // 페이드 인
+                    yield return StartCoroutine(FadeIn());
+                }
+                else
+                {
+                    Debug.Log("스테이지 전환: 페이드 효과 없이 즉시 전환");
+                    ChangeStage(newStageID);
+                }
             }
             
             isTransitioning = false;
             Debug.Log("TransitionCoroutine 완료");
         }
         
-        /// <summary>
-        /// 카메라 이동을 이용한 스테이지 전환
-        /// </summary>
-        public IEnumerator CameraTransitionCoroutine(int newStageID)
-        {
-            isTransitioning = true;
-            
-            Vector3 originalPos = mainCamera.transform.position;
-            Vector3 upPos = originalPos + Vector3.up * 15f;
-            
-            // 1. 카메라를 위로 이동하면서 페이드 아웃
-            yield return StartCoroutine(MoveCameraWithFade(originalPos, upPos, true));
-            
-            // 2. 스테이지 전환
-            ChangeStage(newStageID);
-            
-            // 3. 카메라를 새 위치로 이동하면서 페이드 인
-            Vector3 newPos = originalPos; // 필요에 따라 새 위치 설정
-            yield return StartCoroutine(MoveCameraWithFade(upPos, newPos, false));
-            
-            isTransitioning = false;
-        }
-        
-        /// <summary>
-        /// 점진적 맵 전환 (기존 맵이 사라지면서 새 맵이 나타남)
-        /// </summary>
-        public IEnumerator GradualTransitionCoroutine(int newStageID)
-        {
-            isTransitioning = true;
-            
-            // 새 맵을 먼저 생성 (화면 밖에)
-            StageData newStage = GetStageData(newStageID);
-            if (newStage != null)
-            {
-                yield return StartCoroutine(CreateNewMapsOffscreen(newStage));
-            }
-            
-            // 기존 맵들을 점진적으로 제거
-            yield return StartCoroutine(RemoveOldMapsGradually());
-            
-            isTransitioning = false;
-        }
-        
         private IEnumerator FadeOut()
         {
+            if (fadePanel == null)
+            {
+                Debug.LogWarning("페이드 패널이 null입니다. 즉시 전환합니다.");
+                yield break;
+            }
+            
             fadePanel.gameObject.SetActive(true);
             float elapsed = 0f;
             
@@ -549,6 +523,12 @@ namespace YSK
         
         private IEnumerator FadeIn()
         {
+            if (fadePanel == null)
+            {
+                Debug.LogWarning("페이드 패널이 null입니다.");
+                yield break;
+            }
+            
             float elapsed = 0f;
             
             while (elapsed < fadeDuration)
@@ -561,57 +541,6 @@ namespace YSK
             
             fadePanel.alpha = 0f;
             fadePanel.gameObject.SetActive(false);
-        }
-        
-        private IEnumerator MoveCameraWithFade(Vector3 fromPos, Vector3 toPos, bool fadeOut)
-        {
-            float elapsed = 0f;
-            
-            while (elapsed < fadeDuration)
-            {
-                elapsed += Time.deltaTime;
-                float t = elapsed / fadeDuration;
-                
-                // 카메라 이동
-                mainCamera.transform.position = Vector3.Lerp(fromPos, toPos, fadeCurve.Evaluate(t));
-                
-                // 페이드 효과
-                if (fadeOut)
-                {
-                    fadePanel.alpha = fadeCurve.Evaluate(t);
-                }
-                else
-                {
-                    fadePanel.alpha = 1f - fadeCurve.Evaluate(t);
-                }
-                
-                yield return null;
-            }
-            
-            mainCamera.transform.position = toPos;
-            
-            if (fadeOut)
-            {
-                fadePanel.alpha = 1f;
-            }
-            else
-            {
-                fadePanel.alpha = 0f;
-            }
-        }
-        
-        private IEnumerator CreateNewMapsOffscreen(StageData newStage)
-        {
-            // 새 맵을 화면 밖에 생성하는 로직
-            // 이 부분은 필요에 따라 구현
-            yield return null;
-        }
-        
-        private IEnumerator RemoveOldMapsGradually()
-        {
-            // 기존 맵을 점진적으로 제거하는 로직
-            // 이 부분은 필요에 따라 구현
-            yield return null;
         }
         
         /// <summary>
@@ -632,6 +561,7 @@ namespace YSK
         /// </summary>
         public void SetFadeColor(Color color)
         {
+            fadeColor = color;
             if (fadePanel != null)
             {
                 Image fadeImage = fadePanel.GetComponent<Image>();
@@ -689,22 +619,16 @@ namespace YSK
         /// <returns>다음 스테이지 정보</returns>
         private (int mainStage, int subStage, bool isGameComplete) CalculateNextStage(int currentMainStage, int currentSubStage)
         {
-            // 서브 스테이지 최대값 (5개)
-            const int MAX_SUB_STAGES = 5;
-            
             // 다음 서브 스테이지 계산
             int nextSubStage = currentSubStage + 1;
             
             // 서브 스테이지가 최대값을 넘으면 다음 메인 스테이지로
-            if (nextSubStage > MAX_SUB_STAGES)
+            if (nextSubStage > maxSubStages)
             {
                 int nextMainStage = currentMainStage + 1;
                 
-                // 메인 스테이지 최대값 (4개)
-                const int MAX_MAIN_STAGES = 4;
-                
                 // 메인 스테이지가 최대값을 넘으면 게임 클리어
-                if (nextMainStage > MAX_MAIN_STAGES)
+                if (nextMainStage > maxMainStages)
                 {
                     return (0, 0, true); // 게임 클리어
                 }
@@ -801,6 +725,7 @@ namespace YSK
             Debug.Log($"CurrentStage: {(currentStage != null ? currentStage.stageName : "null")}");
             Debug.Log($"SpawnedMaps: {spawnedMaps.Count}개");
             Debug.Log($"MovingMaps: {movingMaps.Count}개");
+            Debug.Log($"MaxMainStages: {maxMainStages}, MaxSubStages: {maxSubStages}");
             //Debug.Log($"GameStateManager: {(GameStateManager.Instance != null ? "존재" : "null")}");
             Debug.Log($"PlayerPrefs - Main: {PlayerPrefs.GetInt("SelectedMainStage", 1)}, Sub: {PlayerPrefs.GetInt("SelectedSubStage", 1)}");
             Debug.Log("=== 현재 상태 정보 완료 ===");
