@@ -25,15 +25,6 @@ namespace JYL
                 compDict.TryAdd($"{comp.gameObject.name}_{comp.GetType().Name}",comp);
             }
         }
-        void Start()
-        {
-
-        }
-
-        void Update()
-        {
-
-        }
 
         // string으로 특정 UI 게임오브젝트 찾기
         public GameObject GetUI(in string name)
@@ -69,7 +60,9 @@ namespace JYL
         public PointerHandler GetEvent(in string name)
         {
             GameObject go = GetUI(name);
-            return gameObject.GetOrAddComponent<PointerHandler>();
+            PointerHandler temp = go.GetOrAddComponent<PointerHandler>();
+
+            return temp;
         }
     }
 }
