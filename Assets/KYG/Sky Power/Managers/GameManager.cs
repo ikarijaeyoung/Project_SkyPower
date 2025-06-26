@@ -27,20 +27,18 @@ namespace KYG_skyPower
     {
         public static GameManager Instance { get; private set; }
 
-        //[Header("게임 상태")]
+        public UnityEvent onGameOver, onPause, onResume, onGameClear;
 
-        public int score { get; private set; } // 현재 게임 스코어
+        
         public bool isGameOver { get; private set; } // 게임 오버
         public bool isPaused { get; private set; } // 게임 일시 정지
+
+        public bool isGameCleared { get; private set; } // 게임 클리어
 
         //[SerializeField] private int defaultPlayerHP = 5;
         //public int playerHp { get; private set; } // 플레이어에 붙을 수도 있지만 나중에 추가 될지 몰라 주석 처리
 
-        [Header("이벤트")]
-        public UnityEvent onGameOver; // 게임 오버 시 호출
-        public UnityEvent<int> onScoreChanged; // 점수 변경 시 호출(파라미터: 변경된 점수)
-        public UnityEvent onPause;  // 일시정지 시 호출
-        public UnityEvent onResume;  // 일시정지 해제 시 호출
+
 
         private void Awake() // 싱글톤 패턴
         {
@@ -52,32 +50,27 @@ namespace KYG_skyPower
 
             Instance = this;
             DontDestroyOnLoad(gameObject); // 게임 오브젝트 파괴되지 않게 제한
-            Init(); // 게임 상태 초기화
+
         }
 
 
-        public void Init()
-        {
-            score = 0;
-            isGameOver = false;
-            isPaused = false;
-            Time.timeScale = 1f; // 다시 시간 흐르게
-            //playerHp = defaultPlayerHp;
-        }
-
-        public void AddScore(int value) // 점수 추가
-        {
-            if (isGameOver) return; // 게임오버 상태에서 점수 변동 X
-            score += value;
-            onScoreChanged?.Invoke(score); // UI, 이펙트 등 이벤트와 연동 가능
-        }
 
         public void SetGameOver()
         {
+            if (isGameOver) return;
             isGameOver = true; // 게임 오버가 true면
             Time.timeScale = 0f; // 시간 정지 기능
             onGameOver?.Invoke();
-            Debug.Log("게임 오버");            
+            Debug.Log("게임 오버");
+        }
+
+        public void SetGameClear()
+        {
+            if (isGameCleared || isGameOver) return;
+            isGameCleared = true;
+            Time.timeScale = 0f;
+            onGameClear?.Invoke();
+            Debug.Log("게임 클리어");
         }
 
         public void PausedGame()
@@ -85,7 +78,7 @@ namespace KYG_skyPower
             if (isPaused || isGameOver) return;
             isPaused = true;
             Time.timeScale = 0f; // 전체 게임 정지
-            onGameOver?.Invoke();
+            onPause?.Invoke();
             Debug.Log("일시 정지");
         }
 
@@ -94,7 +87,7 @@ namespace KYG_skyPower
             if (!isPaused || isGameOver) return;
             isPaused = false;
             Time.timeScale = 1f; // 게임 시간 정상화
-            onGameOver?.Invoke();
+            onResume?.Invoke();
             Debug.Log("게임 재개");
         }
 
