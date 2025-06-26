@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CharictorController : MonoBehaviour
 {
-    public CharictorData charictorData;
+    public CharictorDataTest charictorData;
 
     public CharictorSave charictorSave = new();
 
@@ -27,9 +27,9 @@ public class CharictorController : MonoBehaviour
     private void SetParameter()
     {
         // Data의 값을 그대로 가져옴
-        bulletPrefab = charictorData.bulletPrefab;
-        model = charictorData.model;
-        image = charictorData.image;
+        // bulletPrefab = charictorData.bulletPrefab;
+        // model = charictorData.model;
+        // image = charictorData.image;
 
         // Save의 값을 그대로 가져옴
         level = charictorSave.level;

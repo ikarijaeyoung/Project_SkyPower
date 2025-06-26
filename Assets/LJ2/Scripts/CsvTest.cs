@@ -28,6 +28,7 @@ public class CsvTest : MonoBehaviour
             charictorData.attackPower = int.Parse(table.GetData(i, 4));
             charictorData.attackSpeed = int.Parse(table.GetData(i, 5));
             charictorData.moveSpeed = int.Parse(table.GetData(i, 6));
+            charictorData.bulletPrefab = (GameObject)AssetDatabase.LoadAssetAtPath($"Assets/LJ2/Prefabs/CsvBullet.Prefab", typeof(GameObject));
 
             string assetPath = $"Assets/LJ2/Scripts/Charictor/{charictorData.name}.asset";
             AssetDatabase.CreateAsset(charictorData, assetPath);

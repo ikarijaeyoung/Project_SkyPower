@@ -12,4 +12,5 @@ public class CharictorDataTest : ScriptableObject
     public int attackPower;
     public int attackSpeed;
     public int moveSpeed;
+    public GameObject bulletPrefab;
 }

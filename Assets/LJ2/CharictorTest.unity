@@ -342,6 +342,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1820923139}
   - component: {fileID: 1820923138}
+  - component: {fileID: 1820923140}
   m_Layer: 0
   m_Name: CsvTester
   m_TagString: Untagged
@@ -380,6 +381,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1820923140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820923137}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ee92e7b70b5ec1479c4391209ace354, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  table:
+    _filePath: LJ2/Scripts/IO/Csv/oneCharictorTest.csv
+    <SplitSymbol>k__BackingField: 44
+  secondTable:
+    _filePath: LJ2/Scripts/IO/Csv/SecondTest.csv
+    <SplitSymbol>k__BackingField: 44
+  charictorData: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
