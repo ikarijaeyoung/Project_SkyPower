@@ -1,3 +1,4 @@
+using IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,4 +14,6 @@ public class CharictorDataTest : ScriptableObject
     public int attackSpeed;
     public int moveSpeed;
     public GameObject bulletPrefab;
+
+    public CsvTable dataTable;
 }

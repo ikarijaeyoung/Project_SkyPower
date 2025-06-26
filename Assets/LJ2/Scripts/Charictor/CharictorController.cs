@@ -27,13 +27,15 @@ public class CharictorController : MonoBehaviour
     private void SetParameter()
     {
         // Data의 값을 그대로 가져옴
-        // bulletPrefab = charictorData.bulletPrefab;
+        bulletPrefab = charictorData.bulletPrefab;
         // model = charictorData.model;
         // image = charictorData.image;
 
         // Save의 값을 그대로 가져옴
         level = charictorSave.level;
         exp = charictorSave.exp;
+
+
     }
 
 }
