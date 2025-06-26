@@ -36,10 +36,6 @@ namespace YSK
             [Tooltip("게임 내에서 표시될 씬 이름")]
             public string displayName;
             
-            [Header("Scene Type")]
-            [Tooltip("씬의 카테고리 분류")]
-            public SceneCategory sceneCategory = SceneCategory.Game;
-            
             [Header("Scene Settings")]
             [Tooltip("Additive 로딩 여부")]
             public bool isAdditive = false;
@@ -56,118 +52,18 @@ namespace YSK
             public string description = "";
         }
         
-        public enum SceneCategory
-        {
-            Bootstrap,
-            Menu,
-            Game,
-            UI,
-            Test
-        }
-        
-        [System.Serializable]
-        public class CategoryDefaults
-        {
-            public bool isAdditive;
-            public bool requiresLoadingScreen;
-            public float minLoadingTime;
-            public string description;
-        }
-        
-        [Header("Category Default Settings")]
-        public CategoryDefaults bootstrapDefaults = new CategoryDefaults
-        {
-            isAdditive = false,
-            requiresLoadingScreen = false,
-            minLoadingTime = 0.5f,
-            description = "게임 초기화 씬"
-        };
-        
-        public CategoryDefaults menuDefaults = new CategoryDefaults
-        {
-            isAdditive = false,
-            requiresLoadingScreen = true,
-            minLoadingTime = 1.0f,
-            description = "메뉴 관련 씬"
-        };
-        
-        public CategoryDefaults gameDefaults = new CategoryDefaults
-        {
-            isAdditive = false,
-            requiresLoadingScreen = true,
-            minLoadingTime = 1.5f,
-            description = "게임플레이 씬"
-        };
-        
-        public CategoryDefaults uiDefaults = new CategoryDefaults
-        {
-            isAdditive = false,
-            requiresLoadingScreen = false,
-            minLoadingTime = 0.3f,
-            description = "UI 전용 씬"
-        };
-        
-        public CategoryDefaults testDefaults = new CategoryDefaults
-        {
-            isAdditive = false,
-            requiresLoadingScreen = false,
-            minLoadingTime = 0.1f,
-            description = "테스트용 씬"
-        };
-        
         [Header("Scene List")]
         public List<SceneInfo> scenes = new List<SceneInfo>();
-        
-        // 카테고리별 기본 설정을 가져오는 메서드
-        public CategoryDefaults GetCategoryDefaults(SceneCategory category)
-        {
-            switch (category)
-            {
-                case SceneCategory.Bootstrap: return bootstrapDefaults;
-                case SceneCategory.Menu: return menuDefaults;
-                case SceneCategory.Game: return gameDefaults;
-                case SceneCategory.UI: return uiDefaults;
-                case SceneCategory.Test: return testDefaults;
-                default: return gameDefaults;
-            }
-        }
-        
-        // 씬 정보를 가져올 때 카테고리 기본값 적용
-        public SceneInfo GetSceneInfoWithDefaults(string sceneName)
-        {
-            SceneInfo sceneInfo = scenes.Find(s => s.sceneName == sceneName);
-            if (sceneInfo != null)
-            {
-                ApplyCategoryDefaults(sceneInfo);
-            }
-            return sceneInfo;
-        }
-        
-        private void ApplyCategoryDefaults(SceneInfo sceneInfo)
-        {
-            CategoryDefaults defaults = GetCategoryDefaults(sceneInfo.sceneCategory);
-            
-            // 다른 설정들도 필요에 따라 기본값 적용
-            if (sceneInfo.minLoadingTime <= 0)
-            {
-                sceneInfo.minLoadingTime = defaults.minLoadingTime;
-            }
-        }
         
         // 기본 메서드들
         public SceneInfo GetSceneInfo(string sceneName)
         {
-            return GetSceneInfoWithDefaults(sceneName);
+            return scenes.Find(s => s.sceneName == sceneName);
         }
         
         public bool HasScene(string sceneName)
         {
             return scenes.Exists(s => s.sceneName == sceneName);
-        }
-        
-        public List<SceneInfo> GetScenesByCategory(SceneCategory category)
-        {
-            return scenes.FindAll(s => s.sceneCategory == category);
         }
         
         public void AddScene(SceneInfo newScene)

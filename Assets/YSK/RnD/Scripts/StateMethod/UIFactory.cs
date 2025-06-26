@@ -190,7 +190,7 @@ namespace YSK
                     new Vector2(0.15f + (i-1) * 0.23f, 0.4f), 
                     () => {
                         Debug.Log($"스테이지 {stageID} 버튼 클릭됨");
-                        LoadScene($"BaseStage");
+                        LoadScene("RnDBaseStageScene");
                     });
             }
             
@@ -369,7 +369,7 @@ namespace YSK
             int currentStageID = GameStateManager.Instance != null ? GameStateManager.Instance.CurrentStageID : 1;
             CreateButton(canvasObj, "RetryButton", "다시하기", new Vector2(0.3f, 0.3f), () => {
                 Debug.Log("다시하기 버튼 클릭됨");
-                LoadScene($"BaseStage");
+                LoadScene("RnDBaseStageScene");
             });
             
             CreateButton(canvasObj, "MainMenuButton", "메인메뉴", new Vector2(0.7f, 0.3f), () => {
@@ -442,7 +442,7 @@ namespace YSK
                     new Vector2(0.2f + (i-1) * 0.3f, 0.4f), 
                     () => {
                         Debug.Log($"캐릭터 {charID} 선택됨");
-                        LoadScene("MainStage");
+                        LoadScene("RnDBaseStageScene");
                     });
             }
             
@@ -522,7 +522,7 @@ namespace YSK
                             // 선택된 메인 스테이지 정보 저장
                             PlayerPrefs.SetInt("SelectedMainStage", stageID);
                             PlayerPrefs.Save();
-                            LoadScene("SubStage");
+                            LoadScene("RnDSubStageSelectScene");
                         }
                         else
                         {
@@ -606,7 +606,9 @@ namespace YSK
                         {
                             // 선택된 메인 스테이지 정보 가져오기 (기본값: 1)
                             int selectedMainStage = PlayerPrefs.GetInt("SelectedMainStage", 1);
-                            LoadScene($"BaseStage");
+                            PlayerPrefs.SetInt("SelectedSubStage", stageID);
+                            PlayerPrefs.Save();
+                            LoadScene("RnDBaseStageScene");
                         }
                         else
                         {

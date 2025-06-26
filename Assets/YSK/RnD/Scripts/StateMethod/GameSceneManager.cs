@@ -26,15 +26,14 @@ namespace YSK
         
         [Header("Loading Screen UI")]
         [SerializeField] private GameObject customLoadingScreenPrefab;
-        [SerializeField] private Color loadingBackgroundColor = Color.black;
+        [SerializeField] private Color loadingBackgroundColor = new Color(0.1f, 0.1f, 0.3f, 0.9f);
         [SerializeField] private Color loadingTextColor = Color.white;
-        [SerializeField] private Color progressBarColor = Color.blue;
-        [SerializeField] private string loadingText = "Loading...";
+        [SerializeField] private Color progressBarColor = new Color(0.2f, 0.6f, 1f, 1f);
+        [SerializeField] private string loadingText = "로딩 중...";
         [SerializeField] private bool showProgressPercentage = true;
         [SerializeField] private bool showProgressBar = true;
         
-        [Header("Debug Settings")]
-        [SerializeField] private bool enableDebugLogs = true;
+ 
         
         /// <summary>
         /// 씬 타입 열거형
@@ -85,15 +84,8 @@ namespace YSK
                 return;
             }
             
-            // Bootstrap 씬에서 시작하는 경우
-            if (CurrentSceneName == "RndBootstrapScene")
-            {
-                Debug.Log("Bootstrap 씬에서 시작");
-                EnsureEventSystemExists();
-                StartCoroutine(LoadMainMenuAdditive());
-            }
             // 씬 시작 시 로딩 화면 표시 옵션
-            else if (showLoadingOnSceneStart && enableLoadingScreen)
+            if (showLoadingOnSceneStart && enableLoadingScreen)
             {
                 ShowLoadingScreen();
                 StartCoroutine(HideLoadingScreenAfterDelay(0.5f));
@@ -150,16 +142,48 @@ namespace YSK
         /// </summary>
         public void ShowLoadingScreen()
         {
-            if (!enableLoadingScreen || loadingScreen == null) return;
+            Debug.Log("=== ShowLoadingScreen 호출 ===");
             
+            if (!enableLoadingScreen)
+            {
+                Debug.Log("로딩 화면이 비활성화되어 있습니다.");
+                return;
+            }
+            
+            if (loadingScreen == null)
+            {
+                Debug.LogError("로딩 화면이 생성되지 않았습니다!");
+                return;
+            }
+            
+            Debug.Log("로딩 화면 활성화");
             loadingScreen.SetActive(true);
+            
             if (loadingCanvasGroup != null)
             {
                 loadingCanvasGroup.alpha = 1f;
+                Debug.Log($"CanvasGroup 알파값 설정: {loadingCanvasGroup.alpha}");
             }
-            if (progressBar != null) progressBar.value = 0f;
-            if (progressText != null) progressText.text = $"{loadingText} 0%";
-            if (loadingTextComponent != null) loadingTextComponent.text = loadingText;
+            
+            if (progressBar != null)
+            {
+                progressBar.value = 0f;
+                Debug.Log("프로그레스바 초기화");
+            }
+            
+            if (progressText != null)
+            {
+                progressText.text = $"{loadingText} 0%";
+                Debug.Log($"프로그레스 텍스트 설정: {progressText.text}");
+            }
+            
+            if (loadingTextComponent != null)
+            {
+                loadingTextComponent.text = loadingText;
+                Debug.Log($"로딩 텍스트 설정: {loadingTextComponent.text}");
+            }
+            
+            Debug.Log("=== ShowLoadingScreen 완료 ===");
         }
         
         /// <summary>
@@ -180,10 +204,16 @@ namespace YSK
             progress = Mathf.Clamp01(progress);
             OnLoadingProgressChanged?.Invoke(progress);
             
-            if (progressBar != null && showProgressBar) progressBar.value = progress;
-            if (progressText != null && showProgressPercentage) 
+            if (progressBar != null && showProgressBar)
+            {
+                progressBar.value = progress;
+                Debug.Log($"프로그레스바 업데이트: {progress:P0}");
+            }
+            
+            if (progressText != null && showProgressPercentage)
             {
                 progressText.text = $"{loadingText} {Mathf.RoundToInt(progress * 100)}%";
+                Debug.Log($"프로그레스 텍스트 업데이트: {progressText.text}");
             }
         }
         
@@ -195,7 +225,6 @@ namespace YSK
         public void LoadEndlessStage() => LoadGameScene("RnDEndlessStageScene");
         public void LoadStore() => LoadGameScene("RnDStoreScene");
         public void LoadParty() => LoadGameScene("RnDPartyScene");
-        public void LoadBootstrap() => LoadGameScene("RndBootstrapScene");
         public void LoadTestScene() => LoadGameScene("RnDBaseStageTestScene");
         public void ReloadCurrentScene() => LoadGameScene(CurrentSceneName);
         public void QuitGame() => Application.Quit();
@@ -206,6 +235,7 @@ namespace YSK
         
         private void InitializeSceneManager()
         {
+            EnsureEventSystemExists();
             CreateLoadingScreen();
             SceneManager.sceneLoaded += OnSceneLoaded;
             SceneManager.sceneUnloaded += OnSceneUnloaded;
@@ -231,8 +261,11 @@ namespace YSK
         {
             if (IsLoading || string.IsNullOrEmpty(sceneName) || !DoesSceneExist(sceneName))
             {
+                Debug.LogWarning($"씬 로드 조건 불만족: IsLoading={IsLoading}, sceneName={sceneName}, exists={DoesSceneExist(sceneName)}");
                 yield break;
             }
+            
+            Debug.Log($"=== 씬 로드 시작: {sceneName} ===");
             
             IsLoading = true;
             OnSceneLoadStarted?.Invoke(sceneName);
@@ -242,13 +275,20 @@ namespace YSK
             bool showLoadingScreen = (sceneInfo?.requiresLoadingScreen ?? true) && enableLoadingScreen;
             float sceneMinLoadingTime = sceneInfo?.minLoadingTime ?? minLoadingTime;
             
+            Debug.Log($"씬 정보: showLoadingScreen={showLoadingScreen}, minLoadingTime={sceneMinLoadingTime}");
+            
             if (showLoadingScreen)
             {
                 ShowLoadingScreen();
             }
             
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-            if (asyncLoad == null) yield break;
+            if (asyncLoad == null)
+            {
+                Debug.LogError($"씬 '{sceneName}' 로드에 실패했습니다!");
+                IsLoading = false;
+                yield break;
+            }
             
             asyncLoad.allowSceneActivation = false;
             
@@ -273,6 +313,8 @@ namespace YSK
             
             IsLoading = false;
             OnSceneLoadCompleted?.Invoke(sceneName);
+            
+            Debug.Log($"=== 씬 로드 완료: {sceneName} ===");
         }
         
         private IEnumerator EnsureMinimumLoadingTime(float loadingTime)
@@ -315,9 +357,12 @@ namespace YSK
         
         private void CreateLoadingScreen()
         {
+            Debug.Log("=== 로딩 화면 생성 시작 ===");
+            
             // 커스텀 로딩 화면 프리팹이 있으면 사용
             if (customLoadingScreenPrefab != null)
             {
+                Debug.Log("커스텀 로딩 화면 프리팹 사용");
                 loadingScreen = Instantiate(customLoadingScreenPrefab);
                 Canvas canvas = loadingScreen.GetComponent<Canvas>();
                 if (canvas != null)
@@ -331,8 +376,11 @@ namespace YSK
                 progressText = loadingScreen.GetComponentInChildren<TextMeshProUGUI>();
                 loadingCanvasGroup = loadingScreen.GetComponent<CanvasGroup>();
                 
+                Debug.Log("커스텀 로딩 화면 생성 완료");
                 return;
             }
+            
+            Debug.Log("기본 로딩 화면 생성");
             
             // 기본 로딩 화면 생성
             GameObject canvasObj = new GameObject("LoadingCanvas");
@@ -343,6 +391,8 @@ namespace YSK
             canvasObj.AddComponent<GraphicRaycaster>();
             DontDestroyOnLoad(canvasObj);
             
+            Debug.Log($"Canvas 생성 완료: {canvasObj.name}");
+            
             GameObject loadingObj = new GameObject("LoadingScreen");
             loadingObj.transform.SetParent(canvasObj.transform, false);
             
@@ -351,6 +401,7 @@ namespace YSK
             
             Image bgImage = loadingObj.AddComponent<Image>();
             bgImage.color = loadingBackgroundColor;
+            Debug.Log($"배경 이미지 색상 설정: {loadingBackgroundColor}");
             
             RectTransform bgRect = loadingObj.GetComponent<RectTransform>();
             bgRect.anchorMin = Vector2.zero;
@@ -374,9 +425,12 @@ namespace YSK
             loadingTextRect.offsetMin = Vector2.zero;
             loadingTextRect.offsetMax = Vector2.zero;
             
+            Debug.Log($"로딩 텍스트 생성 완료: {loadingText}");
+            
             // Progress Bar (옵션)
             if (showProgressBar)
             {
+                Debug.Log("프로그레스바 생성");
                 GameObject progressObj = new GameObject("ProgressBar");
                 progressObj.transform.SetParent(loadingObj.transform, false);
                 progressBar = progressObj.AddComponent<Slider>();
@@ -411,11 +465,14 @@ namespace YSK
                 sliderRect.anchorMax = new Vector2(0.8f, 0.5f);
                 sliderRect.offsetMin = Vector2.zero;
                 sliderRect.offsetMax = Vector2.zero;
+                
+                Debug.Log("프로그레스바 생성 완료");
             }
             
             // Progress Text (옵션)
             if (showProgressPercentage)
             {
+                Debug.Log("프로그레스 텍스트 생성");
                 GameObject textObj = new GameObject("ProgressText");
                 textObj.transform.SetParent(loadingObj.transform, false);
                 progressText = textObj.AddComponent<TextMeshProUGUI>();
@@ -430,10 +487,14 @@ namespace YSK
                 textRect.anchorMax = new Vector2(0.8f, 0.7f);
                 textRect.offsetMin = Vector2.zero;
                 textRect.offsetMax = Vector2.zero;
+                
+                Debug.Log("프로그레스 텍스트 생성 완료");
             }
             
             loadingScreen = loadingObj;
             loadingScreen.SetActive(false);
+            
+            Debug.Log("=== 로딩 화면 생성 완료 ===");
         }
         
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -448,58 +509,45 @@ namespace YSK
             SceneData.SceneInfo sceneInfo = sceneData?.GetSceneInfo(sceneName);
             if (sceneInfo == null) return;
             
-            // 카테고리별 공통 처리
-            HandleSceneCategory(sceneInfo.sceneCategory);
+            // 씬별 공통 처리
+            HandleSceneInitialization(sceneName);
         }
         
-        private void HandleSceneCategory(SceneData.SceneCategory category)
+        private void HandleSceneInitialization(string sceneName)
         {
-            switch (category)
+            switch (sceneName)
             {
-                case SceneData.SceneCategory.Bootstrap:
-                    Debug.Log("Bootstrap 씬 초기화");
-                    break;
-                case SceneData.SceneCategory.Menu:
+                case "RnDMainMenu":
+                case "RnDMainStageSelectScene":
+                case "RnDSubStageSelectScene":
+                case "RnDStoreScene":
+                case "RnDPartyScene":
                     Debug.Log("메뉴 씬 초기화");
                     break;
-                case SceneData.SceneCategory.Game:
+                case "RnDBaseStageScene":
+                case "RnDEndlessStageScene":
+                case "RnDBaseStageTestScene":
                     Debug.Log("게임 씬 초기화");
                     ConnectStageManagers();
                     break;
-                case SceneData.SceneCategory.UI:
-                    Debug.Log("UI 씬 초기화");
-                    break;
-                case SceneData.SceneCategory.Test:
-                    Debug.Log("테스트 씬 초기화");
+                default:
+                    Debug.Log($"기타 씬 초기화: {sceneName}");
                     break;
             }
         }
         
         private void ConnectStageManagers()
         {
-            GameStateManager gameStateManager = GameStateManager.Instance;
             StageManager stageManager = FindObjectOfType<StageManager>();
             
-            if (gameStateManager != null && stageManager != null)
+            if (stageManager != null)
             {
-                stageManager.SetGameStateManager(gameStateManager);
-                gameStateManager.SetStageManager(stageManager);
-                
                 StageTransition stageTransition = stageManager.GetComponentInChildren<StageTransition>();
                 if (stageTransition != null)
                 {
-                    gameStateManager.SetStageTransition(stageTransition);
                     stageManager.SetStageTransition(stageTransition);
                 }
-                
-                StartCoroutine(DelayedGameStateSetup(gameStateManager));
             }
-        }
-        
-        private IEnumerator DelayedGameStateSetup(GameStateManager gameStateManager)
-        {
-            yield return new WaitForSeconds(0.2f);
-            gameStateManager.SetGameState(GameState.Playing);
         }
         
         private void EnsureEventSystemExists()
@@ -537,147 +585,6 @@ namespace YSK
             #endif
             
             return fontAsset ?? Resources.Load<TMP_FontAsset>("Fonts & Materials/LiberationSans SDF");
-        }
-        
-        #endregion
-        
-        #region Bootstrap Loading
-        
-        private IEnumerator LoadMainMenuAdditive()
-        {
-            if (sceneData == null)
-            {
-                Debug.LogError("SceneData가 할당되지 않았습니다!");
-                yield break;
-            }
-            
-            Debug.Log("=== Bootstrap 로딩 시스템 시작 ===");
-            
-            GameObject bootstrapLoadingScreen = CreateBootstrapLoadingScreen();
-            yield return new WaitForSeconds(0.1f);
-            
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("RnDMainMenu", LoadSceneMode.Additive);
-            if (asyncLoad == null)
-            {
-                Debug.LogError("메인메뉴 씬 로드에 실패했습니다!");
-                if (bootstrapLoadingScreen != null) Destroy(bootstrapLoadingScreen);
-                yield break;
-            }
-            
-            asyncLoad.allowSceneActivation = false;
-            
-            while (asyncLoad.progress < 0.9f)
-            {
-                UpdateBootstrapLoadingProgress(bootstrapLoadingScreen, asyncLoad.progress / 0.9f);
-                yield return null;
-            }
-            
-            asyncLoad.allowSceneActivation = true;
-            while (!asyncLoad.isDone) yield return null;
-            
-            Scene loadedMainMenuScene = SceneManager.GetSceneByName("RnDMainMenu");
-            if (loadedMainMenuScene.isLoaded) SceneManager.SetActiveScene(loadedMainMenuScene);
-            
-            yield return new WaitForSeconds(0.1f);
-            
-            yield return new WaitForSeconds(0.3f);
-            if (bootstrapLoadingScreen != null) Destroy(bootstrapLoadingScreen);
-            
-            yield return new WaitForSeconds(0.2f);
-            UnloadBootstrapScene();
-            
-            Debug.Log("=== Bootstrap 로딩 시스템 완료 ===");
-        }
-        
-        private void UnloadBootstrapScene()
-        {
-            Scene bootstrapSceneInstance = SceneManager.GetSceneByName("RndBootstrapScene");
-            if (bootstrapSceneInstance.isLoaded)
-            {
-                GameObject[] bootstrapObjects = bootstrapSceneInstance.GetRootGameObjects();
-                foreach (GameObject obj in bootstrapObjects)
-                {
-                    if (obj.name != "PeristentManagers") Destroy(obj);
-                }
-                
-                AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(bootstrapSceneInstance);
-                if (unloadOperation != null) StartCoroutine(UnloadBootstrapSceneCoroutine(unloadOperation));
-            }
-        }
-        
-        private IEnumerator UnloadBootstrapSceneCoroutine(AsyncOperation unloadOperation)
-        {
-            while (!unloadOperation.isDone) yield return null;
-            System.GC.Collect();
-        }
-        
-        private GameObject CreateBootstrapLoadingScreen()
-        {
-            GameObject canvasObj = new GameObject("BootstrapLoadingCanvas");
-            Canvas canvas = canvasObj.AddComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            canvas.sortingOrder = 2000;
-            canvasObj.AddComponent<CanvasScaler>();
-            canvasObj.AddComponent<GraphicRaycaster>();
-            DontDestroyOnLoad(canvasObj);
-            
-            GameObject loadingObj = new GameObject("BootstrapLoadingScreen");
-            loadingObj.transform.SetParent(canvasObj.transform, false);
-            
-            Image bgImage = loadingObj.AddComponent<Image>();
-            bgImage.color = Color.black;
-            
-            RectTransform bgRect = loadingObj.GetComponent<RectTransform>();
-            bgRect.anchorMin = Vector2.zero;
-            bgRect.anchorMax = Vector2.one;
-            bgRect.offsetMin = Vector2.zero;
-            bgRect.offsetMax = Vector2.zero;
-            
-            // Bootstrap Progress Bar
-            GameObject progressObj = new GameObject("BootstrapProgressBar");
-            progressObj.transform.SetParent(loadingObj.transform, false);
-            Slider slider = progressObj.AddComponent<Slider>();
-            slider.minValue = 0f;
-            slider.maxValue = 1f;
-            slider.value = 0f;
-            
-            RectTransform sliderRect = progressObj.GetComponent<RectTransform>();
-            sliderRect.anchorMin = new Vector2(0.2f, 0.4f);
-            sliderRect.anchorMax = new Vector2(0.8f, 0.5f);
-            sliderRect.offsetMin = Vector2.zero;
-            sliderRect.offsetMax = Vector2.zero;
-            
-            // Bootstrap Progress Text
-            GameObject textObj = new GameObject("BootstrapProgressText");
-            textObj.transform.SetParent(loadingObj.transform, false);
-            TextMeshProUGUI text = textObj.AddComponent<TextMeshProUGUI>();
-            text.text = "Loading... 0%";
-            text.font = LoadNotoSansKRFont();
-            text.fontSize = 24;
-            text.color = Color.white;
-            text.alignment = TextAlignmentOptions.Center;
-            
-            RectTransform textRect = textObj.GetComponent<RectTransform>();
-            textRect.anchorMin = new Vector2(0.2f, 0.6f);
-            textRect.anchorMax = new Vector2(0.8f, 0.7f);
-            textRect.offsetMin = Vector2.zero;
-            textRect.offsetMax = Vector2.zero;
-            
-            return loadingObj;
-        }
-        
-        private void UpdateBootstrapLoadingProgress(GameObject loadingScreen, float progress)
-        {
-            if (loadingScreen == null) return;
-            
-            Slider progressBar = loadingScreen.GetComponentInChildren<Slider>();
-            if (progressBar != null) progressBar.value = progress;
-            
-            TextMeshProUGUI progressText = loadingScreen.GetComponentInChildren<TextMeshProUGUI>();
-            if (progressText != null && progressText.name == "BootstrapProgressText")
-            {
-                progressText.text = $"Loading... {Mathf.RoundToInt(progress * 100)}%";
-            }
         }
         
         #endregion
