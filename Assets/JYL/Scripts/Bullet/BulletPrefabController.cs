@@ -21,7 +21,7 @@ namespace JYL
             {
                 bullet[i].trans = transforms[i];
                 bullet[i].rig = transforms[i].GetComponent<Rigidbody>();
-                bullet[i].originPos = transforms[i].position;
+                bullet[i].originPos = transforms[i].localPosition;
             }
         }
     }
