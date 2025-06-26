@@ -235,7 +235,6 @@ namespace YSK
         
         private void InitializeSceneManager()
         {
-            EnsureEventSystemExists();
             CreateLoadingScreen();
             SceneManager.sceneLoaded += OnSceneLoaded;
             SceneManager.sceneUnloaded += OnSceneUnloaded;

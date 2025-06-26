@@ -47,39 +47,7 @@ namespace YSK
             Debug.Log("=== StageManager Start 완료 ===");
         }
 
-        //private IEnumerator WaitForGameStateManager()
-        //{
-        //    Debug.Log("=== WaitForGameStateManager 시작 ===");
-        //    
-        //    int waitCount = 0;
-        //    // GameStateManager가 준비될 때까지 대기
-        //    while (GameStateManager.Instance == null)
-        //    {
-        //        waitCount++;
-        //        if (waitCount % 60 == 0) // 1초마다 로그
-        //        {
-        //            Debug.Log($"GameStateManager 대기 중... ({waitCount}프레임)");
-        //        }
-        //        yield return null;
-        //    }
-        //    
-        //    Debug.Log($"GameStateManager 발견! ({waitCount}프레임 대기)");
-        //    
-        //    // 이벤트 구독
-        //    GameStateManager.OnStageChanged += OnStageChanged;
-        //    GameStateManager.OnGameStateChanged += OnGameStateChanged;
-        //    
-        //    Debug.Log("StageManager 이벤트 구독 완료");
-        //    
-        //    // GameStateManager가 이미 Playing 상태라면 강제로 맵 생성 트리거
-        //    if (GameStateManager.Instance.CurrentGameState == GameState.Playing)
-        //    {
-        //        Debug.Log("GameStateManager가 이미 Playing 상태입니다. 맵 생성 트리거");
-        //        OnGameStateChanged(GameState.Playing);
-        //    }
-        //    
-        //    Debug.Log("=== WaitForGameStateManager 완료 ===");
-        //}
+
 
         private void Update()
         {
@@ -87,12 +55,7 @@ namespace YSK
             CheckInput();
         }
 
-        //private void OnDestroy()
-        //{
-        //    // 이벤트 구독 해제
-        //    GameStateManager.OnStageChanged -= OnStageChanged;
-        //    GameStateManager.OnGameStateChanged -= OnGameStateChanged;
-        //}
+
 
         #endregion
 
@@ -105,43 +68,6 @@ namespace YSK
             LoadStage(newStageID);
         }
 
-        /// <summary>
-        /// GameStateManager에서 게임 상태 변경 이벤트를 받았을 때 호출됩니다.
-        /// </summary>
-        private void OnGameStateChanged(GameState newState)
-        {
-            Debug.Log($"=== OnGameStateChanged 호출: {newState} ===");
-
-            switch (newState)
-            {
-                case GameState.Playing:
-                    Debug.Log($"Playing 상태 처리 시작 - spawnedMaps.Count: {spawnedMaps.Count}");
-                    
-                    // 이미 스테이지가 로드되어 있지 않은 경우에만 로드
-                    if (spawnedMaps.Count == 0)
-                    {
-                        Debug.Log("게임 시작: 스테이지 로드");
-                        // PlayerPrefs에서 메인 스테이지 정보 가져오기
-                        int mainStageID = PlayerPrefs.GetInt("SelectedMainStage", 1);
-                        Debug.Log($"PlayerPrefs에서 가져온 메인 스테이지: {mainStageID}");
-                        LoadStage(mainStageID);
-                    }
-                    else
-                    {
-                        Debug.Log($"게임 시작: 이미 스테이지가 로드됨 (맵 개수: {spawnedMaps.Count})");
-                    }
-                    break;
-
-                case GameState.MainMenu:
-                case GameState.StageSelect:
-                    // 메인메뉴나 스테이지 선택 시에는 기존 스테이지 정리
-                    Debug.Log("메인메뉴/스테이지 선택: 기존 맵 정리");
-                    ClearAllMaps();
-                    break;
-            }
-            
-            Debug.Log($"=== OnGameStateChanged 완료: {newState} ===");
-        }
 
         /// <summary>
         /// 필요한 컴포넌트들을 초기화합니다.
@@ -153,20 +79,6 @@ namespace YSK
             //FindGameStateManager();
         }
 
-        /// <summary>
-        /// GameStateManager를 찾습니다.
-        /// </summary>
-        //private void FindGameStateManager()
-        //{
-        //    if (gameStateManager == null)
-        //    {
-        //        gameStateManager = GameStateManager.Instance;
-        //        if (gameStateManager == null)
-        //        {
-        //            Debug.LogWarning("GameStateManager를 찾을 수 없습니다! (씬 전환 중이거나 아직 초기화되지 않았을 수 있습니다)");
-        //        }
-        //    }
-        //}
 
         /// <summary>
         /// 자식 오브젝트에서 StageTransition을 찾습니다.
@@ -393,8 +305,6 @@ namespace YSK
         }
 
 
-
-
         private void UpdateMovingMaps()
         {
             // movingMaps가 null이거나 비어있는지 확인
@@ -424,13 +334,6 @@ namespace YSK
             int mainStageID = PlayerPrefs.GetInt("SelectedMainStage", 1);
             int subStageID = PlayerPrefs.GetInt("SelectedSubStage", 1);
 
-            // 3. 플레이어/카메라 위치 초기화
-            // player.transform.position = ...;
-            // camera.transform.position = ...;
-
-            // 4. UI 및 게임 상태 초기화
-            // UpdateUI();
-            // SetGameState(GameState.Ready);
         }
 
         /// <summary>
@@ -443,46 +346,6 @@ namespace YSK
             return stageDataList.Find(data => data.stageID == stageID);
         }
 
-        /// <summary>
-        /// 현재 스테이지의 데이터를 반환합니다.
-        /// </summary>
-        /// <returns>현재 스테이지의 데이터</returns>
-        //public StageData GetCurrentStageData()
-        //{
-        //    return currentStage;
-        //}
-
-        /// <summary>
-        /// 현재 생성된 맵 오브젝트 리스트를 반환합니다.
-        /// </summary>
-        /// <returns>생성된 맵 리스트</returns>
-        //public List<GameObject> GetSpawnedMaps()
-        //{
-        //    return new List<GameObject>(spawnedMaps);
-        //}
-
-        /// <summary>
-        /// 현재 이동 중인 맵 오브젝트 리스트를 반환합니다.
-        /// </summary>
-        /// <returns>이동 중인 맵 리스트</returns>
-        //public List<GameObject> GetMovingMaps()
-        //{
-        //    return new List<GameObject>(movingMaps);
-        //}
-
-        /// <summary>
-        /// 특정 맵을 제거합니다.
-        /// </summary>
-        /// <param name="map">제거할 맵 오브젝트</param>
-        //public void RemoveMap(GameObject map)
-        //{
-        //    if (spawnedMaps.Contains(map))
-        //    {
-        //        spawnedMaps.Remove(map);
-        //        movingMaps.Remove(map);
-        //        Destroy(map);
-        //    }
-        //}
 
         /// <summary>
         /// 모든 맵을 제거합니다.
@@ -505,30 +368,7 @@ namespace YSK
             Debug.Log("ClearAllMaps 완료: 모든 맵 제거됨");
         }
 
-        /// <summary>
-        /// 맵 이동을 일시정지합니다.
-        /// </summary>
-        //public void PauseMapMovement()
-        //{
-        //    enabled = false;
-        //}
 
-        /// <summary>
-        /// 맵 이동을 재개합니다.
-        /// </summary>
-        //public void ResumeMapMovement()
-        //{
-        //    enabled = true;
-        //}
-
-        /// <summary>
-        /// 현재 선택된 메인 스테이지 ID를 반환합니다.
-        /// </summary>
-        /// <returns>메인 스테이지 ID</returns>
-        //public int GetCurrentMainStageID()
-        //{
-        //    return PlayerPrefs.GetInt("SelectedMainStage", 1);
-        //}
 
         /// <summary>
         /// 현재 선택된 서브 스테이지 ID를 반환합니다.
@@ -551,61 +391,8 @@ namespace YSK
             return currentStage.subStages?.Find(s => s.subStageID == subStageID);
         }
 
-        /// <summary>
-        /// 현재 스테이지의 난이도를 반환합니다.
-        /// </summary>
-        /// <returns>난이도 (1-5)</returns>
-        //public float GetCurrentDifficulty()
-        //{
-        //    if (currentStage == null) return 1f;
-        //
-        //    int subStageID = GetCurrentSubStageID();
-        //    SubStageData subStageData = GetCurrentSubStageData();
-        //
-        //    // 서브 스테이지별 커스텀 난이도가 있으면 사용
-        //    if (subStageData != null && subStageData.customDifficulty > 0)
-        //    {
-        //        return subStageData.customDifficulty;
-        //    }
-        //
-        //    // 기본 난이도 + 서브 스테이지별 증가량
-        //    return currentStage.baseDifficulty + (subStageID - 1) * currentStage.difficultyIncreasePerSubStage;
-        //}
+        
 
-        /// <summary>
-        /// GameStateManager 참조를 설정합니다.
-        /// </summary>
-        /// <param name="newGameStateManager">설정할 GameStateManager 인스턴스</param>
-        //public void SetGameStateManager(GameStateManager newGameStateManager)
-        //{
-        //    gameStateManager = newGameStateManager;
-        //
-        //    if (gameStateManager != null)
-        //    {
-        //        Debug.Log("StageManager에 GameStateManager 참조 설정 완료");
-        //        
-        //         이벤트 구독 (중복 방지)
-        //        GameStateManager.OnStageChanged -= OnStageChanged;
-        //        GameStateManager.OnGameStateChanged -= OnGameStateChanged;
-        //        GameStateManager.OnStageChanged += OnStageChanged;
-        //        GameStateManager.OnGameStateChanged += OnGameStateChanged;
-        //        
-        //        Debug.Log("StageManager 이벤트 구독 완료 (SetGameStateManager에서)");
-        //    }
-        //    else
-        //    {
-        //        Debug.LogWarning("StageManager에서 GameStateManager 참조가 null로 설정되었습니다.");
-        //    }
-        //}
-
-        /// <summary>
-        /// 현재 설정된 GameStateManager 참조를 반환합니다.
-        /// </summary>
-        /// <returns>GameStateManager 인스턴스 또는 null</returns>
-        //public GameStateManager GetGameStateManager()
-        //{
-        //    return gameStateManager;
-        //}
 
         /// <summary>
         /// StageTransition 참조를 설정합니다.
@@ -625,14 +412,7 @@ namespace YSK
             }
         }
 
-        /// <summary>
-        /// 현재 설정된 StageTransition 참조를 반환합니다.
-        /// </summary>
-        /// <returns>StageTransition 인스턴스 또는 null</returns>
-        //public StageTransition GetStageTransition()
-        //{
-        //    return stageControl;
-        //}
+
 
         /// <summary>
         /// 현재 스테이지를 클리어하고 다음 스테이지로 전환합니다.
@@ -699,14 +479,6 @@ namespace YSK
 
 
 
-        ///// <summary>
-        ///// 전체 메인 스테이지 수를 반환합니다.
-        ///// </summary>
-        //private int GetMaxMainStageCount()
-        //{
-        //    return stageDataList != null ? stageDataList.Count : 4; // 기본값
-        //}
-
         /// <summary>
         /// 게임 클리어 시 호출됩니다.
         /// </summary>
@@ -727,34 +499,6 @@ namespace YSK
             }
         }
 
-        /// <summary>
-        /// 스테이지 진행을 테스트하는 메서드입니다.
-        /// </summary>
-        //public void TestStageProgression()
-        //{
-        //    Debug.Log("=== 스테이지 진행 테스트 ===");
-        //    
-        //    // 1-1부터 시작해서 모든 스테이지 진행 테스트
-        //    for (int mainStage = 1; mainStage <= 4; mainStage++)
-        //    {
-        //        for (int subStage = 1; subStage <= 5; subStage++)
-        //        {
-        //            var nextStage = CalculateNextStage(mainStage, subStage);
-        //            
-        //            if (nextStage.isGameComplete)
-        //            {
-        //                Debug.Log($"{mainStage}-{subStage} → 게임 클리어!");
-        //                break;
-        //            }
-        //            else
-        //            {
-        //                Debug.Log($"{mainStage}-{subStage} → {nextStage.mainStage}-{nextStage.subStage}");
-        //            }
-        //        }
-        //    }
-        //    
-        //    Debug.Log("=== 스테이지 진행 테스트 완료 ===");
-        //}
 
         /// <summary>
         /// 특정 스테이지로 강제 이동합니다 (테스트용).
