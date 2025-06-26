@@ -27,16 +27,18 @@ namespace KYG_skyPower
     {
         public static GameManager Instance { get; private set; }
 
-        public UnityEvent onGameOver, onPause, onResume;
+        public UnityEvent onGameOver, onPause, onResume, onGameClear;
 
         
         public bool isGameOver { get; private set; } // 게임 오버
         public bool isPaused { get; private set; } // 게임 일시 정지
 
+        public bool isGameCleared { get; private set; } // 게임 클리어
+
         //[SerializeField] private int defaultPlayerHP = 5;
         //public int playerHp { get; private set; } // 플레이어에 붙을 수도 있지만 나중에 추가 될지 몰라 주석 처리
 
-        
+
 
         private void Awake() // 싱글톤 패턴
         {
@@ -48,18 +50,27 @@ namespace KYG_skyPower
 
             Instance = this;
             DontDestroyOnLoad(gameObject); // 게임 오브젝트 파괴되지 않게 제한
-            
+
         }
 
 
 
         public void SetGameOver()
         {
-            if(isGameOver) return;
+            if (isGameOver) return;
             isGameOver = true; // 게임 오버가 true면
             Time.timeScale = 0f; // 시간 정지 기능
             onGameOver?.Invoke();
-            Debug.Log("게임 오버");            
+            Debug.Log("게임 오버");
+        }
+
+        public void SetGameClear()
+        {
+            if (isGameCleared || isGameOver) return;
+            isGameCleared = true;
+            Time.timeScale = 0f;
+            onGameClear?.Invoke();
+            Debug.Log("게임 클리어");
         }
 
         public void PausedGame()
