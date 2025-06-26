@@ -8,7 +8,7 @@ public class OneCharictorTest : MonoBehaviour
 {
     [SerializeField] private CsvTable table;
     [SerializeField] private CsvTable secondTable;
-    public CharictorDataTest charictorData;
+    private CharictorDataTest charictorData;
 
     private List<CsvTable> csvTables;
 
@@ -36,6 +36,7 @@ public class OneCharictorTest : MonoBehaviour
             charictorData.attackPower = int.Parse(csvTables[i].GetData(1, 3));
             charictorData.attackSpeed = int.Parse(csvTables[i].GetData(1, 4));
             charictorData.moveSpeed = int.Parse(csvTables[i].GetData(1, 5));
+            charictorData.bulletPrefab = (GameObject)AssetDatabase.LoadAssetAtPath($"Assets/LJ2/Prefabs/{csvTables[i].GetData(1, 6)}.Prefab", typeof(GameObject));
 
             string assetPath = $"Assets/LJ2/Scripts/Charictor/{charictorData.name}.asset";
             AssetDatabase.CreateAsset(charictorData, assetPath);
