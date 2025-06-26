@@ -2,15 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class UIPresenter : BaseUI
+namespace JYL 
 {
-    void Start()
+    public abstract class UIPresenter : BaseUI
     {
-        
-    }
+        void Start()
+        {
 
-    void Update()
-    {
-        
+        }
+
+        void Update()
+        {
+
+        }
     }
 }
+
