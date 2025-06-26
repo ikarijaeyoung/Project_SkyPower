@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using YSK;
 using System.Collections;
+using UnityEngine.UI;
 
 namespace YSK
 {
@@ -13,20 +14,24 @@ namespace YSK
         private StageData currentStage;
         private List<GameObject> MapPrefabs;
 
-
         [Header("MoveInfo")]
         [SerializeField] private Transform endPoint;
         [SerializeField] private Transform startPoint;
         [SerializeField] private float speed = 3f;
         [SerializeField] private float mapLength = 20;
 
+        [Header("Transition Settings")]
+        [SerializeField] private CanvasGroup fadePanel;
+        [SerializeField] private float fadeDuration = 1f;
+        [SerializeField] private AnimationCurve fadeCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+        [SerializeField] private Camera mainCamera;
+
         [Header("References")]
         //[SerializeField] private GameStateManager gameStateManager;
 
         private List<GameObject> spawnedMaps = new(); // 프리팹을 이용한 Stage Map 생성
-
         private List<GameObject> movingMaps = new(); // 현재 이동중인 맵.
-        private StageTransition stageControl;
+        private bool isTransitioning = false;
 
         #region Unity Lifecycle
 
@@ -47,15 +52,11 @@ namespace YSK
             Debug.Log("=== StageManager Start 완료 ===");
         }
 
-
-
         private void Update()
         {
             UpdateMovingMaps();
             CheckInput();
         }
-
-
 
         #endregion
 
@@ -68,29 +69,15 @@ namespace YSK
             LoadStage(newStageID);
         }
 
-
         /// <summary>
         /// 필요한 컴포넌트들을 초기화합니다.
         /// </summary>
         private void InitializeComponents()
         {
-            FindStageTransition();
             FindTransformPoints();
+            FindMainCamera();
+            InitializeFadePanel();
             //FindGameStateManager();
-        }
-
-
-        /// <summary>
-        /// 자식 오브젝트에서 StageTransition을 찾습니다.
-        /// </summary>
-        private void FindStageTransition()
-        {
-            stageControl = GetComponentInChildren<StageTransition>();
-
-            if (stageControl == null)
-            {
-                Debug.LogWarning("StageTransition 컴포넌트를 자식 오브젝트에서 찾을 수 없습니다! (해당 씬에서만 사용되는 컴포넌트입니다)");
-            }
         }
 
         /// <summary>
@@ -115,6 +102,68 @@ namespace YSK
                     Debug.LogWarning("EndPoint를 찾을 수 없습니다! (씬에서 설정해야 합니다)");
                 }
             }
+        }
+
+        /// <summary>
+        /// MainCamera를 찾습니다.
+        /// </summary>
+        private void FindMainCamera()
+        {
+            if (mainCamera == null)
+            {
+                mainCamera = Camera.main;
+                if (mainCamera == null)
+                {
+                    Debug.LogError("Main Camera를 찾을 수 없습니다!");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 페이드 패널을 초기화합니다.
+        /// </summary>
+        private void InitializeFadePanel()
+        {
+            if (fadePanel == null)
+            {
+                CreateFadePanel();
+            }
+            
+            // 초기 상태 설정 - 항상 투명하게 시작
+            fadePanel.alpha = 0f;
+            fadePanel.gameObject.SetActive(false);
+            
+            Debug.Log("페이드 패널 초기화 완료 - 투명 상태");
+        }
+        
+        private void CreateFadePanel()
+        {
+            // Canvas 찾기 또는 생성
+            Canvas canvas = FindObjectOfType<Canvas>();
+            if (canvas == null)
+            {
+                GameObject canvasObj = new GameObject("TransitionCanvas");
+                canvas = canvasObj.AddComponent<Canvas>();
+                canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                canvas.sortingOrder = 999; // 최상위에 표시
+                canvasObj.AddComponent<CanvasScaler>();
+                canvasObj.AddComponent<GraphicRaycaster>();
+            }
+            
+            // Fade Panel 생성
+            GameObject fadeObj = new GameObject("FadePanel");
+            fadeObj.transform.SetParent(canvas.transform, false);
+            
+            Image fadeImage = fadeObj.AddComponent<Image>();
+            fadeImage.color = Color.black;
+            
+            RectTransform rectTransform = fadeObj.GetComponent<RectTransform>();
+            rectTransform.anchorMin = Vector2.zero;
+            rectTransform.anchorMax = Vector2.one;
+            rectTransform.offsetMin = Vector2.zero;
+            rectTransform.offsetMax = Vector2.zero;
+            
+            fadePanel = fadeObj.AddComponent<CanvasGroup>();
         }
 
         private void CheckInput()
@@ -212,7 +261,7 @@ namespace YSK
                 return;
             }
 
-            // PlayerPrefs에서 서브 스테이지 정보 가져오기
+            // PlayerPrefs에서 현재 서브 스테이지 정보 가져오기
             int subStageID = PlayerPrefs.GetInt("SelectedSubStage", 1);
 
             // 사용할 맵 프리팹 리스트 결정
@@ -225,11 +274,11 @@ namespace YSK
                 if (subStageData != null && subStageData.customMapPrefabs != null && subStageData.customMapPrefabs.Count > 0)
                 {
                     mapPrefabsToUse = subStageData.customMapPrefabs;
-                    Debug.Log($"서브 스테이지 {subStageID} 전용 맵 사용");
+                    Debug.Log($"서브 스테이지 {subStageID} 커스텀 맵 사용");
                 }
                 else
                 {
-                    Debug.Log($"서브 스테이지 {subStageID}는 기본 맵 사용");
+                    Debug.Log($"서브 스테이지 {subStageID} 기본 맵 사용");
                 }
             }
 
@@ -304,7 +353,6 @@ namespace YSK
             return maxZ;
         }
 
-
         private void UpdateMovingMaps()
         {
             // movingMaps가 null이거나 비어있는지 확인
@@ -324,13 +372,13 @@ namespace YSK
 
         public void ChangeStage(int newStageID)
         {
-            Debug.Log($"ChangeStage 호출: 스테이지로 {newStageID}로 변경");
+            Debug.Log($"ChangeStage 호출: 스테이지 {newStageID}로 변경");
 
             // LoadStage에서 이미 ClearAllMaps를 호출하므로 여기서는 생략
-            // 현재 스테이지를 지우고 다음 스테이지로 변경
+            // 단순히 메인 스테이지만 변경하고 서브 스테이지는 1로 초기화
             LoadStage(newStageID);
 
-            // PlayerPrefs에서 현재 메인 스테이지와 서브 스테이지 정보 가져오기
+            // PlayerPrefs에서 현재 설정된 메인 스테이지와 서브 스테이지 정보 가져오기
             int mainStageID = PlayerPrefs.GetInt("SelectedMainStage", 1);
             int subStageID = PlayerPrefs.GetInt("SelectedSubStage", 1);
 
@@ -346,13 +394,12 @@ namespace YSK
             return stageDataList.Find(data => data.stageID == stageID);
         }
 
-
         /// <summary>
-        /// 모든 맵을 제거합니다.
+        /// 모든 맵을 정리합니다.
         /// </summary>
         public void ClearAllMaps()
         {
-            Debug.Log($"ClearAllMaps 시작: {spawnedMaps.Count}개 맵 제거");
+            Debug.Log($"ClearAllMaps 시작: {spawnedMaps.Count}개 맵 정리");
 
             foreach (var map in spawnedMaps)
             {
@@ -368,19 +415,17 @@ namespace YSK
             Debug.Log("ClearAllMaps 완료: 모든 맵 제거됨");
         }
 
-
-
         /// <summary>
-        /// 현재 선택된 서브 스테이지 ID를 반환합니다.
+        /// 현재 설정된 서브 스테이지의 ID를 반환합니다.
         /// </summary>
-        /// <returns>서브 스테이지 ID</returns>
+        /// <returns>현재 서브 스테이지 ID</returns>
         public int GetCurrentSubStageID()
         {
             return PlayerPrefs.GetInt("SelectedSubStage", 1);
         }
 
         /// <summary>
-        /// 현재 서브 스테이지의 데이터를 반환합니다.
+        /// 현재 설정된 서브 스테이지의 데이터를 반환합니다.
         /// </summary>
         /// <returns>서브 스테이지 데이터 또는 null</returns>
         public SubStageData GetCurrentSubStageData()
@@ -391,28 +436,225 @@ namespace YSK
             return currentStage.subStages?.Find(s => s.subStageID == subStageID);
         }
 
-        
-
+        #region Transition Methods
 
         /// <summary>
-        /// StageTransition 참조를 설정합니다.
+        /// 부드러운 스테이지 전환을 시작합니다.
         /// </summary>
-        /// <param name="newStageTransition">설정할 StageTransition 인스턴스</param>
-        public void SetStageTransition(StageTransition newStageTransition)
+        /// <param name="newStageID">전환할 스테이지 ID</param>
+        /// <param name="isGameStart">게임 시작 여부 (true: 게임 시작, false: 스테이지 전환)</param>
+        public void StartStageTransition(int newStageID, bool isGameStart = false)
         {
-            stageControl = newStageTransition;
-
-            if (stageControl != null)
+            Debug.Log($"StageManager.StartStageTransition 호출: 스테이지 {newStageID}, 게임시작: {isGameStart}");
+            
+            if (!isTransitioning)
             {
-                Debug.Log("StageManager에 StageTransition 참조 설정 완료");
+                Debug.Log("스테이지 전환 코루틴 시작");
+                StartCoroutine(TransitionCoroutine(newStageID, isGameStart));
             }
             else
             {
-                Debug.LogWarning("StageManager에서 StageTransition 참조가 null로 설정되었습니다.");
+                Debug.LogWarning("이미 전환 중입니다!");
+            }
+        }
+        
+        /// <summary>
+        /// 페이드 인/아웃을 이용한 스테이지 전환
+        /// </summary>
+        private IEnumerator TransitionCoroutine(int newStageID, bool isGameStart)
+        {
+            Debug.Log($"TransitionCoroutine 시작: 스테이지 {newStageID}");
+            isTransitioning = true;
+            
+            if (isGameStart)
+            {
+                Debug.Log("게임 시작: 페이드 효과 없이 즉시 전환");
+                ChangeStage(newStageID);
+            }
+            else
+            {
+                Debug.Log("스테이지 전환: 페이드 효과 사용");
+                // 페이드 아웃
+                yield return StartCoroutine(FadeOut());
+                
+                // 스테이지 전환
+                ChangeStage(newStageID);
+                
+                // 페이드 인
+                yield return StartCoroutine(FadeIn());
+            }
+            
+            isTransitioning = false;
+            Debug.Log("TransitionCoroutine 완료");
+        }
+        
+        /// <summary>
+        /// 카메라 이동을 이용한 스테이지 전환
+        /// </summary>
+        public IEnumerator CameraTransitionCoroutine(int newStageID)
+        {
+            isTransitioning = true;
+            
+            Vector3 originalPos = mainCamera.transform.position;
+            Vector3 upPos = originalPos + Vector3.up * 15f;
+            
+            // 1. 카메라를 위로 이동하면서 페이드 아웃
+            yield return StartCoroutine(MoveCameraWithFade(originalPos, upPos, true));
+            
+            // 2. 스테이지 전환
+            ChangeStage(newStageID);
+            
+            // 3. 카메라를 새 위치로 이동하면서 페이드 인
+            Vector3 newPos = originalPos; // 필요에 따라 새 위치 설정
+            yield return StartCoroutine(MoveCameraWithFade(upPos, newPos, false));
+            
+            isTransitioning = false;
+        }
+        
+        /// <summary>
+        /// 점진적 맵 전환 (기존 맵이 사라지면서 새 맵이 나타남)
+        /// </summary>
+        public IEnumerator GradualTransitionCoroutine(int newStageID)
+        {
+            isTransitioning = true;
+            
+            // 새 맵을 먼저 생성 (화면 밖에)
+            StageData newStage = GetStageData(newStageID);
+            if (newStage != null)
+            {
+                yield return StartCoroutine(CreateNewMapsOffscreen(newStage));
+            }
+            
+            // 기존 맵들을 점진적으로 제거
+            yield return StartCoroutine(RemoveOldMapsGradually());
+            
+            isTransitioning = false;
+        }
+        
+        private IEnumerator FadeOut()
+        {
+            fadePanel.gameObject.SetActive(true);
+            float elapsed = 0f;
+            
+            while (elapsed < fadeDuration)
+            {
+                elapsed += Time.deltaTime;
+                float t = elapsed / fadeDuration;
+                fadePanel.alpha = fadeCurve.Evaluate(t);
+                yield return null;
+            }
+            
+            fadePanel.alpha = 1f;
+        }
+        
+        private IEnumerator FadeIn()
+        {
+            float elapsed = 0f;
+            
+            while (elapsed < fadeDuration)
+            {
+                elapsed += Time.deltaTime;
+                float t = elapsed / fadeDuration;
+                fadePanel.alpha = 1f - fadeCurve.Evaluate(t);
+                yield return null;
+            }
+            
+            fadePanel.alpha = 0f;
+            fadePanel.gameObject.SetActive(false);
+        }
+        
+        private IEnumerator MoveCameraWithFade(Vector3 fromPos, Vector3 toPos, bool fadeOut)
+        {
+            float elapsed = 0f;
+            
+            while (elapsed < fadeDuration)
+            {
+                elapsed += Time.deltaTime;
+                float t = elapsed / fadeDuration;
+                
+                // 카메라 이동
+                mainCamera.transform.position = Vector3.Lerp(fromPos, toPos, fadeCurve.Evaluate(t));
+                
+                // 페이드 효과
+                if (fadeOut)
+                {
+                    fadePanel.alpha = fadeCurve.Evaluate(t);
+                }
+                else
+                {
+                    fadePanel.alpha = 1f - fadeCurve.Evaluate(t);
+                }
+                
+                yield return null;
+            }
+            
+            mainCamera.transform.position = toPos;
+            
+            if (fadeOut)
+            {
+                fadePanel.alpha = 1f;
+            }
+            else
+            {
+                fadePanel.alpha = 0f;
+            }
+        }
+        
+        private IEnumerator CreateNewMapsOffscreen(StageData newStage)
+        {
+            // 새 맵을 화면 밖에 생성하는 로직
+            // 이 부분은 필요에 따라 구현
+            yield return null;
+        }
+        
+        private IEnumerator RemoveOldMapsGradually()
+        {
+            // 기존 맵을 점진적으로 제거하는 로직
+            // 이 부분은 필요에 따라 구현
+            yield return null;
+        }
+        
+        /// <summary>
+        /// 현재 전환 중인지 확인
+        /// </summary>
+        public bool IsTransitioning => isTransitioning;
+        
+        /// <summary>
+        /// 전환 효과 설정
+        /// </summary>
+        public void SetFadeDuration(float duration)
+        {
+            fadeDuration = duration;
+        }
+        
+        /// <summary>
+        /// 페이드 패널 색상 설정
+        /// </summary>
+        public void SetFadeColor(Color color)
+        {
+            if (fadePanel != null)
+            {
+                Image fadeImage = fadePanel.GetComponent<Image>();
+                if (fadeImage != null)
+                {
+                    fadeImage.color = color;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// 스테이지 버튼 클릭 이벤트 (UI에서 호출)
+        /// </summary>
+        /// <param name="stageID">선택된 스테이지 ID</param>
+        public void OnStageButtonClick(int stageID)
+        {
+            if (!isTransitioning)
+            {
+                StartStageTransition(stageID, false); // 스테이지 전환
             }
         }
 
-
+        #endregion
 
         /// <summary>
         /// 현재 스테이지를 클리어하고 다음 스테이지로 전환합니다.
@@ -434,7 +676,7 @@ namespace YSK
                 return;
             }
             
-            // 다음 스테이지로 이동
+            // 다음 스테이지로 전환
             LoadStage(nextStage.mainStage, nextStage.subStage);
             Debug.Log($"다음 스테이지로 전환: {nextStage.mainStage}-{nextStage.subStage}");
         }
@@ -472,12 +714,10 @@ namespace YSK
             }
             else
             {
-                // 같은 메인 스테이지의 다음 서브 스테이지로
+                // 현재 메인 스테이지의 다음 서브 스테이지로
                 return (currentMainStage, nextSubStage, false);
             }
         }
-
-
 
         /// <summary>
         /// 게임 클리어 시 호출됩니다.
@@ -495,10 +735,9 @@ namespace YSK
             // 결과 화면으로 이동
             if (GameSceneManager.Instance != null)
             {
-                //GameSceneManager.Instance.LoadResultScene(1000, true); // 예시 점수
+                //GameSceneManager.Instance.LoadResultScene(1000, true); // 게임 클리어
             }
         }
-
 
         /// <summary>
         /// 특정 스테이지로 강제 이동합니다 (테스트용).
@@ -518,7 +757,8 @@ namespace YSK
             PlayerPrefs.SetInt("SelectedSubStage", 1);
             PlayerPrefs.Save();
 
-            
+            // 현재 스테이지도 초기화
+            LoadStage(1, 1);
 
             Debug.Log("스테이지 진행 상태 초기화: 1-1");
         }
@@ -563,7 +803,7 @@ namespace YSK
             Debug.Log($"MovingMaps: {movingMaps.Count}개");
             //Debug.Log($"GameStateManager: {(GameStateManager.Instance != null ? "존재" : "null")}");
             Debug.Log($"PlayerPrefs - Main: {PlayerPrefs.GetInt("SelectedMainStage", 1)}, Sub: {PlayerPrefs.GetInt("SelectedSubStage", 1)}");
-            Debug.Log("=== 상태 정보 완료 ===");
+            Debug.Log("=== 현재 상태 정보 완료 ===");
         }
     }
 }

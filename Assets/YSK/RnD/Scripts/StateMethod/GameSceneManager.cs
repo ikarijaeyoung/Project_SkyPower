@@ -541,11 +541,11 @@ namespace YSK
             
             if (stageManager != null)
             {
-                StageTransition stageTransition = stageManager.GetComponentInChildren<StageTransition>();
-                if (stageTransition != null)
-                {
-                    stageManager.SetStageTransition(stageTransition);
-                }
+                Debug.Log("StageManager 발견 - 전환 기능이 통합되어 있습니다.");
+            }
+            else
+            {
+                Debug.LogWarning("StageManager를 찾을 수 없습니다!");
             }
         }
         
