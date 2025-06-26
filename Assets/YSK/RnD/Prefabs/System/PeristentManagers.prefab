@@ -202,6 +202,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3034378885704754324, guid: f5c2e630598244e479f94589b8fd2b8c,
         type: 3}
+      propertyPath: sceneData
+      value: 
+      objectReference: {fileID: 11400000, guid: 9e7a1c25079d50848b52883f24aed260,
+        type: 2}
+    - target: {fileID: 3034378885704754324, guid: f5c2e630598244e479f94589b8fd2b8c,
+        type: 3}
       propertyPath: useFadeTransition
       value: 1
       objectReference: {fileID: 0}

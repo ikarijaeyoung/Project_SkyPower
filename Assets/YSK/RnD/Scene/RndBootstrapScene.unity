@@ -387,8 +387,24 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5070884526741353785, guid: 086e3bdbf160dae41b5c83e3322db15b,
         type: 3}
+      propertyPath: sceneData
+      value: 
+      objectReference: {fileID: 11400000, guid: 9e7a1c25079d50848b52883f24aed260,
+        type: 2}
+    - target: {fileID: 5070884526741353785, guid: 086e3bdbf160dae41b5c83e3322db15b,
+        type: 3}
       propertyPath: mainMenuScene
       value: RnDMainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 5070884526741353785, guid: 086e3bdbf160dae41b5c83e3322db15b,
+        type: 3}
+      propertyPath: minLoadingTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5070884526741353785, guid: 086e3bdbf160dae41b5c83e3322db15b,
+        type: 3}
+      propertyPath: enableDebugLogs
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6338649377485062125, guid: 086e3bdbf160dae41b5c83e3322db15b,
         type: 3}
