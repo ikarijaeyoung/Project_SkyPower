@@ -22,7 +22,7 @@ namespace KYG_skyPower
         public void ResetScore() { Score = 0; onScoreChanged?.Invoke(Score); }
         public void AddScore(int value)
         {
-            if (GameManager.Instance != null && GameManager.Instance.IsGameOver) return;
+            if (GameManager.Instance != null && GameManager.Instance.isGameOver) return;
             Score += value;
             onScoreChanged?.Invoke(Score);
         }
