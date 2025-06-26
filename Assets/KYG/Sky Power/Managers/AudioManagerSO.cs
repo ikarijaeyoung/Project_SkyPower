@@ -24,7 +24,7 @@ namespace KYG_skyPower
 
         [Header("디폴트 BGM / SFX")] // 게임 시작시 기본 사운드
         public AudioData defaultBGM;
-        public AudioData defaultSFX;
+        
 
         private Dictionary<string, AudioData> audioDict; // 이름으로 데이터 찾는 딕셔너리
 

@@ -21,7 +21,7 @@ namespace KYG_skyPower
 
         void Start() // 기본 사운드 재생
         {
-            PlaySFX(audioManagerSO.defaultSFX);
+            
             PlayBGM(audioManagerSO.defaultBGM);
         }
 
@@ -58,14 +58,19 @@ namespace KYG_skyPower
             bgmSource.Play();
         }
 
-        private void PlaySFX(AudioData SFX) // SFX 재생
+        private void PlaySFX(string name) // SFX 재생
         {
-            if (SFX == null || SFX.clipSource == null) return;
-            if (sfxSource.isPlaying && sfxSource.clip == SFX.clipSource) return;
+            var data = audioManagerSO.GetAudioData(name);
+            if (data == null || data.clipSource == null)
+            {
+                Debug.LogWarning($"오디오 데이터 못 찾음: {name}");
+                return;
+            }
+            
 
-            sfxSource.clip = SFX.clipSource;
-            sfxSource.volume = SFX.volume;
-            sfxSource.loop = SFX.loop;
+            sfxSource.clip = data.clipSource;
+            sfxSource.volume = data.volume;
+            sfxSource.loop = data.loop;
             sfxSource.Play();
         }
     }
