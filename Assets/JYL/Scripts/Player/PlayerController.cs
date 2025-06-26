@@ -26,20 +26,20 @@ namespace JYL
         private PlayerInput playerInput;
         private Rigidbody rig;
         private InputAction attackAction;
-        private InputAction parryAction1;
-        private InputAction parryAction2;
-        private InputAction ultAction;
-        private InputAction menuAction;
+        //private InputAction parryAction1;
+        //private InputAction parryAction2;
+        //private InputAction ultAction;
+        //private InputAction menuAction;
 
         // ÁÂ, ¿ì UI »çÀÌÁî
         private float leftMargin;
         private float rightMargin;
 
-        private int level;
-        private int hp;
+        //private int level;
+        //private int hp;
         private int poolIndex = 0;
         private Vector2 inputDir;
-        private bool isAttack;
+        //private bool isAttack;
 
         private ObjectPool curBulletPool => bulletPools[poolIndex];
         private void Awake()
