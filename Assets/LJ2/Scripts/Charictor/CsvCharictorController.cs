@@ -12,7 +12,8 @@ public class CsvCharictorController : MonoBehaviour
     public int exp;
 
     // 인게임 필요 정보
-    public int Hp;
+    private int Hp;
+    public int HP { get { return Hp; } set { Hp = value; } }
     public int attackPower;
     public int attackSpeed;
     public int moveSpeed;
@@ -30,5 +31,20 @@ public class CsvCharictorController : MonoBehaviour
         attackPower = int.Parse(charictorHasCsv.dataTable.GetData(level, 2));
         attackSpeed = int.Parse(charictorHasCsv.dataTable.GetData(level, 3));
         moveSpeed = int.Parse(charictorHasCsv.dataTable.GetData(level, 4));
+    }
+
+    public void GetEXP()
+    {
+        // ToDo : Csv 형식에 따라 성장 적용
+    }
+
+    public void UseUlt()
+    {
+        // Todo : 캐릭터 별 궁극기 효과 함수 실행
+    }
+
+    public void Parrying()
+    {
+        // Todo : 캐릭터 별 패링 효과 함수 실행
     }
 }
