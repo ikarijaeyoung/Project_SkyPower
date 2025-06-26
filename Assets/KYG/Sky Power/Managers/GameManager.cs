@@ -23,10 +23,8 @@ namespace KYG_skyPower
     */
 
     
-    public class GameManager : MonoBehaviour
+    public class GameManager : Singleton<GameManager>
     {
-        public static GameManager Instance { get; private set; }
-
         public UnityEvent onGameOver, onPause, onResume, onGameClear;
 
         
@@ -38,9 +36,12 @@ namespace KYG_skyPower
         //[SerializeField] private int defaultPlayerHP = 5;
         //public int playerHp { get; private set; } // 플레이어에 붙을 수도 있지만 나중에 추가 될지 몰라 주석 처리
 
+        public override void Init()
+        {
+            
+        }
 
-
-        private void Awake() // 싱글톤 패턴
+        /*private void Awake() // 싱글톤 패턴
         {
             if (Instance != null && Instance != this) // 만약 다른 Instance 있으면 본 Instance
             {
@@ -51,7 +52,7 @@ namespace KYG_skyPower
             Instance = this;
             DontDestroyOnLoad(gameObject); // 게임 오브젝트 파괴되지 않게 제한
 
-        }
+        }*/
 
 
 
