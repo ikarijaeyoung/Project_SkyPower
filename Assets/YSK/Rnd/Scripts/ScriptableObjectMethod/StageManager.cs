@@ -12,7 +12,7 @@ namespace YSK
         [SerializeField] private List<StageData> stageDataList; // 모든 스테이지의 데이터
         private StageData currentStage;
         private List<GameObject> MapPrefabs;
-        [SerializeField] int selectedstageID; // Test용 Stage ID의 경우 외부 선택에 의해서 전해지게 되는 값으로 설정해야함.
+
 
         [Header("MoveInfo")]
         [SerializeField] private Transform endPoint;
@@ -411,34 +411,15 @@ namespace YSK
 
         public void ChangeStage(int newStageID)
         {
-            Debug.Log($"ChangeStage 호출: 스테이지를 {newStageID}로 변경");
+            Debug.Log($"ChangeStage 호출: 스테이지로 {newStageID}로 변경");
 
             // LoadStage에서 이미 ClearAllMaps를 호출하므로 여기서는 생략
-            // 기존 스테이지와 새 스테이지의 맵을 교체
+            // 현재 스테이지를 지우고 다음 스테이지로 변경
             LoadStage(newStageID);
 
-            // PlayerPrefs에서 메인 스테이지와 서브 스테이지 정보 가져오기
+            // PlayerPrefs에서 현재 메인 스테이지와 서브 스테이지 정보 가져오기
             int mainStageID = PlayerPrefs.GetInt("SelectedMainStage", 1);
             int subStageID = PlayerPrefs.GetInt("SelectedSubStage", 1);
-
-            // UI 텍스트 업데이트 - 메인-서브 형태로 표시
-            if (UIFactory.Instance != null)
-            {
-                UIFactory.Instance.UpdateStageText($"{mainStageID}-{subStageID}");
-            }
-            else
-            {
-                Debug.LogWarning("UIFactory.Instance가 null입니다. UIFactory를 찾아보겠습니다.");
-                UIFactory uiFactory = FindObjectOfType<UIFactory>();
-                if (uiFactory != null)
-                {
-                    uiFactory.UpdateStageText($"{mainStageID}-{subStageID}");
-                }
-                else
-                {
-                    Debug.LogWarning("UIFactory를 찾을 수 없습니다! UI 텍스트 업데이트를 건너뜁니다.");
-                }
-            }
 
             // 3. 플레이어/카메라 위치 초기화
             // player.transform.position = ...;

@@ -95,50 +95,22 @@ namespace YSK
             // 버튼들 (순서: 메인스테이지 → 무한스테이지 → 상점 → 파티 → 게임종료)
             CreateButton(canvasObj, "MainStageButton", "메인스테이지", new Vector2(0.5f, 0.6f), () => {
                 Debug.Log("메인스테이지 버튼 클릭됨");
-                if (GameSceneManager.Instance != null)
-                {
-                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.MainStageSelect);
-                }
-                else
-                {
-                    Debug.LogError("GameSceneManager.Instance가 null입니다!");
-                }
+                LoadScene("RnDMainStageSelectScene");
             });
 
             CreateButton(canvasObj, "EndlessStageButton", "무한스테이지", new Vector2(0.5f, 0.5f), () => {
                 Debug.Log("무한스테이지 버튼 클릭됨");
-                if (GameSceneManager.Instance != null)
-                {
-                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.EndlessStage);
-                }
-                else
-                {
-                    Debug.LogError("GameSceneManager.Instance가 null입니다!");
-                }
+                LoadScene("RnDEndlessStageScene");
             });
 
             CreateButton(canvasObj, "StoreButton", "상점", new Vector2(0.5f, 0.4f), () => {
                 Debug.Log("상점 버튼 클릭됨");
-                if (GameSceneManager.Instance != null)
-                {
-                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.Store);
-                }
-                else
-                {
-                    Debug.LogError("GameSceneManager.Instance가 null입니다!");
-                }
+                LoadScene("RnDStoreScene");
             });
 
             CreateButton(canvasObj, "PartyButton", "파티", new Vector2(0.5f, 0.3f), () => {
                 Debug.Log("파티 버튼 클릭됨");
-                if (GameSceneManager.Instance != null)
-                {
-                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.Party);
-                }
-                else
-                {
-                    Debug.LogError("GameSceneManager.Instance가 null입니다!");
-                }
+                LoadScene("RnDPartyScene");
             });
 
             CreateButton(canvasObj, "QuitButton", "게임 종료", new Vector2(0.5f, 0.2f), () => {
@@ -218,28 +190,14 @@ namespace YSK
                     new Vector2(0.15f + (i-1) * 0.23f, 0.4f), 
                     () => {
                         Debug.Log($"스테이지 {stageID} 버튼 클릭됨");
-                        if (GameSceneManager.Instance != null)
-                        {
-                            GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.BaseStage, stageID);
-                        }
-                        else
-                        {
-                            Debug.LogError("GameSceneManager.Instance가 null입니다!");
-                        }
+                        LoadScene($"BaseStage");
                     });
             }
             
             // 뒤로가기 버튼
             CreateButton(canvasObj, "BackButton", "뒤로가기", new Vector2(0.5f, 0.1f), () => {
                 Debug.Log("뒤로가기 버튼 클릭됨");
-                if (GameSceneManager.Instance != null)
-                {
-                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.MainMenu);
-                }
-                else
-                {
-                    Debug.LogError("GameSceneManager.Instance가 null입니다!");
-                }
+                LoadScene("RnDMainMenu");
             });
             
             Debug.Log("스테이지 선택 UI 생성 완료");
@@ -323,14 +281,7 @@ namespace YSK
             // 결과 화면으로 넘어가는 버튼 (테스트용)
             CreateButton(panelObj, "ResultButton", "결과화면", new Vector2(0.875f, 0.3f), () => {
                 Debug.Log("결과화면 버튼 클릭됨");
-                if (GameSceneManager.Instance != null)
-                {
-                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.Result, score: 1500, isWin: true);
-                }
-                else
-                {
-                    Debug.LogError("GameSceneManager.Instance가 null입니다!");
-                }
+                LoadScene("RnDResultScene");
             });
             
             Debug.Log($"게임 UI 생성 완료 - 스테이지 {stageID}");
@@ -418,26 +369,12 @@ namespace YSK
             int currentStageID = GameStateManager.Instance != null ? GameStateManager.Instance.CurrentStageID : 1;
             CreateButton(canvasObj, "RetryButton", "다시하기", new Vector2(0.3f, 0.3f), () => {
                 Debug.Log("다시하기 버튼 클릭됨");
-                if (GameSceneManager.Instance != null)
-                {
-                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.BaseStage, currentStageID);
-                }
-                else
-                {
-                    Debug.LogError("GameSceneManager.Instance가 null입니다!");
-                }
+                LoadScene($"BaseStage");
             });
             
             CreateButton(canvasObj, "MainMenuButton", "메인메뉴", new Vector2(0.7f, 0.3f), () => {
                 Debug.Log("메인메뉴 버튼 클릭됨");
-                if (GameSceneManager.Instance != null)
-                {
-                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.MainMenu);
-                }
-                else
-                {
-                    Debug.LogError("GameSceneManager.Instance가 null입니다!");
-                }
+                LoadScene("RnDMainMenu");
             });
             
             Debug.Log($"결과 UI 생성 완료 - 점수: {score}, 승리: {isWin}");
@@ -505,28 +442,14 @@ namespace YSK
                     new Vector2(0.2f + (i-1) * 0.3f, 0.4f), 
                     () => {
                         Debug.Log($"캐릭터 {charID} 선택됨");
-                        if (GameSceneManager.Instance != null)
-                        {
-                            GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.MainStageSelect);
-                        }
-                        else
-                        {
-                            Debug.LogError("GameSceneManager.Instance가 null입니다!");
-                        }
+                        LoadScene("MainStage");
                     });
             }
             
             // 뒤로가기 버튼
             CreateButton(canvasObj, "BackButton", "뒤로가기", new Vector2(0.5f, 0.1f), () => {
                 Debug.Log("뒤로가기 버튼 클릭됨");
-                if (GameSceneManager.Instance != null)
-                {
-                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.MainMenu);
-                }
-                else
-                {
-                    Debug.LogError("GameSceneManager.Instance가 null입니다!");
-                }
+                LoadScene("RnDMainMenu");
             });
             
             Debug.Log("캐릭터 선택 UI 생성 완료");
@@ -599,7 +522,7 @@ namespace YSK
                             // 선택된 메인 스테이지 정보 저장
                             PlayerPrefs.SetInt("SelectedMainStage", stageID);
                             PlayerPrefs.Save();
-                            GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.SubStageSelect);
+                            LoadScene("SubStage");
                         }
                         else
                         {
@@ -611,14 +534,7 @@ namespace YSK
             // 뒤로가기 버튼
             CreateButton(canvasObj, "BackButton", "뒤로가기", new Vector2(0.5f, 0.1f), () => {
                 Debug.Log("뒤로가기 버튼 클릭됨");
-                if (GameSceneManager.Instance != null)
-                {
-                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.MainMenu);
-                }
-                else
-                {
-                    Debug.LogError("GameSceneManager.Instance가 null입니다!");
-                }
+                LoadScene("RnDMainMenu");
             });
             
             Debug.Log("메인 스테이지 선택 UI 생성 완료");
@@ -690,7 +606,7 @@ namespace YSK
                         {
                             // 선택된 메인 스테이지 정보 가져오기 (기본값: 1)
                             int selectedMainStage = PlayerPrefs.GetInt("SelectedMainStage", 1);
-                            GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.BaseStage, selectedMainStage, stageID);
+                            LoadScene($"BaseStage");
                         }
                         else
                         {
@@ -702,14 +618,7 @@ namespace YSK
             // 뒤로가기 버튼
             CreateButton(canvasObj, "BackButton", "뒤로가기", new Vector2(0.5f, 0.1f), () => {
                 Debug.Log("뒤로가기 버튼 클릭됨");
-                if (GameSceneManager.Instance != null)
-                {
-                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.MainStageSelect);
-                }
-                else
-                {
-                    Debug.LogError("GameSceneManager.Instance가 null입니다!");
-                }
+                LoadScene("RnDMainStageSelectScene");
             });
             
             Debug.Log("서브 스테이지 선택 UI 생성 완료");
@@ -793,14 +702,7 @@ namespace YSK
             // 메인메뉴로 돌아가기 버튼
             CreateButton(panelObj, "MainMenuButton", "메인메뉴", new Vector2(0.875f, 0.3f), () => {
                 Debug.Log("메인메뉴로 이동");
-                if (GameSceneManager.Instance != null)
-                {
-                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.MainMenu);
-                }
-                else
-                {
-                    Debug.LogError("GameSceneManager.Instance가 null입니다!");
-                }
+                LoadScene("RnDMainMenu");
             });
             
             Debug.Log("3D 탄막 게임 UI 생성 완료");
@@ -872,14 +774,7 @@ namespace YSK
             // 메인메뉴로 돌아가기 버튼
             CreateButton(panelObj, "MainMenuButton", "메인메뉴", new Vector2(0.875f, 0.3f), () => {
                 Debug.Log("메인메뉴로 이동");
-                if (GameSceneManager.Instance != null)
-                {
-                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.MainMenu);
-                }
-                else
-                {
-                    Debug.LogError("GameSceneManager.Instance가 null입니다!");
-                }
+                LoadScene("RnDMainMenu");
             });
             
             Debug.Log("무한 모드 UI 생성 완료");
@@ -955,14 +850,7 @@ namespace YSK
             // 뒤로가기 버튼
             CreateButton(canvasObj, "BackButton", "뒤로가기", new Vector2(0.5f, 0.1f), () => {
                 Debug.Log("뒤로가기 버튼 클릭됨");
-                if (GameSceneManager.Instance != null)
-                {
-                    GameSceneManager.Instance.LoadScene(GameSceneManager.SceneType.MainMenu);
-                }
-                else
-                {
-                    Debug.LogError("GameSceneManager.Instance가 null입니다!");
-                }
+                LoadScene("RnDMainMenu");
             });
             
             Debug.Log("상점 UI 생성 완료");
@@ -1202,6 +1090,28 @@ namespace YSK
             
             return fontAsset;
         }
+        
+        /// <summary>
+        /// GameSceneManager.SceneType 대신 문자열 사용
+        /// </summary>
+        public void LoadScene(string sceneID)
+        {
+            if (GameSceneManager.Instance != null)
+            {
+                GameSceneManager.Instance.LoadScene(sceneID);
+            }
+            else
+            {
+                Debug.LogError("GameSceneManager.Instance가 null입니다!");
+            }
+        }
+        
+        /// <summary>
+        /// 편의 메서드들
+        /// </summary>
+        public void LoadMainMenu() => LoadScene("RnDMainMenu");
+        public void LoadBaseStage(int mainStageID = 1, int subStageID = 1) => LoadScene("RnDBaseStageScene");
+        public void LoadResult(int score = 0, bool isWin = true) => LoadScene("RnDResultScene");
         
         #endregion
     }

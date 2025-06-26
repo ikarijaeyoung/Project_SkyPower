@@ -152,16 +152,6 @@ namespace YSK
             int mainStageID = PlayerPrefs.GetInt("SelectedMainStage", 1);
             int subStageID = PlayerPrefs.GetInt("SelectedSubStage", 1);
             
-            // UI 텍스트 업데이트 - 메인-서브 형태로 표시
-            if (UIFactory.Instance != null)
-            {
-                UIFactory.Instance.UpdateStageText($"{mainStageID}-{subStageID}");
-            }
-            else
-            {
-                Debug.LogWarning("UIFactory를 찾을 수 없습니다!");
-            }
-            
             OnStageChanged?.Invoke(stageID);
         }
         
