@@ -364,6 +364,7 @@ MonoBehaviour:
   table:
     _filePath: LJ2/Scripts/IO/Csv/CsvToSO.csv
     <SplitSymbol>k__BackingField: 44
+  charictorData: {fileID: 11400000, guid: 08983dfbf996ac54491b12bd02f7792e, type: 2}
 --- !u!4 &1820923139
 Transform:
   m_ObjectHideFlags: 0
