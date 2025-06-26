@@ -12,7 +12,6 @@ namespace JYL
     {
         public BulletInfo[] bullet;
         private Transform[] transforms;
-        private int index = 0;
         private void Awake()
         {
             transforms = GetComponentsInChildren<Transform>();
