@@ -7,8 +7,12 @@ using UnityEngine.SceneManagement;
 namespace KYG_skyPower
 {
     [CreateAssetMenu(fileName = "SceneChangerManagerSO", menuName = "Manager/SceneChangerManager")]
-    public class SceneChangerManagerSO : ScriptableObject
+    public class SceneChangerManagerSO : SOSingleton<SceneChangerManagerSO>
     {
+        public override void Init()
+        {
+            // 후에 필요시
+        }
         public void LoadScene(string name) // 지정한 이름의 씬 로드
         {
             if (string.IsNullOrEmpty(name))
