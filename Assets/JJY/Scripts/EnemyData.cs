@@ -8,6 +8,7 @@ public class EnemyData : ScriptableObject
     [Header("Enemy Stats")]
     public int maxHP; // 몬스터 종류에 따라 최대 체력이 다른가?
     public Sprite enemyIcon;
+    public GameObject bulletPrefab; // 몬스터가 발사하는 총알 프리팹. => BulletPatternData를 상속받은 스크립트로 변경할 것.
 
     // Binary Tree Pattern을 여기서 어떻게 사용하나?
 

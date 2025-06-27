@@ -154,8 +154,9 @@ MonoBehaviour:
   itemPrefab: {fileID: 1448221701436002672, guid: c211a3be39fa1f64c813c52841db79b5,
     type: 3}
   itemCount: 40
-  dropRadius: 2
+  itemMoveLimitRange: 2
   dropItemSpeed: 1
+  itemStopTime: 1
 --- !u!4 &857080424
 Transform:
   m_ObjectHideFlags: 0
@@ -171,6 +172,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1086801821 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1733373949005940716, guid: b6bf1a1c214fe8140872893ec98130fe,
+    type: 3}
+  m_PrefabInstance: {fileID: 1852574097916921306}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acf716ee6c3828c48b1d345a2009c6f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1231606555
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,7 +561,7 @@ PrefabInstance:
     - target: {fileID: 3958047286832142781, guid: 382515b078d5ae443abc4aee0c779e5d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6982742924317362919, guid: 382515b078d5ae443abc4aee0c779e5d,
         type: 3}
@@ -723,6 +736,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BulletPool
       objectReference: {fileID: 0}
+    - target: {fileID: 3786523404056398468, guid: df334d57865a00d46b3159e7f5f777e0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7337762602393450240, guid: df334d57865a00d46b3159e7f5f777e0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -788,30 +806,13 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 588954578109089177, guid: b6bf1a1c214fe8140872893ec98130fe,
         type: 3}
-      propertyPath: enemyPrefabs.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 588954578109089177, guid: b6bf1a1c214fe8140872893ec98130fe,
-        type: 3}
-      propertyPath: enemyPrefabs.Array.data[0]
+      propertyPath: objectPool
       value: 
-      objectReference: {fileID: 4344951356574126065, guid: df440701e54dbd842a312f528baac31d,
-        type: 3}
-    - target: {fileID: 588954578109089177, guid: b6bf1a1c214fe8140872893ec98130fe,
-        type: 3}
-      propertyPath: enemyPrefabs.Array.data[1]
-      value: 
-      objectReference: {fileID: 4344951356574126065, guid: df440701e54dbd842a312f528baac31d,
-        type: 3}
+      objectReference: {fileID: 1086801821}
     - target: {fileID: 4911842180412060167, guid: b6bf1a1c214fe8140872893ec98130fe,
         type: 3}
       propertyPath: m_Name
       value: EnemySpawner
-      objectReference: {fileID: 0}
-    - target: {fileID: 4911842180412060167, guid: b6bf1a1c214fe8140872893ec98130fe,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5831717184260503411, guid: b6bf1a1c214fe8140872893ec98130fe,
         type: 3}
