@@ -23,8 +23,8 @@ namespace YSK
         [SerializeField] private float mapLength = 20;
 
         [Header("Transition Settings")]
-        [SerializeField] private bool enableTransition = true;
-        [SerializeField] private bool useFadeTransition = true;
+        [SerializeField] private bool enableTransition = false;
+        [SerializeField] private bool useFadeTransition = false;
         [SerializeField] private CanvasGroup fadePanel;
         [SerializeField] private float fadeDuration = 1f;
         [SerializeField] private AnimationCurve fadeCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
@@ -103,6 +103,13 @@ namespace YSK
         /// </summary>
         private void InitializeFadePanel()
         {
+            // GameSceneManager의 로딩 화면이 활성화되어 있으면 비활성화
+            if (GameSceneManager.Instance != null && GameSceneManager.Instance.IsLoadingScreenEnabled)
+            {
+                GameSceneManager.Instance.SetLoadingScreenEnabled(false);
+                Debug.Log("GameSceneManager 로딩 화면 비활성화");
+            }
+            
             // 전환 기능이 비활성화되어 있으면 페이드 패널을 생성하지 않음
             if (!enableTransition || !useFadeTransition)
             {
@@ -131,13 +138,13 @@ namespace YSK
                 GameObject canvasObj = new GameObject("TransitionCanvas");
                 canvas = canvasObj.AddComponent<Canvas>();
                 canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-                canvas.sortingOrder = 999; // 최상위에 표시
+                canvas.sortingOrder = 999; // GameSceneManager보다 낮게
                 canvasObj.AddComponent<CanvasScaler>();
                 canvasObj.AddComponent<GraphicRaycaster>();
             }
             
             // Fade Panel 생성
-            GameObject fadeObj = new GameObject("FadePanel");
+            GameObject fadeObj = new GameObject("StageFadePanel");
             fadeObj.transform.SetParent(canvas.transform, false);
             
             Image fadeImage = fadeObj.AddComponent<Image>();
