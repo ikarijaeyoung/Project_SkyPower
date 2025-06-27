@@ -1,10 +1,8 @@
 fileFormatVersion: 2
-
-guid: 755465d5ccdc9dd40a1da4272084fe93
-
-folderAsset: yes
-DefaultImporter:
+guid: 7732760aaacdfdb428a60e951a5ec1e3
+NativeFormatImporter:
   externalObjects: {}
+  mainObjectFileID: 112000000
   userData: 
   assetBundleName: 
   assetBundleVariant: 

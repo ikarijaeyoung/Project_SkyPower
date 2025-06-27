@@ -290,10 +290,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1c49c343c7c1d7f4fa92f3b191963113, type: 2}
   - {fileID: 11400000, guid: 75b7ec7daad056941a8609cd4e71d747, type: 2}
   - {fileID: 11400000, guid: 0c563732c7779bd48a0d43bee27514ec, type: 2}
+  maxMainStages: 4
+  maxSubStages: 5
   endPoint: {fileID: 68435474}
   startPoint: {fileID: 1109402535}
   speed: 1
   mapLength: 19.8
+  enableTransition: 1
+  useFadeTransition: 1
   fadePanel: {fileID: 0}
   fadeDuration: 1
   fadeCurve:
@@ -302,34 +306,25 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0.15513659
-      outSlope: 0.15513659
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.34779784
-    - serializedVersion: 3
-      time: 0.21060112
-      value: 0.63337845
-      inSlope: 1.4943285
-      outSlope: 1.4943285
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.9750061
-      value: 0.99842834
       inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
-    m_PreInfinity: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  mainCamera: {fileID: 362495733}
+  fadeColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!4 &159610134
 Transform:
   m_ObjectHideFlags: 0
@@ -413,7 +408,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 34
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -729,7 +724,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 53
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -903,6 +898,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameSceneManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3034378885704754324, guid: f5c2e630598244e479f94589b8fd2b8c,
+        type: 3}
+      propertyPath: customLoadingScreenPrefab
+      value: 
+      objectReference: {fileID: 8835225831514424816, guid: fd99729cffbfc0c49b9e979352c4551d,
+        type: 3}
     - target: {fileID: 8088591135873399683, guid: f5c2e630598244e479f94589b8fd2b8c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1053,7 +1054,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 687819926}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -48}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1062,7 +1063,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -800, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &687819928
@@ -1285,7 +1286,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1308640293}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1294,7 +1295,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10, y: 85}
+  m_AnchoredPosition: {x: -811, y: 85}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1308640295
@@ -1541,13 +1542,13 @@ MonoBehaviour:
   onGameOver:
     m_PersistentCalls:
       m_Calls: []
-  onScoreChanged:
-    m_PersistentCalls:
-      m_Calls: []
   onPause:
     m_PersistentCalls:
       m_Calls: []
   onResume:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameClear:
     m_PersistentCalls:
       m_Calls: []
 --- !u!4 &1641685612

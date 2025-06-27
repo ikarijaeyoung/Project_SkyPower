@@ -23,8 +23,8 @@ namespace YSK
         [SerializeField] private float mapLength = 20;
 
         [Header("Transition Settings")]
-        [SerializeField] private bool enableTransition = true;
-        [SerializeField] private bool useFadeTransition = true;
+        [SerializeField] private bool enableTransition = false;
+        [SerializeField] private bool useFadeTransition = false;
         [SerializeField] private CanvasGroup fadePanel;
         [SerializeField] private float fadeDuration = 1f;
         [SerializeField] private AnimationCurve fadeCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
@@ -64,14 +64,6 @@ namespace YSK
 
         #endregion
 
-        /// <summary>
-        /// GameStateManager에서 스테이지 변경 이벤트를 받았을 때 호출됩니다.
-        /// </summary>
-        private void OnStageChanged(int newStageID)
-        {
-            Debug.Log($"GameStateManager에서 스테이지 변경 요청: {newStageID}");
-            LoadStage(newStageID);
-        }
 
         /// <summary>
         /// 필요한 컴포넌트들을 초기화합니다.
@@ -80,7 +72,6 @@ namespace YSK
         {
             FindTransformPoints();
             InitializeFadePanel();
-            //FindGameStateManager();
         }
 
         /// <summary>
@@ -112,6 +103,13 @@ namespace YSK
         /// </summary>
         private void InitializeFadePanel()
         {
+            // GameSceneManager의 로딩 화면이 활성화되어 있으면 비활성화
+            if (GameSceneManager.Instance != null && GameSceneManager.Instance.IsLoadingScreenEnabled)
+            {
+                GameSceneManager.Instance.SetLoadingScreenEnabled(false);
+                Debug.Log("GameSceneManager 로딩 화면 비활성화");
+            }
+            
             // 전환 기능이 비활성화되어 있으면 페이드 패널을 생성하지 않음
             if (!enableTransition || !useFadeTransition)
             {
@@ -140,13 +138,13 @@ namespace YSK
                 GameObject canvasObj = new GameObject("TransitionCanvas");
                 canvas = canvasObj.AddComponent<Canvas>();
                 canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-                canvas.sortingOrder = 999; // 최상위에 표시
+                canvas.sortingOrder = 999; // GameSceneManager보다 낮게
                 canvasObj.AddComponent<CanvasScaler>();
                 canvasObj.AddComponent<GraphicRaycaster>();
             }
             
             // Fade Panel 생성
-            GameObject fadeObj = new GameObject("FadePanel");
+            GameObject fadeObj = new GameObject("StageFadePanel");
             fadeObj.transform.SetParent(canvas.transform, false);
             
             Image fadeImage = fadeObj.AddComponent<Image>();
@@ -170,6 +168,8 @@ namespace YSK
                 else if (Input.GetKeyDown(KeyCode.Alpha3)) HandleKey(3);
                 else if (Input.GetKeyDown(KeyCode.Alpha4)) HandleKey(4);
                 else if (Input.GetKeyDown(KeyCode.Alpha5)) HandleKey(5);
+                else if (Input.GetKeyDown(KeyCode.Alpha6)) HandleKey(6);
+                else if (Input.GetKeyDown(KeyCode.Alpha7)) HandleKey(7);
             }
         }
 
@@ -178,24 +178,40 @@ namespace YSK
             switch (keyNumber)
             {
                 case 1:
-                    Debug.Log("1번 키: 스테이지 클리어 및 다음 스테이지로");
-                    ClearCurrentStageAndNext();
+                    Debug.Log("1번 키: 스테이지 클리어 및 다음 스테이지로 (페이드 트랜지션 사용)");
+                    ClearCurrentStageAndNextWithTransition();
                     break;
                 case 2:
-                    Debug.Log("2번 키: 강제 맵 생성 테스트");
-                    ForceTestMapGeneration();
+                    Debug.Log("2번 키: 스테이지 클리어 및 다음 스테이지로 (페이드 트랜지션 없이)");
+                    ClearCurrentStageAndNext();
                     break;
                 case 3:
-                    Debug.Log("3번 키: 스테이지 진행 상태 초기화");
-                    ResetStageProgress();
+                    Debug.Log("3번 키: 강제 맵 생성 테스트");
+                    ForceTestMapGeneration();
                     break;
                 case 4:
-                    Debug.Log("4번 키: 2-3으로 강제 이동");
-                    ForceStage(1, 1);
+                    Debug.Log("4번 키: 스테이지 진행 상태 초기화");
+                    ResetStageProgress();
                     break;
                 case 5:
-                    Debug.Log("5번 키: 현재 상태 정보 출력");
+                    Debug.Log("5번 키: 2-3으로 강제 이동 (페이드 트랜지션 사용)");
+                    ForceStageWithTransition(1, 1);
+                    break;
+                case 6:
+                    Debug.Log("6번 키: 현재 상태 정보 출력");
                     DebugCurrentState();
+                    break;
+                case 7:
+                    Debug.Log("7번 키: 페이드 효과 테스트");
+                    if (fadePanel != null)
+                    {
+                        StartCoroutine(FadeOut());
+                        StartCoroutine(FadeIn());
+                    }
+                    else
+                    {
+                        Debug.LogError("fadePanel이 null입니다!");
+                    }
                     break;
                 default:
                     Debug.LogWarning("알 수 없는 키 입력");
@@ -436,24 +452,25 @@ namespace YSK
         /// <summary>
         /// 부드러운 스테이지 전환을 시작합니다.
         /// </summary>
-        /// <param name="newStageID">전환할 스테이지 ID</param>
+        /// <param name="mainStageID">전환할 메인 스테이지 ID</param>
+        /// <param name="subStageID">전환할 서브 스테이지 ID</param>
         /// <param name="isGameStart">게임 시작 여부 (true: 게임 시작, false: 스테이지 전환)</param>
-        public void StartStageTransition(int newStageID, bool isGameStart = false)
+        public void StartStageTransition(int mainStageID, int subStageID = 1, bool isGameStart = false)
         {
-            Debug.Log($"StageManager.StartStageTransition 호출: 스테이지 {newStageID}, 게임시작: {isGameStart}");
+            Debug.Log($"StageManager.StartStageTransition 호출: 메인 스테이지 {mainStageID}, 서브 스테이지 {subStageID}, 게임시작: {isGameStart}");
             
             // 전환 기능이 비활성화되어 있으면 즉시 전환
             if (!enableTransition)
             {
                 Debug.Log("전환 기능이 비활성화되어 즉시 전환합니다.");
-                ChangeStage(newStageID);
+                LoadStage(mainStageID, subStageID);
                 return;
             }
             
             if (!isTransitioning)
             {
                 Debug.Log("스테이지 전환 코루틴 시작");
-                StartCoroutine(TransitionCoroutine(newStageID, isGameStart));
+                StartCoroutine(TransitionCoroutine(mainStageID, subStageID, isGameStart));
             }
             else
             {
@@ -464,15 +481,15 @@ namespace YSK
         /// <summary>
         /// 페이드 인/아웃을 이용한 스테이지 전환
         /// </summary>
-        private IEnumerator TransitionCoroutine(int newStageID, bool isGameStart)
+        private IEnumerator TransitionCoroutine(int mainStageID, int subStageID, bool isGameStart)
         {
-            Debug.Log($"TransitionCoroutine 시작: 스테이지 {newStageID}");
+            Debug.Log($"TransitionCoroutine 시작: 메인 스테이지 {mainStageID}, 서브 스테이지 {subStageID}");
             isTransitioning = true;
             
             if (isGameStart)
             {
                 Debug.Log("게임 시작: 페이드 효과 없이 즉시 전환");
-                ChangeStage(newStageID);
+                LoadStage(mainStageID, subStageID);
             }
             else
             {
@@ -483,7 +500,7 @@ namespace YSK
                     yield return StartCoroutine(FadeOut());
                     
                     // 스테이지 전환
-                    ChangeStage(newStageID);
+                    LoadStage(mainStageID, subStageID);
                     
                     // 페이드 인
                     yield return StartCoroutine(FadeIn());
@@ -491,7 +508,7 @@ namespace YSK
                 else
                 {
                     Debug.Log("스테이지 전환: 페이드 효과 없이 즉시 전환");
-                    ChangeStage(newStageID);
+                    LoadStage(mainStageID, subStageID);
                 }
             }
             
@@ -575,12 +592,13 @@ namespace YSK
         /// <summary>
         /// 스테이지 버튼 클릭 이벤트 (UI에서 호출)
         /// </summary>
-        /// <param name="stageID">선택된 스테이지 ID</param>
-        public void OnStageButtonClick(int stageID)
+        /// <param name="mainStageID">선택된 메인 스테이지 ID</param>
+        /// <param name="subStageID">선택된 서브 스테이지 ID</param>
+        public void OnStageButtonClick(int mainStageID, int subStageID = 1)
         {
             if (!isTransitioning)
             {
-                StartStageTransition(stageID, false); // 스테이지 전환
+                StartStageTransition(mainStageID, subStageID, false);
             }
         }
 
@@ -729,6 +747,37 @@ namespace YSK
             //Debug.Log($"GameStateManager: {(GameStateManager.Instance != null ? "존재" : "null")}");
             Debug.Log($"PlayerPrefs - Main: {PlayerPrefs.GetInt("SelectedMainStage", 1)}, Sub: {PlayerPrefs.GetInt("SelectedSubStage", 1)}");
             Debug.Log("=== 현재 상태 정보 완료 ===");
+        }
+
+        // 페이드 트랜지션을 사용하는 테스트용 메서드들
+        public void ClearCurrentStageAndNextWithTransition()
+        {
+            int currentMainStage = PlayerPrefs.GetInt("SelectedMainStage", 1);
+            int currentSubStage = PlayerPrefs.GetInt("SelectedSubStage", 1);
+            
+            Debug.Log($"스테이지 클리어 (페이드 트랜지션 사용): {currentMainStage}-{currentSubStage}");
+            
+            // 다음 스테이지 계산
+            var nextStage = CalculateNextStage(currentMainStage, currentSubStage);
+            
+            if (nextStage.isGameComplete)
+            {
+                Debug.Log("모든 스테이지 클리어! 게임 클리어 처리");
+                OnGameComplete();
+                return;
+            }
+            
+            // 페이드 트랜지션으로 다음 스테이지로 전환
+            StartStageTransition(nextStage.mainStage, nextStage.subStage, false);
+            Debug.Log($"다음 스테이지로 전환 (페이드): {nextStage.mainStage}-{nextStage.subStage}");
+        }
+
+        public void ForceStageWithTransition(int mainStageID, int subStageID)
+        {
+            Debug.Log($"강제 스테이지 이동 (페이드 트랜지션 사용): {mainStageID}-{subStageID}");
+            
+            // 페이드 트랜지션으로 스테이지 전환 (PlayerPrefs는 LoadStage에서 업데이트됨)
+            StartStageTransition(mainStageID, subStageID, false);
         }
     }
 }

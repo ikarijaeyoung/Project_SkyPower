@@ -37,10 +37,10 @@ MonoBehaviour:
     subStageLock: 0
     subStageScore: 0
     customMapPrefabs:
-    - {fileID: 255603948662158416, guid: 591cdd1f4a4c9cf4b951994a1efabe7c, type: 3}
-    - {fileID: 7668984884236379141, guid: c8198c04befb152428d60590c330601c, type: 3}
-    - {fileID: 8380167807526418686, guid: b88c778b90a563c42ae28a475c36a6aa, type: 3}
-    - {fileID: 8380167807526418686, guid: 06f65bb35cebb714183e46ca9dcd30ce, type: 3}
+    - {fileID: 255603948662158416, guid: 0cbc744a2edf4be4c9a032658a1e11a7, type: 3}
+    - {fileID: 7668984884236379141, guid: 84f01115942a1874eb33a9264331240a, type: 3}
+    - {fileID: 8380167807526418686, guid: c4c694f42437f1d4fbf7d42b4d9d9161, type: 3}
+    - {fileID: 8380167807526418686, guid: 4a7efd12c417c4e45af6bd8dc5876fdf, type: 3}
   - subStageID: 3
     subStageName: 
     subStageLock: 0
