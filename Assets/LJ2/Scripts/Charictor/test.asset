@@ -21,3 +21,6 @@ MonoBehaviour:
   moveSpeed: 5
   bulletPrefab: {fileID: 3361279178069723379, guid: c4c2d92055be43642a8e5effc88525bd,
     type: 3}
+  dataTable:
+    _filePath: 
+    <SplitSymbol>k__BackingField: 49

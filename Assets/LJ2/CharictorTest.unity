@@ -144,6 +144,9 @@ MonoBehaviour:
   ultBullet: {fileID: 0}
   ultLaser: {fileID: 0}
   ultAll: {fileID: 0}
+  enemyBullet:
+    serializedVersion: 2
+    m_Bits: 0
   setUltDelay: 0
   canUseUlt: 0
 --- !u!114 &632246753
@@ -302,6 +305,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4156655018953658499}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1280415677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280415671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2e7320ef787bb04784abaf8ef105ed4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet:
+    serializedVersion: 2
+    m_Bits: 0
+  damage: 5
 --- !u!1 &1595930275
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,6 +607,11 @@ PrefabInstance:
       propertyPath: ultAll
       value: 
       objectReference: {fileID: 1280415671}
+    - target: {fileID: 2371787595919510463, guid: 9dceecfb8afd8614a916d340985e89ba,
+        type: 3}
+      propertyPath: enemyBullet.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
     - target: {fileID: 2573005343487360391, guid: 9dceecfb8afd8614a916d340985e89ba,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -676,7 +700,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3346603142328794570, guid: 9dceecfb8afd8614a916d340985e89ba,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1280415677}
   m_SourcePrefab: {fileID: 100100000, guid: 9dceecfb8afd8614a916d340985e89ba, type: 3}
 --- !u!1001 &4463097276343645808
 PrefabInstance:

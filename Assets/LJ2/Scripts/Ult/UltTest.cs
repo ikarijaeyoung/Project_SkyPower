@@ -84,7 +84,9 @@ public class UltTest : MonoBehaviour
     private IEnumerator EraseCoroutine()
     {
         yield return null;
+        
         Collider[] hits = Physics.OverlapBox(ultAll.transform.position, ultAll.transform.localScale / 2f, Quaternion.identity, enemyBullet);
+        
         Debug.Log("Erase 코루틴 진입");
         foreach (Collider c in hits)
         {
@@ -92,10 +94,13 @@ public class UltTest : MonoBehaviour
 
             c.gameObject.SetActive(false);
 
-
         }
+        ultAll.SetActive(true);
+        ultAll.SetActive(false);
         hits = null;
         ultRoutine = null;
+        Debug.Log("코루틴 종료");
+
         yield break;
     }
 }

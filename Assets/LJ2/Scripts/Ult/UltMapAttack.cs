@@ -6,33 +6,35 @@ public class UltMapAttack : MonoBehaviour
 {
     [SerializeField] LayerMask bullet;
     private Coroutine coroutine;
+    [SerializeField] int damage;
 
     private void OnEnable()
     {
-        coroutine = StartCoroutine(EraseCoroutine());
-    }
+        Collider[] hits = Physics.OverlapBox(transform.position, transform.localScale / 2f, Quaternion.identity);
 
-    private void OnDisable()
-    {
-        coroutine = null;
-    }
-
-    private IEnumerator EraseCoroutine()
-    {
-        yield return null;
-        Collider[] hits = Physics.OverlapBox(transform.position, transform.localScale / 2f, Quaternion.identity, bullet);
-        Debug.Log("Erase 코루틴 진입");
         foreach (Collider c in hits)
         {
-            Debug.Log("반복문 진입");
+            Debug.Log("TakeDamage 시도");
+            if (c.gameObject.GetComponent<Enemy>()) 
+            { 
+                Enemy enemy = c.gameObject.GetComponent<Enemy>();
+                enemy.TakeDamage(damage);
 
-            c.gameObject.SetActive(false);
-                
-            
+            }
         }
-        hits = null;
-        yield break;
     }
+
+    //private void OnDisable()
+    //{
+    //    coroutine = null;
+    //}
+
+    //private IEnumerator AllAttackCoroutine(int damage)
+    // {
+        
+        //hits = null;
+    //    yield break;
+    //}
 
     
 }
