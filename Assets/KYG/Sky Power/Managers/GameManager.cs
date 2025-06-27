@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
+using LJ2;
 
 
 namespace KYG_skyPower
@@ -19,6 +20,8 @@ namespace KYG_skyPower
 
     추가 기능
     이벤트 기반 코드로 확장성 고려
+    세이브 테이터를 배열로 게임 매니저가 가지고 와야 한다
+    게임 시작시 세이브 데이터 가지고 와서 가지고 있는다
 
     */
 
@@ -27,18 +30,36 @@ namespace KYG_skyPower
     {
         public UnityEvent onGameOver, onPause, onResume, onGameClear;
 
-        
+        public CharictorSave[] saveFiles = new CharictorSave[3]; // 세이브 파일 3개
+
+        public int currentSaveIndex { get; private set; } = 0;
+
+        public CharictorSave CurrentSave => saveFiles[currentSaveIndex]; // 세이브 파일 인덱스로 배열
+
         public bool isGameOver { get; private set; } // 게임 오버
         public bool isPaused { get; private set; } // 게임 일시 정지
 
         public bool isGameCleared { get; private set; } // 게임 클리어
 
+
+
         //[SerializeField] private int defaultPlayerHP = 5;
         //public int playerHp { get; private set; } // 플레이어에 붙을 수도 있지만 나중에 추가 될지 몰라 주석 처리
 
-        public override void Init()
+        public override void Init() // 게임 시작시 세이브 데이터 로드
         {
-            
+            for (int i = 0; i < saveFiles.Length; i++)
+            {
+                saveFiles[i] = new CharictorSave();
+                SaveManager.Instance.PlayerLoad(saveFiles[i], i + 1); // 인덱스 1부터
+
+            }
+        }
+
+        public void SelectSaveFile(int index)
+        {
+            if (index >= 0 && index < saveFiles.Length)
+                currentSaveIndex = index;
         }
 
         /*private void Awake() // 싱글톤 패턴
