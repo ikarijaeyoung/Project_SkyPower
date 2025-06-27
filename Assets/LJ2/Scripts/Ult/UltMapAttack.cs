@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class UltMapAttack : MonoBehaviour
 {
-    [SerializeField] LayerMask bullet;
-    private Coroutine coroutine;
     [SerializeField] int damage;
 
     private void OnEnable()
@@ -24,17 +22,7 @@ public class UltMapAttack : MonoBehaviour
         }
     }
 
-    //private void OnDisable()
-    //{
-    //    coroutine = null;
-    //}
-
-    //private IEnumerator AllAttackCoroutine(int damage)
-    // {
-        
-        //hits = null;
-    //    yield break;
-    //}
+    
 
     
 }
