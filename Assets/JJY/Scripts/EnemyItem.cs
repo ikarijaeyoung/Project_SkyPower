@@ -31,11 +31,10 @@ public class EnemyItem : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, player.position, magneticSpeed * Time.deltaTime);
         }
     }
-
-    void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         Debug.Log("들어옴");
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             Debug.Log("Player임");
             // 여기 왜 안 됨?
@@ -43,9 +42,11 @@ public class EnemyItem : MonoBehaviour
         }
     }
 
+
     void Collect()
     {
         Debug.Log("Enemy item collected.");
         Destroy(gameObject);
     }
 }
+
