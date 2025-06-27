@@ -21,8 +21,6 @@ namespace YSK
         [Header("Sub Stage Settings")]
         [Tooltip("서브 스테이지별 설정 (현재는 모든 서브 스테이지가 같은 맵 사용)")]
         public List<SubStageData> subStages = new List<SubStageData>();
- 
-        
 
     }
     

@@ -202,19 +202,10 @@ namespace YSK
         public void UpdateLoadingProgress(float progress)
         {
             progress = Mathf.Clamp01(progress);
-            OnLoadingProgressChanged?.Invoke(progress);
-            
             if (progressBar != null && showProgressBar)
-            {
                 progressBar.value = progress;
-                Debug.Log($"프로그레스바 업데이트: {progress:P0}");
-            }
-            
             if (progressText != null && showProgressPercentage)
-            {
-                progressText.text = $"{loadingText} {Mathf.RoundToInt(progress * 100)}%";
-                Debug.Log($"프로그레스 텍스트 업데이트: {progressText.text}");
-            }
+                progressText.text = $"{Mathf.RoundToInt(progress * 100)}%";
         }
         
         // Unity 인스펙터 OnClick()용 메서드들
@@ -279,6 +270,8 @@ namespace YSK
             if (showLoadingScreen)
             {
                 ShowLoadingScreen();
+                // 초기 진행률 설정
+                UpdateLoadingProgress(0f);
             }
             
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
@@ -291,14 +284,18 @@ namespace YSK
             
             asyncLoad.allowSceneActivation = false;
             
+            // 진행률 업데이트 루프 개선
             while (asyncLoad.progress < 0.9f)
             {
-                UpdateLoadingProgress(asyncLoad.progress / 0.9f);
+                float normalizedProgress = asyncLoad.progress / 0.9f;
+                UpdateLoadingProgress(normalizedProgress);
                 yield return null;
             }
             
+            // 최소 로딩 시간 대기
             yield return StartCoroutine(EnsureMinimumLoadingTime(sceneMinLoadingTime));
             
+            // 100% 완료 표시
             UpdateLoadingProgress(1f);
             yield return new WaitForSeconds(0.1f);
             
@@ -370,10 +367,45 @@ namespace YSK
                     DontDestroyOnLoad(canvas.gameObject);
                 }
                 
-                // 컴포넌트들 찾기
-                progressBar = loadingScreen.GetComponentInChildren<Slider>();
-                progressText = loadingScreen.GetComponentInChildren<TextMeshProUGUI>();
+                // 컴포넌트들 찾기 - 더 정확한 검색
+                var progressBarTr = loadingScreen.transform.Find("ProgressBar");
+                Debug.Log(progressBarTr != null ? "ProgressBar 찾음" : "ProgressBar 못 찾음");
+                if (progressBarTr != null)
+                {
+                    progressBar = progressBarTr.GetComponent<Slider>();
+                    Transform progressTextTr = progressBarTr.Find("ProgressText");
+                    if (progressTextTr != null)
+                        progressText = progressTextTr.GetComponent<TextMeshProUGUI>();
+                }
+                else
+                {
+                    Debug.LogWarning("ProgressBar 오브젝트를 찾을 수 없습니다!");
+                }
+                
                 loadingCanvasGroup = loadingScreen.GetComponent<CanvasGroup>();
+                
+                // 컴포넌트 검증 및 초기화
+                if (progressBar != null)
+                {
+                    progressBar.minValue = 0f;
+                    progressBar.maxValue = 1f;
+                    progressBar.value = 0f;
+                    Debug.Log("프로그레스바 컴포넌트 찾음 및 초기화 완료");
+                }
+                else
+                {
+                    Debug.LogWarning("프로그레스바 컴포넌트를 찾을 수 없습니다!");
+                }
+                
+                if (progressText != null)
+                {
+                    progressText.text = $"{loadingText} 0%";
+                    Debug.Log("프로그레스 텍스트 컴포넌트 찾음 및 초기화 완료");
+                }
+                else
+                {
+                    Debug.LogWarning("프로그레스 텍스트 컴포넌트를 찾을 수 없습니다!");
+                }
                 
                 Debug.Log("커스텀 로딩 화면 생성 완료");
                 return;
