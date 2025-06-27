@@ -11,7 +11,7 @@ public class EnemyItem : MonoBehaviour
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
         if (player == null)
         {
             Debug.Log("EnemyItem : Player가 할당되지 않음.");
@@ -31,19 +31,22 @@ public class EnemyItem : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, player.position, magneticSpeed * Time.deltaTime);
         }
     }
-
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        Debug.Log("들어옴");
+        if (other.gameObject.CompareTag("Player"))
         {
+            Debug.Log("Player임");
+            // 여기 왜 안 됨?
             Collect();
         }
     }
 
+
     void Collect()
     {
         Debug.Log("Enemy item collected.");
-        // TODO : 점수 증가 로직 추가 가능
         Destroy(gameObject);
     }
 }
+

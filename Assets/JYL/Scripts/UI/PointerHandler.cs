@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -15,15 +16,15 @@ namespace JYL
     IDragHandler,
     IEndDragHandler
     {
-        public UnityAction<PointerEventData> Click;
-        public UnityAction<PointerEventData> Up;
-        public UnityAction<PointerEventData> Down;
-        public UnityAction<PointerEventData> Move;
-        public UnityAction<PointerEventData> Enter;
-        public UnityAction<PointerEventData> Exit;
-        public UnityAction<PointerEventData> BeginDrag;
-        public UnityAction<PointerEventData> Drag;
-        public UnityAction<PointerEventData> EndDrag;
+        public event Action<PointerEventData> Click;
+        public event Action<PointerEventData> Up;
+        public event Action<PointerEventData> Down;
+        public event Action<PointerEventData> Move;
+        public event Action<PointerEventData> Enter;
+        public event Action<PointerEventData> Exit;
+        public event Action<PointerEventData> BeginDrag;
+        public event Action<PointerEventData> Drag;
+        public event Action<PointerEventData> EndDrag;
 
         public void OnPointerClick(PointerEventData eventData) => Click?.Invoke(eventData);
         public void OnPointerUp(PointerEventData eventData) => Up?.Invoke(eventData);
