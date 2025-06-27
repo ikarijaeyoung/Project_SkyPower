@@ -162,6 +162,7 @@ namespace YSK
                 else if (Input.GetKeyDown(KeyCode.Alpha4)) HandleKey(4);
                 else if (Input.GetKeyDown(KeyCode.Alpha5)) HandleKey(5);
                 else if (Input.GetKeyDown(KeyCode.Alpha6)) HandleKey(6);
+                else if (Input.GetKeyDown(KeyCode.Alpha7)) HandleKey(7);
             }
         }
 
@@ -192,6 +193,18 @@ namespace YSK
                 case 6:
                     Debug.Log("6번 키: 현재 상태 정보 출력");
                     DebugCurrentState();
+                    break;
+                case 7:
+                    Debug.Log("7번 키: 페이드 효과 테스트");
+                    if (fadePanel != null)
+                    {
+                        StartCoroutine(FadeOut());
+                        StartCoroutine(FadeIn());
+                    }
+                    else
+                    {
+                        Debug.LogError("fadePanel이 null입니다!");
+                    }
                     break;
                 default:
                     Debug.LogWarning("알 수 없는 키 입력");
