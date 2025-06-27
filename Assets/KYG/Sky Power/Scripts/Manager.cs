@@ -55,7 +55,6 @@ namespace KYG_skyPower
             //Character.Init();
             //Enemy.Init();
             //UI.Init();
-
             Score.Init();
             Dialogue.Init();
 
