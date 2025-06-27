@@ -187,12 +187,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1c49c343c7c1d7f4fa92f3b191963113, type: 2}
   - {fileID: 11400000, guid: 75b7ec7daad056941a8609cd4e71d747, type: 2}
   - {fileID: 11400000, guid: 0c563732c7779bd48a0d43bee27514ec, type: 2}
-  selectedstageID: 1
   endPoint: {fileID: 68435474}
   startPoint: {fileID: 1109402535}
   speed: 1
   mapLength: 19.8
-  gameStateManager: {fileID: 0}
 --- !u!4 &159610134
 Transform:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using UnityEngine;
 using IO;
 public class CharictorSave : SaveData
 {
+    public string name;
     public int level = 1;
     public int exp = 0;
     public string[] members;
