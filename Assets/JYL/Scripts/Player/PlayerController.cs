@@ -67,7 +67,7 @@ namespace JYL
             // 애니메이션 - 궁극기 등
         }
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider other)
         {
             // 적 총알에 맞으면 피격
         }
@@ -221,3 +221,33 @@ namespace JYL
         //}
     }
 }
+
+// 버튼 순서에 맞게 알아서 배치되게
+
+// Dictionary<string,Scene> sceneList;
+// sceneList  시작할 때, 빌드에 포함 된 씬 전부 저장
+// public int curScene  = sceneList[0]; // sceneList[scene.Title];
+
+// 
+// void SceneChange(string sceneName)
+// {
+//      씬 전환 적업이 일어남
+//      들어오는게 스테이지 = 
+//      -> 데이터 여기서 들어옴
+//      스테이지의 스크립터블 오브젝트가 필요함
+//      스테이지 저장
+//      stage_1,1
+//      string.split('_',',') -> string[] s = "stage","1","1" 
+//      s[0] => curScene
+//      int 
+//      s[1],[2] => int.parse
+//      curscene = 
+//      1-1 => 월드 변수, 스테이지 변수
+//      string 숫자 받아ㅏ오면됨
+//      curScene = sceneName
+// }
+// 
+// 스테이지마다 달라져야 하는것, 가져와야 하는 것
+// 라이트, 에너미(스포너), 에너미의  설정값, 보스, 엘리트몬스터
+// 맵데이터, 플레이어 데이터(자동), <= SceneChange
+// 

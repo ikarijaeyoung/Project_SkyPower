@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class EnemyItem : MonoBehaviour
 {
-    public EnemyDropItemData dropItem;
+    // public EnemyDropItemData dropItem;
+
+    // 자력 효과
     private Transform player;
     public float magneticRange = 3f;
     public float magneticSpeed = 5f;
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
         if (player == null)
         {
             Debug.Log("EnemyItem : Player가 할당되지 않음.");
@@ -31,19 +33,18 @@ public class EnemyItem : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, player.position, magneticSpeed * Time.deltaTime);
         }
     }
-
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             Collect();
         }
     }
-
     void Collect()
     {
         Debug.Log("Enemy item collected.");
-        // TODO : 점수 증가 로직 추가 가능
         Destroy(gameObject);
     }
 }
+
+

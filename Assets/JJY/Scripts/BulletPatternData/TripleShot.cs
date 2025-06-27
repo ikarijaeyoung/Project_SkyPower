@@ -4,36 +4,37 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using System;
+using JYL;
 
-[System.Serializable]
-[CreateAssetMenu(fileName = "TripleShotData", menuName = "BulletPattern/TripleShotData")]
 public class TripleShot : BulletPatternData
 {
     private int shotCount = 3;
-    private float delay= 0.1f;
-    private Coroutine shotRoutine;
-    public override void Shoot(Transform firePoint, GameObject bulletPrefab, float bulletSpeed)
+    private float delayBetweenshots = 0.1f;
+    private float fireDelay = 2f;
+    public float bulletReturnTimer = 1.5f;
+    public override IEnumerator Shoot(Transform firePoint, GameObject bulletPrefab, float bulletSpeed)
     {
-        
-        //shotRoutine = StartCoroutine(TripleShotDelay(firePoint,bulletPrefab,bulletSpeed));
-    }
+        BulletPrefabController bullets = objectPool.ObjectOut() as BulletPrefabController;
 
-    // MonoBehaviour를 상속받지 않기 때문에 사용 불가 = 사용하려면 MonoBehaviour를 상속받을 필요가 있음.
-    IEnumerator TripleShotDelay(Transform firePoint,GameObject bulletPrefab,float bulletSpeed)
-    {
-        for (int i = 0; i < shotCount; i++)
+        while (true)
         {
-            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-            Rigidbody rb = bullet.GetComponent<Rigidbody>();
-            if (rb != null)
+            // bullets.transform.position = firePoint.position;
+            for (int i = 0; i < shotCount; i++)
             {
-                rb.velocity = firePoint.forward * bulletSpeed;
-                // 대기
+                // bullet.ReturnToPool(bulletReturnTimer);
+                foreach (BulletInfo info in bullets.bullet)
+                {
+                    if (info.rig != null)
+                    {
+                        info.trans.gameObject.SetActive(true);
+                        info.trans.position = firePoint.position;
+                        info.rig.velocity = Vector3.zero;
+                        info.rig.AddForce(firePoint.forward * bulletSpeed, ForceMode.Impulse);
+                        yield return new WaitForSeconds(delayBetweenshots);
+                    }
+                }
             }
-            else Debug.Log("Triple Shot Error");
-
-            Debug.Log("Triple Shot : 두두두");
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(fireDelay);
         }
     }
 }

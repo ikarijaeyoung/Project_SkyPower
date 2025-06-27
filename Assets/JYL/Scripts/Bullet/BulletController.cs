@@ -12,7 +12,7 @@ namespace JYL
             rig.useGravity = false;
         }
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider other)
         {
             gameObject.SetActive(false);
         }

@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogueManager : MonoBehaviour
+namespace KYG_skyPower
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+
+    public class DialogueManager : Singleton<DialogueManager>
     {
-        
+        public override void Init()
+        {
+            // 필요성 확인
+        }
     }
 }

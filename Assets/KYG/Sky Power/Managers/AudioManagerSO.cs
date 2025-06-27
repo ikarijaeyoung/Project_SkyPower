@@ -5,19 +5,9 @@ using UnityEngine;
 namespace KYG_skyPower
 {
     [CreateAssetMenu(fileName = "AudioManagerSO", menuName = "Manager/AudioManager")]
-    public class AudioManagerSO : ScriptableObject
+    public class AudioManagerSO : SOSingleton<AudioManagerSO>
     {
-        private static AudioManagerSO instance;
-
-        public static AudioManagerSO Instance // 싱글톤 패턴
-        {
-            get
-            {
-                if (!instance)
-                    instance = Resources.Load<AudioManagerSO>("AudioManagerSO");
-                        return instance;
-            }
-        }
+        
 
         [Header("사운드 데이터베이스")]
         public AudioDataBase audioDB;
@@ -28,8 +18,9 @@ namespace KYG_skyPower
 
         private Dictionary<string, AudioData> audioDict; // 이름으로 데이터 찾는 딕셔너리
 
-        public void Init() // 오디오 DB 딕셔러리로 초기화
+        public override void Init() // 오디오 DB 딕셔러리로 초기화
         {
+            if (audioDict == null) return;
             audioDict = new Dictionary<string, AudioData>();
             foreach (var data in audioDB.audioList)
             {
