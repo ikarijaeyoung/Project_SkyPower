@@ -11,14 +11,14 @@ namespace JYL
         private Dictionary<string, Component> compDict;
         private void Awake()
         {
-            RectTransform[] transforms = GetComponentsInChildren<RectTransform>();
+            RectTransform[] transforms = GetComponentsInChildren<RectTransform>(true);
             goDict = new Dictionary<string, GameObject>(transforms.Length<<2);
             foreach (Transform t in transforms)
             {
                 goDict.TryAdd(t.gameObject.name, t.gameObject);
             }
 
-            Component[] components = GetComponentsInChildren<Component>();
+            Component[] components = GetComponentsInChildren<Component>(true);
             compDict = new Dictionary<string, Component>(components.Length << 2);
             foreach (Component comp in components)
             {
