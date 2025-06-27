@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class EnemyItem : MonoBehaviour
 {
-    public EnemyDropItemData dropItem;
+    // public EnemyDropItemData dropItem;
+
+    // 자력 효과
     private Transform player;
     public float magneticRange = 3f;
     public float magneticSpeed = 5f;
@@ -33,20 +35,16 @@ public class EnemyItem : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("들어옴");
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player임");
-            // 여기 왜 안 됨?
             Collect();
         }
     }
-
-
     void Collect()
     {
         Debug.Log("Enemy item collected.");
         Destroy(gameObject);
     }
 }
+
 

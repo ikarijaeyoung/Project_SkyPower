@@ -19,6 +19,4 @@ public class EnemyDropItemData : ScriptableObject
     public string itemName;
     public Sprite itemIcon; // 인게임 내에서 보일 모습.
     public float dropRate;
-
-    // 플레이어는 주변 아이템을 자력으로 흡수한다. => 아이템은 플레이어에게 어떻게 다가갈 것인가?
 }
