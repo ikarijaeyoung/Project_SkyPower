@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 8139530292015348620}
   m_Layer: 6
   m_Name: Player_1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -161,7 +161,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -187,6 +187,8 @@ MonoBehaviour:
   - {fileID: 8350127271031379903}
   - {fileID: 745479471625141119}
   muzzlePoint: {fileID: 5960060613956268451}
+  leftUI: {fileID: 0}
+  rightUI: {fileID: 0}
   bulletReturnTimer: 2
   fireDelay: 2
 --- !u!114 &8139530292015348620

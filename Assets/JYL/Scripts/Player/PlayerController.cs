@@ -67,7 +67,7 @@ namespace JYL
             // 애니메이션 - 궁극기 등
         }
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider other)
         {
             // 적 총알에 맞으면 피격
         }
