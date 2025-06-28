@@ -8,8 +8,9 @@ public class ParryingTest : MonoBehaviour
     [SerializeField] float invincibleTime;
     [SerializeField] float parryingRadius;
     [SerializeField] float destroyRadius;
+    [SerializeField] LayerMask enemyBullet;
     [SerializeField] LayerMask destroyLayer;
-    [SerializeField] Collider collider;
+    [SerializeField] SphereCollider charactorCollider;
     private Coroutine coroutine;
 
 
@@ -18,7 +19,7 @@ public class ParryingTest : MonoBehaviour
     private void Awake()
     {
         coroutineDelay = new WaitForSeconds(invincibleTime);
-        collider = GetComponent<Collider>();
+        charactorCollider = GetComponent<SphereCollider>();
     }
 
     private void Update()
@@ -31,7 +32,7 @@ public class ParryingTest : MonoBehaviour
 
     public void Parrying()
     {
-        Collider[] canParrying = Physics.OverlapCapsule(transform.position, Vector3.one * parryingRadius, 1, destroyLayer);
+        Collider[] canParrying = Physics.OverlapSphere(transform.position, parryingRadius, enemyBullet);
         Debug.Log("패링 진입");
         if (canParrying.Length > 0)
         {
@@ -43,7 +44,7 @@ public class ParryingTest : MonoBehaviour
                 Debug.Log("반복문 진입");
 
             }
-            coroutine = StartCoroutine(InvincibleCoroutine());
+            coroutine = StartCoroutine(EraseCoroutine());
 
         }
         else return;
@@ -54,14 +55,39 @@ public class ParryingTest : MonoBehaviour
     {
         Debug.Log("코루틴 진입");
 
-        collider.enabled = false;
+        charactorCollider.enabled = false;
         yield return coroutineDelay;
-        collider.enabled = true;
+        charactorCollider.enabled = true;
         coroutine = null;
         yield break;
 
     }
 
+    private IEnumerator EraseCoroutine()
+    {
+        yield return null;
 
+        Collider[] hits = Physics.OverlapSphere(transform.position, destroyRadius, destroyLayer);
 
+        Debug.Log("Erase 코루틴 진입");
+        foreach (Collider c in hits)
+        {
+            Debug.Log("반복문 진입");
+
+            c.gameObject.SetActive(false);
+
+        }
+        
+        hits = null;
+        coroutine = null;
+        Debug.Log("코루틴 종료");
+
+        yield break;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.black;
+        Gizmos.DrawWireSphere(transform.position, destroyRadius);
+    }
 }
