@@ -4,6 +4,7 @@ using UnityEngine;
 using YSK;
 using System.Collections;
 using UnityEngine.UI;
+using KYG_skyPower;
 
 namespace YSK
 {
@@ -36,6 +37,9 @@ namespace YSK
         private List<GameObject> spawnedMaps = new(); // 프리팹을 이용한 Stage Map 생성
         private List<GameObject> movingMaps = new(); // 현재 이동중인 맵.
         private bool isTransitioning = false;
+
+        [Header("Data Management")]
+        [SerializeField] private StageDataManager dataManager;
 
         #region Unity Lifecycle
 
@@ -72,6 +76,16 @@ namespace YSK
         {
             FindTransformPoints();
             InitializeFadePanel();
+            
+            // DataManager 찾기
+            if (dataManager == null)
+            {
+                dataManager = FindObjectOfType<StageDataManager>();
+                if (dataManager == null)
+                {
+                    Debug.LogWarning("StageDataManager를 찾을 수 없습니다!");
+                }
+            }
         }
 
         /// <summary>
@@ -778,6 +792,68 @@ namespace YSK
             
             // 페이드 트랜지션으로 스테이지 전환 (PlayerPrefs는 LoadStage에서 업데이트됨)
             StartStageTransition(mainStageID, subStageID, false);
+        }
+
+        /// <summary>
+        /// 스테이지 클리어 시 호출
+        /// </summary>
+        public void OnStageCompleted(int score = 0)
+        {
+            int currentMainStage = PlayerPrefs.GetInt("SelectedMainStage", 1);
+            int currentSubStage = PlayerPrefs.GetInt("SelectedSubStage", 1);
+            
+            Debug.Log($"스테이지 완료: {currentMainStage}-{currentSubStage}, 점수: {score}");
+            
+            if (dataManager != null)
+            {
+                // 점수 업데이트
+                dataManager.UpdateStageScore(currentMainStage, currentSubStage, score);
+                
+                // 완료 처리
+                dataManager.CompleteStage(currentMainStage, currentSubStage, Time.time);
+                
+                // 다음 스테이지 해금
+                UnlockNextStage(currentMainStage, currentSubStage);
+            }
+            
+            // GameManager 이벤트 발생
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.SetGameClear();
+            }
+        }
+
+        /// <summary>
+        /// 다음 스테이지 해금
+        /// </summary>
+        private void UnlockNextStage(int currentMainStage, int currentSubStage)
+        {
+            if (dataManager == null) return;
+            
+            var nextStage = CalculateNextStage(currentMainStage, currentSubStage);
+            
+            if (nextStage.isGameComplete)
+            {
+                Debug.Log("모든 스테이지 클리어!");
+                return;
+            }
+            
+            // 다음 스테이지 해금
+            dataManager.UnlockStage(nextStage.mainStage);
+            dataManager.UnlockSubStage(nextStage.mainStage, nextStage.subStage);
+            
+            Debug.Log($"다음 스테이지 해금: {nextStage.mainStage}-{nextStage.subStage}");
+        }
+
+        /// <summary>
+        /// 스테이지 로드 전 해금 상태 확인
+        /// </summary>
+        private bool CanLoadStage(int mainStageID, int subStageID)
+        {
+            if (dataManager == null) return true;
+            
+            return dataManager.IsStageUnlocked(mainStageID) && 
+                   dataManager.IsSubStageUnlocked(mainStageID, subStageID);
         }
     }
 }

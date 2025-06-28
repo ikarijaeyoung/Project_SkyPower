@@ -15,43 +15,36 @@ MonoBehaviour:
   scenes:
   - sceneName: RndMainMenu
     displayName: "\uBA54\uC778 \uBA54\uB274"
-    isAdditive: 0
+    description: "\uBA54\uC778 \uBA54\uB274 \uC52C"
     requiresLoadingScreen: 1
     minLoadingTime: 1
-    description: "\uBA54\uC778 \uBA54\uB274 \uC52C"
   - sceneName: RnDMainStageSelectScene
     displayName: "\uBA54\uC778 \uC2A4\uD14C\uC774\uC9C0 \uC120\uD0DD"
-    isAdditive: 0
+    description: "\uBA54\uC778 \uC2A4\uD14C\uC774\uC9C0 \uC120\uD0DD \uC52C"
     requiresLoadingScreen: 1
     minLoadingTime: 1
-    description: "\uBA54\uC778 \uC2A4\uD14C\uC774\uC9C0 \uC120\uD0DD \uC52C"
   - sceneName: RnDSubStageSelectScene
     displayName: "\uC11C\uBE0C \uC2A4\uD14C\uC774\uC9C0 \uC120\uD0DD"
-    isAdditive: 0
+    description: "\uC11C\uBE0C \uC2A4\uD14C\uC774\uC9C0 \uC120\uD0DD \uC52C"
     requiresLoadingScreen: 1
     minLoadingTime: 1
-    description: "\uC11C\uBE0C \uC2A4\uD14C\uC774\uC9C0 \uC120\uD0DD \uC52C"
   - sceneName: RnDBaseStageScene
     displayName: "\uAE30\uBCF8 \uC2A4\uD14C\uC774\uC9C0"
-    isAdditive: 0
+    description: "\uAE30\uBCF8 \uAC8C\uC784 \uC2A4\uD14C\uC774\uC9C0"
     requiresLoadingScreen: 1
     minLoadingTime: 1.5
-    description: "\uAE30\uBCF8 \uAC8C\uC784 \uC2A4\uD14C\uC774\uC9C0"
   - sceneName: RnDEndlessStageScene
     displayName: "\uBB34\uD55C \uC2A4\uD14C\uC774\uC9C0"
-    isAdditive: 0
+    description: "\uBB34\uD55C \uC2A4\uD14C\uC774\uC9C0"
     requiresLoadingScreen: 1
     minLoadingTime: 1.5
-    description: "\uBB34\uD55C \uC2A4\uD14C\uC774\uC9C0"
   - sceneName: RnDPartyScene
     displayName: "\uD30C\uD2F0"
-    isAdditive: 0
+    description: "\uD30C\uD2F0 \uC52C"
     requiresLoadingScreen: 1
     minLoadingTime: 1
-    description: "\uD30C\uD2F0 \uC52C"
   - sceneName: RnDStoreScene
     displayName: "\uC0C1\uC810"
-    isAdditive: 0
+    description: "\uC0C1\uC810 \uC52C"
     requiresLoadingScreen: 1
     minLoadingTime: 1
-    description: "\uC0C1\uC810 \uC52C"

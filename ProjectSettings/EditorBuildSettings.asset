@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/KYG/Prototype/Scenes/Test Scene2.unity
     guid: 4429047150bc8b94fb3d78141e2b3417
+  - enabled: 1
+    path: Assets/YSK/RnD/Scene/RnDMainMenu.unity
+    guid: d71c3b832aa45784ebf11d0a1a11978c
   m_configObjects: {}
