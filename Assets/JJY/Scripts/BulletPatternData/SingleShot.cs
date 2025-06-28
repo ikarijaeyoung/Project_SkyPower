@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using JYL;
 
+[CreateAssetMenu(fileName = "SingleShot", menuName = "ScriptableObject/BulletPattern/SingleShot")]
 public class SingleShot : BulletPatternData
 {
-    private float fireDelay = 1f;
+    public float fireDelay = 1f;
     public override IEnumerator Shoot(Transform firePoint, GameObject bulletPrefab, float bulletSpeed)
     {
-        BulletPrefabController bullets = objectPool.ObjectOut() as BulletPrefabController;
+        BulletPrefabController bullet = objectPool.ObjectOut() as BulletPrefabController;
         while (true)
         {
             // TODO : 오브젝트풀로 돌아가는 타이밍 다시 생각
             // bullet.ReturnToPool(bulletReturnTimer);
-            foreach (BulletInfo info in bullets.bullet)
+            foreach (BulletInfo info in bullet.bullet)
             {
                 if (info.rig != null)
                 {

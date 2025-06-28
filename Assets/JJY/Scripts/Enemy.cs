@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
     public static event Action<Vector3> OnEnemyDied; // 죽었을 때 사용되는 이벤트
     public BulletPatternData BulletPattern;
     private Coroutine curFireCoroutine;
+    public ObjectPool objectPool;
+
 
     // Enemy의 특성대로 총알 속도와 발사 간격을 조절.
     public float bulletSpeed = 10f;
@@ -21,6 +23,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         currentHP = enemyData.maxHP;
+        BulletPattern.SetPool(objectPool);
         Fire();
     }
     public void TakeDamage(int damage)
