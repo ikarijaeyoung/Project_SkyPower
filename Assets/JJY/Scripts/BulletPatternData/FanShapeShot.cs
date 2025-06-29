@@ -12,7 +12,7 @@ public class FanShapeShot : BulletPatternData
     public float fireDelay = 1f;
     public float fireDelayBetweenShots = 0f;
     public float fanShapeangle = 90;
-    public override IEnumerator Shoot(Transform firePoint, GameObject bulletPrefab, float bulletSpeed)
+    public override IEnumerator Shoot(Transform[] firePoints, GameObject bulletPrefab, float bulletSpeed)
     {
         // TODO : ReturnToPool()호출 타이밍 생각해야함. => 플레이어와 충돌 or 시간이 지날 때 ReturnToPool()해야하나?
         while (true)
@@ -20,23 +20,23 @@ public class FanShapeShot : BulletPatternData
             for (int i = 0; i < shotCount; i++)
             {
                 BulletPrefabController bullet = objectPool.ObjectOut() as BulletPrefabController;
-                float angle = i * (fanShapeangle / (shotCount - 1)) - (fanShapeangle / 2); // 마지막 +90f는 내 씬 기준 지금 방향이 틀어져있으므로, 지워도 됨.
-                firePoint.rotation = Quaternion.Euler(0, angle, 0); // Y축을 기준으로 회전
-                firePoint.forward = firePoint.rotation * Vector3.forward; // 회전된 방향으로 총구를 향하게 함
+                float angle = i * (fanShapeangle / (shotCount - 1)) - (fanShapeangle / 2) + 90f; // 마지막 +90f는 내 씬 기준 지금 방향이 틀어져있으므로, 지워도 됨.
+                firePoints[0].rotation = Quaternion.Euler(0, angle, 0); // Y축을 기준으로 회전
+                firePoints[0].forward = firePoints[0].rotation * Vector3.forward; // 회전된 방향으로 총구를 향하게 함
                 Debug.Log($"FanShapeShot angle : {angle}");
-                Debug.Log($"FanShapeShot firePoint.forward : {firePoint.forward}");
+                Debug.Log($"FanShapeShot firePoint.forward : {firePoints[0].forward}");
                 if (bullet != null)
                 {
-                    bullet.transform.position = firePoint.position;
+                    bullet.transform.position = firePoints[0].position;
 
                     foreach (BulletInfo info in bullet.bullet)
                     {
                         if (info.rig != null)
                         {
                             info.trans.gameObject.SetActive(true);
-                            info.trans.position = firePoint.position;
+                            info.trans.position = firePoints[0].position;
                             info.rig.velocity = Vector3.zero;
-                            info.rig.AddForce(firePoint.forward * bulletSpeed, ForceMode.Impulse);
+                            info.rig.AddForce(firePoints[0].forward * bulletSpeed, ForceMode.Impulse);
                         }
                     }
                 }

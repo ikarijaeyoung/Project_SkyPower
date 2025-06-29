@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18b3208c5330bb4459f1a37bc9d2c30f, type: 3}
   m_Name: TripleShot
   m_EditorClassIdentifier: 
-  bulletReturnTimer: 1.5
+  shotCount: 3
+  delayBetweenshots: 0.1
+  fireDelay: 2

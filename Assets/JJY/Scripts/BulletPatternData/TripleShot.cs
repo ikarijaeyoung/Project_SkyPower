@@ -12,7 +12,7 @@ public class TripleShot : BulletPatternData
     public int shotCount = 3;
     public float delayBetweenshots = 0.1f;
     public float fireDelay = 2f;
-    public override IEnumerator Shoot(Transform firePoint, GameObject bulletPrefab, float bulletSpeed)
+    public override IEnumerator Shoot(Transform[] firePoints, GameObject bulletPrefab, float bulletSpeed)
     {
         // TODO : ReturnToPool()호출 타이밍 생각해야함. => 플레이어와 충돌 or 시간이 지날 때 ReturnToPool()해야하나?
         while (true)
@@ -23,16 +23,16 @@ public class TripleShot : BulletPatternData
 
                 if (bullet != null)
                 {
-                    bullet.transform.position = firePoint.position;
+                    bullet.transform.position = firePoints[0].position;
 
                     foreach (BulletInfo info in bullet.bullet)
                     {
                         if (info.rig != null)
                         {
                             info.trans.gameObject.SetActive(true);
-                            info.trans.position = firePoint.position;
+                            info.trans.position = firePoints[0].position;
                             info.rig.velocity = Vector3.zero;
-                            info.rig.AddForce(firePoint.forward * bulletSpeed, ForceMode.Impulse);
+                            info.rig.AddForce(firePoints[0].forward * bulletSpeed, ForceMode.Impulse);
                         }
                     }
                 }

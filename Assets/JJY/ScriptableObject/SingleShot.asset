@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d4e528faa2e9714ab24d8e0d93410c2, type: 3}
   m_Name: SingleShot
   m_EditorClassIdentifier: 
+  fireDelay: 1

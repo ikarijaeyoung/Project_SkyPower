@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using JYL;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int currentHP;
     public bool isMoving = false; // 몬스터는 맵 밖에서 소환되어, 특정 위치로 애니메이터를 통해 이동된다. 이동중에는 공격을 하면 안되기 때문에 공격은 isMoving이 false일 때만 기능한다.
     // private float fireTimer;
-    public Transform firePoint;
+    public Transform[] firePoints;
     public static event Action<Vector3> OnEnemyDied; // 죽었을 때 사용되는 이벤트
     public BulletPatternData BulletPattern;
     private Coroutine curFireCoroutine;
@@ -38,7 +39,7 @@ public class Enemy : MonoBehaviour
     }
     private void Fire()
     {
-        curFireCoroutine = StartCoroutine(BulletPattern.Shoot(firePoint, enemyData.bulletPrefab, bulletSpeed));
+        curFireCoroutine = StartCoroutine(BulletPattern.Shoot(firePoints, enemyData.bulletPrefab, bulletSpeed));
     }
     private void Die()
     {
