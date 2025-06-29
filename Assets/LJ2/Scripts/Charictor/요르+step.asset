@@ -30,5 +30,5 @@ MonoBehaviour:
   ultLore: 
   ultVisual: {fileID: 0}
   parry: 0
-  parryCool: 0
+  parryCool: 10
   image: {fileID: 0}

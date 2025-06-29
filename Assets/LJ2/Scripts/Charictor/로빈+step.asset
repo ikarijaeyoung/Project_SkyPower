@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 10010
   grade: R
   name: "\uB85C\uBE48+step"
-  elemental: 0
+  elemental: 1
   maxLevel: 30
   hp: 100
   hpPlus: 5

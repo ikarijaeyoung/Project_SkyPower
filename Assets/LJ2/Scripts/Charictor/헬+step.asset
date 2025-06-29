@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 10005
   grade: SSR
   name: "\uD5EC+step"
-  elemental: 0
+  elemental: 2
   maxLevel: 30
   hp: 201
   hpPlus: 10
@@ -29,6 +29,6 @@ MonoBehaviour:
   ultCoolReduce: 10
   ultLore: 
   ultVisual: {fileID: 0}
-  parry: 0
-  parryCool: 0
+  parry: 2
+  parryCool: 5
   image: {fileID: 0}
