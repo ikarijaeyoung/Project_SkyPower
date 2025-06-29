@@ -809,6 +809,17 @@ PrefabInstance:
       propertyPath: objectPool
       value: 
       objectReference: {fileID: 1086801821}
+    - target: {fileID: 588954578109089177, guid: b6bf1a1c214fe8140872893ec98130fe,
+        type: 3}
+      propertyPath: enemyPrefabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 588954578109089177, guid: b6bf1a1c214fe8140872893ec98130fe,
+        type: 3}
+      propertyPath: enemyPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 4344951356574126065, guid: ca8cd7507fd8c0e448d31eba59e6d242,
+        type: 3}
     - target: {fileID: 4911842180412060167, guid: b6bf1a1c214fe8140872893ec98130fe,
         type: 3}
       propertyPath: m_Name
