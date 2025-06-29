@@ -10,24 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5043dd61d89d6e247ada5222321b7ca1, type: 3}
-  m_Name: CharictorDataTest
+  m_Name: "\uD074\uB808\uC544+step"
   m_EditorClassIdentifier: 
-  id: 0
-  grade: 
-  name: 
-  step: 0
+  id: 10002
+  grade: SSR
+  name: "\uD074\uB808\uC544+step"
   elemental: 0
-  maxLevel: 0
-  hp: 0
-  hpPlus: 0
+  maxLevel: 30
+  hp: 201
+  hpPlus: 10
   attackType: {fileID: 0}
-  attackDamage: 0
-  damagePlus: 0
-  attackSpeed: 0
-  moveSpeed: 0
-  defense: 0
-  ultCoolDefault: 0
-  ultCoolReduce: 0
+  attackDamage: 40
+  damagePlus: 10
+  attackSpeed: 0.75
+  moveSpeed: 100
+  defense: 2
+  ultCoolDefault: 80
+  ultCoolReduce: 10
   ultLore: 
   ultVisual: {fileID: 0}
   parry: 0
