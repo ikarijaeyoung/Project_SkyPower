@@ -8,6 +8,7 @@ namespace JYL
     {
         [SerializeField] string popUpPath = "JYL/UI/Canvas_PopUp";
         [SerializeField] string prefabPath = "JYL/UI";
+
         private PopUpUI popUp;
         public PopUpUI PopUp
 
@@ -31,7 +32,13 @@ namespace JYL
             }
         }
         protected override void Awake() => base.Awake();
-
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Instance.ClosePopUp();
+            }
+        }
         // ÆË¾÷ UI¸¦ ²¨³½´Ù
         public T ShowPopUp<T>() where T : BaseUI
         {
