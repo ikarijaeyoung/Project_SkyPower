@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5043dd61d89d6e247ada5222321b7ca1, type: 3}
-  m_Name: CharictorDataTest
+  m_Name: "\uD5EC+step"
   m_EditorClassIdentifier: 
-  id: 0
+  id: 10005
   grade: 0
-  name: test
-  elemental: 0
-  maxLevel: 0
-  hp: 0
-  hpPlus: 0
+  name: "\uD5EC+step"
+  elemental: 2
+  maxLevel: 30
+  hp: 201
+  hpPlus: 10
   attackType: {fileID: 0}
-  attackDamage: 0
-  damagePlus: 0
-  attackSpeed: 0
-  moveSpeed: 0
-  defense: 0
-  ultCoolDefault: 0
-  ultCoolReduce: 0
+  attackDamage: 20
+  damagePlus: 10
+  attackSpeed: 1
+  moveSpeed: 100
+  defense: 2
+  ultCoolDefault: 60
+  ultCoolReduce: 10
   ultLore: 
   ultVisual: {fileID: 0}
-  parry: 0
-  parryCool: 0
+  parry: 2
+  parryCool: 5
   image: {fileID: 0}
