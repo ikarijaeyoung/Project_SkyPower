@@ -8,7 +8,7 @@ using UnityEngine;
 public class CharacterData : ScriptableObject
 {
     public int id;
-    public string grade;
+    public Grade grade;
     public string name;
     
     public Elemental elemental;
@@ -36,6 +36,11 @@ public class CharacterData : ScriptableObject
 
 }
 
+public enum Grade
+{
+    SSR,
+    R
+}
 public enum Elemental 
 {
     ¹°,

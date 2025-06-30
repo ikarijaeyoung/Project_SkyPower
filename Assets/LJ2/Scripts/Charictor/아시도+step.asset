@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "\uC544\uC2DC\uB3C4+step"
   m_EditorClassIdentifier: 
   id: 10008
-  grade: R
+  grade: 1
   name: "\uC544\uC2DC\uB3C4+step"
   elemental: 2
   maxLevel: 30

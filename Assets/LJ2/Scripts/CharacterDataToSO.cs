@@ -9,8 +9,9 @@ public class CharacterDataToSO : MonoBehaviour
 {
     [SerializeField] private CsvTable table;
     private CharacterData characterData;
+    [SerializeField] public CharacterInventory characterInventory;
 
-    
+
     private void Start()
     {
         CsvReader.Read(table);
@@ -23,10 +24,14 @@ public class CharacterDataToSO : MonoBehaviour
         for (int i = 2; i < table.Table.GetLength(0); i++)
         {
             characterData = ScriptableObject.CreateInstance<CharacterData>();
+
             characterData.id = int.Parse(table.GetData(i, 0));
-            characterData.grade = table.GetData(i, 1);
+            characterInventory.AddCharacter(characterData.id);
+
+            
+            Enum.TryParse<Grade>(table.GetData(i, 1), out characterData.grade);
             characterData.name = table.GetData(i, 2);
-            Debug.Log(characterData.name);
+            //Debug.Log(characterData.name);
             Enum.TryParse<Elemental>(table.GetData(i, 5), out characterData.elemental);
             
             characterData.maxLevel = int.Parse(table.GetData(i, 7));
@@ -58,8 +63,9 @@ public class CharacterDataToSO : MonoBehaviour
             {
                 Debug.LogWarning($"파싱 실패: '{clean}' → 기본값 사용됨");
             }
-            int.TryParse(table.GetData(i, 24), out characterData.parryCool);
             */
+            int.TryParse(table.GetData(i, 24), out characterData.parryCool);
+            
 
             //charictorData.image = (Sprite)AssetDatabase.LoadAssetAtPath($"이미지 파일들 경로/{table.GetData(i, 26)}.Prefab", typeof(Sprite));
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "\uB8E8\uB098+step"
   m_EditorClassIdentifier: 
   id: 10003
-  grade: SSR
+  grade: 0
   name: "\uB8E8\uB098+step"
   elemental: 2
   maxLevel: 30
