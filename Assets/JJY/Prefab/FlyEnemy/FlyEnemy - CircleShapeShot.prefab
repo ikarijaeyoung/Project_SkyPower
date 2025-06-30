@@ -357,7 +357,8 @@ MonoBehaviour:
   - {fileID: 2238400592941883239}
   - {fileID: 5278972994410851216}
   - {fileID: 3609669958303110091}
-  BulletPattern: {fileID: 11400000, guid: 152e7646788583e40b7512c143c49e7d, type: 2}
+  BulletPattern:
+  - {fileID: 11400000, guid: 152e7646788583e40b7512c143c49e7d, type: 2}
   objectPool: {fileID: 7413765455485792788, guid: df334d57865a00d46b3159e7f5f777e0,
     type: 3}
   bulletSpeed: 10

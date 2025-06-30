@@ -188,7 +188,8 @@ MonoBehaviour:
   isMoving: 0
   firePoints:
   - {fileID: 7715130198389869489}
-  BulletPattern: {fileID: 11400000, guid: e4e1f50767b7b5340a7f3c4ac0469a9b, type: 2}
+  BulletPattern:
+  - {fileID: 0}
   objectPool: {fileID: 7413765455485792788, guid: df334d57865a00d46b3159e7f5f777e0,
     type: 3}
   bulletSpeed: 10

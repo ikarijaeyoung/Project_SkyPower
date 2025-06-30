@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using JYL;
 using UnityEngine;
+using Random = System.Random;
 
 public class Enemy : MonoBehaviour
 {
@@ -12,12 +14,9 @@ public class Enemy : MonoBehaviour
     // private float fireTimer;
     public Transform[] firePoints;
     public static event Action<Vector3> OnEnemyDied; // 죽었을 때 사용되는 이벤트
-    public BulletPatternData BulletPattern;
+    public BulletPatternData[] BulletPattern;
     private Coroutine curFireCoroutine;
     public ObjectPool objectPool;
-
-    [SerializeField]
-
 
     // Enemy의 특성대로 총알 속도와 발사 간격을 조절.
     public float bulletSpeed = 10f;
@@ -30,8 +29,11 @@ public class Enemy : MonoBehaviour
     void Init()
     {
         currentHP = enemyData.maxHP;
-        BulletPattern.SetPool(objectPool);
-        Fire();
+        for (int i = 0; i < BulletPattern.Length; i++)
+        {
+            BulletPattern[i].SetPool(objectPool);
+        }
+        StartCoroutine(ChangeFireMode());
         isMoving = false; // 테스트용
     }
     public void TakeDamage(int damage)
@@ -51,7 +53,7 @@ public class Enemy : MonoBehaviour
     }
     private void Fire()
     {
-        curFireCoroutine = StartCoroutine(BulletPattern.Shoot(firePoints, enemyData.bulletPrefab, bulletSpeed));
+        curFireCoroutine = StartCoroutine(BulletPattern[0].Shoot(firePoints, enemyData.bulletPrefab, bulletSpeed));
     }
     private void Die()
     {
@@ -61,5 +63,13 @@ public class Enemy : MonoBehaviour
         StopCoroutine(curFireCoroutine);
         // 죽는 애니메이션 실행.
         Destroy(gameObject);
+    }
+    IEnumerator ChangeFireMode()
+    {
+        Random random = new Random();
+        int ranNum = random.Next(0, BulletPattern.Length);
+        curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, enemyData.bulletPrefab, bulletSpeed));
+        yield return new WaitForSeconds(1.5f);
+        // StopCoroutine(curFireCoroutine);
     }
 }
