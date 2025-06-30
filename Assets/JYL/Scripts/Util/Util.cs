@@ -6,6 +6,7 @@ namespace JYL
 {
     public static class Util
     {
+        public static bool escPressed { get; private set; } = false;
         public static T GetOrAddComponent<T>(this GameObject go) where T : Component
         {
             T comp = go.GetComponent<T>();
@@ -32,9 +33,15 @@ namespace JYL
                 Debug.LogWarning("입력에 숫자가 없습니다");
                 return false;
             }
-
             return int.TryParse(input[(i + 1)..], out number);
-
+        }
+        public static void ConsumeESC()
+        {
+            escPressed = true;
+        }
+        public static void ResetESC()
+        {
+            if(escPressed) escPressed = false;
         }
     }
 }
