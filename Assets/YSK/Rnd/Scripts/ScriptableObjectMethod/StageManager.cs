@@ -4,6 +4,7 @@ using UnityEngine;
 using YSK;
 using System.Collections;
 using UnityEngine.UI;
+using KYG_skyPower;
 
 namespace YSK
 {
@@ -36,6 +37,9 @@ namespace YSK
         private List<GameObject> spawnedMaps = new(); // 프리팹을 이용한 Stage Map 생성
         private List<GameObject> movingMaps = new(); // 현재 이동중인 맵.
         private bool isTransitioning = false;
+
+        [Header("Data Management")]
+        [SerializeField] private StageDataManager dataManager;
 
         #region Unity Lifecycle
 
@@ -72,6 +76,16 @@ namespace YSK
         {
             FindTransformPoints();
             InitializeFadePanel();
+            
+            // DataManager 찾기
+            if (dataManager == null)
+            {
+                dataManager = FindObjectOfType<StageDataManager>();
+                if (dataManager == null)
+                {
+                    Debug.LogWarning("StageDataManager를 찾을 수 없습니다!");
+                }
+            }
         }
 
         /// <summary>
@@ -477,7 +491,33 @@ namespace YSK
                 Debug.LogWarning("이미 전환 중입니다!");
             }
         }
-        
+
+        /// <summary>
+        ///  검은화면에서 페이드 인을 이용한 스테이지 전환
+        /// </summary>
+        public void StartStageTransitionOnlyFadeIn(int mainStageID, int subStageID = 1, bool isGameStart = false)
+        {
+            Debug.Log($"StageManager.StartStageTransition 호출: 메인 스테이지 {mainStageID}, 서브 스테이지 {subStageID}, 게임시작: {isGameStart}");
+
+            // 전환 기능이 비활성화되어 있으면 즉시 전환
+            if (!enableTransition)
+            {
+                Debug.Log("전환 기능이 비활성화되어 즉시 전환합니다.");
+                LoadStage(mainStageID, subStageID);
+                return;
+            }
+
+            if (!isTransitioning)
+            {
+                Debug.Log("스테이지 전환 코루틴 시작");
+                StartCoroutine(TransitionWithFadeInCoroutine(mainStageID, subStageID, isGameStart));
+            }
+            else
+            {
+                Debug.LogWarning("이미 전환 중입니다!");
+            }
+        }
+
         /// <summary>
         /// 페이드 인/아웃을 이용한 스테이지 전환
         /// </summary>
@@ -515,7 +555,55 @@ namespace YSK
             isTransitioning = false;
             Debug.Log("TransitionCoroutine 완료");
         }
-        
+
+
+        /// <summary>
+        /// 페이드 인만 사용하는 전환 코루틴
+        /// </summary>
+        private IEnumerator TransitionWithFadeInCoroutine(int mainStageID, int subStageID, bool isGameStart)
+        {
+            Debug.Log($"TransitionWithFadeInCoroutine 시작: 메인 스테이지 {mainStageID}, 서브 스테이지 {subStageID}");
+            isTransitioning = true;
+
+            if (isGameStart)
+            {
+                Debug.Log("게임 시작: 바로 스테이지 로드");
+                LoadStage(mainStageID, subStageID);
+            }
+            else
+            {
+                if (useFadeTransition)
+                {
+                    Debug.Log("스테이지 전환: 페이드 인만 사용");
+
+                    // 페이드 패널을 검은색으로 설정 (페이드 아웃 효과 대신)
+                    if (fadePanel != null)
+                    {
+                        fadePanel.alpha = 1f;
+                        fadePanel.gameObject.SetActive(true);
+                    }
+
+                    // 먼저 스테이지 로드 (검은 화면 상태)
+                    LoadStage(mainStageID, subStageID);
+
+                    // 잠시 대기하여 스테이지가 완전히 로드되도록 함
+                    yield return new WaitForSeconds(0.1f);
+
+                    // 페이드 인만 실행
+                    yield return StartCoroutine(FadeIn());
+                }
+                else
+                {
+                    Debug.Log("스테이지 전환: 페이드 효과 없이 바로 전환");
+                    LoadStage(mainStageID, subStageID);
+                }
+            }
+
+            isTransitioning = false;
+            Debug.Log("TransitionWithFadeInCoroutine 완료");
+        }
+
+
         private IEnumerator FadeOut()
         {
             if (fadePanel == null)
@@ -778,6 +866,68 @@ namespace YSK
             
             // 페이드 트랜지션으로 스테이지 전환 (PlayerPrefs는 LoadStage에서 업데이트됨)
             StartStageTransition(mainStageID, subStageID, false);
+        }
+
+        /// <summary>
+        /// 스테이지 클리어 시 호출
+        /// </summary>
+        public void OnStageCompleted(int score = 0)
+        {
+            int currentMainStage = PlayerPrefs.GetInt("SelectedMainStage", 1);
+            int currentSubStage = PlayerPrefs.GetInt("SelectedSubStage", 1);
+            
+            Debug.Log($"스테이지 완료: {currentMainStage}-{currentSubStage}, 점수: {score}");
+            
+            if (dataManager != null)
+            {
+                // 점수 업데이트
+                dataManager.UpdateStageScore(currentMainStage, currentSubStage, score);
+                
+                // 완료 처리
+                dataManager.CompleteStage(currentMainStage, currentSubStage, Time.time);
+                
+                // 다음 스테이지 해금
+                UnlockNextStage(currentMainStage, currentSubStage);
+            }
+            
+            // GameManager 이벤트 발생
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.SetGameClear();
+            }
+        }
+
+        /// <summary>
+        /// 다음 스테이지 해금
+        /// </summary>
+        private void UnlockNextStage(int currentMainStage, int currentSubStage)
+        {
+            if (dataManager == null) return;
+            
+            var nextStage = CalculateNextStage(currentMainStage, currentSubStage);
+            
+            if (nextStage.isGameComplete)
+            {
+                Debug.Log("모든 스테이지 클리어!");
+                return;
+            }
+            
+            // 다음 스테이지 해금
+            dataManager.UnlockStage(nextStage.mainStage);
+            dataManager.UnlockSubStage(nextStage.mainStage, nextStage.subStage);
+            
+            Debug.Log($"다음 스테이지 해금: {nextStage.mainStage}-{nextStage.subStage}");
+        }
+
+        /// <summary>
+        /// 스테이지 로드 전 해금 상태 확인
+        /// </summary>
+        private bool CanLoadStage(int mainStageID, int subStageID)
+        {
+            if (dataManager == null) return true;
+            
+            return dataManager.IsStageUnlocked(mainStageID) && 
+                   dataManager.IsSubStageUnlocked(mainStageID, subStageID);
         }
     }
 }

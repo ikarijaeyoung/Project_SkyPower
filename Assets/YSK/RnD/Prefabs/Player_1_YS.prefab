@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 8205956720404344412}
   - component: {fileID: 8139530292015348620}
   m_Layer: 6
-  m_Name: Player_1
+  m_Name: Player_1_YS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -187,6 +187,8 @@ MonoBehaviour:
   - {fileID: 8350127271031379903}
   - {fileID: 745479471625141119}
   muzzlePoint: {fileID: 5960060613956268451}
+  leftUI: {fileID: 0}
+  rightUI: {fileID: 0}
   bulletReturnTimer: 2
   fireDelay: 2
 --- !u!114 &8139530292015348620
