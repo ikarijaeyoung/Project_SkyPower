@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using IO;
+using JYL;
 
-public class CharacterInventory : MonoBehaviour
+public class CharacterInventory : Singleton<CharacterInventory>
 {
     [SerializeField] public List<CharacterSave> characters = new List<CharacterSave>();
     
