@@ -14,4 +14,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/KYG/Prototype/Scenes/Test Scene2.unity
     guid: 4429047150bc8b94fb3d78141e2b3417
+  - enabled: 1
+    path: Assets/JYL/Scenes/aTitleScene_JYL.unity
+    guid: 742a7e75db19549479d39cf47ff5192e
+  - enabled: 1
+    path: Assets/JYL/Scenes/bMainScene_JYL.unity
+    guid: 2f7df7cc9cd711a4bad197419cbbed8d
+  - enabled: 1
+    path: Assets/JYL/Scenes/cStoreScene_JYL.unity
+    guid: d04c861c10973f240af8183113af4000
+  - enabled: 1
+    path: Assets/JYL/Scenes/dStageScene_JYL.unity
+    guid: d2887e0f5cb59dd408266c17e96f73b7
   m_configObjects: {}

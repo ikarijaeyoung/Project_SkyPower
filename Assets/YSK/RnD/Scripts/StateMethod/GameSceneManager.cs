@@ -19,26 +19,18 @@ namespace YSK
         [SerializeField] private SceneData sceneData;
         
         [Header("Loading Screen Settings")]
-        [SerializeField] private bool enableLoadingScreen = true;
-        [SerializeField] private bool showLoadingOnSceneStart = true;
+        [Tooltip("로딩 화면을 사용할지 여부 (기본값: false)")]
+        [SerializeField] private bool enableLoadingScreen = false;
+        
+        [Tooltip("씬 시작 시 로딩 화면을 표시할지 여부")]
+        [SerializeField] private bool showLoadingOnSceneStart = false;
+        
+        [Tooltip("최소 로딩 시간 (초)")]
         [SerializeField] private float minLoadingTime = 1f;
-        [SerializeField] private TMP_FontAsset notoSansKRFont;
         
         [Header("Loading Screen UI")]
+        [Tooltip("로딩 화면 프리팹 (null이면 로딩 화면을 사용하지 않음)")]
         [SerializeField] private GameObject customLoadingScreenPrefab;
-        [SerializeField] private Color loadingBackgroundColor = new Color(0.1f, 0.1f, 0.3f, 0.9f);
-        [SerializeField] private Color loadingTextColor = Color.white;
-        [SerializeField] private Color progressBarColor = new Color(0.2f, 0.6f, 1f, 1f);
-        [SerializeField] private string loadingText = "로딩 중...";
-        [SerializeField] private bool showProgressPercentage = true;
-        [SerializeField] private bool showProgressBar = true;
-        
- 
-        
-        /// <summary>
-        /// 씬 타입 열거형
-        /// </summary>
-        // public enum SceneType { ... } 삭제
         
         // 싱글톤 패턴
         public static GameSceneManager Instance { get; private set; }
@@ -46,7 +38,6 @@ namespace YSK
         // 이벤트
         public static event Action<string> OnSceneLoadStarted;
         public static event Action<string> OnSceneLoadCompleted;
-        public static event Action<float> OnLoadingProgressChanged;
         
         // 프로퍼티
         public bool IsLoading { get; private set; }
@@ -85,7 +76,7 @@ namespace YSK
             }
             
             // 씬 시작 시 로딩 화면 표시 옵션
-            if (showLoadingOnSceneStart && enableLoadingScreen)
+            if (showLoadingOnSceneStart && enableLoadingScreen && customLoadingScreenPrefab != null)
             {
                 ShowLoadingScreen();
                 StartCoroutine(HideLoadingScreenAfterDelay(0.5f));
@@ -96,6 +87,28 @@ namespace YSK
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
             SceneManager.sceneUnloaded -= OnSceneUnloaded;
+        }
+        
+        private void Update()
+        {
+            // 새로 추가할 테스트용 키 입력
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                Debug.Log("T키: 테스트 씬 로드 (1-1 스테이지)");
+                LoadTestSceneWithStage1_1();
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                Debug.Log("Y키: 테스트 씬 로드 (2-1 스테이지)");
+                LoadTestSceneWithStage2_1();
+            }
+            
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                Debug.Log("U키: 테스트 씬 로드 (3-1 스테이지)");
+                LoadTestSceneWithStage3_1();
+            }
         }
         
         #endregion
@@ -113,6 +126,17 @@ namespace YSK
         /// </summary>
         public void LoadGameScene(string sceneName, int mainStageID = 1, int subStageID = 1, int score = 0, bool isWin = true)
         {
+            // 오브젝트가 비활성화되어 있으면 활성화
+            if (!gameObject.activeInHierarchy)
+            {
+                Debug.LogWarning("GameSceneManager가 비활성화되어 있어서 활성화합니다.");
+                gameObject.SetActive(true);
+                
+                // 활성화 후 잠시 대기
+                StartCoroutine(LoadSceneAfterActivation(sceneName, mainStageID, subStageID, score, isWin));
+                return;
+            }
+            
             HandleSceneSpecificData(sceneName, mainStageID, subStageID, score, isWin);
             StartCoroutine(LoadSceneAsync(sceneName));
         }
@@ -150,9 +174,15 @@ namespace YSK
                 return;
             }
             
+            if (customLoadingScreenPrefab == null)
+            {
+                Debug.LogWarning("로딩 화면 프리팹이 설정되지 않았습니다! 로딩 화면을 건너뜁니다.");
+                return;
+            }
+            
             if (loadingScreen == null)
             {
-                Debug.LogError("로딩 화면이 생성되지 않았습니다!");
+                Debug.LogWarning("로딩 화면이 생성되지 않았습니다! 로딩 화면을 건너뜁니다.");
                 return;
             }
             
@@ -173,14 +203,8 @@ namespace YSK
             
             if (progressText != null)
             {
-                progressText.text = $"{loadingText} 0%";
+                progressText.text = "0%";
                 Debug.Log($"프로그레스 텍스트 설정: {progressText.text}");
-            }
-            
-            if (loadingTextComponent != null)
-            {
-                loadingTextComponent.text = loadingText;
-                Debug.Log($"로딩 텍스트 설정: {loadingTextComponent.text}");
             }
             
             Debug.Log("=== ShowLoadingScreen 완료 ===");
@@ -202,23 +226,103 @@ namespace YSK
         public void UpdateLoadingProgress(float progress)
         {
             progress = Mathf.Clamp01(progress);
-            if (progressBar != null && showProgressBar)
+            if (progressBar != null)
                 progressBar.value = progress;
-            if (progressText != null && showProgressPercentage)
+            if (progressText != null)
                 progressText.text = $"{Mathf.RoundToInt(progress * 100)}%";
         }
         
         // Unity 인스펙터 OnClick()용 메서드들
-        public void LoadMainMenu() => LoadGameScene("RnDMainMenu");
-        public void LoadMainStageSelect() => LoadGameScene("RnDMainStageSelectScene");
-        public void LoadSubStageSelect() => LoadGameScene("RnDSubStageSelectScene");
-        public void LoadBaseStage() => LoadGameScene("RnDBaseStageScene");
-        public void LoadEndlessStage() => LoadGameScene("RnDEndlessStageScene");
-        public void LoadStore() => LoadGameScene("RnDStoreScene");
-        public void LoadParty() => LoadGameScene("RnDPartyScene");
-        public void LoadTestScene() => LoadGameScene("RnDBaseStageTestScene");
-        public void ReloadCurrentScene() => LoadGameScene(CurrentSceneName);
-        public void QuitGame() => Application.Quit();
+        public void LoadMainMenu() 
+        {
+            Debug.Log("LoadMainMenu 버튼 클릭됨!");
+            LoadGameScene("RnDMainMenu");
+        }
+
+        public void LoadMainStageSelect() 
+        {
+            Debug.Log("LoadMainStageSelect 버튼 클릭됨!");
+            LoadGameScene("RnDMainStageSelectScene");
+        }
+
+        public void LoadSubStageSelect() 
+        {
+            Debug.Log("LoadSubStageSelect 버튼 클릭됨!");
+            LoadGameScene("RnDSubStageSelectScene");
+        }
+
+        public void LoadBaseStage() 
+        {
+            Debug.Log("LoadBaseStage 버튼 클릭됨!");
+            LoadGameScene("RnDBaseStageScene");
+        }
+
+        public void LoadEndlessStage() 
+        {
+            Debug.Log("LoadEndlessStage 버튼 클릭됨!");
+            LoadGameScene("RnDEndlessStageScene");
+        }
+
+        public void LoadStore() 
+        {
+            Debug.Log("LoadStore 버튼 클릭됨!");
+            LoadGameScene("RnDStoreScene");
+        }
+
+        public void LoadParty() 
+        {
+            Debug.Log("LoadParty 버튼 클릭됨!");
+            LoadGameScene("RnDPartyScene");
+        }
+
+        public void LoadTestScene() 
+        {
+            Debug.Log("LoadTestScene 버튼 클릭됨!");
+            LoadGameScene("RnDBaseStageTestScene");
+        }
+
+        // 새로 추가할 테스트용 메서드들
+        public void LoadTestSceneWithStage1_1() 
+        {
+            Debug.Log("LoadTestSceneWithStage1_1 버튼 클릭됨!");
+            LoadGameSceneWithStage("RnDBaseStageTestScene", 1, 1);
+        }
+
+        public void LoadTestSceneWithStage1_2() 
+        {
+            Debug.Log("LoadTestSceneWithStage1_2 버튼 클릭됨!");
+            LoadGameSceneWithStage("RnDBaseStageTestScene", 1, 2);
+        }
+
+        public void LoadTestSceneWithStage2_1() 
+        {
+            Debug.Log("LoadTestSceneWithStage2_1 버튼 클릭됨!");
+            LoadGameSceneWithStage("RnDBaseStageTestScene", 2, 1);
+        }
+
+        public void LoadTestSceneWithStage2_2() 
+        {
+            Debug.Log("LoadTestSceneWithStage2_2 버튼 클릭됨!");
+            LoadGameSceneWithStage("RnDBaseStageTestScene", 2, 2);
+        }
+
+        public void LoadTestSceneWithStage3_1() 
+        {
+            Debug.Log("LoadTestSceneWithStage3_1 버튼 클릭됨!");
+            LoadGameSceneWithStage("RnDBaseStageTestScene", 3, 1);
+        }
+
+        public void ReloadCurrentScene() 
+        {
+            Debug.Log("ReloadCurrentScene 버튼 클릭됨!");
+            LoadGameScene(CurrentSceneName);
+        }
+
+        public void QuitGame() 
+        {
+            Debug.Log("QuitGame 버튼 클릭됨!");
+            Application.Quit();
+        }
         
         #endregion
         
@@ -226,7 +330,16 @@ namespace YSK
         
         private void InitializeSceneManager()
         {
-            CreateLoadingScreen();
+            // 로딩 화면 프리팹이 있을 때만 생성
+            if (customLoadingScreenPrefab != null)
+            {
+                CreateLoadingScreen();
+            }
+            else
+            {
+                Debug.Log("로딩 화면 프리팹이 설정되지 않아 로딩 화면을 사용하지 않습니다.");
+            }
+            
             SceneManager.sceneLoaded += OnSceneLoaded;
             SceneManager.sceneUnloaded += OnSceneUnloaded;
         }
@@ -262,7 +375,7 @@ namespace YSK
             
             // 씬 정보 가져오기
             SceneData.SceneInfo sceneInfo = sceneData.GetSceneInfo(sceneName);
-            bool showLoadingScreen = (sceneInfo?.requiresLoadingScreen ?? true) && enableLoadingScreen;
+            bool showLoadingScreen = (sceneInfo?.requiresLoadingScreen ?? true) && enableLoadingScreen && customLoadingScreenPrefab != null;
             float sceneMinLoadingTime = sceneInfo?.minLoadingTime ?? minLoadingTime;
             
             Debug.Log($"씬 정보: showLoadingScreen={showLoadingScreen}, minLoadingTime={sceneMinLoadingTime}");
@@ -270,7 +383,6 @@ namespace YSK
             if (showLoadingScreen)
             {
                 ShowLoadingScreen();
-                // 초기 진행률 설정
                 UpdateLoadingProgress(0f);
             }
             
@@ -284,20 +396,24 @@ namespace YSK
             
             asyncLoad.allowSceneActivation = false;
             
-            // 진행률 업데이트 루프 개선
+            // 진행률 업데이트 루프
             while (asyncLoad.progress < 0.9f)
             {
                 float normalizedProgress = asyncLoad.progress / 0.9f;
-                UpdateLoadingProgress(normalizedProgress);
+                if (showLoadingScreen)
+                {
+                    UpdateLoadingProgress(normalizedProgress);
+                }
                 yield return null;
             }
             
-            // 최소 로딩 시간 대기
-            yield return StartCoroutine(EnsureMinimumLoadingTime(sceneMinLoadingTime));
-            
-            // 100% 완료 표시
-            UpdateLoadingProgress(1f);
-            yield return new WaitForSeconds(0.1f);
+            // 최소 로딩 시간 대기 (로딩 화면이 있을 때만)
+            if (showLoadingScreen)
+            {
+                yield return StartCoroutine(EnsureMinimumLoadingTime(sceneMinLoadingTime));
+                UpdateLoadingProgress(1f);
+                yield return new WaitForSeconds(0.1f);
+            }
             
             asyncLoad.allowSceneActivation = true;
             while (!asyncLoad.isDone) yield return null;
@@ -355,177 +471,74 @@ namespace YSK
         {
             Debug.Log("=== 로딩 화면 생성 시작 ===");
             
-            // 커스텀 로딩 화면 프리팹이 있으면 사용
-            if (customLoadingScreenPrefab != null)
+            // 프리팹이 없으면 생성하지 않음
+            if (customLoadingScreenPrefab == null)
             {
-                Debug.Log("커스텀 로딩 화면 프리팹 사용");
-                loadingScreen = Instantiate(customLoadingScreenPrefab);
-                Canvas canvas = loadingScreen.GetComponent<Canvas>();
-                if (canvas != null)
-                {
-                    canvas.sortingOrder = 1000;
-                    DontDestroyOnLoad(canvas.gameObject);
-                }
-                
-                // 컴포넌트들 찾기 - 더 정확한 검색
-                var progressBarTr = loadingScreen.transform.Find("ProgressBar");
-                Debug.Log(progressBarTr != null ? "ProgressBar 찾음" : "ProgressBar 못 찾음");
-                if (progressBarTr != null)
-                {
-                    progressBar = progressBarTr.GetComponent<Slider>();
-                    Transform progressTextTr = progressBarTr.Find("ProgressText");
-                    if (progressTextTr != null)
-                        progressText = progressTextTr.GetComponent<TextMeshProUGUI>();
-                }
-                else
-                {
-                    Debug.LogWarning("ProgressBar 오브젝트를 찾을 수 없습니다!");
-                }
-                
-                loadingCanvasGroup = loadingScreen.GetComponent<CanvasGroup>();
-                
-                // 컴포넌트 검증 및 초기화
-                if (progressBar != null)
-                {
-                    progressBar.minValue = 0f;
-                    progressBar.maxValue = 1f;
-                    progressBar.value = 0f;
-                    Debug.Log("프로그레스바 컴포넌트 찾음 및 초기화 완료");
-                }
-                else
-                {
-                    Debug.LogWarning("프로그레스바 컴포넌트를 찾을 수 없습니다!");
-                }
-                
-                if (progressText != null)
-                {
-                    progressText.text = $"{loadingText} 0%";
-                    Debug.Log("프로그레스 텍스트 컴포넌트 찾음 및 초기화 완료");
-                }
-                else
-                {
-                    Debug.LogWarning("프로그레스 텍스트 컴포넌트를 찾을 수 없습니다!");
-                }
-                
-                Debug.Log("커스텀 로딩 화면 생성 완료");
+                Debug.LogWarning("로딩 화면 프리팹이 설정되지 않았습니다! 로딩 화면을 생성하지 않습니다.");
                 return;
             }
             
-            Debug.Log("기본 로딩 화면 생성");
-            
-            // 기본 로딩 화면 생성
-            GameObject canvasObj = new GameObject("LoadingCanvas");
-            Canvas loadingCanvas = canvasObj.AddComponent<Canvas>();
-            loadingCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            loadingCanvas.sortingOrder = 1000;
-            canvasObj.AddComponent<CanvasScaler>();
-            canvasObj.AddComponent<GraphicRaycaster>();
-            DontDestroyOnLoad(canvasObj);
-            
-            Debug.Log($"Canvas 생성 완료: {canvasObj.name}");
-            
-            GameObject loadingObj = new GameObject("LoadingScreen");
-            loadingObj.transform.SetParent(canvasObj.transform, false);
-            
-            loadingCanvasGroup = loadingObj.AddComponent<CanvasGroup>();
-            loadingCanvasGroup.alpha = 1f;
-            
-            Image bgImage = loadingObj.AddComponent<Image>();
-            bgImage.color = loadingBackgroundColor;
-            Debug.Log($"배경 이미지 색상 설정: {loadingBackgroundColor}");
-            
-            RectTransform bgRect = loadingObj.GetComponent<RectTransform>();
-            bgRect.anchorMin = Vector2.zero;
-            bgRect.anchorMax = Vector2.one;
-            bgRect.offsetMin = Vector2.zero;
-            bgRect.offsetMax = Vector2.zero;
-            
-            // 로딩 텍스트
-            GameObject loadingTextObj = new GameObject("LoadingText");
-            loadingTextObj.transform.SetParent(loadingObj.transform, false);
-            loadingTextComponent = loadingTextObj.AddComponent<TextMeshProUGUI>();
-            loadingTextComponent.text = loadingText;
-            loadingTextComponent.font = LoadNotoSansKRFont();
-            loadingTextComponent.fontSize = 32;
-            loadingTextComponent.color = loadingTextColor;
-            loadingTextComponent.alignment = TextAlignmentOptions.Center;
-            
-            RectTransform loadingTextRect = loadingTextObj.GetComponent<RectTransform>();
-            loadingTextRect.anchorMin = new Vector2(0.2f, 0.7f);
-            loadingTextRect.anchorMax = new Vector2(0.8f, 0.8f);
-            loadingTextRect.offsetMin = Vector2.zero;
-            loadingTextRect.offsetMax = Vector2.zero;
-            
-            Debug.Log($"로딩 텍스트 생성 완료: {loadingText}");
-            
-            // Progress Bar (옵션)
-            if (showProgressBar)
+            Debug.Log("로딩 화면 프리팹 사용");
+            loadingScreen = Instantiate(customLoadingScreenPrefab);
+            Canvas canvas = loadingScreen.GetComponent<Canvas>();
+            if (canvas != null)
             {
-                Debug.Log("프로그레스바 생성");
-                GameObject progressObj = new GameObject("ProgressBar");
-                progressObj.transform.SetParent(loadingObj.transform, false);
-                progressBar = progressObj.AddComponent<Slider>();
+                canvas.sortingOrder = 1000;
+                DontDestroyOnLoad(canvas.gameObject);
+            }
+            
+            // 컴포넌트들 찾기
+            Debug.Log("=== 컴포넌트 검색 시작 ===");
+            
+            // 1. Slider 컴포넌트 찾기
+            progressBar = loadingScreen.GetComponentInChildren<Slider>();
+            if (progressBar != null)
+            {
+                Debug.Log($"Slider 컴포넌트 찾음: {progressBar.name}");
                 progressBar.minValue = 0f;
                 progressBar.maxValue = 1f;
                 progressBar.value = 0f;
-                
-                // Progress Bar 배경
-                Image progressBg = progressBar.GetComponent<Image>();
-                if (progressBg != null)
-                {
-                    progressBg.color = new Color(0.2f, 0.2f, 0.2f, 0.8f);
-                }
-                
-                // Progress Bar Fill
-                Transform fillArea = progressBar.transform.Find("Fill Area");
-                if (fillArea != null)
-                {
-                    Transform fill = fillArea.Find("Fill");
-                    if (fill != null)
-                    {
-                        Image fillImage = fill.GetComponent<Image>();
-                        if (fillImage != null)
-                        {
-                            fillImage.color = progressBarColor;
-                        }
-                    }
-                }
-                
-                RectTransform sliderRect = progressObj.GetComponent<RectTransform>();
-                sliderRect.anchorMin = new Vector2(0.2f, 0.4f);
-                sliderRect.anchorMax = new Vector2(0.8f, 0.5f);
-                sliderRect.offsetMin = Vector2.zero;
-                sliderRect.offsetMax = Vector2.zero;
-                
-                Debug.Log("프로그레스바 생성 완료");
             }
-            
-            // Progress Text (옵션)
-            if (showProgressPercentage)
+            else
             {
-                Debug.Log("프로그레스 텍스트 생성");
-                GameObject textObj = new GameObject("ProgressText");
-                textObj.transform.SetParent(loadingObj.transform, false);
-                progressText = textObj.AddComponent<TextMeshProUGUI>();
-                progressText.text = $"{loadingText} 0%";
-                progressText.font = LoadNotoSansKRFont();
-                progressText.fontSize = 24;
-                progressText.color = loadingTextColor;
-                progressText.alignment = TextAlignmentOptions.Center;
-                
-                RectTransform textRect = textObj.GetComponent<RectTransform>();
-                textRect.anchorMin = new Vector2(0.2f, 0.6f);
-                textRect.anchorMax = new Vector2(0.8f, 0.7f);
-                textRect.offsetMin = Vector2.zero;
-                textRect.offsetMax = Vector2.zero;
-                
-                Debug.Log("프로그레스 텍스트 생성 완료");
+                Debug.LogWarning("Slider 컴포넌트를 찾을 수 없습니다!");
             }
             
-            loadingScreen = loadingObj;
-            loadingScreen.SetActive(false);
+            // 2. TextMeshProUGUI 컴포넌트들 찾기
+            TextMeshProUGUI[] textComponents = loadingScreen.GetComponentsInChildren<TextMeshProUGUI>();
+            Debug.Log($"TextMeshProUGUI 컴포넌트 개수: {textComponents.Length}");
             
-            Debug.Log("=== 로딩 화면 생성 완료 ===");
+            foreach (var text in textComponents)
+            {
+                Debug.Log($"Text 컴포넌트: {text.name} - '{text.text}'");
+                
+                // 프로그레스 텍스트 찾기 (% 포함)
+                if (progressText == null && text.text.Contains("%"))
+                {
+                    progressText = text;
+                    Debug.Log($"프로그레스 텍스트 컴포넌트 찾음: {text.name}");
+                }
+            }
+            
+            // 3. CanvasGroup 찾기
+            loadingCanvasGroup = loadingScreen.GetComponent<CanvasGroup>();
+            if (loadingCanvasGroup == null)
+            {
+                loadingCanvasGroup = loadingScreen.AddComponent<CanvasGroup>();
+                Debug.Log("CanvasGroup 컴포넌트 추가");
+            }
+            
+            // 4. 컴포넌트 검증
+            Debug.Log("=== 컴포넌트 검증 ===");
+            Debug.Log($"ProgressBar: {(progressBar != null ? "찾음" : "못 찾음")}");
+            Debug.Log($"ProgressText: {(progressText != null ? "찾음" : "못 찾음")}");
+            Debug.Log($"CanvasGroup: {(loadingCanvasGroup != null ? "찾음" : "못 찾음")}");
+            
+            // 초기 상태 설정 - 비활성화 상태로 생성
+            loadingScreen.SetActive(false);
+            loadingCanvasGroup.alpha = 0f;
+            
+            Debug.Log("로딩 화면 프리팹 생성 완료");
         }
         
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -603,19 +616,140 @@ namespace YSK
             return false;
         }
         
-        private TMP_FontAsset LoadNotoSansKRFont()
+        // 특정 스테이지와 함께 씬을 로드하는 새로운 메서드
+        public void LoadGameSceneWithStage(string sceneName, int mainStageID, int subStageID)
         {
-            if (notoSansKRFont != null) return notoSansKRFont;
+            Debug.Log($"=== 특정 스테이지와 함께 씬 로드: {sceneName}, 스테이지 {mainStageID}-{subStageID} ===");
             
-            TMP_FontAsset fontAsset = Resources.Load<TMP_FontAsset>("RnD/Font/NotoSansKR-VariableFont_wght SDF");
-            if (fontAsset == null) fontAsset = Resources.Load<TMP_FontAsset>("Fonts/NotoSansKR-VariableFont_wght SDF");
-            if (fontAsset == null) fontAsset = Resources.Load<TMP_FontAsset>("NotoSansKR-VariableFont_wght SDF");
+            // 오브젝트가 비활성화되어 있으면 활성화
+            if (!gameObject.activeInHierarchy)
+            {
+                Debug.LogWarning("GameSceneManager가 비활성화되어 있어서 활성화합니다.");
+                gameObject.SetActive(true);
+            }
             
-            #if UNITY_EDITOR
-            if (fontAsset == null) fontAsset = UnityEditor.AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/YSK/RnD/Font/NotoSansKR-VariableFont_wght SDF.asset");
-            #endif
+            HandleSceneSpecificData(sceneName, mainStageID, subStageID, 0, false);
+            StartCoroutine(LoadSceneAsyncWithStage(sceneName, mainStageID, subStageID));
+        }
+        
+        // 스테이지 정보와 함께 씬을 로드하는 코루틴
+        private IEnumerator LoadSceneAsyncWithStage(string sceneName, int mainStageID, int subStageID)
+        {
+            if (IsLoading || string.IsNullOrEmpty(sceneName) || !DoesSceneExist(sceneName))
+            {
+                Debug.LogWarning($"씬 로드 조건 불만족: IsLoading={IsLoading}, sceneName={sceneName}, exists={DoesSceneExist(sceneName)}");
+                yield break;
+            }
             
-            return fontAsset ?? Resources.Load<TMP_FontAsset>("Fonts & Materials/LiberationSans SDF");
+            Debug.Log($"=== 특정 스테이지와 함께 씬 로드 시작: {sceneName}, 스테이지 {mainStageID}-{subStageID} ===");
+            
+            IsLoading = true;
+            OnSceneLoadStarted?.Invoke(sceneName);
+            
+            // 씬 정보 가져오기
+            SceneData.SceneInfo sceneInfo = sceneData.GetSceneInfo(sceneName);
+            bool showLoadingScreen = (sceneInfo?.requiresLoadingScreen ?? true) && enableLoadingScreen && customLoadingScreenPrefab != null;
+            float sceneMinLoadingTime = sceneInfo?.minLoadingTime ?? minLoadingTime;
+            
+            Debug.Log($"씬 정보: showLoadingScreen={showLoadingScreen}, minLoadingTime={sceneMinLoadingTime}");
+            
+            if (showLoadingScreen)
+            {
+                ShowLoadingScreen();
+                UpdateLoadingProgress(0f);
+            }
+            
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+            if (asyncLoad == null)
+            {
+                Debug.LogError($"씬 '{sceneName}' 로드에 실패했습니다!");
+                IsLoading = false;
+                yield break;
+            }
+            
+            asyncLoad.allowSceneActivation = false;
+            
+            // 진행률 업데이트 루프
+            while (asyncLoad.progress < 0.9f)
+            {
+                float normalizedProgress = asyncLoad.progress / 0.9f;
+                if (showLoadingScreen)
+                {
+                    UpdateLoadingProgress(normalizedProgress);
+                }
+                yield return null;
+            }
+            
+            // 최소 로딩 시간 대기 (로딩 화면이 있을 때만)
+            if (showLoadingScreen)
+            {
+                yield return StartCoroutine(EnsureMinimumLoadingTime(sceneMinLoadingTime));
+                UpdateLoadingProgress(1f);
+                yield return new WaitForSeconds(0.1f);
+            }
+            
+            asyncLoad.allowSceneActivation = true;
+            while (!asyncLoad.isDone) yield return null;
+            
+            if (showLoadingScreen)
+            {
+                HideLoadingScreen();
+            }
+            
+            IsLoading = false;
+            OnSceneLoadCompleted?.Invoke(sceneName);
+            
+            // 씬 로드 완료 후 스테이지 설정
+            yield return StartCoroutine(SetStageAfterSceneLoad(mainStageID, subStageID));
+            
+            Debug.Log($"=== 특정 스테이지와 함께 씬 로드 완료: {sceneName}, 스테이지 {mainStageID}-{subStageID} ===");
+        }
+        
+        // 씬 로드 완료 후 스테이지를 설정하는 코루틴
+        private IEnumerator SetStageAfterSceneLoad(int mainStageID, int subStageID)
+        {
+            Debug.Log($"스테이지 설정 대기 중: {mainStageID}-{subStageID}");
+            
+            // StageManager가 준비될 때까지 대기
+            StageManager stageManager = null;
+            float waitTime = 0f;
+            const float maxWaitTime = 5f; // 최대 5초 대기
+            
+            while (stageManager == null && waitTime < maxWaitTime)
+            {
+                stageManager = FindObjectOfType<StageManager>();
+                if (stageManager == null)
+                {
+                    yield return new WaitForSeconds(0.1f);
+                    waitTime += 0.1f;
+                }
+            }
+            
+            if (stageManager == null)
+            {
+                Debug.LogError("StageManager를 찾을 수 없습니다! 스테이지 설정을 건너뜁니다.");
+                yield break;
+            }
+            
+            Debug.Log($"StageManager 발견! 스테이지 설정: {mainStageID}-{subStageID}");
+            
+            // 한 프레임 더 대기하여 StageManager가 완전히 초기화되도록 함
+            yield return null;
+            
+            // 스테이지 설정
+            stageManager.ForceStage(mainStageID, subStageID);
+            
+            Debug.Log($"스테이지 설정 완료: {mainStageID}-{subStageID}");
+        }
+        
+        // 새로 추가할 코루틴
+        private IEnumerator LoadSceneAfterActivation(string sceneName, int mainStageID, int subStageID, int score, bool isWin)
+        {
+            // 한 프레임 대기하여 오브젝트가 완전히 활성화되도록 함
+            yield return null;
+            
+            HandleSceneSpecificData(sceneName, mainStageID, subStageID, score, isWin);
+            StartCoroutine(LoadSceneAsync(sceneName));
         }
         
         #endregion

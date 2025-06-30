@@ -12,12 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5043dd61d89d6e247ada5222321b7ca1, type: 3}
   m_Name: CharictorDataTest
   m_EditorClassIdentifier: 
-  level: 0
-  Hp: 0
-  exp: 0
-  attackPower: 0
+  id: 0
+  grade: 0
+  name: test
+  elemental: 0
+  maxLevel: 0
+  hp: 0
+  hpPlus: 0
+  attackType: {fileID: 0}
+  attackDamage: 0
+  damagePlus: 0
   attackSpeed: 0
   moveSpeed: 0
-  bulletPrefab: {fileID: 0}
-  model: {fileID: 0}
+  defense: 0
+  ultCoolDefault: 0
+  ultCoolReduce: 0
+  ultLore: 
+  ultVisual: {fileID: 0}
+  parry: 0
+  parryCool: 0
   image: {fileID: 0}

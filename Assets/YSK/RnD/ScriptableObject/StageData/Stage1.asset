@@ -49,12 +49,12 @@ MonoBehaviour:
     - {fileID: 255603948662158416, guid: a5195e74c05235f4897aa802bfb6a25d, type: 3}
     - {fileID: 7668984884236379141, guid: 94bbef344085d844d84ba30e59f4fabe, type: 3}
     - {fileID: 8380167807526418686, guid: f58e5c46a8da8a74e899d311c0684644, type: 3}
-  - subStageID: 0
+  - subStageID: 4
     subStageName: 
     subStageLock: 0
     subStageScore: 0
     customMapPrefabs: []
-  - subStageID: 0
+  - subStageID: 5
     subStageName: 
     subStageLock: 0
     subStageScore: 0

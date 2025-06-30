@@ -6,33 +6,39 @@ using UnityEngine;
 using System;
 using JYL;
 
+[CreateAssetMenu(fileName = "TripleShot", menuName = "ScriptableObject/BulletPattern/TripleShot")]
 public class TripleShot : BulletPatternData
 {
-    private int shotCount = 3;
-    private float delayBetweenshots = 0.1f;
-    private float fireDelay = 2f;
-    public float bulletReturnTimer = 1.5f;
-    public override IEnumerator Shoot(Transform firePoint, GameObject bulletPrefab, float bulletSpeed)
+    [Header("Triple Shot Settings")]
+    public int shotCount = 3;
+    public float delayBetweenshots = 0.1f;
+    public float fireDelay = 2f;
+    public float returnToPoolTimer = 5f;
+    public override IEnumerator Shoot(Transform[] firePoints, GameObject bulletPrefab, float bulletSpeed)
     {
-        BulletPrefabController bullets = objectPool.ObjectOut() as BulletPrefabController;
-
+        // TODO : ReturnToPool()호출 타이밍 생각해야함. => 플레이어와 충돌 or 시간이 지날 때 ReturnToPool()해야하나?
         while (true)
         {
-            // bullets.transform.position = firePoint.position;
             for (int i = 0; i < shotCount; i++)
             {
-                // bullet.ReturnToPool(bulletReturnTimer);
-                foreach (BulletInfo info in bullets.bullet)
+                BulletPrefabController bullet = objectPool.ObjectOut() as BulletPrefabController;
+
+                if (bullet != null)
                 {
-                    if (info.rig != null)
+                    bullet.ReturnToPool(returnToPoolTimer);
+
+                    foreach (BulletInfo info in bullet.bullet)
                     {
-                        info.trans.gameObject.SetActive(true);
-                        info.trans.position = firePoint.position;
-                        info.rig.velocity = Vector3.zero;
-                        info.rig.AddForce(firePoint.forward * bulletSpeed, ForceMode.Impulse);
-                        yield return new WaitForSeconds(delayBetweenshots);
+                        if (info.rig != null)
+                        {
+                            info.trans.gameObject.SetActive(true);
+                            info.trans.position = firePoints[0].position;
+                            info.rig.velocity = Vector3.zero;
+                            info.rig.AddForce(firePoints[0].forward * bulletSpeed, ForceMode.Impulse);
+                        }
                     }
                 }
+                yield return new WaitForSeconds(delayBetweenshots);
             }
             yield return new WaitForSeconds(fireDelay);
         }

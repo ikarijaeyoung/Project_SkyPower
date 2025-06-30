@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class UltLaserController : MonoBehaviour
 {
-    private Transform transform;
     [SerializeField] private float increase;
     [SerializeField] private float maxSize;
     private float size;
 
     private void Awake()
     {
-        transform = GetComponent<Transform>();
         increase = Mathf.Clamp(increase, 0.1f, maxSize);
     }
 
