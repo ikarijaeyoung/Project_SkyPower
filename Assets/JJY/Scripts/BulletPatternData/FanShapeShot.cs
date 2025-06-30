@@ -12,6 +12,7 @@ public class FanShapeShot : BulletPatternData
     public float fireDelay = 1f;
     public float fireDelayBetweenShots = 0f;
     public float fanShapeangle = 90;
+    public float returnToPoolTimer = 5f;
     public override IEnumerator Shoot(Transform[] firePoints, GameObject bulletPrefab, float bulletSpeed)
     {
         // TODO : ReturnToPool()호출 타이밍 생각해야함. => 플레이어와 충돌 or 시간이 지날 때 ReturnToPool()해야하나?
@@ -27,7 +28,7 @@ public class FanShapeShot : BulletPatternData
                 // Debug.Log($"FanShapeShot firePoint.forward : {firePoints[0].forward}");
                 if (bullet != null)
                 {
-                    bullet.transform.position = firePoints[0].position;
+                    bullet.ReturnToPool(returnToPoolTimer);
 
                     foreach (BulletInfo info in bullet.bullet)
                     {

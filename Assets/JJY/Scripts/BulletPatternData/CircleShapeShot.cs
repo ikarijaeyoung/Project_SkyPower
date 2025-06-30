@@ -11,6 +11,7 @@ public class CircleShapeShot : BulletPatternData
     public int shotCount = 8; // 한 번에 발사할 총알의 개수 : 총구 개수의 배수, 총구 개수보다 많아야할듯.
     public float fireDelay = 1f;
     public float fireDelayBetweenShots = 0.1f;
+    public float returnToPoolTimer = 5f;
     public override IEnumerator Shoot(Transform[] firePoints, GameObject bulletPrefab, float bulletSpeed)
     {
         // TODO : ReturnToPool()호출 타이밍 생각해야함. => 플레이어와 충돌 or 시간이 지날 때 ReturnToPool()해야하나?
@@ -22,7 +23,7 @@ public class CircleShapeShot : BulletPatternData
 
                 if (bullet != null)
                 {
-                    bullet.transform.position = firePoints[i].position;
+                    bullet.ReturnToPool(returnToPoolTimer);
 
                     foreach (BulletInfo info in bullet.bullet)
                     {

@@ -9,9 +9,11 @@ using JYL;
 [CreateAssetMenu(fileName = "TripleShot", menuName = "ScriptableObject/BulletPattern/TripleShot")]
 public class TripleShot : BulletPatternData
 {
+    [Header("Triple Shot Settings")]
     public int shotCount = 3;
     public float delayBetweenshots = 0.1f;
     public float fireDelay = 2f;
+    public float returnToPoolTimer = 5f;
     public override IEnumerator Shoot(Transform[] firePoints, GameObject bulletPrefab, float bulletSpeed)
     {
         // TODO : ReturnToPool()호출 타이밍 생각해야함. => 플레이어와 충돌 or 시간이 지날 때 ReturnToPool()해야하나?
@@ -23,7 +25,7 @@ public class TripleShot : BulletPatternData
 
                 if (bullet != null)
                 {
-                    bullet.transform.position = firePoints[0].position;
+                    bullet.ReturnToPool(returnToPoolTimer);
 
                     foreach (BulletInfo info in bullet.bullet)
                     {

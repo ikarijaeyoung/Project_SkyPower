@@ -2,16 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using JYL;
+using Unity.VisualScripting;
+
+[CreateAssetMenu(fileName = "SnakeShot", menuName = "ScriptableObject/BulletPattern/SnakeShot")]
 
 public class SnakeShot : BulletPatternData
 {
+    [Header("Snake Shot Settings")]
     public int shotCount = 10;
     public float delayBetweenshots = 0.1f;
-    public float fireDelay = 2f;
+    public float fireDelay = 0f;
     public float returnToPoolTimer = 5f;
+
+    [Header("Fire Point Movement")]
+    public float firePointsMoveRadius = 0.5f;
+    public float firePointsMoveSpeed = 1f;
     public override IEnumerator Shoot(Transform[] firePoints, GameObject bulletPrefab, float bulletSpeed)
     {
-        // TODO : ReturnToPool()호출 타이밍 생각해야함. => 플레이어와 충돌 or 시간이 지날 때 ReturnToPool()해야하나?
         while (true)
         {
             for (int i = 0; i < shotCount; i++)
@@ -20,8 +27,7 @@ public class SnakeShot : BulletPatternData
 
                 if (bullet != null)
                 {
-                    // bullet.owner = bulletOwner;
-                    bullet.transform.position = firePoints[0].position;
+                    bullet.ReturnToPool(returnToPoolTimer);
 
                     foreach (BulletInfo info in bullet.bullet)
                     {
@@ -37,7 +43,6 @@ public class SnakeShot : BulletPatternData
                 yield return new WaitForSeconds(delayBetweenshots);
             }
             yield return new WaitForSeconds(fireDelay);
-            
         }
     }
 }
