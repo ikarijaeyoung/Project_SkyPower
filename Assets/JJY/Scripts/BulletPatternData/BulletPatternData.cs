@@ -10,5 +10,5 @@ public abstract class BulletPatternData : ScriptableObject
     {
         objectPool = pool;
     }
-    public abstract IEnumerator Shoot(Transform[] firePoints, GameObject bulletPrefab, float bulletSpeed);
+    public abstract IEnumerator Shoot(Transform[] firePoints, GameObject bulletPrefab, float bulletSpeed); // GameObject bulletOwner 추가
 }
