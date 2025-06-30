@@ -42,6 +42,8 @@ namespace JYL
         {
             // 선택된 캐릭을 기준으로 인벤을 연다
             Util.ExtractTrailNumber(eventData.pointerClick.name, out int index);
+            // GameManager.Instance.selectSave.party[index] -> 캐릭터 ID
+            // 캐릭터 컨트롤러 (캐릭터 ID)
             Debug.Log($"{index}");
             UIManager.Instance.ShowPopUp<InvenPopUp>();
         }
