@@ -1,18 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
-using System;
 using JYL;
+using Unity.VisualScripting.Antlr3.Runtime;
 
-[CreateAssetMenu(fileName = "TripleShot", menuName = "ScriptableObject/BulletPattern/TripleShot")]
-public class TripleShot : BulletPatternData
+[CreateAssetMenu(fileName = "FanShapeShot", menuName = "ScriptableObject/BulletPattern/FanShapeShot")]
+public class FanShapeShot : BulletPatternData
 {
-    [Header("Triple Shot Settings")]
-    public int shotCount = 3;
-    public float delayBetweenshots = 0.1f;
-    public float fireDelay = 2f;
+    [Header("Fan Shape Shot Settings")]
+    public int shotCount = 5; // 한 번에 발사할 총알의 개수
+    public float fireDelay = 1f;
+    public float fireDelayBetweenShots = 0f;
+    public float fanShapeangle = 90;
     public float returnToPoolTimer = 5f;
     public override IEnumerator Shoot(Transform[] firePoints, GameObject bulletPrefab, float bulletSpeed)
     {
@@ -22,7 +21,11 @@ public class TripleShot : BulletPatternData
             for (int i = 0; i < shotCount; i++)
             {
                 BulletPrefabController bullet = objectPool.ObjectOut() as BulletPrefabController;
-
+                float angle = i * (fanShapeangle / (shotCount - 1)) - (fanShapeangle / 2);
+                firePoints[0].rotation = Quaternion.Euler(0, angle, 0); // Y축을 기준으로 회전
+                firePoints[0].forward = firePoints[0].rotation * Vector3.forward; // 회전된 방향으로 총구를 향하게 함
+                // Debug.Log($"FanShapeShot angle : {angle}");
+                // Debug.Log($"FanShapeShot firePoint.forward : {firePoints[0].forward}");
                 if (bullet != null)
                 {
                     bullet.ReturnToPool(returnToPoolTimer);
@@ -38,10 +41,9 @@ public class TripleShot : BulletPatternData
                         }
                     }
                 }
-                yield return new WaitForSeconds(delayBetweenshots);
+                yield return new WaitForSeconds(fireDelayBetweenShots); // 여기서 간격을 두어 다른 모양으로 변경 가능.
             }
             yield return new WaitForSeconds(fireDelay);
         }
     }
 }
-

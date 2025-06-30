@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using JYL;
 
-[CreateAssetMenu(fileName = "SingleShot", menuName = "ScriptableObject/BulletPattern/SingleShot")]
-public class SingleShot : BulletPatternData
+[CreateAssetMenu(fileName = "SingleShotToPlayerPos", menuName = "ScriptableObject/BulletPattern/SingleShotToPlayerPos")]
+public class SingleShotToPlayerPos : BulletPatternData
 {
-    [Header("Single Shot Settings")]
+    [Header("Single Shot To Player Pos Settings")]
+    Vector3 playerPos;
     public float fireDelay = 1f;
     public float returnToPoolTimer = 5f;
     public override IEnumerator Shoot(Transform[] firePoints, GameObject bulletPrefab, float bulletSpeed)
@@ -16,6 +17,9 @@ public class SingleShot : BulletPatternData
         {
             BulletPrefabController bullet = objectPool.ObjectOut() as BulletPrefabController;
             bullet.ReturnToPool(returnToPoolTimer);
+
+            playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
+            firePoints[0].LookAt(playerPos);
 
             foreach (BulletInfo info in bullet.bullet)
             {
