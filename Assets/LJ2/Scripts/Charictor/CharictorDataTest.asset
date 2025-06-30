@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: CharictorDataTest
   m_EditorClassIdentifier: 
   id: 0
-  grade: 
-  name: 
-  step: 0
+  grade: 0
+  name: test
   elemental: 0
   maxLevel: 0
   hp: 0
