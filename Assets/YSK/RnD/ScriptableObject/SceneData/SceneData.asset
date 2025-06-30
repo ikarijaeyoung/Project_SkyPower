@@ -21,7 +21,7 @@ MonoBehaviour:
   - sceneName: RnDMainStageSelectScene
     displayName: "\uBA54\uC778 \uC2A4\uD14C\uC774\uC9C0 \uC120\uD0DD"
     description: "\uBA54\uC778 \uC2A4\uD14C\uC774\uC9C0 \uC120\uD0DD \uC52C"
-    requiresLoadingScreen: 1
+    requiresLoadingScreen: 0
     minLoadingTime: 1
   - sceneName: RnDSubStageSelectScene
     displayName: "\uC11C\uBE0C \uC2A4\uD14C\uC774\uC9C0 \uC120\uD0DD"
