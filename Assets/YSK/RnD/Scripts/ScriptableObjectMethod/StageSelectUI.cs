@@ -34,6 +34,8 @@ namespace YSK
         [SerializeField] private string stage2_2ScoreTextName = "Stage2_2ScoreText";
         [SerializeField] private string stage3_1ScoreTextName = "Stage3_1ScoreText";
 
+        [Header("Debug")]
+        [SerializeField] private bool forceUIUpdate = false;
 
         private void Start()
         {
@@ -361,6 +363,17 @@ namespace YSK
         private void ClearStage()
         {
             
+        }
+
+        private void Update()
+        {
+            // 인스펙터에서 체크박스를 토글하면 UI 업데이트
+            if (forceUIUpdate)
+            {
+                UpdateUI();
+                forceUIUpdate = false;
+                Debug.Log("수동 UI 업데이트 실행");
+            }
         }
     }
 }

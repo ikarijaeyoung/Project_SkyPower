@@ -381,6 +381,41 @@ namespace YSK
             InitializeRuntimeData();
             Debug.Log("모든 스테이지 진행도가 초기화되었습니다.");
         }
+
+        #if UNITY_EDITOR
+        /// <summary>
+        /// 인스펙터에서 값이 변경될 때 호출
+        /// </summary>
+        private void OnValidate()
+        {
+            // 런타임 중에만 실행
+            if (Application.isPlaying && runtimeData != null && runtimeData.Count > 0)
+            {
+                // 약간의 지연을 두어 인스펙터 변경이 완료된 후 이벤트 발생
+                UnityEditor.EditorApplication.delayCall += () =>
+                {
+                    OnStageDataChanged?.Invoke();
+                    Debug.Log("StageDataManager 인스펙터 Runtime Data 변경 감지 - UI 업데이트");
+                };
+            }
+        }
+
+        /// <summary>
+        /// 디버그용 - 현재 스테이지 상태 출력
+        /// </summary>
+        public void DebugStageStatus()
+        {
+            Debug.Log("=== 스테이지 상태 디버그 ===");
+            foreach (var stage in runtimeData)
+            {
+                Debug.Log($"스테이지 {stage.stageID}: 해금={stage.isUnlocked}, 완료={stage.isCompleted}, 점수={stage.bestScore}");
+                foreach (var subStage in stage.subStages)
+                {
+                    Debug.Log($"  서브스테이지 {subStage.subStageID}: 해금={subStage.isUnlocked}, 완료={subStage.isCompleted}, 점수={subStage.bestScore}");
+                }
+            }
+        }
+        #endif
     }
     
     // JSON 직렬화를 위한 래퍼 클래스

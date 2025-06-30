@@ -429,6 +429,7 @@ MonoBehaviour:
   stage2_1ScoreTextName: Stage2_1ScoreText
   stage2_2ScoreTextName: Stage2_2ScoreText
   stage3_1ScoreTextName: Stage3_1ScoreText
+  forceUIUpdate: 1
 --- !u!1 &219236899
 GameObject:
   m_ObjectHideFlags: 0
@@ -1685,7 +1686,131 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1c49c343c7c1d7f4fa92f3b191963113, type: 2}
   - {fileID: 11400000, guid: 75b7ec7daad056941a8609cd4e71d747, type: 2}
   - {fileID: 11400000, guid: 0c563732c7779bd48a0d43bee27514ec, type: 2}
-  runtimeData: []
+  runtimeData:
+  - stageID: 1
+    isUnlocked: 1
+    bestScore: 0
+    isCompleted: 1
+    completionTime: 0
+    subStages:
+    - subStageID: 1
+      isUnlocked: 1
+      bestScore: 0
+      isCompleted: 1
+      completionTime: 0
+    - subStageID: 2
+      isUnlocked: 1
+      bestScore: 0
+      isCompleted: 0
+      completionTime: 0
+    - subStageID: 3
+      isUnlocked: 0
+      bestScore: 0
+      isCompleted: 0
+      completionTime: 0
+    - subStageID: 4
+      isUnlocked: 0
+      bestScore: 0
+      isCompleted: 0
+      completionTime: 0
+    - subStageID: 5
+      isUnlocked: 0
+      bestScore: 0
+      isCompleted: 0
+      completionTime: 0
+  - stageID: 2
+    isUnlocked: 0
+    bestScore: 0
+    isCompleted: 0
+    completionTime: 0
+    subStages:
+    - subStageID: 1
+      isUnlocked: 0
+      bestScore: 0
+      isCompleted: 0
+      completionTime: 0
+    - subStageID: 2
+      isUnlocked: 0
+      bestScore: 0
+      isCompleted: 0
+      completionTime: 0
+    - subStageID: 3
+      isUnlocked: 0
+      bestScore: 0
+      isCompleted: 0
+      completionTime: 0
+    - subStageID: 4
+      isUnlocked: 0
+      bestScore: 0
+      isCompleted: 0
+      completionTime: 0
+    - subStageID: 5
+      isUnlocked: 0
+      bestScore: 0
+      isCompleted: 0
+      completionTime: 0
+  - stageID: 3
+    isUnlocked: 0
+    bestScore: 0
+    isCompleted: 0
+    completionTime: 0
+    subStages:
+    - subStageID: 1
+      isUnlocked: 0
+      bestScore: 0
+      isCompleted: 0
+      completionTime: 0
+    - subStageID: 2
+      isUnlocked: 0
+      bestScore: 0
+      isCompleted: 0
+      completionTime: 0
+    - subStageID: 3
+      isUnlocked: 0
+      bestScore: 0
+      isCompleted: 0
+      completionTime: 0
+    - subStageID: 4
+      isUnlocked: 0
+      bestScore: 0
+      isCompleted: 0
+      completionTime: 0
+    - subStageID: 5
+      isUnlocked: 0
+      bestScore: 0
+      isCompleted: 0
+      completionTime: 0
+  - stageID: 4
+    isUnlocked: 0
+    bestScore: 0
+    isCompleted: 0
+    completionTime: 0
+    subStages:
+    - subStageID: 1
+      isUnlocked: 0
+      bestScore: 0
+      isCompleted: 0
+      completionTime: 0
+    - subStageID: 2
+      isUnlocked: 0
+      bestScore: 0
+      isCompleted: 0
+      completionTime: 0
+    - subStageID: 3
+      isUnlocked: 0
+      bestScore: 0
+      isCompleted: 0
+      completionTime: 0
+    - subStageID: 4
+      isUnlocked: 0
+      bestScore: 0
+      isCompleted: 0
+      completionTime: 0
+    - subStageID: 5
+      isUnlocked: 0
+      bestScore: 0
+      isCompleted: 0
+      completionTime: 0
 --- !u!4 &753704083
 Transform:
   m_ObjectHideFlags: 0
