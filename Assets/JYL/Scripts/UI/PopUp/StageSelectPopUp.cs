@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace JYL 
+namespace JYL
 {
-    public abstract class UIPresenter : BaseUI
+    public class StageSelectPopUp : BaseUI
     {
+        // Start is called before the first frame update
         void Start()
         {
 
         }
 
+        // Update is called once per frame
         void Update()
         {
 

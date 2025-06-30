@@ -57,5 +57,12 @@ namespace JYL
         {
             PopUp.PopUIStack();
         }
+        public void CleanPopUp()
+        {
+            while(PopUp.StackCount() == 0)
+            {
+                PopUp.PopUIStack();
+            }
+        }
     }
 }
