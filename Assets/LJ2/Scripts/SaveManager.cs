@@ -39,12 +39,13 @@ namespace LJ2
             DataSaveController.Delete(target, index);
         }
 
+        // 현재 partial class로 구현된 GameData를 control하는 함수들
         public void GameSave(GameData target, int index)
         {
             DataSaveController.Save(target, index);
         }
 
-        public void GameLoad(GameData target, int index)
+        public void GameLoad(ref GameData target, int index)
         {
             DataSaveController.Load(ref target, index);
         }

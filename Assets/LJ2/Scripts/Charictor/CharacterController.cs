@@ -8,7 +8,7 @@ namespace LJ2
     {
         public CharacterData characterData;
 
-        public CharacterInventory charictorInventory;
+        public SaveTester saveTester;
 
         public int id;
         public Grade grade;
@@ -66,9 +66,20 @@ namespace LJ2
             defense = characterData.defense;
 
             // Save의 값을 그대로 가져옴  
-            CharacterSave characterSave = charictorInventory.characters.Find(c => c.id == id);
+
+
+
+            CharacterSave characterSave = saveTester.gameData.characterInventory.characters.Find(c => c.id == id);
+
+            if (characterSave.id == 0)
+            {
+                Debug.LogWarning($"id {id}에 해당하는 CharacterSave를 찾을 수 없습니다.");
+                return;
+            }
+
             Debug.Log($"Character ID: {characterSave.id}, Step: {characterSave.step}, Level : {characterSave.level}");
             level = characterSave.level;
+            step = characterSave.step;
 
             // Save의 값에 따라 Data의 값을 변경
             Hp = characterData.hp + (characterData.hpPlus * (level - 1));

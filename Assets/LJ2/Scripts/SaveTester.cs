@@ -26,7 +26,7 @@ namespace LJ2
 
         public void LoadGameData()
         {
-            SaveManager.Instance.GameLoad(gameData, index);
+            SaveManager.Instance.GameLoad(ref gameData, index);
         }
 
         public void DeleteGameData()
