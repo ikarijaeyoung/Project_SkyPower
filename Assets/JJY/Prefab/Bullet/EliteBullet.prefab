@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2754731820770964383}
   - component: {fileID: 4283938317084407979}
   m_Layer: 9
-  m_Name: TestBullet
+  m_Name: EliteBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +110,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 411f937e5cb8bc84c9f6314996da46fe, type: 2}
+  - {fileID: 2100000, guid: bd59a96bb389a2847807aa3ad2f8a7af, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class EnemyItemManager : MonoBehaviour
 {
-    // 아이템 드롭 매니저
+    // TODO : 임시로 EnemyItemManager를 사용함. 다른 매니저로 옮길것.
     public GameObject itemPrefab;
     public int itemCount = 40; // 아이템 개수
     public float itemMoveLimitRange = 2f; // 아이템이 떨어지는 반경 제한
     public float dropItemSpeed = 0.5f; // 아이템이 퍼져나가는 속력 , 아이템이 떨어지는 속력.
     public float itemStopTime = 1f; // 몇 초 뒤에 멈출것인가.
+    static public int enemyCount; // TODO : 임시로 EnemyItemManager를 사용함. StageManager로 옮길것.
 
     void OnEnable()
     {

@@ -9,10 +9,10 @@ public class Enemy : MonoBehaviour
 {
     public EnemyData enemyData;
     public EnemyDropItemData dropItem;
-    [SerializeField] private int currentHP;
-    public bool isFiring; // 몬스터는 맵 밖에서 소환되어, 특정 위치로 애니메이터를 통해 이동된다. 이동중에는 공격을 하면 안되기 때문에 공격은 isMoving이 false일 때만 기능한다.
+    [SerializeField] private int currentHP; // TODO : Player의 공격력 * 1.5배
+    public bool isFiring;
     public Transform[] firePoints;
-    public static event Action<Vector3> OnEnemyDied; // 죽었을 때 사용되는 이벤트
+    public static event Action<Vector3> OnEnemyDied;
     public BulletPatternData[] BulletPattern;
     private Coroutine curFireCoroutine;
     public ObjectPool objectPool;
@@ -27,13 +27,17 @@ public class Enemy : MonoBehaviour
     }
     void Init()
     {
-        currentHP = enemyData.maxHP;
+        currentHP = enemyData.maxHP; // Player의 공격력 * 1.5배
         for (int i = 0; i < BulletPattern.Length; i++)
         {
             BulletPattern[i].SetPool(objectPool);
         }
-        isFiring = true; // 테스트용
+        isFiring = true;
         StartCoroutine(ChangeFireMode());
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("PlayerBullet")) TakeDamage(1);
     }
     public void TakeDamage(int damage)
     {
@@ -54,11 +58,14 @@ public class Enemy : MonoBehaviour
     // }
     private void Die()
     {
+        EnemyItemManager.enemyCount--; // TODO : 임시로 EnemyItemManager를 사용함. StageManager로 옮길것.
         // 여기도 GameManager에서 이벤트
+        
         OnEnemyDied?.Invoke(transform.position);
         // GameManager에서는 죽었다는 이벤트를 받아서 => 아이템 드롭 => 아이템 먹으면 점수 증가
+
         StopCoroutine(curFireCoroutine);
-        // 죽는 애니메이션 실행.
+        // TODO : 죽는 애니메이션 실행.
         Destroy(gameObject);
     }
     IEnumerator ChangeFireMode()

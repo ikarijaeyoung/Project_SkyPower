@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using JYL;
 using Unity.VisualScripting;
 using UnityEngine;
+using YSK;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -21,9 +22,14 @@ public class EnemySpawner : MonoBehaviour
         {
             MoveSpawnPoint(spawnPoint[i]);
             GameObject enemyobj = Instantiate(enemyPrefabs[i], transform.position, transform.rotation);
+
+            EnemyItemManager.enemyCount++;
+            Debug.Log($"Enemy Spawner Enemy Count : {EnemyItemManager.enemyCount}");
+
             enemyobj.transform.position = transform.position;
             Enemy enemy = enemyobj.GetComponent<Enemy>();
             enemy.objectPool = objectPool;
+
             yield return new WaitForSeconds(spawnDelay);
         }
 
