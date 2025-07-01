@@ -18,6 +18,7 @@ namespace LJ2
         public int level;
         public int step;
         public int exp;
+        public int fragle; // 캐릭터 조각 : 캐릭터의 등급을 올리는데 사용됨
 
         public int Hp;
         public int attackDamage;
@@ -46,8 +47,6 @@ namespace LJ2
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 id = characterData.id;
-                // 저장위치에 따른 index 변화 구현 필요
-                //SaveManager.Instance.PlayerLoad(charictorSave, 0);
                 SetParameter();
             }
 
@@ -66,7 +65,7 @@ namespace LJ2
         private void SetParameter()
         {
             // Data의 값을 그대로 가져옴
-            //bulletPrefab = characterData.bulletPrefab;
+            // bulletPrefab = characterData.bulletPrefab;
             // ultPrefab = characterData.ultVisual;
             // image = charictorData.image;
 
@@ -77,9 +76,8 @@ namespace LJ2
             moveSpeed = characterData.moveSpeed;
             defense = characterData.defense;
 
+
             // Save의 값을 그대로 가져옴  
-
-
 
             CharacterSave characterSave = saveTester.gameData.characterInventory.characters.Find(c => c.id == id);
 
@@ -92,6 +90,7 @@ namespace LJ2
             Debug.Log($"Character ID: {characterSave.id}, Step: {characterSave.step}, Level : {characterSave.level}");
             level = characterSave.level;
             step = characterSave.step;
+            fragle = characterSave.fragle;
 
             // Save의 값에 따라 Data의 값을 변경
             Hp = characterData.hp + (characterData.hpPlus * (level - 1));

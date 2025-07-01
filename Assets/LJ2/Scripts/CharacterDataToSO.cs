@@ -28,6 +28,7 @@ public class CharacterDataToSO : MonoBehaviour
             characterData = ScriptableObject.CreateInstance<CharacterData>();
 
             characterData.id = int.Parse(table.GetData(i, 0));
+
             saveTester.gameData.characterInventory.AddCharacter(characterData.id);
 
             
