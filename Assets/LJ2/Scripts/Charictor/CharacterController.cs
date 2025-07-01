@@ -54,11 +54,13 @@ namespace LJ2
             if (Input.GetKeyDown(KeyCode.L))
             {
                 LevelUp();
+                SetParameter();
             }
 
             if (Input.GetKeyDown(KeyCode.S))
             {
                 StepUp();
+                SetParameter();
             }
         }
         private void SetParameter()
