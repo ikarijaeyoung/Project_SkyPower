@@ -20,7 +20,7 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < enemyPrefabs.Length; i++)
         {
             MoveSpawnPoint(spawnPoint[i]);
-            GameObject enemyobj = Instantiate(enemyPrefabs[i], transform.position, Quaternion.identity);
+            GameObject enemyobj = Instantiate(enemyPrefabs[i], transform.position, transform.rotation);
             enemyobj.transform.position = transform.position;
             Enemy enemy = enemyobj.GetComponent<Enemy>();
             enemy.objectPool = objectPool;
