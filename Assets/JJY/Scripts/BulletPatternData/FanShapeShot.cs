@@ -17,7 +17,7 @@ public class FanShapeShot : BulletPatternData
         for (int i = 0; i < shotCount; i++)
         {
             BulletPrefabController bullet = objectPool.ObjectOut() as BulletPrefabController;
-            float angle = i * (fanShapeangle / (shotCount - 1)) - (fanShapeangle / 2);
+            float angle = i * (fanShapeangle / (shotCount - 1)) - (fanShapeangle / 2) + 180;
             firePoints[0].rotation = Quaternion.Euler(0, angle, 0); // Y축을 기준으로 회전
             firePoints[0].forward = firePoints[0].rotation * Vector3.forward; // 회전된 방향으로 총구를 향하게 함
             if (bullet != null)
