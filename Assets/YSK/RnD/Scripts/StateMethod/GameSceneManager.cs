@@ -91,24 +91,24 @@ namespace YSK
         
         private void Update()
         {
-            // 새로 추가할 테스트용 키 입력
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                Debug.Log("T키: 테스트 씬 로드 (1-1 스테이지)");
-                LoadTestSceneWithStage1_1();
-            }
-            
-            if (Input.GetKeyDown(KeyCode.Y))
-            {
-                Debug.Log("Y키: 테스트 씬 로드 (2-1 스테이지)");
-                LoadTestSceneWithStage2_1();
-            }
-            
-            if (Input.GetKeyDown(KeyCode.U))
-            {
-                Debug.Log("U키: 테스트 씬 로드 (3-1 스테이지)");
-                LoadTestSceneWithStage3_1();
-            }
+            //// 새로 추가할 테스트용 키 입력
+            //if (Input.GetKeyDown(KeyCode.T))
+            //{
+            //    Debug.Log("T키: 테스트 씬 로드 (1-1 스테이지)");
+            //    LoadTestSceneWithStage1_1();
+            //}
+            //
+            //if (Input.GetKeyDown(KeyCode.Y))
+            //{
+            //    Debug.Log("Y키: 테스트 씬 로드 (2-1 스테이지)");
+            //    LoadTestSceneWithStage2_1();
+            //}
+            //
+            //if (Input.GetKeyDown(KeyCode.U))
+            //{
+            //    Debug.Log("U키: 테스트 씬 로드 (3-1 스테이지)");
+            //    LoadTestSceneWithStage3_1();
+            //}
         }
         
         #endregion
@@ -231,91 +231,98 @@ namespace YSK
             if (progressText != null)
                 progressText.text = $"{Mathf.RoundToInt(progress * 100)}%";
         }
-        
-        // Unity 인스펙터 OnClick()용 메서드들
-        public void LoadMainMenu() 
+
+        // Unity 인스펙터 OnClick()용 메서드들 - SceneData 기반으로 변경
+        public void LoadTitleScene() 
         {
-            Debug.Log("LoadMainMenu 버튼 클릭됨!");
-            LoadGameScene("RnDMainMenu");
+            Debug.Log("LoadTitleScene 버튼 클릭됨!");
+            LoadSceneByType(SceneType.Title);
         }
 
-        public void LoadMainStageSelect() 
+        public void LoadMainScene() 
         {
-            Debug.Log("LoadMainStageSelect 버튼 클릭됨!");
-            LoadGameScene("RnDMainStageSelectScene");
+            Debug.Log("LoadMainScene 버튼 클릭됨!");
+            LoadSceneByType(SceneType.MainMenu);
         }
 
-        public void LoadSubStageSelect() 
+        public void LoadStoreScene()
         {
-            Debug.Log("LoadSubStageSelect 버튼 클릭됨!");
-            LoadGameScene("RnDSubStageSelectScene");
+            Debug.Log("LoadStoreScene 버튼 클릭됨!");
+            LoadSceneByType(SceneType.Store);
         }
 
-        public void LoadBaseStage() 
+        public void LoadStageStage() 
         {
-            Debug.Log("LoadBaseStage 버튼 클릭됨!");
-            LoadGameScene("RnDBaseStageScene");
+            Debug.Log("LoadStageScene 버튼 클릭됨!");
+            LoadSceneByType(SceneType.StageSelect);
         }
 
-        public void LoadEndlessStage() 
+        // UI를 위한 PointerEventData data 매개변수 넣은 Overloading
+        public void LoadTitleScene(PointerEventData data) 
         {
-            Debug.Log("LoadEndlessStage 버튼 클릭됨!");
-            LoadGameScene("RnDEndlessStageScene");
+            Debug.Log("LoadTitleScene 버튼 클릭됨!");
+            LoadSceneByType(SceneType.Title);
         }
 
-        public void LoadStore() 
+        public void LoadMainScene(PointerEventData data) 
         {
-            Debug.Log("LoadStore 버튼 클릭됨!");
-            LoadGameScene("RnDStoreScene");
+            Debug.Log("LoadMainScene 버튼 클릭됨!");
+            LoadSceneByType(SceneType.MainMenu);
         }
 
-        public void LoadParty() 
+        public void LoadStoreScene(PointerEventData data)
         {
-            Debug.Log("LoadParty 버튼 클릭됨!");
-            LoadGameScene("RnDPartyScene");
+            Debug.Log("LoadStoreScene 버튼 클릭됨!");
+            LoadSceneByType(SceneType.Store);
         }
 
-        public void LoadTestScene() 
+        public void LoadStageStage(PointerEventData data) 
         {
-            Debug.Log("LoadTestScene 버튼 클릭됨!");
-            LoadGameScene("RnDBaseStageTestScene");
+            Debug.Log("LoadStageScene 버튼 클릭됨!");
+            LoadSceneByType(SceneType.StageSelect);
         }
 
-        // 새로 추가할 테스트용 메서드들
-        public void LoadTestSceneWithStage1_1() 
+       public void ReloadCurrentStage(PointerEventData data)
         {
-            Debug.Log("LoadTestSceneWithStage1_1 버튼 클릭됨!");
-            LoadGameSceneWithStage("RnDBaseStageTestScene", 1, 1);
-        }
-
-        public void LoadTestSceneWithStage1_2() 
-        {
-            Debug.Log("LoadTestSceneWithStage1_2 버튼 클릭됨!");
-            LoadGameSceneWithStage("RnDBaseStageTestScene", 1, 2);
-        }
-
-        public void LoadTestSceneWithStage2_1() 
-        {
-            Debug.Log("LoadTestSceneWithStage2_1 버튼 클릭됨!");
-            LoadGameSceneWithStage("RnDBaseStageTestScene", 2, 1);
-        }
-
-        public void LoadTestSceneWithStage2_2() 
-        {
-            Debug.Log("LoadTestSceneWithStage2_2 버튼 클릭됨!");
-            LoadGameSceneWithStage("RnDBaseStageTestScene", 2, 2);
-        }
-
-        public void LoadTestSceneWithStage3_1() 
-        {
-            Debug.Log("LoadTestSceneWithStage3_1 버튼 클릭됨!");
-            LoadGameSceneWithStage("RnDBaseStageTestScene", 3, 1);
+            Debug.Log("ReloadCurrentStage 버튼 클릭됨!");
+            ReloadCurrentStage();
         }
 
         public void ReloadCurrentScene() 
         {
             Debug.Log("ReloadCurrentScene 버튼 클릭됨!");
             LoadGameScene(CurrentSceneName);
+        }
+        
+ 
+
+
+
+        /// <summary>
+        /// 현재 스테이지를 다시 로드합니다.
+        /// </summary>
+        public void ReloadCurrentStage()
+        {
+            int currentMainStage = PlayerPrefs.GetInt("SelectedMainStage", 1);
+            int currentSubStage = PlayerPrefs.GetInt("SelectedSubStage", 1);
+            
+            Debug.Log($"GameSceneManager: 현재 스테이지 다시 로드 - {currentMainStage}-{currentSubStage}");
+            
+            // 현재 씬에서 현재 스테이지로 다시 로드
+            LoadGameSceneWithStage(CurrentSceneName, currentMainStage, currentSubStage);
+        }
+
+        /// <summary>
+        /// 특정 스테이지를 다시 로드합니다.
+        /// </summary>
+        /// <param name="mainStageID">메인 스테이지 ID</param>
+        /// <param name="subStageID">서브 스테이지 ID</param>
+        public void ReloadStage(int mainStageID, int subStageID)
+        {
+            Debug.Log($"GameSceneManager: 특정 스테이지 다시 로드 - {mainStageID}-{subStageID}");
+            
+            // 현재 씬에서 특정 스테이지로 다시 로드
+            LoadGameSceneWithStage(CurrentSceneName, mainStageID, subStageID);
         }
 
         public void QuitGame() 
@@ -324,6 +331,87 @@ namespace YSK
             Application.Quit();
         }
         
+        #endregion
+        
+        #region Public API - SceneData 기반 자동 매칭
+
+        /// <summary>
+        /// SceneData에서 씬 타입으로 씬을 로드합니다.
+        /// </summary>
+        public void LoadSceneByType(SceneType sceneType)
+        {
+            if (sceneData == null)
+            {
+                Debug.LogError("SceneData가 할당되지 않았습니다!");
+                return;
+            }
+            
+            var sceneInfo = sceneData.GetSceneInfoByType(sceneType);
+            if (sceneInfo != null)
+            {
+                Debug.Log($"씬 타입 {sceneType}으로 씬 로드: {sceneInfo.sceneName}");
+                LoadGameScene(sceneInfo.sceneName);
+            }
+            else
+            {
+                Debug.LogError($"SceneData에서 씬 타입 {sceneType}을 찾을 수 없습니다!");
+                Debug.Log($"등록된 씬 타입들: {string.Join(", ", GetRegisteredSceneTypes())}");
+            }
+        }
+
+        /// <summary>
+        /// SceneData에서 씬 타입으로 스테이지와 함께 씬을 로드합니다.
+        /// </summary>
+        public void LoadSceneByTypeWithStage(SceneType sceneType, int mainStageID, int subStageID)
+        {
+            if (sceneData == null)
+            {
+                Debug.LogError("SceneData가 할당되지 않았습니다!");
+                return;
+            }
+            
+            var sceneInfo = sceneData.GetSceneInfoByType(sceneType);
+            if (sceneInfo != null)
+            {
+                Debug.Log($"씬 타입 {sceneType}으로 스테이지와 함께 씬 로드: {sceneInfo.sceneName}, 스테이지 {mainStageID}-{subStageID}");
+                LoadGameScene(sceneInfo.sceneName, mainStageID, subStageID);
+            }
+            else
+            {
+                Debug.LogError($"SceneData에서 씬 타입 {sceneType}을 찾을 수 없습니다!");
+                Debug.Log($"등록된 씬 타입들: {string.Join(", ", GetRegisteredSceneTypes())}");
+            }
+        }
+
+        /// <summary>
+        /// SceneData에서 씬 타입으로 씬 이름을 가져옵니다.
+        /// </summary>
+        public string GetSceneNameByType(SceneType sceneType)
+        {
+            if (sceneData == null) return null;
+            return sceneData.GetSceneNameByType(sceneType);
+        }
+
+        /// <summary>
+        /// SceneData에 등록된 모든 씬 타입을 반환합니다.
+        /// </summary>
+        public SceneType[] GetRegisteredSceneTypes()
+        {
+            if (sceneData == null) return new SceneType[0];
+            
+            return sceneData.scenes.ConvertAll(s => s.sceneType).ToArray();
+        }
+
+        /// <summary>
+        /// SceneData에 등록된 모든 씬 이름을 반환합니다.
+        /// </summary>
+        public string[] GetRegisteredSceneNames()
+        {
+            if (sceneData == null) return new string[0];
+            
+            return sceneData.scenes.ConvertAll(s => s.sceneName).ToArray();
+        }
+
         #endregion
         
         #region Private Methods
@@ -754,6 +842,10 @@ namespace YSK
         
         #endregion
     }
+
+
+ 
+
 }
 
 
