@@ -104,7 +104,7 @@ namespace JYL
                     UseUltimate();
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Escape) && !PopUpUI.IsPopUpActive)
+            if (Input.GetKeyDown(KeyCode.Escape) && !PopUpUI.IsPopUpActive && !Util.escPressed)
             {
                 UIManager.Instance.ShowPopUp<StagePopUp>();
                 Util.ConsumeESC();
@@ -124,7 +124,6 @@ namespace JYL
                 pgTimer += Time.deltaTime;
                 SetProgressBar();
             }
-            Util.ResetESC();
         }
         private void Init()
         {

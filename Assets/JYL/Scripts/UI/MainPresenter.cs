@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+
 namespace JYL
 {
     public class MainPresenter : BaseUI
@@ -28,6 +30,7 @@ namespace JYL
         {
             // TODO : 상점 구현
             // GameSceneManager.Instance.SceneChange("Shop");
+            SceneManager.LoadSceneAsync("cStoreScene_JYL");
         }
         private void OpenPartySetting(PointerEventData eventData)
         {

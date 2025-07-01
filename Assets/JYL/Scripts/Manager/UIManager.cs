@@ -40,6 +40,10 @@ namespace JYL
                 Util.ConsumeESC();
             }
         }
+        private void LateUpdate()
+        {
+            Util.ResetESC();
+        }
 
         // ÆË¾÷ UI¸¦ ²¨³½´Ù
         public T ShowPopUp<T>() where T : BaseUI
