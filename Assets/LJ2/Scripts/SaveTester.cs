@@ -7,9 +7,16 @@ namespace LJ2
 {
     public class SaveTester : MonoBehaviour
     {
-        [SerializeField] public GameData gameData = new();
+        [SerializeField] public GameData gameData;
         public int index = 0;
 
+        private void Awake()
+        {
+            if (gameData == null)
+            {
+                gameData = new GameData();
+            }
+        }
 
         public void SaveGameData()
         {
