@@ -53,6 +53,7 @@ MonoBehaviour:
   level: 0
   step: 0
   exp: 0
+  fragle: 0
   Hp: 0
   attackDamage: 0
   attackSpeed: 0
@@ -66,3 +67,4 @@ MonoBehaviour:
   parry: 0
   parryCool: 0
   image: {fileID: 0}
+  upgradeUnit: 0

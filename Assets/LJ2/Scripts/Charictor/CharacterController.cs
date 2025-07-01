@@ -38,6 +38,7 @@ namespace LJ2
         public Sprite image;
 
         public int upgradeUnit;
+        public int currentUnit; // 현재 보유한 유닛 수, 업그레이드에 사용됨
 
         private void Start()
         {
@@ -128,11 +129,13 @@ namespace LJ2
 
         }
 
+        // 업그레이드 가능할 때만 실행
         public void LevelUp(int unit)
         {
             if (level < characterData.maxLevel)
             {
-                if(unit > upgradeUnit)
+                
+                if (unit > upgradeUnit)
                 {
                     unit -= upgradeUnit;
                     level++;
@@ -154,6 +157,18 @@ namespace LJ2
             }
         }
 
+        public void GetUpgradeUnit(int unit)
+        {
+            currentUnit += unit;
+            if (currentUnit > upgradeUnit)
+            {
+                Debug.Log("업그레이드 가능 유닛이 있습니다.");
+            }
+            else
+            {
+                Debug.Log("업그레이드 가능 유닛이 부족합니다.");
+            }
+        }
         public void StepUp()
         {
             if (step < 4)
