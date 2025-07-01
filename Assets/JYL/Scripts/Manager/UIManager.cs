@@ -11,7 +11,6 @@ namespace JYL
 
         private PopUpUI popUp;
         public PopUpUI PopUp
-
         {
             get 
             {
@@ -31,14 +30,21 @@ namespace JYL
                 return popUp;
             }
         }
+
         protected override void Awake() => base.Awake();
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape) && PopUpUI.IsPopUpActive && !Util.escPressed)
             {
                 Instance.ClosePopUp();
+                Util.ConsumeESC();
             }
         }
+        private void LateUpdate()
+        {
+            Util.ResetESC();
+        }
+
         // ÆË¾÷ UI¸¦ ²¨³½´Ù
         public T ShowPopUp<T>() where T : BaseUI
         {

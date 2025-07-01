@@ -91,9 +91,9 @@ namespace YSK
             
             
             // 메뉴 버튼들 연결
-            ConnectMenuButton(mainMenuButtonName, "RnDMainMenu");
-            ConnectMenuButton(mainStageSelectButtonName, "RnDMainStageSelectScene");
-            ConnectMenuButton(testSceneButtonName, "RnDBaseStageTestScene");
+            ConnectMenuButton(mainMenuButtonName, "bMainScene_JYL");
+            ConnectMenuButton(mainStageSelectButtonName, "cStoreScene_JYL");
+            ConnectMenuButton(testSceneButtonName, "aTitleScene_JYL");
 
             // 스테이지 버튼들 연결
             ConnectStageButton(stage1_1ButtonName, 1, 1);

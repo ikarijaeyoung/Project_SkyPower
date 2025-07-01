@@ -45,10 +45,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50a40bf57aca5394fa3fbb729dce2433, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnPoint:
+  - {x: 8.59, y: 3, z: 7.1}
+  - {x: -5.98, y: 3, z: 4.25}
+  - {x: 5.4, y: 3, z: -3.63}
+  - {x: -1.29, y: 3, z: -8.5}
   enemyPrefabs:
-  - {fileID: 4344951356574126065, guid: df440701e54dbd842a312f528baac31d, type: 3}
+  - {fileID: 4344951356574126065, guid: c211640be57b33f49aa34aab2286c97e, type: 3}
+  - {fileID: 4344951356574126065, guid: ca8cd7507fd8c0e448d31eba59e6d242, type: 3}
   - {fileID: 4344951356574126065, guid: 74b27bd8be43ee24f9d325672cef2cd9, type: 3}
-  spawnDelay: 2
+  - {fileID: 4344951356574126065, guid: 00fb1c9481e0ff6429049e6b7a3c89c3, type: 3}
+  spawnDelay: 3
+  objectPool: {fileID: 0}
 --- !u!1 &5415628366664985402
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acf716ee6c3828c48b1d345a2009c6f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolObject: {fileID: -4137832295422276319, guid: ee783124d05432741b98557e8ea455b8,
+  poolObject: {fileID: 4283938317084407979, guid: e3a51ed57acaf764bb7c2381eeb11c32,
     type: 3}
   poolSize: 5
 --- !u!1 &6325344249001794131

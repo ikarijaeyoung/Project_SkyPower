@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
 using LJ2;
+using IO;
 
 
 namespace KYG_skyPower
@@ -30,11 +31,11 @@ namespace KYG_skyPower
     {
         public UnityEvent onGameOver, onPause, onResume, onGameClear;
 
-        public CharictorSave[] saveFiles = new CharictorSave[3]; // 세이브 파일 3개
+        public GameData[] saveFiles = new GameData[3]; // 세이브 파일 3개
 
         public int currentSaveIndex { get; private set; } = 0;
 
-        public CharictorSave CurrentSave => saveFiles[currentSaveIndex]; // 세이브 파일 인덱스로 배열
+        public GameData CurrentSave => saveFiles[currentSaveIndex]; // 세이브 파일 인덱스로 배열
 
         public bool isGameOver { get; private set; } // 게임 오버
         public bool isPaused { get; private set; } // 게임 일시 정지
@@ -48,11 +49,15 @@ namespace KYG_skyPower
 
         public override void Init() // 게임 시작시 세이브 데이터 로드
         {
+            ResetSaveRef();
+        }
+        public void ResetSaveRef()
+        {
             for (int i = 0; i < saveFiles.Length; i++)
             {
-                saveFiles[i] = new CharictorSave();
-                SaveManager.Instance.PlayerLoad(saveFiles[i], i + 1); // 인덱스 1부터
-
+                saveFiles[i] = new GameData();
+                SaveManager.Instance.GameLoad(ref saveFiles[i], i + 1); // 인덱스 1부터
+                Debug.Log($"{i}: {saveFiles[i].playerName}");
             }
         }
 

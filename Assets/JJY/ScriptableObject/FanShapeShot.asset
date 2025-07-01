@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: FanShapeShot
   m_EditorClassIdentifier: 
   shotCount: 5
-  fireDelay: 1
-  fireDelayBetweenShots: 0
+  fireDelayBetweenShots: 0.1
   fanShapeangle: 90
+  returnToPoolTimer: 5

@@ -42,7 +42,8 @@ public class EnemyItem : MonoBehaviour
     }
     void Collect()
     {
-        Debug.Log("Enemy item collected.");
+        Debug.Log("TODO : 점수 증가 기능 추가.");
+        // TODO : 점수 증가 기능 추가
         Destroy(gameObject);
     }
 }

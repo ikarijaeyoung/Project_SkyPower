@@ -39,7 +39,7 @@ namespace JYL
                 Destroy(gameObject);
             }
         }
-        protected virtual void OnApplicationQuit()
+        protected void OnApplicationQuit()
         {
             instance = null;
         }
