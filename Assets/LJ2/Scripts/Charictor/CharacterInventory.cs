@@ -4,10 +4,16 @@ using UnityEngine;
 using IO;
 using JYL;
 
-public class CharacterInventory : Singleton<CharacterInventory>
+[System.Serializable]
+public class CharacterInventory
 {
-    [SerializeField] public List<CharacterSave> characters = new List<CharacterSave>();
+    [SerializeField] public List<CharacterSave> characters;
     
+    public CharacterInventory()
+    {
+        // Initialize the character list
+        characters = new List<CharacterSave>();
+    }
     public void AddCharacter(int id)
     {
         // Check if the character already exists in the inventory
@@ -31,7 +37,7 @@ public class CharacterInventory : Singleton<CharacterInventory>
     }
 
 }
-
+[System.Serializable]
 public struct CharacterSave
 {
     [SerializeField] public int id;

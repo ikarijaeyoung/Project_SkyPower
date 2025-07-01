@@ -3,6 +3,9 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.Utilities;
+using UnityEngine.InputSystem.UI;
+using TMPro;
+using KYG_skyPower;
 
 namespace JYL
 {
@@ -18,10 +21,17 @@ namespace JYL
 
         private void Init()
         {
-            for (int i = 0; i < 3; i++)
-            {
-                //GetUI<TMP_Text>($"SaveText{i+1}").text = Manager.Game.saveFile[i].name;
-            }
+            //for (int i = 0; i < 3; i++)
+            //{
+            //    if (Manager.Game.saveFiles[i] == null)
+            //    {
+            //        GetUI<TMP_Text>($"SaveText{i + 1}").text = "File Empty";
+            //    }
+            //    else
+            //    {
+            //        GetUI<TMP_Text>($"SaveText{i + 1}").text = Manager.Game.saveFiles[i].name;
+            //    }
+            //}
             titleImage = GetUI("TitleImage");
 
             InputSystem.onAnyButtonPress.Call(ctrl => OnAnyBtnPress(ctrl));
