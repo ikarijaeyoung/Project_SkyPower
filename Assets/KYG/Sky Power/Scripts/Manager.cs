@@ -31,6 +31,7 @@ namespace KYG_skyPower
 
         public static SceneChangerManagerSO SceneChanger => SceneChangerManagerSO.Instance;
 
+        public static StageDataManager SDM => StageDataManager.Instance;
 
         /*void Awake()
         {
@@ -58,6 +59,7 @@ namespace KYG_skyPower
             //UI.Init();
             Score.Init();
             //Dialogue.Init();
+            SDM.Init();
         }
     }
 }

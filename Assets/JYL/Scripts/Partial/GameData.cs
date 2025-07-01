@@ -5,7 +5,7 @@ using IO;
 
 public partial class GameData : SaveData
 {
-    public StageInfo[,] stageinfo;
+    public StageInfo[,] stageInfo;
     public bool isEmpty => string.IsNullOrEmpty(playerName);
 
 }

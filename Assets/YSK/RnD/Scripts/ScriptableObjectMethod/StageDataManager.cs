@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using YSK;
+using KYG_skyPower;
 
 namespace YSK
 {
@@ -26,33 +27,55 @@ namespace YSK
         public float completionTime;
     }
     
-    public class StageDataManager : MonoBehaviour
+    public class StageDataManager : Singleton<StageDataManager>
     {
         [Header("Stage Data")]
         [SerializeField] private List<StageData> stageDataList;
         
         [Header("Runtime Data")]
-        [SerializeField] private List<StageRuntimeData> runtimeData = new List<StageRuntimeData>();
+        [SerializeField] public List<StageRuntimeData> runtimeData = new List<StageRuntimeData>();
         
         // 저장 키
         private const string STAGE_DATA_KEY = "StageRuntimeData";
         
         // 이벤트 - 데이터 변경 시 UI 업데이트용
         public static System.Action OnStageDataChanged;
-        
-        private void Start()
+        protected override void Awake() => base.Awake();
+
+        private void Start() { }
+
+        public override void Init()
         {
-            InitializeStageDataList();
+            //InitializeStageDataList();
             InitializeRuntimeData();
-            LoadRuntimeData();
-            
+            //LoadRuntimeData();
+
             // 초기화 완료 후 이벤트 발생
             OnStageDataChanged?.Invoke();
         }
-        
         /// <summary>
         /// StageData 스크립터블 오브젝트들을 자동으로 찾아서 설정
         /// </summary>
+
+        public void SyncRuntimeDataWithStageInfo()
+        {
+            GameData saveData = Manager.Game.saveFiles[Manager.Game.currentSaveIndex];
+            int stageIndex = 0;
+            for (int i = 0; i < saveData.stageInfo.GetLength(0); i++)
+            {
+                int subStageIndex = 0;
+                for (int j = 0; j < saveData.stageInfo.GetLength(1); j++)
+                {
+                    runtimeData[stageIndex].subStages[subStageIndex].bestScore = saveData.stageInfo[i, j].score;
+                    runtimeData[stageIndex].subStages[subStageIndex].isUnlocked = saveData.stageInfo[i, j].unlock;
+                    runtimeData[stageIndex].subStages[subStageIndex].isCompleted = saveData.stageInfo[i, j].isClear;
+                    subStageIndex++;
+                }
+                stageIndex++;
+            }
+        }
+
+
         private void InitializeStageDataList()
         {
             if (stageDataList == null || stageDataList.Count == 0)
@@ -381,6 +404,7 @@ namespace YSK
             InitializeRuntimeData();
             Debug.Log("모든 스테이지 진행도가 초기화되었습니다.");
         }
+
 
         #if UNITY_EDITOR
         /// <summary>

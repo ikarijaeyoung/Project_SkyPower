@@ -15,7 +15,7 @@ namespace JYL
 
                     if (instance != null) return instance;
 
-                    GameObject go = new GameObject("UIManager");
+                    GameObject go = new GameObject($"{typeof(T)}");
                     instance = go.AddComponent<T>();
                     DontDestroyOnLoad(go);
 
