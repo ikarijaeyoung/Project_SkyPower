@@ -73,12 +73,6 @@ namespace YSK
             UpdateUI();
         }
 
-        public void SyncRuntimeDataWithStageInfo()
-        {
-            GameData saveData = Manager.Game.saveFiles[Manager.Game.currentSaveIndex];
-            saveData.stageInfo;
-        }
-
         private void InitializeDataManager()
         {
             if (dataManager == null)

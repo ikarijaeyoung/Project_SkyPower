@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using IO;
 using KYG_skyPower;
-using YSK;
+using System;
+using UnityEngine;
+using UnityEngine.Diagnostics;
 
 namespace LJ2
 {
@@ -29,25 +28,22 @@ namespace LJ2
         }
 
         // 현재 partial class로 구현된 GameData를 control하는 함수들
-        public void GameSave(GameData target, int index,string name)
+        public void GameSave(GameData target, int index, string name)
         {
             //이름 정해줌
             target.playerName = name;
-            int dataIndex = 0;
-            for (int i = 0; i < Manager.SDM.runtimeData.Count; i++)
+            target.stageInfo = new StageInfo[Manager.SDM.runtimeData.Count * subStage];
+            if (Manager.SDM.runtimeData.Count == 0) { Debug.LogError("SDM 카운트가 0임"); }
+            for (int i = 0; i < Manager.SDM.runtimeData.Count * subStage; i++)
             {
-                for (int j = 0; j < subStage; j++)
+                target.stageInfo[i] = new StageInfo
                 {
-                    StageRuntimeData data = Manager.SDM.runtimeData[dataIndex];
-                    target.stageInfo[i, j] = new StageInfo
-                    {
-                        world = i,
-                        stage = j,
-                        unlock = data.isUnlocked,
-                        isClear = data.isCompleted
-                    };
-                }
-            }   
+                    world = 1 + i / subStage,
+                    stage = 1 + i % subStage,
+                    unlock = Manager.SDM.runtimeData[i / subStage].subStages[i % subStage].isUnlocked,
+                    isClear = Manager.SDM.runtimeData[i / subStage].subStages[i % subStage].isCompleted
+                };
+            }
             DataSaveController.Save(target, index);
         }
 

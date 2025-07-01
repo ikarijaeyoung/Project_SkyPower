@@ -143,7 +143,7 @@ namespace IO
             Directory.CreateDirectory(BasePath);
 
             string filePath = GetFilePath(target.FileName, index);
-            string jsonString = JsonUtility.ToJson(target);
+            string jsonString = JsonUtility.ToJson(target,true);
 
             if (IsFileEmpty(jsonString)) return;
 
