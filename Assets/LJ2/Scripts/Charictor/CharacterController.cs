@@ -2,7 +2,7 @@ using LJ2;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace LJ2 
+namespace LJ2
 {
     public class CharactorController : MonoBehaviour
     {
@@ -18,6 +18,7 @@ namespace LJ2
         public int level;
         public int step;
         public int exp;
+        public int fragle; // 캐릭터 조각 : 캐릭터의 등급을 올리는데 사용됨
 
         public int Hp;
         public int attackDamage;
@@ -46,15 +47,25 @@ namespace LJ2
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 id = characterData.id;
-                // 저장위치에 따른 index 변화 구현 필요
-                //SaveManager.Instance.PlayerLoad(charictorSave, 0);
+                SetParameter();
+            }
+
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                LevelUp();
+                SetParameter();
+            }
+
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                StepUp();
                 SetParameter();
             }
         }
         private void SetParameter()
         {
             // Data의 값을 그대로 가져옴
-            //bulletPrefab = characterData.bulletPrefab;
+            // bulletPrefab = characterData.bulletPrefab;
             // ultPrefab = characterData.ultVisual;
             // image = charictorData.image;
 
@@ -65,9 +76,8 @@ namespace LJ2
             moveSpeed = characterData.moveSpeed;
             defense = characterData.defense;
 
+
             // Save의 값을 그대로 가져옴  
-
-
 
             CharacterSave characterSave = saveTester.gameData.characterInventory.characters.Find(c => c.id == id);
 
@@ -80,6 +90,7 @@ namespace LJ2
             Debug.Log($"Character ID: {characterSave.id}, Step: {characterSave.step}, Level : {characterSave.level}");
             level = characterSave.level;
             step = characterSave.step;
+            fragle = characterSave.fragle;
 
             // Save의 값에 따라 Data의 값을 변경
             Hp = characterData.hp + (characterData.hpPlus * (level - 1));
@@ -89,16 +100,16 @@ namespace LJ2
             switch (id)
             {
                 case 10001:
-                    ultDamage = characterData.attackDamage * ((150 + Mathf.Pow(25, step)) / 100);
+                    ultDamage = characterData.attackDamage * ((150 + 25 * Mathf.Pow(step, 2)) / 100);
                     break;
                 case 10002:
-                    ultDamage = characterData.attackDamage * ((120 + Mathf.Pow(20, step)) / 100);
+                    ultDamage = characterData.attackDamage * ((120 + 20 * step) / 100);
                     break;
                 case 10003:
-                    ultDamage = characterData.attackDamage * ((150 + Mathf.Pow(50, step)) / 100);
+                    ultDamage = characterData.attackDamage * ((150 + 50 * step) / 100);
                     break;
                 case 10004:
-                    ultDamage = characterData.attackDamage * ((130 + Mathf.Pow(30, step)) / 100);
+                    ultDamage = characterData.attackDamage * ((130 + 30 * step) / 100);
                     break;
                 case 10005:
                     ultDamage = characterData.attackDamage * ((150 + (12.5f * Mathf.Pow(step, 2)) + (37.5f * step)) / 100);
@@ -107,10 +118,44 @@ namespace LJ2
                     ultDamage = characterData.attackDamage * ((150 + (12.5f * Mathf.Pow(step, 2)) + (37.5f * step)) / 100);
                     break;
                 default:
-                    ultDamage = characterData.attackDamage * ((150 + Mathf.Pow(50, step)) / 100);
+                    ultDamage = characterData.attackDamage * ((150 + 50 * step) / 100);
                     break;
             }
 
+        }
+
+        public void LevelUp()
+        {
+            if (level < characterData.maxLevel)
+            {
+                level++;
+
+                int index = saveTester.gameData.characterInventory.characters.FindIndex(c => c.id == id);
+                CharacterSave characterSave = saveTester.gameData.characterInventory.characters[index];
+                characterSave.level = level;
+                saveTester.gameData.characterInventory.characters[index] = characterSave;
+            }
+            else
+            {
+                Debug.Log("최대 레벨에 도달했습니다.");
+            }
+        }
+
+        public void StepUp()
+        {
+            if (step < 4)
+            {
+                step++;
+
+                int index = saveTester.gameData.characterInventory.characters.FindIndex(c => c.id == id);
+                CharacterSave characterSave = saveTester.gameData.characterInventory.characters[index];
+                characterSave.step = step;
+                saveTester.gameData.characterInventory.characters[index] = characterSave;
+            }
+            else
+            {
+                Debug.Log("최대 단계에 도달했습니다.");
+            }
         }
     }
 }
