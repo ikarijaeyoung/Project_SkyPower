@@ -2,7 +2,7 @@ using LJ2;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace LJ2 
+namespace LJ2
 {
     public class CharactorController : MonoBehaviour
     {
@@ -49,6 +49,16 @@ namespace LJ2
                 // 저장위치에 따른 index 변화 구현 필요
                 //SaveManager.Instance.PlayerLoad(charictorSave, 0);
                 SetParameter();
+            }
+
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                LevelUp();
+            }
+
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                StepUp();
             }
         }
         private void SetParameter()
@@ -111,6 +121,40 @@ namespace LJ2
                     break;
             }
 
+        }
+
+        public void LevelUp()
+        {
+            if (level < characterData.maxLevel)
+            {
+                level++;
+
+                int index = saveTester.gameData.characterInventory.characters.FindIndex(c => c.id == id);
+                CharacterSave characterSave = saveTester.gameData.characterInventory.characters[index];
+                characterSave.level = level;
+                saveTester.gameData.characterInventory.characters[index] = characterSave;
+            }
+            else
+            {
+                Debug.Log("최대 레벨에 도달했습니다.");
+            }
+        }
+
+        public void StepUp()
+        {
+            if (step < 4)
+            {
+                step++;
+
+                int index = saveTester.gameData.characterInventory.characters.FindIndex(c => c.id == id);
+                CharacterSave characterSave = saveTester.gameData.characterInventory.characters[index];
+                characterSave.step = step;
+                saveTester.gameData.characterInventory.characters[index] = characterSave;
+            }
+            else
+            {
+                Debug.Log("최대 단계에 도달했습니다.");
+            }
         }
     }
 }
