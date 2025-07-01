@@ -15,7 +15,7 @@ namespace KYG_skyPower
         void Start()
         {
             // 1. 아이템 추가 (ID로)
-            inventoryManagerSO.AddItemById(itemManagerSO, 1001, 5);
+            inventoryManagerSO.AddItemById(itemManagerSO, 1, 5);
 
             // 2. 아이템 추가 (이름으로)
             var item = itemManagerSO.GetItemByName("체력포션");
