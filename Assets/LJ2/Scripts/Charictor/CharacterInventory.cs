@@ -4,9 +4,9 @@ using UnityEngine;
 using IO;
 using JYL;
 
-public class CharacterInventory : Singleton<CharacterInventory>
+public class CharacterInventory
 {
-    [SerializeField] public List<CharacterSave> characters = new List<CharacterSave>();
+    [SerializeField] public List<CharacterSave> characters;
     
     public void AddCharacter(int id)
     {

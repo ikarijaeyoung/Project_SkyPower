@@ -1,4 +1,5 @@
 using IO;
+using LJ2;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +10,8 @@ public class CharacterDataToSO : MonoBehaviour
 {
     [SerializeField] private CsvTable table;
     private CharacterData characterData;
-    [SerializeField] public CharacterInventory characterInventory;
+    // Removed SerializeField attribute from 'saveTester' as it is redundant for public fields.  
+    public SaveTester saveTester;
 
 
     private void Start()
@@ -26,7 +28,7 @@ public class CharacterDataToSO : MonoBehaviour
             characterData = ScriptableObject.CreateInstance<CharacterData>();
 
             characterData.id = int.Parse(table.GetData(i, 0));
-            characterInventory.AddCharacter(characterData.id);
+            //saveTester.gameData.characterInventory.AddCharacter(characterData.id);
 
             
             Enum.TryParse<Grade>(table.GetData(i, 1), out characterData.grade);
