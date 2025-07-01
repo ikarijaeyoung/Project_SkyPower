@@ -37,6 +37,8 @@ namespace LJ2
         public int parryCool;
         public Sprite image;
 
+        public int upgradeUnit;
+
         private void Start()
         {
 
@@ -52,7 +54,7 @@ namespace LJ2
 
             if (Input.GetKeyDown(KeyCode.L))
             {
-                LevelUp();
+                LevelUp(5000);  // 5000은 예시로, 실제 게임에서는 플레이어가 가진 유닛 수에 따라 다르게 설정해야 함
                 SetParameter();
             }
 
@@ -97,6 +99,8 @@ namespace LJ2
             attackDamage = (int)(characterData.attackDamage + (characterData.damagePlus * (level - 1)));
             ultLevel = step + 1;
             ultCool = characterData.ultCoolDefault - (characterData.ultCoolReduce * step);
+            upgradeUnit = characterData.upgradeUnitDefault + (characterData.upgradeUnitPlus * level);
+
             switch (id)
             {
                 case 10001:
@@ -124,16 +128,25 @@ namespace LJ2
 
         }
 
-        public void LevelUp()
+        public void LevelUp(int unit)
         {
             if (level < characterData.maxLevel)
             {
-                level++;
+                if(unit > upgradeUnit)
+                {
+                    unit -= upgradeUnit;
+                    level++;
 
-                int index = saveTester.gameData.characterInventory.characters.FindIndex(c => c.id == id);
-                CharacterSave characterSave = saveTester.gameData.characterInventory.characters[index];
-                characterSave.level = level;
-                saveTester.gameData.characterInventory.characters[index] = characterSave;
+                    int index = saveTester.gameData.characterInventory.characters.FindIndex(c => c.id == id);
+                    CharacterSave characterSave = saveTester.gameData.characterInventory.characters[index];
+                    characterSave.level = level;
+                    saveTester.gameData.characterInventory.characters[index] = characterSave;
+                }
+                else
+                {
+                    Debug.Log("업그레이드 유닛이 부족합니다.");
+                }
+
             }
             else
             {

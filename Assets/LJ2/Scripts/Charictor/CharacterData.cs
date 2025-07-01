@@ -32,7 +32,9 @@ public class CharacterData : ScriptableObject
     public int parryCool;
     public Sprite image;
 
-    
+    public int upgradeUnitDefault;
+    public int upgradeUnitPlus;
+
 
 }
 
