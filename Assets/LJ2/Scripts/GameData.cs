@@ -9,11 +9,12 @@ public partial class GameData : SaveData
 
     public CharacterInventory characterInventory;
 
-    private void Awake()
+    public GameData()
     {
-        characterInventory = CharacterInventory.Instance;
+        // Set the file name to the type name of this class
+        playerName = GetType().Name;
+        
+        // Initialize character inventory
+        characterInventory = new CharacterInventory();
     }
-
-
-
 }

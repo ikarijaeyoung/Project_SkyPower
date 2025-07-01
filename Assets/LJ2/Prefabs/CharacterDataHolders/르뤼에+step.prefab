@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterData: {fileID: 11400000, guid: 2c851c6cf5955ef48a38f86965d8aa33, type: 2}
-  charictorInventory: {fileID: 0}
+  saveTester: {fileID: 0}
   id: 0
   grade: 0
   name: 
