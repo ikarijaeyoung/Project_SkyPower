@@ -2,26 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using IO;
+using JYL;
 
 namespace LJ2
 {
-    public class SaveManager : MonoBehaviour
+    public class SaveManager : Singleton<SaveManager>
     {
-        private static SaveManager instance;
-        public static SaveManager Instance { get { return instance; } }
-
-        private void Awake()
-        {
-            if (instance == null)
-            {
-                instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-        }
+        protected override void Awake() => base.Awake();
 
         // 정보 별 저장, 로드, 삭제 함수 따로 구현
         public void PlayerSave(CharictorSave target, int index)
@@ -40,8 +27,9 @@ namespace LJ2
         }
 
         // 현재 partial class로 구현된 GameData를 control하는 함수들
-        public void GameSave(GameData target, int index)
+        public void GameSave(GameData target, int index,string name)
         {
+            target.playerName = name;
             DataSaveController.Save(target, index);
         }
 

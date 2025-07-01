@@ -12,7 +12,7 @@ public partial class GameData : SaveData
     public GameData()
     {
         // Set the file name to the type name of this class
-        playerName = GetType().Name;
+        // = GetType().Name;
         
         // Initialize character inventory
         characterInventory = new CharacterInventory();

@@ -9,6 +9,8 @@ namespace LJ2
     {
         [SerializeField] public GameData gameData;
         public int index = 0;
+        //TODO : TestSave name
+        public string name = "test";
 
         private void Awake()
         {
@@ -20,7 +22,7 @@ namespace LJ2
 
         public void SaveGameData()
         {
-            SaveManager.Instance.GameSave(gameData, index);
+            SaveManager.Instance.GameSave(gameData, index,name);
             Debug.Log("Game data saved successfully.");
         }
 
