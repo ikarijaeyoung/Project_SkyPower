@@ -101,16 +101,16 @@ namespace LJ2
             switch (id)
             {
                 case 10001:
-                    ultDamage = characterData.attackDamage * ((150 + Mathf.Pow(25, step)) / 100);
+                    ultDamage = characterData.attackDamage * ((150 + 25 * Mathf.Pow(step, 2)) / 100);
                     break;
                 case 10002:
-                    ultDamage = characterData.attackDamage * ((120 + Mathf.Pow(20, step)) / 100);
+                    ultDamage = characterData.attackDamage * ((120 + 20 * step) / 100);
                     break;
                 case 10003:
-                    ultDamage = characterData.attackDamage * ((150 + Mathf.Pow(50, step)) / 100);
+                    ultDamage = characterData.attackDamage * ((150 + 50 * step) / 100);
                     break;
                 case 10004:
-                    ultDamage = characterData.attackDamage * ((130 + Mathf.Pow(30, step)) / 100);
+                    ultDamage = characterData.attackDamage * ((130 + 30 * step) / 100);
                     break;
                 case 10005:
                     ultDamage = characterData.attackDamage * ((150 + (12.5f * Mathf.Pow(step, 2)) + (37.5f * step)) / 100);
@@ -119,7 +119,7 @@ namespace LJ2
                     ultDamage = characterData.attackDamage * ((150 + (12.5f * Mathf.Pow(step, 2)) + (37.5f * step)) / 100);
                     break;
                 default:
-                    ultDamage = characterData.attackDamage * ((150 + Mathf.Pow(50, step)) / 100);
+                    ultDamage = characterData.attackDamage * ((150 + 50 * step) / 100);
                     break;
             }
 
