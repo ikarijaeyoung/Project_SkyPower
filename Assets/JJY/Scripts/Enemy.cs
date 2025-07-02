@@ -8,7 +8,6 @@ using Random = System.Random;
 public class Enemy : MonoBehaviour
 {
     public EnemyData enemyData;
-    public EnemyDropItemData dropItem;
     [SerializeField] private int currentHP; // TODO : Player의 공격력 * 1.5배
     public bool isFiring;
     public Transform[] firePoints;
@@ -58,7 +57,7 @@ public class Enemy : MonoBehaviour
     // }
     private void Die()
     {
-        EnemyItemManager.enemyCount--; // TODO : 임시로 EnemyItemManager를 사용함. StageManager로 옮길것.
+        SpawnManager.enemyCount--; // TODO : 임시로 EnemyItemManager를 사용함. StageManager로 옮길것.
         // 여기도 GameManager에서 이벤트
         
         OnEnemyDied?.Invoke(transform.position);
