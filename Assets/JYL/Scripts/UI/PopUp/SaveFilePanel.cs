@@ -2,7 +2,6 @@ using KYG_skyPower;
 using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using KYG_skyPower;
 
 namespace JYL
 {
@@ -21,7 +20,7 @@ namespace JYL
         //세이브파일을 삭제
         private void OnDelClick(PointerEventData eventData)
         {
-            Manager.Save.GameDelete(data, Manager.Game.currentSaveIndex+1);
+            Manager.Save.GameDelete(data, Manager.Game.currentSaveIndex + 1);
             UIManager.Instance.ClosePopUp();
             Manager.Game.ResetSaveRef();
         }

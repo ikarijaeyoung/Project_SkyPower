@@ -17,12 +17,17 @@ namespace JYL
         }
         private void Update()
         {
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                Debug.Log($"{PopUpUI.IsPopUpActive}, {Util.escPressed}");
+            }
             if(Input.GetKeyDown(KeyCode.Escape)&&!PopUpUI.IsPopUpActive&&!Util.escPressed)
             {
                 // 씬 전환
                 SceneManager.LoadSceneAsync("bMainScene_JYL");
             }
         }
+        
         private void CharacterGacha(PointerEventData eventData)
         {
             // TODO : 가챠 수행과 동시에, 인벤토리(캐릭터 목록)에 추가. 게임매니저에서 세이브함

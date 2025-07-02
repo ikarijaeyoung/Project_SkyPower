@@ -25,11 +25,17 @@ namespace JYL
                         Debug.LogWarning($"해당 경로에 팝업 프리팹이 없음: {popUpPath}");
                         return null;
                     }
-                    return Instantiate(prefab);
+                    PopUpUI go = Instantiate(prefab);
+                    DontDestroyOnLoad(go);
+                    return go;
                 }
+                DontDestroyOnLoad(popUp);
                 return popUp;
             }
         }
+
+        // 선택 UI 인덱스
+        public int selectIndexUI = 0;
 
         protected override void Awake() => base.Awake();
         private void Update()
@@ -65,9 +71,10 @@ namespace JYL
         }
         public void CleanPopUp()
         {
-            while(PopUp.StackCount() == 0)
+            while(true)
             {
                 PopUp.PopUIStack();
+                if (PopUp.StackCount() == 0) break;
             }
         }
     }
