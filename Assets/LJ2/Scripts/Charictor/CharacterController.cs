@@ -10,8 +10,6 @@ namespace LJ2
     {
         public CharacterData characterData;
 
-        public SaveTester saveTester;
-
         public Parrying parrying;
         public Ultimate ultimate;
 
@@ -142,10 +140,10 @@ namespace LJ2
                     unit -= upgradeUnit;
                     level++;
 
-                    int index = saveTester.gameData.characterInventory.characters.FindIndex(c => c.id == id);
-                    CharacterSave characterSave = saveTester.gameData.characterInventory.characters[index];
+                    int index = Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.characters.FindIndex(c => c.id == id);
+                    CharacterSave characterSave = Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.characters[index];
                     characterSave.level = level;
-                    saveTester.gameData.characterInventory.characters[index] = characterSave;
+                    Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.characters[index] = characterSave;
                 }
                 else
                 {
@@ -177,10 +175,10 @@ namespace LJ2
             {
                 step++;
 
-                int index = saveTester.gameData.characterInventory.characters.FindIndex(c => c.id == id);
-                CharacterSave characterSave = saveTester.gameData.characterInventory.characters[index];
+                int index = Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.characters.FindIndex(c => c.id == id);
+                CharacterSave characterSave = Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.characters[index];
                 characterSave.step = step;
-                saveTester.gameData.characterInventory.characters[index] = characterSave;
+                Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.characters[index] = characterSave;
             }
             else
             {

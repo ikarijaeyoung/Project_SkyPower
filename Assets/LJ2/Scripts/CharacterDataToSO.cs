@@ -10,8 +10,6 @@ public class CharacterDataToSO : MonoBehaviour
 {
     [SerializeField] private CsvTable table;
     private CharacterData characterData;
-    // Removed SerializeField attribute from 'saveTester' as it is redundant for public fields.  
-    public SaveTester saveTester;
 
 
     private void Start()
@@ -29,9 +27,6 @@ public class CharacterDataToSO : MonoBehaviour
 
             characterData.id = int.Parse(table.GetData(i, 0));
 
-            saveTester.gameData.characterInventory.AddCharacter(characterData.id);
-
-            
             Enum.TryParse<Grade>(table.GetData(i, 1), out characterData.grade);
             characterData.characterName = table.GetData(i, 2);
             //Debug.Log(characterData.name);
