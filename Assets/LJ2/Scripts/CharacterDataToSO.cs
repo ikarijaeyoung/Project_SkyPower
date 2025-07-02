@@ -72,6 +72,8 @@ public class CharacterDataToSO : MonoBehaviour
 
             //charictorData.image = (Sprite)AssetDatabase.LoadAssetAtPath($"이미지 파일들 경로/{table.GetData(i, 26)}.Prefab", typeof(Sprite));
 
+            characterData.upgradeUnitDefault = int.Parse(table.GetData(i, 27));
+            characterData.upgradeUnitPlus = int.Parse(table.GetData(i, 28));
 
             string assetPath = $"Assets/LJ2/Scripts/Charictor/{characterData.name}.asset";
             AssetDatabase.CreateAsset(characterData, assetPath);

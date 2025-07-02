@@ -32,3 +32,5 @@ MonoBehaviour:
   parry: 2
   parryCool: 5
   image: {fileID: 0}
+  upgradeUnitDefault: 5000
+  upgradeUnitPlus: 5000
