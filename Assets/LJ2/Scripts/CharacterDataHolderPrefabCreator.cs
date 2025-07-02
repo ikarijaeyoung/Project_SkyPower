@@ -11,7 +11,7 @@ public class CharacterDataHolderPrefabCreator
     {
         // 모든 CharacterData ScriptableObject 에셋 경로 찾기  
         string[] guids = AssetDatabase.FindAssets("t:CharacterData", new[] { "Assets/LJ2/Scripts/Charictor" });
-        var saveDir = "Assets/LJ2/Prefabs/CharacterDataHolders";
+        var saveDir = "Assets/Resources/CharacterPrefabs";
         if (!AssetDatabase.IsValidFolder(saveDir))
             AssetDatabase.CreateFolder("Assets/LJ2/Prefabs", "CharacterDataHolders");
 
@@ -25,7 +25,7 @@ public class CharacterDataHolderPrefabCreator
             if (data == null) continue;
 
             // 빈 GameObject 생성 및 CharactorController 컴포넌트 추가
-            GameObject go = new GameObject($"{data.name}");
+            GameObject go = new GameObject($"{data.characterName}");
             var holder = go.AddComponent<LJ2.CharactorController>();  
             holder.characterData = data;
 
@@ -47,7 +47,7 @@ public class CharacterDataHolderPrefabCreator
             laserObject.transform.SetParent(go.transform); // Laser 프리팹을 생성된 GameObject의 자식으로 설정
             shieldObject.transform.SetParent(go.transform); // Shield 프리팹을 생성된 GameObject의 자식으로 설정
 
-            string prefabPath = $"{saveDir}/{data.name}.prefab";
+            string prefabPath = $"{saveDir}/{data.characterName}.prefab";
             PrefabUtility.SaveAsPrefabAsset(go, prefabPath);
             Object.DestroyImmediate(go);
         }

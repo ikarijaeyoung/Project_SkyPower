@@ -30,10 +30,8 @@ namespace LJ2
         // 현재 partial class로 구현된 GameData를 control하는 함수들
         public void GameSave(GameData target, int index, string name)
         {
-            //이름 정해줌
             target.playerName = name;
             target.stageInfo = new StageInfo[Manager.SDM.runtimeData.Count * subStage];
-            if (Manager.SDM.runtimeData.Count == 0) { Debug.LogError("SDM 카운트가 0임"); }
             for (int i = 0; i < Manager.SDM.runtimeData.Count * subStage; i++)
             {
                 target.stageInfo[i] = new StageInfo
@@ -44,6 +42,7 @@ namespace LJ2
                     isClear = Manager.SDM.runtimeData[i / subStage].subStages[i % subStage].isCompleted
                 };
             }
+
             DataSaveController.Save(target, index);
         }
 

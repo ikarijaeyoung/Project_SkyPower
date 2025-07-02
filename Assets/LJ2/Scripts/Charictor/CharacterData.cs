@@ -10,7 +10,7 @@ namespace LJ2
     {
         public int id;
         public Grade grade;
-        public string name;
+        public string characterName;
 
         public Elemental elemental;
         public int maxLevel;

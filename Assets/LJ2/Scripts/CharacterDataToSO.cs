@@ -33,7 +33,7 @@ public class CharacterDataToSO : MonoBehaviour
 
             
             Enum.TryParse<Grade>(table.GetData(i, 1), out characterData.grade);
-            characterData.name = table.GetData(i, 2);
+            characterData.characterName = table.GetData(i, 2);
             //Debug.Log(characterData.name);
             Enum.TryParse<Elemental>(table.GetData(i, 5), out characterData.elemental);
             
@@ -75,7 +75,7 @@ public class CharacterDataToSO : MonoBehaviour
             characterData.upgradeUnitDefault = int.Parse(table.GetData(i, 27));
             characterData.upgradeUnitPlus = int.Parse(table.GetData(i, 28));
 
-            string assetPath = $"Assets/LJ2/Scripts/Charictor/{characterData.name}.asset";
+            string assetPath = $"Assets/LJ2/Scripts/Charictor/{characterData.characterName}.asset";
             AssetDatabase.CreateAsset(characterData, assetPath);
         }
         AssetDatabase.SaveAssets();

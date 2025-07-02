@@ -760,6 +760,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1288026469}
   m_CullTransparentMesh: 1
+--- !u!1 &1342384430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1342384432}
+  - component: {fileID: 1342384431}
+  m_Layer: 0
+  m_Name: CharacterInit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1342384431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342384430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a2f771eacfc83143bf493c071e28871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  table:
+    _filePath: LJ2/Scripts/IO/Csv/ProjectSkyPower_DataTable - Character_Table.csv
+    <SplitSymbol>k__BackingField: 44
+--- !u!4 &1342384432
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342384430}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20.619732, y: 54.546505, z: -28.110533}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1682170713
 GameObject:
   m_ObjectHideFlags: 0
@@ -1192,3 +1239,4 @@ SceneRoots:
   - {fileID: 964726344}
   - {fileID: 208207814}
   - {fileID: 257510709}
+  - {fileID: 1342384432}

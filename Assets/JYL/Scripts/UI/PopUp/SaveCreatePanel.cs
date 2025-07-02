@@ -9,6 +9,7 @@ namespace JYL
 {
     public class SaveCreatePanel : BaseUI
     {
+        [SerializeField] CharacterInit characterInit;
         [SerializeField] int maxInputCount = 8;
         private TMP_InputField inputField;
         private Image bgImage;
@@ -18,12 +19,9 @@ namespace JYL
         private Color warningColor = Color.red;
         private Color correctColor = Color.green;
 
-        private void Start()
-        {
-
-        }
         private void OnEnable()
         {
+            characterInit = GetComponent<CharacterInit>();
             bgImage = GetUI<Image>("SaveInput");
             warningText = GetUI<TMP_Text>("SaveWarningText");
             inputField = GetUI<TMP_InputField>("SaveInput");
@@ -48,6 +46,7 @@ namespace JYL
             if (correctInput)
             {
                 int index = Manager.Game.currentSaveIndex;
+                characterInit.InitCharacterInfo();
                 Manager.Save.GameSave(Manager.Game.saveFiles[index], index+1,inputField.text);
                 Manager.Game.ResetSaveRef();
                 SceneManager.LoadSceneAsync("bMainScene_JYL");

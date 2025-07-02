@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using KYG_skyPower;
+
 namespace LJ2
 {
+    [System.Serializable]
     public class CharactorController : MonoBehaviour
     {
         public CharacterData characterData;
@@ -12,9 +15,9 @@ namespace LJ2
         public Parrying parrying;
         public Ultimate ultimate;
 
-        public int id;
+        public int id => characterData.id;
         public Grade grade;
-        public string name;
+        public string charName;
         public Elemental elemental;
 
         public int level;
@@ -40,7 +43,7 @@ namespace LJ2
 
         public int upgradeUnit;
 
-        private void Start()
+        private void Awake()
         {
             parrying = GetComponent<Parrying>();
             ultimate = GetComponent<Ultimate>();
@@ -48,25 +51,25 @@ namespace LJ2
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                id = characterData.id;
-                SetParameter();
-            }
+            //if (Input.GetKeyDown(KeyCode.Space))
+            //{
+            //    id = characterData.id;
+            //    SetParameter();
+            //}
 
-            if (Input.GetKeyDown(KeyCode.L))
-            {
-                LevelUp(5000);  // 5000은 예시로, 실제 게임에서는 플레이어가 가진 유닛 수에 따라 다르게 설정해야 함
-                SetParameter();
-            }
+            //if (Input.GetKeyDown(KeyCode.L))
+            //{
+            //    LevelUp(5000);  // 5000은 예시로, 실제 게임에서는 플레이어가 가진 유닛 수에 따라 다르게 설정해야 함
+            //    SetParameter();
+            //}
 
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                StepUp();
-                SetParameter();
-            }
+            //if (Input.GetKeyDown(KeyCode.S))
+            //{
+            //    StepUp();
+            //    SetParameter();
+            //}
         }
-        private void SetParameter()
+        public void SetParameter()
         {
             // Data의 값을 그대로 가져옴
             // bulletPrefab = characterData.bulletPrefab;
@@ -74,7 +77,7 @@ namespace LJ2
             // image = charictorData.image;
 
             grade = characterData.grade;
-            name = characterData.name;
+            charName = characterData.characterName;
             elemental = characterData.elemental;
             attackSpeed = characterData.attackSpeed;
             moveSpeed = characterData.moveSpeed;
@@ -83,7 +86,7 @@ namespace LJ2
 
             // Save의 값을 그대로 가져옴  
 
-            CharacterSave characterSave = saveTester.gameData.characterInventory.characters.Find(c => c.id == id);
+            CharacterSave characterSave = Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.characters.Find(c => c.id == id);
 
             if (characterSave.id == 0)
             {
@@ -126,7 +129,6 @@ namespace LJ2
                     ultDamage = characterData.attackDamage * ((150 + 50 * step) / 100);
                     break;
             }
-
         }
 
         // 업그레이드 가능할 때만 실행
