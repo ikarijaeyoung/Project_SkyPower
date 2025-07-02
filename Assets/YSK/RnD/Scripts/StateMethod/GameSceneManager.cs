@@ -14,9 +14,6 @@ namespace YSK
     /// </summary>
     public class GameSceneManager : Singleton<GameSceneManager>
     {
-        [Header("Scene Data")]
-        [SerializeField] private SceneData sceneData;
-
         [Header("Loading Screen Settings")]
         [Tooltip("로딩 화면을 사용할지 여부 (기본값: false)")]
         [SerializeField] private bool enableLoadingScreen = false;
@@ -30,8 +27,6 @@ namespace YSK
         [Header("Loading Screen UI")]
         [Tooltip("로딩 화면 프리팹 (null이면 로딩 화면을 사용하지 않음)")]
         [SerializeField] private GameObject customLoadingScreenPrefab;
-
-        // 싱글톤 패턴
 
         // 이벤트
         public static event Action<string> OnSceneLoadStarted;
@@ -58,12 +53,6 @@ namespace YSK
 
         private void Start()
         {
-            //if (sceneData == null)
-            //{
-            //    Debug.LogError("SceneData가 할당되지 않았습니다!");
-            //    return;
-            //}
-
             // 씬 시작 시 로딩 화면 표시 옵션
             if (showLoadingOnSceneStart && enableLoadingScreen && customLoadingScreenPrefab != null)
             {
@@ -76,10 +65,6 @@ namespace YSK
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
             SceneManager.sceneUnloaded -= OnSceneUnloaded;
-        }
-
-        private void Update()
-        {
         }
 
         #endregion
@@ -110,6 +95,24 @@ namespace YSK
 
             HandleSceneSpecificData(sceneName, mainStageID, subStageID, score, isWin);
             StartCoroutine(LoadSceneAsync(sceneName));
+        }
+
+        /// <summary>
+        /// 특정 스테이지와 함께 씬을 로드합니다.
+        /// </summary>
+        public void LoadGameSceneWithStage(string sceneName, int mainStageID, int subStageID)
+        {
+            Debug.Log($"=== 특정 스테이지와 함께 씬 로드: {sceneName}, 스테이지 {mainStageID}-{subStageID} ===");
+
+            // 오브젝트가 비활성화되어 있으면 활성화
+            if (!gameObject.activeInHierarchy)
+            {
+                Debug.LogWarning("GameSceneManager가 비활성화되어 있어서 활성화합니다.");
+                gameObject.SetActive(true);
+            }
+
+            HandleSceneSpecificData(sceneName, mainStageID, subStageID, 0, false);
+            StartCoroutine(LoadSceneAsyncWithStage(sceneName, mainStageID, subStageID));
         }
 
         /// <summary>
@@ -203,54 +206,54 @@ namespace YSK
                 progressText.text = $"{Mathf.RoundToInt(progress * 100)}%";
         }
 
-        // Unity 인스펙터 OnClick()용 메서드들 - SceneData 기반으로 변경
+        // Unity 인스펙터 OnClick()용 메서드들 - 하드코딩된 씬 이름 사용
         public void LoadTitleScene()
         {
             Debug.Log("LoadTitleScene 버튼 클릭됨!");
-            LoadSceneByType(SceneType.Title);
+            LoadGameScene("aTitleScene_JYL");
         }
 
         public void LoadMainScene()
         {
             Debug.Log("LoadMainScene 버튼 클릭됨!");
-            LoadSceneByType(SceneType.MainMenu);
+            LoadGameScene("bMainScene_JYL");
         }
 
         public void LoadStoreScene()
         {
             Debug.Log("LoadStoreScene 버튼 클릭됨!");
-            LoadSceneByType(SceneType.Store);
+            LoadGameScene("cStoreScene_JYL");
         }
 
         public void LoadStageStage()
         {
             Debug.Log("LoadStageScene 버튼 클릭됨!");
-            LoadSceneByType(SceneType.StageSelect);
+            LoadGameScene("dStageScene_JYL");
         }
 
         // UI를 위한 PointerEventData data 매개변수 넣은 Overloading
         public void LoadTitleScene(PointerEventData data)
         {
             Debug.Log("LoadTitleScene 버튼 클릭됨!");
-            LoadSceneByType(SceneType.Title);
+            LoadGameScene("aTitleScene_JYL");
         }
 
         public void LoadMainScene(PointerEventData data)
         {
             Debug.Log("LoadMainScene 버튼 클릭됨!");
-            LoadSceneByType(SceneType.MainMenu);
+            LoadGameScene("bMainScene_JYL");
         }
 
         public void LoadStoreScene(PointerEventData data)
         {
             Debug.Log("LoadStoreScene 버튼 클릭됨!");
-            LoadSceneByType(SceneType.Store);
+            LoadGameScene("cStoreScene_JYL");
         }
 
         public void LoadStageStage(PointerEventData data)
         {
             Debug.Log("LoadStageScene 버튼 클릭됨!");
-            LoadSceneByType(SceneType.StageSelect);
+            LoadGameScene("dStageScene_JYL");
         }
 
         public void ReloadCurrentStage(PointerEventData data)
@@ -264,10 +267,6 @@ namespace YSK
             Debug.Log("ReloadCurrentScene 버튼 클릭됨!");
             LoadGameScene(CurrentSceneName);
         }
-
-
-
-
 
         /// <summary>
         /// 현재 스테이지를 다시 로드합니다.
@@ -304,101 +303,10 @@ namespace YSK
 
         #endregion
 
-        #region Public API - SceneData 기반 자동 매칭
-
-        /// <summary>
-        /// SceneData에서 씬 타입으로 씬을 로드합니다.
-        /// </summary>
-        public void LoadSceneByType(SceneType sceneType)
-        {
-            if (sceneData == null)
-            {
-                Debug.LogError("SceneData가 할당되지 않았습니다!");
-                return;
-            }
-
-            var sceneInfo = sceneData.GetSceneInfoByType(sceneType);
-            if (sceneInfo != null)
-            {
-                Debug.Log($"씬 타입 {sceneType}으로 씬 로드: {sceneInfo.sceneName}");
-                LoadGameScene(sceneInfo.sceneName);
-            }
-            else
-            {
-                Debug.LogError($"SceneData에서 씬 타입 {sceneType}을 찾을 수 없습니다!");
-                Debug.Log($"등록된 씬 타입들: {string.Join(", ", GetRegisteredSceneTypes())}");
-            }
-        }
-
-        /// <summary>
-        /// SceneData에서 씬 타입으로 스테이지와 함께 씬을 로드합니다.
-        /// </summary>
-        public void LoadSceneByTypeWithStage(SceneType sceneType, int mainStageID, int subStageID)
-        {
-            if (sceneData == null)
-            {
-                Debug.LogError("SceneData가 할당되지 않았습니다!");
-                return;
-            }
-
-            var sceneInfo = sceneData.GetSceneInfoByType(sceneType);
-            if (sceneInfo != null)
-            {
-                Debug.Log($"씬 타입 {sceneType}으로 스테이지와 함께 씬 로드: {sceneInfo.sceneName}, 스테이지 {mainStageID}-{subStageID}");
-                LoadGameScene(sceneInfo.sceneName, mainStageID, subStageID);
-            }
-            else
-            {
-                Debug.LogError($"SceneData에서 씬 타입 {sceneType}을 찾을 수 없습니다!");
-                Debug.Log($"등록된 씬 타입들: {string.Join(", ", GetRegisteredSceneTypes())}");
-            }
-        }
-
-        /// <summary>
-        /// SceneData에서 씬 타입으로 씬 이름을 가져옵니다.
-        /// </summary>
-        public string GetSceneNameByType(SceneType sceneType)
-        {
-            if (sceneData == null) return null;
-            return sceneData.GetSceneNameByType(sceneType);
-        }
-
-        /// <summary>
-        /// SceneData에 등록된 모든 씬 타입을 반환합니다.
-        /// </summary>
-        public SceneType[] GetRegisteredSceneTypes()
-        {
-            if (sceneData == null) return new SceneType[0];
-
-            return sceneData.scenes.ConvertAll(s => s.sceneType).ToArray();
-        }
-
-        /// <summary>
-        /// SceneData에 등록된 모든 씬 이름을 반환합니다.
-        /// </summary>
-        public string[] GetRegisteredSceneNames()
-        {
-            if (sceneData == null) return new string[0];
-
-            return sceneData.scenes.ConvertAll(s => s.sceneName).ToArray();
-        }
-
-        #endregion
-
         #region Private Methods
 
         public override void Init()
         {
-            //// 로딩 화면 프리팹이 있을 때만 생성
-            //if (customLoadingScreenPrefab != null)
-            //{
-            //    CreateLoadingScreen();
-            //}
-            //else
-            //{
-            //    Debug.Log("로딩 화면 프리팹이 설정되지 않아 로딩 화면을 사용하지 않습니다.");
-            //}
-
             SceneManager.sceneLoaded += OnSceneLoaded;
             SceneManager.sceneUnloaded += OnSceneUnloaded;
         }
@@ -411,10 +319,6 @@ namespace YSK
                     PlayerPrefs.SetInt("SelectedMainStage", mainStageID);
                     PlayerPrefs.SetInt("SelectedSubStage", subStageID);
                     break;
-                //case "RnDResultScene":
-                //    PlayerPrefs.SetInt("GameScore", score);
-                //    PlayerPrefs.SetInt("GameWin", isWin ? 1 : 0);
-                //    break;
             }
             PlayerPrefs.Save();
         }
@@ -432,12 +336,9 @@ namespace YSK
             IsLoading = true;
             OnSceneLoadStarted?.Invoke(sceneName);
 
-            // 씬 정보 가져오기
-            SceneData.SceneInfo sceneInfo = sceneData.GetSceneInfo(sceneName);
-            bool showLoadingScreen = (sceneInfo?.requiresLoadingScreen ?? true) && enableLoadingScreen && customLoadingScreenPrefab != null;
-            float sceneMinLoadingTime = sceneInfo?.minLoadingTime ?? minLoadingTime;
+            bool showLoadingScreen = enableLoadingScreen && customLoadingScreenPrefab != null;
 
-            Debug.Log($"씬 정보: showLoadingScreen={showLoadingScreen}, minLoadingTime={sceneMinLoadingTime}");
+            Debug.Log($"씬 정보: showLoadingScreen={showLoadingScreen}, minLoadingTime={minLoadingTime}");
 
             if (showLoadingScreen)
             {
@@ -469,7 +370,7 @@ namespace YSK
             // 최소 로딩 시간 대기 (로딩 화면이 있을 때만)
             if (showLoadingScreen)
             {
-                yield return StartCoroutine(EnsureMinimumLoadingTime(sceneMinLoadingTime));
+                yield return StartCoroutine(EnsureMinimumLoadingTime(minLoadingTime));
                 UpdateLoadingProgress(1f);
                 yield return new WaitForSeconds(0.1f);
             }
@@ -486,6 +387,75 @@ namespace YSK
             OnSceneLoadCompleted?.Invoke(sceneName);
 
             Debug.Log($"=== 씬 로드 완료: {sceneName} ===");
+        }
+
+        private IEnumerator LoadSceneAsyncWithStage(string sceneName, int mainStageID, int subStageID)
+        {
+            if (IsLoading || string.IsNullOrEmpty(sceneName) || !DoesSceneExist(sceneName))
+            {
+                Debug.LogWarning($"씬 로드 조건 불만족: IsLoading={IsLoading}, sceneName={sceneName}, exists={DoesSceneExist(sceneName)}");
+                yield break;
+            }
+
+            Debug.Log($"=== 특정 스테이지와 함께 씬 로드 시작: {sceneName}, 스테이지 {mainStageID}-{subStageID} ===");
+
+            IsLoading = true;
+            OnSceneLoadStarted?.Invoke(sceneName);
+
+            bool showLoadingScreen = enableLoadingScreen && customLoadingScreenPrefab != null;
+
+            Debug.Log($"씬 정보: showLoadingScreen={showLoadingScreen}, minLoadingTime={minLoadingTime}");
+
+            if (showLoadingScreen)
+            {
+                ShowLoadingScreen();
+                UpdateLoadingProgress(0f);
+            }
+
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+            if (asyncLoad == null)
+            {
+                Debug.LogError($"씬 '{sceneName}' 로드에 실패했습니다!");
+                IsLoading = false;
+                yield break;
+            }
+
+            asyncLoad.allowSceneActivation = false;
+
+            // 진행률 업데이트 루프
+            while (asyncLoad.progress < 0.9f)
+            {
+                float normalizedProgress = asyncLoad.progress / 0.9f;
+                if (showLoadingScreen)
+                {
+                    UpdateLoadingProgress(normalizedProgress);
+                }
+                yield return null;
+            }
+
+            // 최소 로딩 시간 대기 (로딩 화면이 있을 때만)
+            if (showLoadingScreen)
+            {
+                yield return StartCoroutine(EnsureMinimumLoadingTime(minLoadingTime));
+                UpdateLoadingProgress(1f);
+                yield return new WaitForSeconds(0.1f);
+            }
+
+            asyncLoad.allowSceneActivation = true;
+            while (!asyncLoad.isDone) yield return null;
+
+            if (showLoadingScreen)
+            {
+                HideLoadingScreen();
+            }
+
+            IsLoading = false;
+            OnSceneLoadCompleted?.Invoke(sceneName);
+
+            // 씬 로드 완료 후 스테이지 설정
+            yield return StartCoroutine(SetStageAfterSceneLoad(mainStageID, subStageID));
+
+            Debug.Log($"=== 특정 스테이지와 함께 씬 로드 완료: {sceneName}, 스테이지 {mainStageID}-{subStageID} ===");
         }
 
         private IEnumerator EnsureMinimumLoadingTime(float loadingTime)
@@ -609,9 +579,6 @@ namespace YSK
 
         private void InitializeScene(string sceneName)
         {
-            SceneData.SceneInfo sceneInfo = sceneData?.GetSceneInfo(sceneName);
-            if (sceneInfo == null) return;
-
             // 씬별 공통 처리
             HandleSceneInitialization(sceneName);
         }
@@ -675,95 +642,6 @@ namespace YSK
             return false;
         }
 
-        // 특정 스테이지와 함께 씬을 로드하는 새로운 메서드
-        public void LoadGameSceneWithStage(string sceneName, int mainStageID, int subStageID)
-        {
-            Debug.Log($"=== 특정 스테이지와 함께 씬 로드: {sceneName}, 스테이지 {mainStageID}-{subStageID} ===");
-
-            // 오브젝트가 비활성화되어 있으면 활성화
-            if (!gameObject.activeInHierarchy)
-            {
-                Debug.LogWarning("GameSceneManager가 비활성화되어 있어서 활성화합니다.");
-                gameObject.SetActive(true);
-            }
-
-            HandleSceneSpecificData(sceneName, mainStageID, subStageID, 0, false);
-            StartCoroutine(LoadSceneAsyncWithStage(sceneName, mainStageID, subStageID));
-        }
-
-        // 스테이지 정보와 함께 씬을 로드하는 코루틴
-        private IEnumerator LoadSceneAsyncWithStage(string sceneName, int mainStageID, int subStageID)
-        {
-            if (IsLoading || string.IsNullOrEmpty(sceneName) || !DoesSceneExist(sceneName))
-            {
-                Debug.LogWarning($"씬 로드 조건 불만족: IsLoading={IsLoading}, sceneName={sceneName}, exists={DoesSceneExist(sceneName)}");
-                yield break;
-            }
-
-            Debug.Log($"=== 특정 스테이지와 함께 씬 로드 시작: {sceneName}, 스테이지 {mainStageID}-{subStageID} ===");
-
-            IsLoading = true;
-            OnSceneLoadStarted?.Invoke(sceneName);
-
-            // 씬 정보 가져오기
-            SceneData.SceneInfo sceneInfo = sceneData.GetSceneInfo(sceneName);
-            bool showLoadingScreen = (sceneInfo?.requiresLoadingScreen ?? true) && enableLoadingScreen && customLoadingScreenPrefab != null;
-            float sceneMinLoadingTime = sceneInfo?.minLoadingTime ?? minLoadingTime;
-
-            Debug.Log($"씬 정보: showLoadingScreen={showLoadingScreen}, minLoadingTime={sceneMinLoadingTime}");
-
-            if (showLoadingScreen)
-            {
-                ShowLoadingScreen();
-                UpdateLoadingProgress(0f);
-            }
-
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-            if (asyncLoad == null)
-            {
-                Debug.LogError($"씬 '{sceneName}' 로드에 실패했습니다!");
-                IsLoading = false;
-                yield break;
-            }
-
-            asyncLoad.allowSceneActivation = false;
-
-            // 진행률 업데이트 루프
-            while (asyncLoad.progress < 0.9f)
-            {
-                float normalizedProgress = asyncLoad.progress / 0.9f;
-                if (showLoadingScreen)
-                {
-                    UpdateLoadingProgress(normalizedProgress);
-                }
-                yield return null;
-            }
-
-            // 최소 로딩 시간 대기 (로딩 화면이 있을 때만)
-            if (showLoadingScreen)
-            {
-                yield return StartCoroutine(EnsureMinimumLoadingTime(sceneMinLoadingTime));
-                UpdateLoadingProgress(1f);
-                yield return new WaitForSeconds(0.1f);
-            }
-
-            asyncLoad.allowSceneActivation = true;
-            while (!asyncLoad.isDone) yield return null;
-
-            if (showLoadingScreen)
-            {
-                HideLoadingScreen();
-            }
-
-            IsLoading = false;
-            OnSceneLoadCompleted?.Invoke(sceneName);
-
-            // 씬 로드 완료 후 스테이지 설정
-            yield return StartCoroutine(SetStageAfterSceneLoad(mainStageID, subStageID));
-
-            Debug.Log($"=== 특정 스테이지와 함께 씬 로드 완료: {sceneName}, 스테이지 {mainStageID}-{subStageID} ===");
-        }
-
         // 씬 로드 완료 후 스테이지를 설정하는 코루틴
         private IEnumerator SetStageAfterSceneLoad(int mainStageID, int subStageID)
         {
@@ -813,10 +691,6 @@ namespace YSK
 
         #endregion
     }
-
-
-
-
 }
 
 
