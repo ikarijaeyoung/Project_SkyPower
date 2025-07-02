@@ -182,15 +182,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb39e66d9d10d045b169252a651b63d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyData: {fileID: 11400000, guid: 72c7a16f41e10724ea5cb264d8d4275b, type: 2}
-  dropItem: {fileID: 0}
+  enemyData: {fileID: 11400000, guid: 98d03020df3db694e87872fae7de0202, type: 2}
   currentHP: 0
   isFiring: 0
   firePoints:
   - {fileID: 7715130198389869489}
   BulletPattern:
   - {fileID: 11400000, guid: 54548bed3b8840146aef114f56b3779f, type: 2}
-  objectPool: {fileID: 7413765455485792788, guid: df334d57865a00d46b3159e7f5f777e0,
-    type: 3}
+  objectPool: {fileID: 0}
   bulletSpeed: 10
   fireDelay: 1.5

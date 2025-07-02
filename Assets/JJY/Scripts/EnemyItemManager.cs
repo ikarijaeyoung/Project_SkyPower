@@ -10,8 +10,6 @@ public class EnemyItemManager : MonoBehaviour
     public float itemMoveLimitRange = 2f; // 아이템이 떨어지는 반경 제한
     public float dropItemSpeed = 0.5f; // 아이템이 퍼져나가는 속력 , 아이템이 떨어지는 속력.
     public float itemStopTime = 1f; // 몇 초 뒤에 멈출것인가.
-    static public int enemyCount; // TODO : 임시로 EnemyItemManager를 사용함. StageManager로 옮길것.
-
     void OnEnable()
     {
         Enemy.OnEnemyDied += HandleEnemyDeath;

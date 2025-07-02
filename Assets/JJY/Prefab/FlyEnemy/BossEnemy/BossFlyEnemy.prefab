@@ -344,8 +344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb39e66d9d10d045b169252a651b63d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyData: {fileID: 11400000, guid: 72c7a16f41e10724ea5cb264d8d4275b, type: 2}
-  dropItem: {fileID: 0}
+  enemyData: {fileID: 11400000, guid: 8657af3464188844ea1cb1bdc82cb6a2, type: 2}
   currentHP: 0
   isFiring: 0
   firePoints:
