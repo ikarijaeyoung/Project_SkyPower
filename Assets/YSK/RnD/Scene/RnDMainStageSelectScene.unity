@@ -578,31 +578,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameSceneManager
       objectReference: {fileID: 0}
-    - target: {fileID: 3034378885704754324, guid: f5c2e630598244e479f94589b8fd2b8c,
-        type: 3}
-      propertyPath: showProgressBar
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3034378885704754324, guid: f5c2e630598244e479f94589b8fd2b8c,
-        type: 3}
-      propertyPath: enableLoadingScreen
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3034378885704754324, guid: f5c2e630598244e479f94589b8fd2b8c,
-        type: 3}
-      propertyPath: showProgressPercentage
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3034378885704754324, guid: f5c2e630598244e479f94589b8fd2b8c,
-        type: 3}
-      propertyPath: showLoadingOnSceneStart
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3034378885704754324, guid: f5c2e630598244e479f94589b8fd2b8c,
-        type: 3}
-      propertyPath: customLoadingScreenPrefab
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 8088591135873399683, guid: f5c2e630598244e479f94589b8fd2b8c,
         type: 3}
       propertyPath: m_LocalPosition.x
