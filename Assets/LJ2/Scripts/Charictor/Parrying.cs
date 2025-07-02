@@ -71,4 +71,6 @@ public class Parrying : MonoBehaviour
         isParrying = false; // Reset parrying state after getting shield
         return getShield;
     }
+
+    // 반사된 총알을 적에게 발사하는 기능은 현재 구현되어 있지 않습니다.    
 }

@@ -21,8 +21,4 @@ public class UltMapAttack : MonoBehaviour
             }
         }
     }
-
-    
-
-    
 }

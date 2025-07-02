@@ -10,6 +10,7 @@ namespace LJ2
         public SaveTester saveTester;
 
         public Parrying parrying;
+        public Ultimate ultimate;
 
         public int id;
         public Grade grade;
@@ -200,6 +201,34 @@ namespace LJ2
                 case Parry.¹«Àû:
                     parrying.Parry();
                     parrying.Invicible();
+                    break;
+            }
+        }
+
+        public void UseUlt(float ultDamage)
+        {
+            switch(id)
+            {                
+                case 10001:
+                    ultimate.Laser();
+                    break;
+                case 10002:
+                    // À¯µµÅº ¹Ì±¸Çö
+                    break;
+                case 10003:
+                    // Åº¸· º¯°æ µ¥¹ÌÁö Áõ°¡
+                    break;
+                case 10004:
+                    // ±Ã±Ø±â Åº¸· 1È¸ - ´Ù´ÜÈ÷Æ®
+                    break;
+                case 10005:
+                    // ±Ã±Ø±â Åº¸· 1È¸ - ´Ù´ÜÈ÷Æ®
+                    break;
+                case 10006:
+                    ultimate.Shield();
+                    break;
+                default:
+                    ultimate.AllAttack();
                     break;
             }
         }
