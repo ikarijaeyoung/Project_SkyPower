@@ -30,7 +30,24 @@ namespace LJ2
         // 현재 partial class로 구현된 GameData를 control하는 함수들
         public void GameSave(GameData target, int index, string name)
         {
+            
             target.playerName = name;
+            GameData saveTargetData = SaveStageInfo(target);
+            DataSaveController.Save(saveTargetData, index);
+        }
+
+        public void GameLoad(ref GameData target, int index)
+        {
+            DataSaveController.Load(ref target, index);
+        }
+
+        public void GameDelete(GameData target, int index)
+        {
+            DataSaveController.Delete(target, index);
+        }
+
+        private GameData SaveStageInfo(GameData target)
+        {
             target.stageInfo = new StageInfo[Manager.SDM.runtimeData.Count * subStage];
             for (int i = 0; i < Manager.SDM.runtimeData.Count * subStage; i++)
             {
@@ -42,18 +59,7 @@ namespace LJ2
                     isClear = Manager.SDM.runtimeData[i / subStage].subStages[i % subStage].isCompleted
                 };
             }
-
-            DataSaveController.Save(target, index);
-        }
-
-        public void GameLoad(ref GameData target, int index)
-        {
-            DataSaveController.Load(ref target, index);
-        }
-
-        public void GameDelete(GameData target, int index)
-        {
-            DataSaveController.Delete(target, index);
+            return target;
         }
     }
 }

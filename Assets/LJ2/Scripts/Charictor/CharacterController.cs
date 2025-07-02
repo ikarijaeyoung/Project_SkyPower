@@ -81,6 +81,7 @@ namespace LJ2
             attackSpeed = characterData.attackSpeed;
             moveSpeed = characterData.moveSpeed;
             defense = characterData.defense;
+            image = characterData.image;
 
 
             // Save의 값을 그대로 가져옴  
