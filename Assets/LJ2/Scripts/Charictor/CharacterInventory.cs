@@ -21,10 +21,10 @@ public class CharacterInventory
         {
             if (characters[i].id == id)
             {
-                if (characters[i].step + 0.1f * (float)characters[i].fragle < 4)
+                if (characters[i].step < 4)
                 {
                     var temp = characters[i];
-                    temp.fragle = temp.fragle + 10; // 등급에 따라 조절 필요(?)
+                    temp.step++;
                     characters[i] = temp; // Update the character in the list
                     return; // Exit if character already exists
                 }
@@ -49,13 +49,10 @@ public struct CharacterSave
     [SerializeField] public int level;
 
     [SerializeField] public int step;
-
-    [SerializeField] public int fragle;
     public CharacterSave(int id)
     {
         this.id = id;
         this.level = 1; // Default level
         this.step = 0; // Default step
-        this.fragle = 0; // Default fragle
     }
 }

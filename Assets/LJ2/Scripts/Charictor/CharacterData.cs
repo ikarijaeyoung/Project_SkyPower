@@ -3,72 +3,74 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-
-[CreateAssetMenu(fileName = "CharictorData", menuName = "Charictor/CharictorData")] 
-public class CharacterData : ScriptableObject
+namespace LJ2
 {
-    public int id;
-    public Grade grade;
-    public string name;
-    
-    public Elemental elemental;
-    public int maxLevel;
-    public int hp;
-    public int hpPlus;
-    public GameObject attackType;
-    public float attackDamage;
-    public float damagePlus;
-    public float attackSpeed;
-    public float moveSpeed;
-    public int defense;
+    [CreateAssetMenu(fileName = "CharictorData", menuName = "Charictor/CharictorData")]
+    public class CharacterData : ScriptableObject
+    {
+        public int id;
+        public Grade grade;
+        public string name;
 
-    
-    public int ultCoolDefault;
-    public int ultCoolReduce;
-    public Skill[] ultLore;
-    public GameObject ultVisual;
-
-    public Parry parry;
-    public int parryCool;
-    public Sprite image;
-
-    public int upgradeUnitDefault;
-    public int upgradeUnitPlus;
+        public Elemental elemental;
+        public int maxLevel;
+        public int hp;
+        public int hpPlus;
+        public GameObject attackType;
+        public float attackDamage;
+        public float damagePlus;
+        public float attackSpeed;
+        public float moveSpeed;
+        public int defense;
 
 
-}
+        public int ultCoolDefault;
+        public int ultCoolReduce;
+        public Skill[] ultLore;
+        public GameObject ultVisual;
 
-public enum Grade
-{
-    SSR,
-    R
-}
-public enum Elemental 
-{
-    물,
-    불,
-    바람
-}
+        public Parry parry;
+        public int parryCool;
+        public Sprite image;
 
-public enum Skill
-{
-    A,
-    B,
-    D,
-    E,
-    H,
-    I,
-    J,
-    K,
-    L,
-    M,
-    N,
-    O
-}
+        public int upgradeUnitDefault;
+        public int upgradeUnitPlus;
 
-public enum Parry
-{
-    방어막,
-    무적,
-    반사B
+
+    }
+
+    public enum Grade
+    {
+        SSR,
+        R
+    }
+    public enum Elemental
+    {
+        물,
+        불,
+        바람
+    }
+
+    public enum Skill
+    {
+        A,
+        B,
+        D,
+        E,
+        H,
+        I,
+        J,
+        K,
+        L,
+        M,
+        N,
+        O
+    }
+
+    public enum Parry
+    {
+        방어막,
+        무적,
+        반사B
+    }
 }

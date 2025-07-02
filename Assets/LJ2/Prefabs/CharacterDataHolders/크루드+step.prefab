@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5625574300436811307}
   - component: {fileID: 4101072131589423044}
+  - component: {fileID: 6580909940233751347}
   m_Layer: 0
   m_Name: "\uD06C\uB8E8\uB4DC+step"
   m_TagString: Untagged
@@ -46,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterData: {fileID: 11400000, guid: 6b8a51e88e9e68b49947622eb5bbb235, type: 2}
   saveTester: {fileID: 0}
+  parrying: {fileID: 6580909940233751347}
   id: 0
   grade: 0
   name: 
@@ -53,7 +55,6 @@ MonoBehaviour:
   level: 0
   step: 0
   exp: 0
-  fragle: 0
   Hp: 0
   attackDamage: 0
   attackSpeed: 0
@@ -68,3 +69,23 @@ MonoBehaviour:
   parryCool: 0
   image: {fileID: 0}
   upgradeUnit: 0
+--- !u!114 &6580909940233751347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6216278655240827802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dec2353f334f2848b520c49505b8917, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isParrying: 0
+  parryRadius: 1.1
+  enemyBullet:
+    serializedVersion: 2
+    m_Bits: 0
+  characterCollider: {fileID: 0}
+  invincibleTime: 1
+  shield: 3

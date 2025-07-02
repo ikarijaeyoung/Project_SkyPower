@@ -2772,6 +2772,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\uC694\uB974+step"
       objectReference: {fileID: 0}
+    - target: {fileID: 1365171068818992286, guid: 40c1d7ca495127341824ce21450d8f63,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4941330735497517647, guid: 40c1d7ca495127341824ce21450d8f63,
         type: 3}
       propertyPath: saveTester
@@ -3649,6 +3654,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 0
+  name: test
 --- !u!1 &1959235296
 GameObject:
   m_ObjectHideFlags: 0

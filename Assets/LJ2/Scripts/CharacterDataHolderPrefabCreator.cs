@@ -20,8 +20,13 @@ public class CharacterDataHolderPrefabCreator
             if (data == null) continue;
 
             GameObject go = new GameObject($"{data.name}");
-            var holder = go.AddComponent<LJ2.CharactorController>(); // Fix: Changed from CharacterController to CharacterDataHolder  
+            var holder = go.AddComponent<LJ2.CharactorController>();  
             holder.characterData = data;
+            // 필요한 경우 추가 컴포넌트 설정
+            var parry = go.AddComponent<Parrying>();  // Parrying 컴포넌트 추가
+            holder.parrying = parry;  // CharactorController에 Parrying 컴포넌트 연결
+
+
 
             string prefabPath = $"{saveDir}/{data.name}.prefab";
             PrefabUtility.SaveAsPrefabAsset(go, prefabPath);

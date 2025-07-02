@@ -1,4 +1,3 @@
-using LJ2;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +9,8 @@ namespace LJ2
 
         public SaveTester saveTester;
 
+        public Parrying parrying;
+
         public int id;
         public Grade grade;
         public string name;
@@ -18,7 +19,6 @@ namespace LJ2
         public int level;
         public int step;
         public int exp;
-        public int fragle; // 캐릭터 조각 : 캐릭터의 등급을 올리는데 사용됨
 
         public int Hp;
         public int attackDamage;
@@ -38,11 +38,10 @@ namespace LJ2
         public Sprite image;
 
         public int upgradeUnit;
-        public int currentUnit; // 현재 보유한 유닛 수, 업그레이드에 사용됨
 
         private void Start()
         {
-
+            parrying = GetComponent<Parrying>();
         }
 
         private void Update()
@@ -93,7 +92,6 @@ namespace LJ2
             Debug.Log($"Character ID: {characterSave.id}, Step: {characterSave.step}, Level : {characterSave.level}");
             level = characterSave.level;
             step = characterSave.step;
-            fragle = characterSave.fragle;
 
             // Save의 값에 따라 Data의 값을 변경
             Hp = characterData.hp + (characterData.hpPlus * (level - 1));
@@ -159,17 +157,17 @@ namespace LJ2
 
         public void GetUpgradeUnit(int unit)
         {
-            currentUnit += unit;
-            if (currentUnit > upgradeUnit)
+            exp += unit;
+            if (exp > upgradeUnit)
             {
-                Debug.Log("업그레이드 가능 유닛이 있습니다.");
+                Debug.Log("업그레이드 가능합니다.");
             }
             else
             {
                 Debug.Log("업그레이드 가능 유닛이 부족합니다.");
             }
         }
-        public void StepUp()
+        public void StepUp() 
         {
             if (step < 4)
             {
@@ -183,6 +181,26 @@ namespace LJ2
             else
             {
                 Debug.Log("최대 단계에 도달했습니다.");
+            }
+        }
+
+        public void UseParry()
+        {
+            // Parry 기능을 사용할 때마다 쿨타임을 체크하고 실행
+            switch (parry)
+            {
+                case Parry.방어막:
+                    parrying.Parry();
+                    defense += parrying.Shield();
+                    break;
+                case Parry.반사B:
+                    parrying.Parry();
+                    Debug.Log("미구현!");
+                    break;
+                case Parry.무적:
+                    parrying.Parry();
+                    parrying.Invicible();
+                    break;
             }
         }
     }
