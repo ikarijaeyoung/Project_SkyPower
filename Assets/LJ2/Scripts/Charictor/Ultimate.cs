@@ -13,7 +13,7 @@ public class Ultimate : MonoBehaviour
     public GameObject shield;   // ShieldController component를 가져야함
     public GameObject ultAll;   // AllAttackController component를 가져야함
 
-    public int defense;
+    public int defense = 1;
 
     public void Awake()
     {

@@ -19,6 +19,7 @@ public class Parrying : MonoBehaviour
     {
         characterCollider = GetComponent<SphereCollider>();
         coroutineDelay = new WaitForSeconds(invincibleTime);
+        enemyBullet = LayerMask.GetMask("EnemyBullet");
     }
 
     public void Parry()
