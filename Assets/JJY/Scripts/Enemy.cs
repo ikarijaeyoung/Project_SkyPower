@@ -44,7 +44,13 @@ public class Enemy : MonoBehaviour
         if (currentHP <= 0) Die();
         // TODO : Sprite 색 변경
     }
-    private void Update() { }
+    private void Update() 
+    {
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            TakeDamage(1);
+        }
+    }
     // private void Fire()
     // {
     //     curFireCoroutine = StartCoroutine(BulletPattern[0].Shoot(firePoints, enemyData.bulletPrefab, bulletSpeed));

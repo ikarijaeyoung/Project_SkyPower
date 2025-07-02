@@ -27,7 +27,6 @@ public class SpawnManager : MonoBehaviour
                 // Debug.LogError($"중복된 EnemyType이 ObjectPool에 있습니다: {pool.enemyType}");
                 continue;
             }
-            Debug.Log($"{poolDic[pool.enemyType]}  {pool}");
             poolDic.TryAdd(pool.enemyType, pool); // pool 스크립트에 public EnemyType enemyType; 정의필요.
         }
     }
@@ -39,12 +38,8 @@ public class SpawnManager : MonoBehaviour
 
     private IEnumerator PlayStage()
     {
-        Debug.Log($"월드 인덱스 : {Manager.Game.selectWorldIndex}, 스테이지 인덱스{Manager.Game.selectStageIndex}");
             StageEnemyData currentStage = Manager.SDM.runtimeData[Manager.Game.selectWorldIndex-1].subStages[Manager.Game.selectStageIndex-1].stageEnemyData;
         // 시퀀스가 종료될 때까지 반복
-        Debug.LogError($"이거 존재하는지 확인 : {currentStage.name}");
-        Debug.LogError($"{currentStage.sequence}");
-        Debug.LogError($"{currentStage.sequence.Count}");
             for (curSequenceLevel = 0; curSequenceLevel < currentStage.sequence.Count; curSequenceLevel++)
             {
                 SequenceData sequence = currentStage.sequence[curSequenceLevel];

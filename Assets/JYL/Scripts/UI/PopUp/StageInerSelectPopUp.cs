@@ -26,12 +26,10 @@ namespace JYL
         private void SetStageButtons()
         {
             worldNum = UIManager.Instance.selectIndexUI;
-            Debug.Log($"{worldNum}");
             for (int i = 0; i < stageNum; i++)
             {
                 stageBtn[i] = GetUI<Button>($"StageBtn_{i + 1}");
                 GetUI<TMP_Text>($"StageText_{i+1}").text = $"Stage {worldNum} - {i+1}";
-                    Debug.Log("ÀÌ°Å µé¾î¿È?");
                 if (Manager.SDM.runtimeData[worldNum].subStages[i].isUnlocked)
                 {
                     stageBtn[i].interactable = true;
