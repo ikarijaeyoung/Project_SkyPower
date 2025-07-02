@@ -24,6 +24,7 @@ public class CharacterDataHolderPrefabCreator
             var data = AssetDatabase.LoadAssetAtPath<CharacterData>(AssetDatabase.GUIDToAssetPath(guid));
             if (data == null) continue;
 
+            // ºó GameObject »ý¼º ¹× CharactorController ÄÄÆ÷³ÍÆ® Ãß°¡
             GameObject go = new GameObject($"{data.name}");
             var holder = go.AddComponent<LJ2.CharactorController>();  
             holder.characterData = data;

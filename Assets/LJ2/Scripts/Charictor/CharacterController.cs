@@ -43,6 +43,7 @@ namespace LJ2
         private void Start()
         {
             parrying = GetComponent<Parrying>();
+            ultimate = GetComponent<Ultimate>();
         }
 
         private void Update()

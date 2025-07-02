@@ -351,7 +351,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1280415671 stripped
 GameObject:
@@ -646,6 +646,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4204488748526478991, guid: 9dceecfb8afd8614a916d340985e89ba,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4858137721054017162, guid: 9dceecfb8afd8614a916d340985e89ba,
         type: 3}
       propertyPath: m_IsActive
@@ -676,7 +681,8 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4566087129550735243, guid: 9dceecfb8afd8614a916d340985e89ba, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -829,7 +835,7 @@ PrefabInstance:
     - target: {fileID: 8852739231460309809, guid: 7254380125e3abd4da43adbcad765902,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
