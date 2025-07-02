@@ -3,36 +3,47 @@ using System.Collections;
 using System.Collections.Generic;
 using JYL;
 using UnityEngine;
-using Random = System.Random;
-
 public class Enemy : MonoBehaviour
 {
+    public static event Action<Vector3> OnEnemyDied;
+
+    [Header("Enemy State")]
     public EnemyData enemyData;
     [SerializeField] private int currentHP; // TODO : Player의 공격력 * 1.5배
     public bool isFiring;
+
+    [Header("Enemy Shot Info")]
     public Transform[] firePoints;
-    public static event Action<Vector3> OnEnemyDied;
     public BulletPatternData[] BulletPattern;
     private Coroutine curFireCoroutine;
     public ObjectPool objectPool;
-
-    // Enemy의 특성대로 총알 속도와 발사 간격을 조절.
     public float bulletSpeed = 1f; //이거 왜 있지
     public float fireDelay = 1.5f;
 
-    void Start()
+    [Header("Hit Animation")]
+    private Renderer modelRenderer;
+    private Color originalColor;
+    private Coroutine flashCoroutine;
+    [SerializeField] private Color flashColor = Color.white; // 피격 시 변경될 색상
+    [SerializeField] private float flashDuration = 0.1f;
+    
+    [Header("Animator")]
+    private Animator animator;
+
+    void Awake()
     {
         Init();
     }
     void Init()
     {
         currentHP = enemyData.maxHP; // Player의 공격력 * 1.5배
-        // for (int i = 0; i < BulletPattern.Length; i++)
-        // {
-        //     BulletPattern[i].SetPool(objectPool);
-        // }
         isFiring = true;
         StartCoroutine(ChangeFireMode());
+        modelRenderer = GetComponentInChildren<Renderer>();
+        if (modelRenderer != null)
+        {
+            originalColor = modelRenderer.material.color;
+        }
     }
     void OnTriggerEnter(Collider other)
     {
@@ -40,28 +51,27 @@ public class Enemy : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
+        if (flashCoroutine != null)
+        {
+            StopCoroutine(flashCoroutine);
+        }
+        flashCoroutine = StartCoroutine(FlashEffectCoroutine());
+
         currentHP -= damage;
         if (currentHP <= 0) Die();
-        // TODO : Sprite 색 변경
     }
-    private void Update() 
+    private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A))
         {
             TakeDamage(1);
         }
     }
-    // private void Fire()
-    // {
-    //     curFireCoroutine = StartCoroutine(BulletPattern[0].Shoot(firePoints, enemyData.bulletPrefab, bulletSpeed));
-    // }
     private void Die()
     {
-        SpawnManager.enemyCount--; // TODO : 임시로 EnemyItemManager를 사용함. StageManager로 옮길것.
-        // 여기도 GameManager에서 이벤트
-        
+        SpawnManager.enemyCount--;
+
         OnEnemyDied?.Invoke(transform.position);
-        // GameManager에서는 죽었다는 이벤트를 받아서 => 아이템 드롭 => 아이템 먹으면 점수 증가
 
         StopCoroutine(curFireCoroutine);
         // TODO : 죽는 애니메이션 실행.
@@ -77,5 +87,15 @@ public class Enemy : MonoBehaviour
             StopCoroutine(curFireCoroutine);
             curFireCoroutine = null;
         }
+    }
+    private IEnumerator FlashEffectCoroutine()
+    {
+        modelRenderer.material.color = flashColor;
+
+        yield return new WaitForSeconds(flashDuration);
+
+        modelRenderer.material.color = originalColor;
+
+        flashCoroutine = null;
     }
 }

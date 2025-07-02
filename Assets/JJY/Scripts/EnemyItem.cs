@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using KYG_skyPower;
 
 public class EnemyItem : MonoBehaviour
 {
@@ -42,8 +43,8 @@ public class EnemyItem : MonoBehaviour
     }
     void Collect()
     {
-        Debug.Log("TODO : 점수 증가 기능 추가.");
-        // TODO : 점수 증가 기능 추가
+        ScoreManager.Instance.AddScore(1);
+        Debug.Log($"{ScoreManager.Instance.Score}");
         Destroy(gameObject);
     }
 }
