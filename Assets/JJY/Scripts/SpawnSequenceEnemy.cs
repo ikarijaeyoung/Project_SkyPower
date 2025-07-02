@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using JYL;
 using Unity.VisualScripting;
 using UnityEngine;
-using static EnemyData;
-
 public class SpawnSequenceEnemy : MonoBehaviour
 {
     [SerializeField] private ObjectPool[] objectPools;
@@ -25,33 +23,30 @@ public class SpawnSequenceEnemy : MonoBehaviour
         }
     }
 
-    public IEnumerator SpawnSequence(SequenceData sequence)
+    public IEnumerator SpawnSequence(EnemySpawnInfo info)
     {
-        foreach (var info in sequence.enemiesInfo)
+        for (int i = 0; i < info.enemyPrefab.Length; i++)
         {
-            for (int i = 0; i < info.enemyPrefab.Length; i++)
+            GameObject enemyObj = Instantiate(info.enemyPrefab[i], info.spawnPos[i], Quaternion.Euler(0, 0, 180f));
+            Enemy enemy = enemyObj.GetComponent<Enemy>();
+            EnemyType type = enemy.enemyData.enemyType;
+            if (poolDic.TryGetValue(type, out ObjectPool pool))
             {
-                GameObject enemyObj = Instantiate(info.enemyPrefab[i], info.spawnPos[i], Quaternion.identity);
-                Enemy enemy = enemyObj.GetComponent<Enemy>();
-                EnemyType type = enemy.enemyData.enemyType;
-                if (poolDic.TryGetValue(type, out ObjectPool pool))
-                {
-                    Debug.Log($"{type}, {pool}");
-                    enemy.objectPool = pool;
-                    for (int j = 0; j < enemy.BulletPattern.Length; j++)
-                    {
-                        enemy.BulletPattern[j].SetPool(pool);
-                    }
-                }
-
-                SpawnManager.enemyCount++;
-                Debug.Log($"Total Enemies: {SpawnManager.enemyCount}");
-
-                yield return new WaitForSeconds(info.spawnDelay);
+                enemy.objectPool = pool;
+                // for (int j = 0; j < enemy.BulletPattern.Length; j++)
+                // {
+                //     enemy.BulletPattern[j].SetPool(pool);
+                // }
             }
+
+            SpawnManager.enemyCount++;
+            Debug.Log($"Total Enemies: {SpawnManager.enemyCount}");
+
+            yield return new WaitForSeconds(info.spawnDelay);
         }
     }
 }
+
 // public class EnemySpawner : MonoBehaviour
 // {
 //     [Header("Spawner Settings")]

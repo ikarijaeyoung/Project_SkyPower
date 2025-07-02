@@ -27,10 +27,10 @@ public class Enemy : MonoBehaviour
     void Init()
     {
         currentHP = enemyData.maxHP; // Player의 공격력 * 1.5배
-        for (int i = 0; i < BulletPattern.Length; i++)
-        {
-            BulletPattern[i].SetPool(objectPool);
-        }
+        // for (int i = 0; i < BulletPattern.Length; i++)
+        // {
+        //     BulletPattern[i].SetPool(objectPool);
+        // }
         isFiring = true;
         StartCoroutine(ChangeFireMode());
     }
@@ -71,9 +71,8 @@ public class Enemy : MonoBehaviour
     {
         while (isFiring)
         {
-            Random random = new Random();
-            int ranNum = random.Next(0, BulletPattern.Length);
-            curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, enemyData.bulletPrefab, bulletSpeed));
+            int ranNum = UnityEngine.Random.Range(0, BulletPattern.Length);
+            curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, enemyData.bulletPrefab, bulletSpeed, objectPool));
             yield return new WaitForSeconds(fireDelay);
             StopCoroutine(curFireCoroutine);
             curFireCoroutine = null;
