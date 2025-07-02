@@ -27,6 +27,7 @@ namespace LJ2
         public float attackSpeed;
         public float moveSpeed;
         public int defense;
+        public PartySet partySet;
 
         public int ultLevel;
         public float ultDamage;
@@ -95,6 +96,7 @@ namespace LJ2
             Debug.Log($"Character ID: {characterSave.id}, Step: {characterSave.step}, Level : {characterSave.level}");
             level = characterSave.level;
             step = characterSave.step;
+            partySet = characterSave.partySet;
 
             // Save의 값에 따라 Data의 값을 변경
             Hp = characterData.hp + (characterData.hpPlus * (level - 1));
