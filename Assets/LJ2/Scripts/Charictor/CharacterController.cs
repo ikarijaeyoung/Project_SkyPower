@@ -196,7 +196,7 @@ namespace LJ2
                     break;
                 case Parry.반사B:
                     parrying.Parry();
-                    Debug.Log("미구현!");
+                    // 반사 기능 미구현
                     break;
                 case Parry.무적:
                     parrying.Parry();
@@ -225,7 +225,7 @@ namespace LJ2
                     // 궁극기 탄막 1회 - 다단히트
                     break;
                 case 10006:
-                    ultimate.Shield();
+                    defense += ultimate.Shield();
                     break;
                 default:
                     ultimate.AllAttack();

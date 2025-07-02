@@ -13,6 +13,8 @@ public class Ultimate : MonoBehaviour
     public GameObject shield;   // ShieldController component를 가져야함
     public GameObject ultAll;   // AllAttackController component를 가져야함
 
+    public int defense;
+
     public void Awake()
     {
         ultDelay = new WaitForSeconds(setUltDelay);
@@ -42,16 +44,13 @@ public class Ultimate : MonoBehaviour
         yield break;
     }
 
-    public void Shield()
+    public int Shield()
     {
         if (ultRoutine == null)
         {
             ultRoutine = StartCoroutine(ShieldCoroutine());
         }
-        else
-        {
-            return;
-        }
+        return defense;
     }
     private IEnumerator ShieldCoroutine()
     {
