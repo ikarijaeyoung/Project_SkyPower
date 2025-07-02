@@ -55,8 +55,8 @@ namespace JYL
         private void ChangeSceneToStage(PointerEventData eventData)
         {
             Debug.Log($"¿Ã∞≈ ¡¢±Ÿ µ ?{worldNum} {selectStageNum}");
-            Manager.GSM.LoadGameSceneWithStage("dStageScene_JYL", Manager.Game.selectWorldIndex, Manager.Game.selectStageIndex);
             UIManager.Instance.CleanPopUp();
+            Manager.GSM.LoadGameSceneWithStage("dStageScene_JYL", Manager.Game.selectWorldIndex, Manager.Game.selectStageIndex);
         }
     }
 }

@@ -45,11 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed0bc85c7ef76be4d9f1a917248eab61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allStages:
-  - {fileID: 11400000, guid: 2b5a253198158ea41be1c1d3819e18ad, type: 2}
   spawnSequenceEnemy: {fileID: 588954578109089177}
   objectPools:
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
 --- !u!114 &588954578109089177
@@ -64,4 +61,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50a40bf57aca5394fa3fbb729dce2433, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectPools: []
+  objectPools:
+  - {fileID: 0}

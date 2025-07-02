@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //StageData에 아래 추가 => StageData에 추가하는게 적절한가? , EnemyData : ScriptableObject ?
-[CreateAssetMenu(menuName = "YSK/Stage Data")]
-public class StageData : ScriptableObject
+[CreateAssetMenu(menuName = "YSK/StageEnemyData")]
+public class StageEnemyData : ScriptableObject
 {
     public List<SequenceData> sequence;
     public GameObject bossPrefab;

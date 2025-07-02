@@ -20,6 +20,7 @@ public class SpawnSequenceEnemy : MonoBehaviour
                 // Debug.LogError($"중복된 EnemyType이 ObjectPool에 있습니다: {pool.enemyType}");
                 continue;
             }
+            Debug.Log($"집어넣으려는 풀 : {pool}, {pool.enemyType}");
             poolDic.TryAdd(pool.enemyType, pool); // pool 스크립트에 public EnemyType enemyType; 정의필요.
         }
     }

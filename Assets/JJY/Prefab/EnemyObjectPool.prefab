@@ -44,9 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acf716ee6c3828c48b1d345a2009c6f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolObject: {fileID: 4283938317084407979, guid: e3a51ed57acaf764bb7c2381eeb11c32,
+  enemyType: 2
+  poolObject: {fileID: 4283938317084407979, guid: 8a1fcdd1f5dc54a4d9451051893eea3c,
     type: 3}
-  poolSize: 5
+  poolSize: 10
 --- !u!1 &2038275542211488970
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,9 +92,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acf716ee6c3828c48b1d345a2009c6f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolObject: {fileID: 4283938317084407979, guid: e3a51ed57acaf764bb7c2381eeb11c32,
+  enemyType: 1
+  poolObject: {fileID: 4283938317084407979, guid: 6f46c2edf4799e84796a38fda9997bd4,
     type: 3}
-  poolSize: 5
+  poolSize: 10
 --- !u!1 &4642137954365113743
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,9 +140,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acf716ee6c3828c48b1d345a2009c6f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   poolObject: {fileID: 4283938317084407979, guid: e3a51ed57acaf764bb7c2381eeb11c32,
     type: 3}
-  poolSize: 5
+  poolSize: 10
 --- !u!1 &5900288745975583809
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ namespace JYL
 {
     public class ObjectPool : MonoBehaviour
     {
-        public EnemyType enemyType; // 
+        public EnemyType enemyType;
         [Header("Set References")]
         [SerializeField] PooledObject poolObject;
         

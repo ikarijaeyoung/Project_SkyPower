@@ -24,6 +24,7 @@ namespace YSK
         public int bestScore;
         public bool isCompleted;
         public float completionTime;
+        public StageEnemyData stageEnemyData;
     }
 
     public class StageDataManager : Singleton<StageDataManager>
@@ -120,7 +121,8 @@ namespace YSK
                         isUnlocked = (stageData.stageID == 1 && subStageData.subStageID == 1),
                         bestScore = subStageData.subStageScore,
                         isCompleted = false,
-                        completionTime = 0f
+                        completionTime = 0f,
+                        stageEnemyData = subStageData.stageEnemyData
                     };
 
                     runtimeStage.subStages.Add(runtimeSubStage);
