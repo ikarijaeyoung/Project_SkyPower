@@ -213,7 +213,7 @@ namespace LJ2
             switch(id)
             {                
                 case 10001:
-                    ultimate.Laser();
+                    ultimate.Laser(ultDamage);
                     break;
                 case 10002:
                     // 유도탄 미구현

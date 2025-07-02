@@ -6,10 +6,15 @@ using UnityEngine;
 public class UltTest : MonoBehaviour
 {
     public GameObject shield;
+    public UltShieldController ultShieldController;
 
     public GameObject ultBullet;
+
     public GameObject ultLaser;
+    public UltLaserController ultLaserController;
+
     public GameObject ultAll;
+    public UltMapAttack ultAllController;
     public LayerMask enemyBullet;
 
     public Coroutine ultRoutine;
@@ -17,23 +22,30 @@ public class UltTest : MonoBehaviour
     public YieldInstruction ultDelay;
     public bool canUseUlt;
 
+    public float ultDamage = 100f;
+
     public void Awake()
     {
         ultDelay = new WaitForSeconds(setUltDelay);
+        enemyBullet = LayerMask.GetMask("EnemyBullet");
+        ultLaserController = ultLaser.GetComponent<UltLaserController>();
+        ultAllController = ultAll.GetComponent<UltMapAttack>();
+        ultShieldController = shield.GetComponent<UltShieldController>();
     }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.KeypadEnter))
         {
-            Ult();
+            Ult(ultDamage);
         }
     }
 
-    public void Ult()
+    public void Ult(float damage)
     {
         if (ultRoutine == null)
         {
-            ultRoutine = StartCoroutine(EraseCoroutine());
+            ultRoutine = StartCoroutine(LaserCotoutine());
+            ultLaserController.Attack(damage);
         }
         else
         {

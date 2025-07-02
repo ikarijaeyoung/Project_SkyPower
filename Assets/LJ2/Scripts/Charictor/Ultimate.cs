@@ -9,9 +9,14 @@ public class Ultimate : MonoBehaviour
     public YieldInstruction ultDelay;
     public LayerMask enemyBullet;
 
-    public GameObject ultLaser; // UltLaserController component를 가져야함
-    public GameObject shield;   // ShieldController component를 가져야함
-    public GameObject ultAll;   // AllAttackController component를 가져야함
+    public GameObject ultLaser; 
+    public UltLaserController ultLaserController;
+
+    public GameObject shield;
+    public UltShieldController ultShieldController;
+
+    public GameObject ultAll;
+    public UltMapAttack ultAllController;
 
     public int defense = 1;
 
@@ -19,9 +24,12 @@ public class Ultimate : MonoBehaviour
     {
         ultDelay = new WaitForSeconds(setUltDelay);
         enemyBullet = LayerMask.GetMask("EnemyBullet");
+        ultLaserController = ultLaser.GetComponent<UltLaserController>();
+        ultShieldController = shield.GetComponent<UltShieldController>();
+        ultAllController = ultAll.GetComponent<UltMapAttack>();
     }
 
-    public void Laser()
+    public void Laser(float damage)
     {
         if (ultRoutine == null)
         {
