@@ -171,8 +171,8 @@ namespace YSK
 
                 GameObject map = Instantiate(mapPrefabsToUse[i]);
                 Vector3 spawnPosition = startPoint != null 
-                    ? startPoint.position + Vector3.back * (mapLength * i)
-                    : Vector3.back * (mapLength * i);
+                    ? startPoint.position + Vector3.forward * (mapLength * i)
+                    : Vector3.forward * (mapLength * i);
                 
                 map.transform.position = spawnPosition;
                 spawnedMaps.Add(map);
@@ -467,11 +467,12 @@ namespace YSK
             StartStageTransition(mainStageID, subStageID, false);
         }
 
-        public void OnStageCompleted(int score = 0)
+        public void OnStageCompleted()
         {
             int currentMainStage = PlayerPrefs.GetInt("SelectedMainStage", 1);
             int currentSubStage = PlayerPrefs.GetInt("SelectedSubStage", 1);
-            
+            int score = Manager.Score.Score; // 현재 점수 가져오기
+
             Debug.Log($"스테이지 완료: {currentMainStage}-{currentSubStage}, 점수: {score}");
             
             if (dataManager != null)

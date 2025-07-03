@@ -22,7 +22,7 @@ namespace YSK
 
         [Header("Transition UI")]
         [SerializeField] private GameObject transitionScreenPrefab;
-        [SerializeField] private string transitionPrefabPath = "YSK/UI/TransitionCanvas";
+        [SerializeField] private string transitionPrefabPath = "YSK/UI/TransitionCanvas1";
 
         [Header("Transition Text Settings")]
         [SerializeField] private string[] transitionTexts = {
@@ -86,11 +86,7 @@ namespace YSK
             }
         }
 
-        private void OnDestroy()
-        {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-            SceneManager.sceneUnloaded -= OnSceneUnloaded;
-        }
+
 
         #endregion
 
@@ -272,17 +268,7 @@ namespace YSK
             }
         }
 
-        // Unity 인스펙터 OnClick()용 메서드들
-        public void LoadTitleScene() => LoadGameScene("aTitleScene_JYL");
-        public void LoadMainScene() => LoadGameScene("bMainScene_JYL");
-        public void LoadStoreScene() => LoadGameScene("cStoreScene_JYL");
-        public void LoadStageStage() => LoadGameScene("dStageScene_JYL");
 
-        // UI를 위한 PointerEventData data 매개변수 넣은 Overloading
-        public void LoadTitleScene(PointerEventData data) => LoadGameScene("aTitleScene_JYL");
-        public void LoadMainScene(PointerEventData data) => LoadGameScene("bMainScene_JYL");
-        public void LoadStoreScene(PointerEventData data) => LoadGameScene("cStoreScene_JYL");
-        public void LoadStageStage(PointerEventData data) => LoadGameScene("dStageScene_JYL");
         public void ReloadCurrentStage(PointerEventData data) => ReloadCurrentStage();
 
         /// <summary>
@@ -303,8 +289,7 @@ namespace YSK
 
         public override void Init()
         {
-            SceneManager.sceneLoaded += OnSceneLoaded;
-            SceneManager.sceneUnloaded += OnSceneUnloaded;
+
         }
 
         private void HandleSceneSpecificData(string sceneName, int mainStageID, int subStageID, int score, bool isWin)
@@ -591,32 +576,7 @@ namespace YSK
             }
         }
 
-        private void OnSceneLoaded(Scene scene, LoadSceneMode mode) => InitializeScene(scene.name);
-        private void OnSceneUnloaded(Scene scene) { }
 
-        private void InitializeScene(string sceneName)
-        {
-            switch (sceneName)
-            {
-                case "RnDMainMenu":
-                case "RnDMainStageSelectScene":
-                case "RnDSubStageSelectScene":
-                case "RnDStoreScene":
-                case "RnDPartyScene":
-                    break;
-                case "RnDBaseStageScene":
-                case "RnDEndlessStageScene":
-                case "RnDBaseStageTestScene":
-                    ConnectStageManagers();
-                    break;
-            }
-        }
-
-        private void ConnectStageManagers()
-        {
-            StageManager stageManager = FindObjectOfType<StageManager>();
-            if (stageManager == null) Debug.LogWarning("StageManager를 찾을 수 없습니다!");
-        }
 
         private bool DoesSceneExist(string sceneName)
         {

@@ -430,7 +430,7 @@ MonoBehaviour:
   stage2_1ScoreTextName: Stage2_1ScoreText
   stage2_2ScoreTextName: Stage2_2ScoreText
   stage3_1ScoreTextName: Stage3_1ScoreText
-  forceUIUpdate: 1
+  forceUIUpdate: 0
 --- !u!1 &219236899
 GameObject:
   m_ObjectHideFlags: 0
@@ -578,6 +578,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameSceneManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3034378885704754324, guid: f5c2e630598244e479f94589b8fd2b8c,
+        type: 3}
+      propertyPath: enableTransition
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3034378885704754324, guid: f5c2e630598244e479f94589b8fd2b8c,
+        type: 3}
+      propertyPath: transitionScreenPrefab
+      value: 
+      objectReference: {fileID: 8835225831514424816, guid: b1b5a6fc728c42344ae8ba1539805142,
+        type: 3}
     - target: {fileID: 8088591135873399683, guid: f5c2e630598244e479f94589b8fd2b8c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1943,26 +1954,31 @@ MonoBehaviour:
       bestScore: 0
       isCompleted: 1
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 2
       isUnlocked: 1
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 3
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 4
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 5
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
   - stageID: 2
     isUnlocked: 0
     bestScore: 0
@@ -1974,26 +1990,31 @@ MonoBehaviour:
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 2
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 3
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 4
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 5
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
   - stageID: 3
     isUnlocked: 0
     bestScore: 0
@@ -2005,26 +2026,31 @@ MonoBehaviour:
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 2
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 3
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 4
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 5
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
   - stageID: 4
     isUnlocked: 0
     bestScore: 0
@@ -2036,26 +2062,31 @@ MonoBehaviour:
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 2
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 3
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 4
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 5
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
 --- !u!4 &753704083
 Transform:
   m_ObjectHideFlags: 0
@@ -4274,7 +4305,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 947018652}
   - {fileID: 696004086}
-  - {fileID: 236508160}
   - {fileID: 145242586}
+  - {fileID: 236508160}
   - {fileID: 692171311}
   - {fileID: 753704083}
