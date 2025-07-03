@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class EnemyItemManager : MonoBehaviour
 {
@@ -42,8 +43,11 @@ public class EnemyItemManager : MonoBehaviour
 
         foreach (Rigidbody rb in itemRbs)
         {
-            rb.velocity = Vector3.zero;
-            rb.AddForce(new Vector3(dropItemSpeed, 0, 0), ForceMode.Impulse);
-        }
+            if (rb != null)
+            {
+                rb.velocity = Vector3.zero;
+                rb.AddForce(new Vector3(0, 0, -dropItemSpeed), ForceMode.Impulse);
+            }
+        }  
     }
 }

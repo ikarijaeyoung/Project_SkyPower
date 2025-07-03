@@ -1,7 +1,8 @@
+using JYL;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using JYL;
+using Unity.Mathematics;
 using UnityEngine;
 public class Enemy : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class Enemy : MonoBehaviour
     [Header("Enemy State")]
     public EnemyData enemyData;
     [SerializeField] private int currentHP; // TODO : Player의 공격력 * 1.5배
-    public bool isFiring;
+    public bool autoFire;
 
     [Header("Enemy Shot Info")]
     public Transform[] firePoints;
@@ -37,12 +38,13 @@ public class Enemy : MonoBehaviour
         {
             originalColor = modelRenderer.material.color;
         }
+        animator = GetComponent<Animator>();
     }
     public void Init(ObjectPool objectPool)
     {
         this.objectPool = objectPool;
         currentHP = enemyData.maxHP; // Player의 공격력 * 1.5배
-        isFiring = true;
+        //autoFire = true;
         StartCoroutine(ChangeFireMode());
     }
     void OnTriggerEnter(Collider other)
@@ -66,6 +68,10 @@ public class Enemy : MonoBehaviour
         {
             TakeDamage(1);
         }
+        if(Input.GetKeyDown(KeyCode.D))
+        {
+            AnimationFire();
+        }
     }
     private void Die()
     {
@@ -75,11 +81,12 @@ public class Enemy : MonoBehaviour
 
         StopCoroutine(curFireCoroutine);
         // TODO : 죽는 애니메이션 실행.
+        // animator.SetBool("IsDead", true);
         Destroy(gameObject);
     }
     IEnumerator ChangeFireMode()
     {
-        while (isFiring)
+        while (autoFire)
         {
             int ranNum = UnityEngine.Random.Range(0, BulletPattern.Length);
             curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, enemyData.bulletPrefab, bulletSpeed, objectPool));
@@ -97,5 +104,11 @@ public class Enemy : MonoBehaviour
         modelRenderer.material.color = originalColor;
 
         flashCoroutine = null;
+    }
+    public void AnimationFire()
+    {
+        Debug.Log("지금 공격함");
+        int ranNum = UnityEngine.Random.Range(0, BulletPattern.Length);
+        StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, enemyData.bulletPrefab, bulletSpeed, objectPool));
     }
 }

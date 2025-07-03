@@ -1,4 +1,5 @@
 using LJ2;
+using System;
 using UnityEngine;
 
 namespace JYL
@@ -24,6 +25,7 @@ namespace JYL
                 cont.SetParameter();
             }
             // 전부 셋파라매터 함.
+            Array.Sort(charactorController, (a, b) => a.partySet.CompareTo(b.partySet)); // 추가적인 정렬도 가능함.
         }
     }
 }
