@@ -94,7 +94,7 @@ namespace LJ2
                 return;
             }
 
-            Debug.Log($"Character ID: {characterSave.id}, Step: {characterSave.step}, Level : {characterSave.level}");
+            //Debug.Log($"Character ID: {characterSave.id}, Step: {characterSave.step}, Level : {characterSave.level}");
             level = characterSave.level;
             step = characterSave.step;
             partySet = characterSave.partySet;

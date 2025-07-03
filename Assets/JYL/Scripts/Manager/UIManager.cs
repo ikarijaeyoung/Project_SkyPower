@@ -40,14 +40,14 @@ namespace JYL
         protected override void Awake() => base.Awake();
         private void Update()
         {
+        }
+        private void LateUpdate()
+        {
             if (Input.GetKeyDown(KeyCode.Escape) && PopUpUI.IsPopUpActive && !Util.escPressed &&!PartySetPopUp.isPartySetting)
             {
                 Instance.ClosePopUp();
                 Util.ConsumeESC();
             }
-        }
-        private void LateUpdate()
-        {
             Util.ResetESC();
         }
 
