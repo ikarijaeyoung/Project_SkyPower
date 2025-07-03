@@ -1,8 +1,9 @@
+using JYL;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UltBulletController : MonoBehaviour
+public class UltBulletController : PooledObject
 {
     [SerializeField] private float attackDelay;
     [SerializeField] public Transform muzzle;

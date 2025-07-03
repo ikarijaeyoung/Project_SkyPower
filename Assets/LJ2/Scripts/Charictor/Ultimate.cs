@@ -88,8 +88,6 @@ public class Ultimate : MonoBehaviour
         ultAll.SetActive(false);
     }
 
-    // 유도탄
-
     // 궁극기 탄막 1회 + 다단히트
 
     // 탄막 변경 + 데미지 증가
