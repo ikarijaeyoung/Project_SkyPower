@@ -24,8 +24,8 @@ public class Ultimate : MonoBehaviour
     {
         ultDelay = new WaitForSeconds(setUltDelay);
         enemyBullet = LayerMask.GetMask("EnemyBullet");
-        ultLaserController = ultLaser.GetComponent<UltLaserController>();
-        ultShieldController = shield.GetComponent<UltShieldController>();
+        ultLaserController = ultLaser.GetComponentInChildren<UltLaserController>();
+        ultShieldController = shield.GetComponentInChildren<UltShieldController>();
         ultAllController = ultAll.GetComponent<UltMapAttack>();
     }
 
@@ -33,6 +33,7 @@ public class Ultimate : MonoBehaviour
     {
         if (ultRoutine == null)
         {
+            ultLaserController.AttackDamage(damage);
             ultRoutine = StartCoroutine(LaserCoroutine());
         }
         else
@@ -52,10 +53,11 @@ public class Ultimate : MonoBehaviour
         yield break;
     }
 
-    public int Shield()
+    public int Shield(float damage)
     {
         if (ultRoutine == null)
         {
+            ultShieldController.AttackDamage(damage);
             ultRoutine = StartCoroutine(ShieldCoroutine());
         }
         return defense;
@@ -72,8 +74,9 @@ public class Ultimate : MonoBehaviour
         yield break;
     }
 
-    public void AllAttack()
+    public void AllAttack(float damage)
     {
+        ultAllController.AttackDamage(damage);
         Collider[] hits = Physics.OverlapBox(ultAll.transform.position, ultAll.transform.localScale / 2f, Quaternion.identity, enemyBullet);
 
         foreach (Collider c in hits)

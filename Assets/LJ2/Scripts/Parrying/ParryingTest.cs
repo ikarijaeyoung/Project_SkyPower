@@ -13,6 +13,7 @@ public class ParryingTest : MonoBehaviour
     [SerializeField] SphereCollider characterCollider;
     private Coroutine parryCoroutine;
 
+    public bool isReflect = true;
 
     public YieldInstruction coroutineDelay;
 
@@ -33,6 +34,7 @@ public class ParryingTest : MonoBehaviour
     public void Parrying()
     {
         Collider[] canParrying = Physics.OverlapSphere(transform.position, parryingRadius, enemyBullet);
+        Transform[] trasnforms = new Transform[canParrying.Length];
         Debug.Log("패링 진입");
         if (canParrying.Length > 0)
         {
@@ -49,6 +51,19 @@ public class ParryingTest : MonoBehaviour
         }
         else return;
 
+        if (isReflect)
+        {
+            foreach(Transform t in trasnforms)
+            {
+                Rigidbody rb = t.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    Vector3 reflectDirection = (t.position - transform.position).normalized;
+                    rb.AddForce(reflectDirection * 10f, ForceMode.Impulse);
+                    Debug.Log("반사 시도");
+                }
+            }
+        }
     }
     
     private IEnumerator InvincibleCoroutine()

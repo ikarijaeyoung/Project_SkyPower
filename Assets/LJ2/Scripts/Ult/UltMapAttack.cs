@@ -8,7 +8,6 @@ public class UltMapAttack : MonoBehaviour
 
     private void OnEnable()
     {
-
         Collider[] hits = Physics.OverlapBox(transform.position, transform.localScale / 2f, Quaternion.identity);
 
         foreach (Collider c in hits)
@@ -18,7 +17,6 @@ public class UltMapAttack : MonoBehaviour
             { 
                 Enemy enemy = c.gameObject.GetComponent<Enemy>();
                 enemy.TakeDamage(attackDamage);
-
             }
         }
     }

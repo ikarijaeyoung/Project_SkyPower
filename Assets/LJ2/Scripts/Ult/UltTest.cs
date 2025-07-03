@@ -8,8 +8,6 @@ public class UltTest : MonoBehaviour
     public GameObject shield;
     public UltShieldController ultShieldController;
 
-    public GameObject ultBullet;
-
     public GameObject ultLaser;
     public UltLaserController ultLaserController;
 
@@ -17,12 +15,15 @@ public class UltTest : MonoBehaviour
     public UltMapAttack ultAllController;
     public LayerMask enemyBullet;
 
+    public GameObject ultBullet;
+    public UltBulletController ultBulletController;
+
     public Coroutine ultRoutine;
     public float setUltDelay;
     public YieldInstruction ultDelay;
     public bool canUseUlt;
 
-    public float ultDamage = 100f;
+    public float ultDamage = 10f;
 
     public void Awake()
     {
@@ -31,6 +32,7 @@ public class UltTest : MonoBehaviour
         ultLaserController = ultLaser.GetComponentInChildren<UltLaserController>();
         ultAllController = ultAll.GetComponent<UltMapAttack>();
         ultShieldController = shield.GetComponentInChildren<UltShieldController>();
+        ultBulletController = ultBullet.GetComponentInChildren<UltBulletController>();
     }
     private void Update()
     {
@@ -47,7 +49,8 @@ public class UltTest : MonoBehaviour
             ultLaserController.AttackDamage(damage);
             ultAllController.AttackDamage(damage);
             ultShieldController.AttackDamage(damage);
-            ultRoutine = StartCoroutine(ShieldCotoutine());
+            ultBulletController.AttackDamage(damage);
+            ultRoutine = StartCoroutine(UltBulletCotoutine());
         }
         else
         {
@@ -94,6 +97,19 @@ public class UltTest : MonoBehaviour
         yield break;
     }
     */
+
+    private IEnumerator UltBulletCotoutine()
+    {
+        ultBullet.SetActive(true);
+        Debug.Log("UltBullet Active");
+        yield return ultDelay;
+
+        ultBullet.SetActive(false);
+        Debug.Log("UltBullet Off");
+        ultRoutine = null;
+        yield break;
+
+    }
 
     private IEnumerator EraseCoroutine()
     {
