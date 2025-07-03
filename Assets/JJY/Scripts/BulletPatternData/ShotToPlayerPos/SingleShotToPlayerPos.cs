@@ -9,7 +9,7 @@ public class SingleShotToPlayerPos : BulletPatternData
     [Header("Single Shot To Player Pos Settings")]
     Vector3 playerPos;
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, GameObject bulletPrefab, float bulletSpeed, ObjectPool pool)
+    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool)
     {
         BulletPrefabController bullet = pool.ObjectOut() as BulletPrefabController;
         // BulletPrefabController.cs 에 public ObjectPool objectPool; 추가

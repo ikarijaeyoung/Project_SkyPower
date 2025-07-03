@@ -14,7 +14,7 @@ public class TripleShotToPlayerPos : BulletPatternData
     public float delayBetweenshots = 0.1f;
     Vector3 playerPos;
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, GameObject bulletPrefab, float bulletSpeed, ObjectPool pool)
+    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool)
     {
         playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
         firePoints[0].LookAt(playerPos);

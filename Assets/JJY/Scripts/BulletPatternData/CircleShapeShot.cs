@@ -8,10 +8,10 @@ using JYL;
 public class CircleShapeShot : BulletPatternData
 {
     [Header("Circle Shape Shot Settings")]
-    public int shotCount = 8; // 한 번에 발사할 총알의 개수 : 총구 개수의 배수, 총구 개수보다 많아야할듯.
+    public int shotCount = 8;
     public float fireDelayBetweenShots = 0f;
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, GameObject bulletPrefab, float bulletSpeed, ObjectPool pool)
+    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool)
     {
         for (int i = 0; i < shotCount; i++)
         {

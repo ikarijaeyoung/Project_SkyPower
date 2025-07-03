@@ -12,7 +12,7 @@ public class FanShapeShot : BulletPatternData
     public float fireDelayBetweenShots = 0.1f;
     public float fanShapeangle = 90;
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, GameObject bulletPrefab, float bulletSpeed, ObjectPool pool)
+    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool)
     {
         for (int i = 0; i < shotCount; i++)
         {

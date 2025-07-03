@@ -17,6 +17,6 @@ public class EnemyBulletController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         rb.useGravity = false;
-        objectPool = enemy.objectPool;
+        objectPool = enemy.curObjectPool;
     }
 }
