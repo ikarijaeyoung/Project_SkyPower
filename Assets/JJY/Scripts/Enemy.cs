@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     public BulletPatternData[] BulletPattern;
     private Coroutine curFireCoroutine;
     public ObjectPool objectPool;
-    public float bulletSpeed = 1f; //이거 왜 있지
+    public float bulletSpeed = 1f;
     public float fireDelay = 1.5f;
 
     [Header("Hit Animation")]
@@ -32,18 +32,18 @@ public class Enemy : MonoBehaviour
 
     void Awake()
     {
-        Init();
-    }
-    void Init()
-    {
-        currentHP = enemyData.maxHP; // Player의 공격력 * 1.5배
-        isFiring = true;
-        StartCoroutine(ChangeFireMode());
         modelRenderer = GetComponentInChildren<Renderer>();
         if (modelRenderer != null)
         {
             originalColor = modelRenderer.material.color;
         }
+    }
+    public void Init(ObjectPool objectPool)
+    {
+        this.objectPool = objectPool;
+        currentHP = enemyData.maxHP; // Player의 공격력 * 1.5배
+        isFiring = true;
+        StartCoroutine(ChangeFireMode());
     }
     void OnTriggerEnter(Collider other)
     {

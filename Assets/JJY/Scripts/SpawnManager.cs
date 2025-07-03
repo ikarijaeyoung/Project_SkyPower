@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using JYL;
 using UnityEngine;
 using KYG_skyPower;
+using Unity.VisualScripting;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -51,17 +52,13 @@ public class SpawnManager : MonoBehaviour
 
         // 시퀀스 모두 클리어 시, 보스 1마리 스폰
         Debug.Log("Boss appears!");
-        GameObject bossobj = Instantiate(currentStage.bossPrefab, currentStage.bossSpawnPos, Quaternion.Euler(0, 0, 180f));
-        Enemy enemy = bossobj.GetComponent<Enemy>();
+        GameObject bossObj = Instantiate(currentStage.bossPrefab, currentStage.bossSpawnPos, Quaternion.Euler(0, 180f, 0));
+        Enemy enemy = bossObj.GetComponent<Enemy>();
         EnemyType type = enemy.enemyData.enemyType;
 
         if (poolDic.TryGetValue(type, out ObjectPool pool))
         {
-            enemy.objectPool = pool;
-            // for (int i = 0; i < enemy.BulletPattern.Length; i++)
-            // {
-            //     enemy.BulletPattern[i].SetPool(pool);
-            // }
+            enemy.Init(pool);
         }
         enemyCount++;
         Debug.Log($"Total Enemies: {enemyCount}");
