@@ -2,16 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using JYL;
 using UnityEngine;
-using YSK;
 using KYG_skyPower;
-using static EnemyData;
+using Unity.VisualScripting;
 
 public class SpawnManager : MonoBehaviour
 {
-    //public List<SubStageRuntimeData> allStages; //TODO: 지움
-    private int curStageLevel = 0; // 스테이지 선택 화면에서 연동.
     private int curSequenceLevel = 0;
-    [SerializeField] static public int enemyCount = 0;
+    static public int enemyCount = 0;
     [SerializeField] private SpawnSequenceEnemy spawnSequenceEnemy;
     [SerializeField] private ObjectPool[] objectPools;
     private Dictionary<EnemyType, ObjectPool> poolDic;
@@ -38,44 +35,39 @@ public class SpawnManager : MonoBehaviour
 
     private IEnumerator PlayStage()
     {
-            StageEnemyData currentStage = Manager.SDM.runtimeData[Manager.Game.selectWorldIndex-1].subStages[Manager.Game.selectStageIndex-1].stageEnemyData;
+        StageEnemyData currentStage = Manager.SDM.runtimeData[Manager.Game.selectWorldIndex - 1].subStages[Manager.Game.selectStageIndex - 1].stageEnemyData;
+
         // 시퀀스가 종료될 때까지 반복
-            for (curSequenceLevel = 0; curSequenceLevel < currentStage.sequence.Count; curSequenceLevel++)
-            {
-                SequenceData sequence = currentStage.sequence[curSequenceLevel];
+        for (curSequenceLevel = 0; curSequenceLevel < currentStage.sequence.Count; curSequenceLevel++)
+        {
+            EnemySpawnInfo sequence = currentStage.sequence[curSequenceLevel];
 
-                yield return StartCoroutine(spawnSequenceEnemy.SpawnSequence(sequence));
+            yield return StartCoroutine(spawnSequenceEnemy.SpawnSequence(sequence));
 
-                // 현재 시퀀스의 모든 적이 처치될 때까지 반복
-                while (enemyCount > 0) yield return null;
+            // 현재 시퀀스의 모든 적이 처치될 때까지 반복
+            while (enemyCount > 0) yield return null;
 
-                Debug.Log($"Sequence {curSequenceLevel} cleared!");
-            }
+            Debug.Log($"Sequence {curSequenceLevel} cleared!");
+        }
 
-            // 시퀀스 모두 클리어 시, 보스 1마리 스폰
-            Debug.Log("Boss appears!");
-            GameObject bossobj = Instantiate(currentStage.bossPrefab, currentStage.bossSpawnPos, Quaternion.identity);
-            Enemy enemy = bossobj.GetComponent<Enemy>();
-            EnemyType type = enemy.enemyData.enemyType;
-            if (poolDic.TryGetValue(type, out ObjectPool pool))
-            {
-                enemy.objectPool = pool;
-                for (int i = 0; i < enemy.BulletPattern.Length; i++)
-                {
-                    enemy.BulletPattern[i].SetPool(pool);
-                }
-            }
-            enemyCount++;
-            Debug.Log($"Total Enemies: {enemyCount}");
+        // 시퀀스 모두 클리어 시, 보스 1마리 스폰
+        Debug.Log("Boss appears!");
+        GameObject bossObj = Instantiate(currentStage.bossPrefab, currentStage.bossSpawnPos, Quaternion.Euler(0, 180f, 0));
+        Enemy enemy = bossObj.GetComponent<Enemy>();
+        EnemyType type = enemy.enemyData.enemyType;
 
-            // 보스 소환 후, 보스가 처치될 때까지 안벗어남
-            while (enemyCount > 0)
-                yield return null;
+        if (poolDic.TryGetValue(type, out ObjectPool pool))
+        {
+            enemy.Init(pool);
+        }
+        enemyCount++;
+        Debug.Log($"Total Enemies: {enemyCount}");
 
-            Debug.Log($"Stage {curStageLevel} cleared!");
-        
+        // 보스 소환 후, 보스가 처치될 때까지 안벗어남
+        while (enemyCount > 0) yield return null;
 
         Debug.Log("All Stages Complete!");
+        
         StopCoroutine(playRoutine);
         playRoutine = null;
     }

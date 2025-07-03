@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyItemManager : MonoBehaviour
 {
-    // TODO : 임시로 EnemyItemManager를 사용함. 다른 매니저로 옮길것.
+    // TODO : 임시로 EnemyItemManager를 사용함. => ScoreManager.cs 로 옮길것인가? 그대로 사용할 것인가?
     public GameObject itemPrefab;
     public int itemCount = 40; // 아이템 개수
     public float itemMoveLimitRange = 2f; // 아이템이 떨어지는 반경 제한
