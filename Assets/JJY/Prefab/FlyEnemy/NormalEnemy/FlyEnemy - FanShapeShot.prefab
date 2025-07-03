@@ -190,5 +190,7 @@ MonoBehaviour:
   BulletPattern:
   - {fileID: 11400000, guid: e411adadb56cb1840b88528143142d05, type: 2}
   objectPool: {fileID: 0}
-  bulletSpeed: 10
+  bulletSpeed: 2
   fireDelay: 1.5
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashDuration: 0.1

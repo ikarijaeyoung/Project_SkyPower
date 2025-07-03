@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour
         {
             originalColor = modelRenderer.material.color;
         }
+        animator = GetComponent<Animator>();
     }
     public void Init(ObjectPool objectPool)
     {
@@ -75,6 +76,7 @@ public class Enemy : MonoBehaviour
 
         StopCoroutine(curFireCoroutine);
         // TODO : 죽는 애니메이션 실행.
+        // animator.SetBool("IsDead", true);
         Destroy(gameObject);
     }
     IEnumerator ChangeFireMode()
