@@ -6,34 +6,51 @@ using UnityEngine;
 public class UltTest : MonoBehaviour
 {
     public GameObject shield;
+    public UltShieldController ultShieldController;
+
+    public GameObject ultLaser;
+    public UltLaserController ultLaserController;
+
+    public GameObject ultAll;
+    public UltMapAttack ultAllController;
+    public LayerMask enemyBullet;
 
     public GameObject ultBullet;
-    public GameObject ultLaser;
-    public GameObject ultAll;
-    public LayerMask enemyBullet;
+    public UltBulletController ultBulletController;
 
     public Coroutine ultRoutine;
     public float setUltDelay;
     public YieldInstruction ultDelay;
     public bool canUseUlt;
 
+    public float ultDamage = 10f;
+
     public void Awake()
     {
         ultDelay = new WaitForSeconds(setUltDelay);
+        enemyBullet = LayerMask.GetMask("EnemyBullet");
+        ultLaserController = ultLaser.GetComponentInChildren<UltLaserController>();
+        ultAllController = ultAll.GetComponent<UltMapAttack>();
+        ultShieldController = shield.GetComponentInChildren<UltShieldController>();
+        ultBulletController = ultBullet.GetComponentInChildren<UltBulletController>();
     }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.KeypadEnter))
         {
-            Ult();
+            Ult(ultDamage);
         }
     }
 
-    public void Ult()
+    public void Ult(float damage)
     {
         if (ultRoutine == null)
         {
-            ultRoutine = StartCoroutine(EraseCoroutine());
+            ultLaserController.AttackDamage(damage);
+            ultAllController.AttackDamage(damage);
+            ultShieldController.AttackDamage(damage);
+            ultBulletController.AttackDamage(damage);
+            ultRoutine = StartCoroutine(UltBulletCotoutine());
         }
         else
         {
@@ -80,6 +97,19 @@ public class UltTest : MonoBehaviour
         yield break;
     }
     */
+
+    private IEnumerator UltBulletCotoutine()
+    {
+        ultBullet.SetActive(true);
+        Debug.Log("UltBullet Active");
+        yield return ultDelay;
+
+        ultBullet.SetActive(false);
+        Debug.Log("UltBullet Off");
+        ultRoutine = null;
+        yield break;
+
+    }
 
     private IEnumerator EraseCoroutine()
     {

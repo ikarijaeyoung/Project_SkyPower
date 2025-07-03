@@ -19,7 +19,7 @@ public class SingleShotToPlayerPos : BulletPatternData
         playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
         firePoints[0].LookAt(playerPos);
 
-        foreach (BulletInfo info in bullet.bullet)
+        foreach (BulletInfo info in bullet.bulletInfo)
         {
             if (info.rig != null)
             {

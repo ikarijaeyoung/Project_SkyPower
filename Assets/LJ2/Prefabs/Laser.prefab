@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4118592881685219936}
   - component: {fileID: 151704382798314734}
   - component: {fileID: 8012875074528721697}
+  - component: {fileID: 734889712812997963}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -107,6 +108,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &734889712812997963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 568372813980131739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1928b80e3cf5ecd43ba0d58eed0d17ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDelay: 0.5
 --- !u!1 &1245939337628991872
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,7 +130,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5209182111593434329}
-  - component: {fileID: 3752374293352640723}
+  - component: {fileID: 7079804252905131729}
   m_Layer: 0
   m_Name: Laser
   m_TagString: Untagged
@@ -140,7 +154,7 @@ Transform:
   - {fileID: 7092859012138806589}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3752374293352640723
+--- !u!114 &7079804252905131729
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,7 +163,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1245939337628991872}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1928b80e3cf5ecd43ba0d58eed0d17ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 2afb7c635b4e05c41b19f45746c4e3fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   increase: 0.2

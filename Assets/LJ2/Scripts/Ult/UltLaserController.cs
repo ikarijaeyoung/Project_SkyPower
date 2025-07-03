@@ -4,29 +4,44 @@ using UnityEngine;
 
 public class UltLaserController : MonoBehaviour
 {
-    [SerializeField] private float increase = 0.2f;
-    [SerializeField] private float maxSize = 5f;
-    private float size;
-
-    private void Awake()
-    {
-        increase = Mathf.Clamp(increase, 0.1f, maxSize);
-    }
-
-    private void OnEnable()
-    {
-        transform.localScale = Vector3.one;
-        size = 0;
-    }
-
-    private void LateUpdate()
-    {
-        if (size < maxSize)
-        {
-            size += increase;
-        }
-        transform.localScale = Vector3.one * size;
-    }
-
     
+    [SerializeField] private float attackDelay;
+    private float currentTime;
+    private int attackDamage;
+
+    private void Update()
+    {
+        if (currentTime >= attackDelay)
+        {
+            currentTime = 0; // Reset currentTime after attack
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        currentTime += Time.fixedDeltaTime;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (currentTime >= attackDelay)
+        {
+            Enemy enemyComponent = other.gameObject.GetComponentInParent<Enemy>();
+            if (enemyComponent != null) // Fix for CS0472
+            {
+                Debug.Log($"TakeDamage {enemyComponent.name} ½Ãµµ");
+                enemyComponent.TakeDamage(attackDamage);
+            }
+        }
+    }
+    private void OnDisable()
+    {
+        currentTime = 0;
+    }
+
+    public void AttackDamage(float damage)
+    {
+        attackDamage = (int)damage;
+    }
+
 }

@@ -22,7 +22,7 @@ public class SingleShot : BulletPatternData
         //
         bullet.ReturnToPool(returnToPoolTimer);
 
-        foreach (BulletInfo info in bullet.bullet)
+        foreach (BulletInfo info in bullet.bulletInfo)
         {
             if (info.rig != null)
             {
