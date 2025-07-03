@@ -228,10 +228,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageDataList:
-  - {fileID: 11400000, guid: 42cfb91afb7928e44ad33bcd26b088f2, type: 2}
-  - {fileID: 11400000, guid: 1c49c343c7c1d7f4fa92f3b191963113, type: 2}
-  - {fileID: 11400000, guid: 75b7ec7daad056941a8609cd4e71d747, type: 2}
-  - {fileID: 11400000, guid: 0c563732c7779bd48a0d43bee27514ec, type: 2}
+  - {fileID: 11400000, guid: 2ba523f15aa21e64c95bc39345306ac8, type: 2}
+  - {fileID: 11400000, guid: c8de21591bf97bf48acf4dcca0839242, type: 2}
+  - {fileID: 11400000, guid: 5c8f14ace83b96b45bcb7dfa37d87643, type: 2}
+  - {fileID: 11400000, guid: 325ef4e1f9c20d045bbe1a4c3f324cec, type: 2}
   runtimeData:
   - stageID: 0
     isUnlocked: 0

@@ -62,9 +62,17 @@ namespace YSK
             GameData saveData = Manager.Game.saveFiles[Manager.Game.currentSaveIndex];
             for (int i = 0; i < saveData.stageInfo.Length; i++)
             {
-                runtimeData[i/5].subStages[i % 5].bestScore = saveData.stageInfo[i].score;
-                runtimeData[i/5].subStages[i % 5].isUnlocked = saveData.stageInfo[i].unlock;
-                runtimeData[i/5].subStages[i % 5].isCompleted = saveData.stageInfo[i].isClear;
+                if(i>Manager.SDM.runtimeData.Count*5-1)
+                {
+                    Debug.Log("runtimeData 이상의 맵 데이터 세이브 정보가 있음");
+                    return;
+                }
+                int worldIndex = i / 5;
+                int stageIndex = i % 5;
+                Debug.Log($"{i}  {worldIndex} {stageIndex}");
+                runtimeData[worldIndex].subStages[stageIndex].bestScore = saveData.stageInfo[i].score;
+                runtimeData[worldIndex].subStages[stageIndex].isUnlocked = saveData.stageInfo[i].unlock;
+                runtimeData[worldIndex].subStages[stageIndex].isCompleted = saveData.stageInfo[i].isClear;
             }
         }
 

@@ -7,7 +7,6 @@ namespace JYL
 {
     public class StageSelectPopUp : BaseUI
     {
-        private int worldNum = 10;
         private List<StageRuntimeData> stageData;
         // UIManager에 현재 선택한 월드의 인덱스를 참조할 필요가 있음.
         // 만약 해당 월드가 lock된 경우, 클릭을 막음. 해당 정보는 게임 매니저 또는 스테이지매니저, 씬매니저에 있음

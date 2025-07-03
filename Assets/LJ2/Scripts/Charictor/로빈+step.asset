@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 10010
   grade: 1
-  name: "\uB85C\uBE48+step"
+  characterName: 
   elemental: 1
   maxLevel: 30
   hp: 100
@@ -31,4 +31,6 @@ MonoBehaviour:
   ultVisual: {fileID: 0}
   parry: 0
   parryCool: 0
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: 4bb5da9d216358646a78116e706879dd, type: 3}
+  upgradeUnitDefault: 2500
+  upgradeUnitPlus: 2500
