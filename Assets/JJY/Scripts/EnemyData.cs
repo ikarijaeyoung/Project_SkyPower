@@ -20,6 +20,7 @@ public enum EnemyType
     Normal,
     Elite,
     Boss
+    // 지상적? => 지상적 전용 ObjectPool? == 지상적은 공중유닛과 다른 BulletPrefab(외형).
 }
 [CreateAssetMenu(fileName = "NewItemData", menuName = "ScriptableObject/ItemData")]
 public class EnemyDropItemData : ScriptableObject

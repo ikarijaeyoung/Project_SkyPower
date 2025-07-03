@@ -2,15 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using JYL;
+using System.Diagnostics.Tracing;
 
 [CreateAssetMenu(fileName = "SingleShot", menuName = "ScriptableObject/BulletPattern/SingleShot")]
 public class SingleShot : BulletPatternData
 {
     [Header("Single Shot Settings")]
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, GameObject bulletPrefab, float bulletSpeed)
+    public override IEnumerator Shoot(Transform[] firePoints, GameObject bulletPrefab, float bulletSpeed, ObjectPool pool)
     {
-        BulletPrefabController bullet = objectPool.ObjectOut() as BulletPrefabController;
+        BulletPrefabController bullet = pool.ObjectOut() as BulletPrefabController;
+        bullet.objectPool = pool;
+        //
+        // 왜냐하면 
+        // a enemy(SingleShot) 소환 - a ObjectPool로 연결됨. =>
+        // b enemy(SingleShot) 소환 - b ObjectPool로 연결됨. =>
+        // a enemy의 ObjectPool은 b ObjectPool로 덮어 씌우게 됨 =>
+        // Elite Enemy와 Normal Enemy의 BulletPattern이 같다면 문제발생.
+        //
         bullet.ReturnToPool(returnToPoolTimer);
 
         foreach (BulletInfo info in bullet.bullet)

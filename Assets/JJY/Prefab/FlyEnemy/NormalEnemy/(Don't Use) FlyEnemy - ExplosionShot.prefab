@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 4398885731801022728}
   - component: {fileID: 1579580377331602160}
   m_Layer: 8
-  m_Name: FlyEnemy - ExplosionShot
+  m_Name: (Don't Use) FlyEnemy - ExplosionShot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -361,8 +361,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a0cba009d06c25643982d3f5edd08073, type: 2}
   - {fileID: 11400000, guid: e411adadb56cb1840b88528143142d05, type: 2}
   objectPool: {fileID: 0}
-  bulletSpeed: 10
+  bulletSpeed: 2
   fireDelay: 1.5
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashDuration: 0.1
 --- !u!1 &6476502010425905754
 GameObject:
   m_ObjectHideFlags: 0
