@@ -20,7 +20,7 @@ public class ExplosionShot : BulletPatternData
         {
             bullet.ReturnToPool(returnToPoolTimer);
 
-            foreach (BulletInfo info in bullet.bullet)
+            foreach (BulletInfo info in bullet.bulletInfo)
             {
                 if (info.rig != null)
                 {
@@ -47,7 +47,7 @@ public class ExplosionShot : BulletPatternData
                 {
                     explosionBullet.ReturnToPool(returnToPoolTimer);
 
-                    foreach (BulletInfo info in explosionBullet.bullet)
+                    foreach (BulletInfo info in explosionBullet.bulletInfo)
                     {
                         if (info.rig != null)
                         {

@@ -13,7 +13,7 @@ public class SingleShot : BulletPatternData
         BulletPrefabController bullet = objectPool.ObjectOut() as BulletPrefabController;
         bullet.ReturnToPool(returnToPoolTimer);
 
-        foreach (BulletInfo info in bullet.bullet)
+        foreach (BulletInfo info in bullet.bulletInfo)
         {
             if (info.rig != null)
             {
