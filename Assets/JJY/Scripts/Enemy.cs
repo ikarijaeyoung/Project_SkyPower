@@ -43,9 +43,9 @@ public class Enemy : MonoBehaviour
     public void Init(ObjectPool objectPool)
     {
         curObjectPool = objectPool;
-        currentHP = enemyData.maxHP; // Player의 공격력 * 1.5배
+        currentHP = enemyData.maxHP;
         //autoFire = true;
-        StartCoroutine(ChangeFireMode());
+        // StartCoroutine(ChangeFireMode());
     }
     void OnTriggerEnter(Collider other)
     {
@@ -109,6 +109,6 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("지금 공격함");
         int ranNum = UnityEngine.Random.Range(0, BulletPattern.Length);
-        StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, bulletSpeed, curObjectPool));
+        curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, bulletSpeed, curObjectPool));
     }
 }
