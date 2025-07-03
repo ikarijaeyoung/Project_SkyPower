@@ -4,79 +4,44 @@ using UnityEngine;
 
 public class UltLaserController : MonoBehaviour
 {
-    [SerializeField] private float increase = 0.2f;
-    [SerializeField] private float maxSize = 5f;
+    
+    [SerializeField] private float attackDelay;
+    private float currentTime;
+    private int attackDamage;
 
-    private Coroutine attackCoroutine;
-    [SerializeField] private float setDelay;
-    private YieldInstruction attackDelay;
-
-    [SerializeField] private LayerMask enemy;
-
-    private float size;
-
-    private void Awake()
+    private void Update()
     {
-        increase = Mathf.Clamp(increase, 0.1f, maxSize);
-        attackDelay = new WaitForSeconds(setDelay);
-        enemy = LayerMask.GetMask("Enemy");
-    }
-
-    private void OnEnable()
-    {
-        transform.localScale = Vector3.one;
-        size = 0;
-    }
-
-    private void LateUpdate()
-    {
-        if (size < maxSize)
+        if (currentTime >= attackDelay)
         {
-            size += increase;
+            currentTime = 0; // Reset currentTime after attack
         }
-        transform.localScale = Vector3.one * size;
     }
 
+    private void FixedUpdate()
+    {
+        currentTime += Time.fixedDeltaTime;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (currentTime >= attackDelay)
+        {
+            Enemy enemyComponent = other.gameObject.GetComponentInParent<Enemy>();
+            if (enemyComponent != null) // Fix for CS0472
+            {
+                Debug.Log($"TakeDamage {enemyComponent.name} 시도");
+                enemyComponent.TakeDamage(attackDamage);
+            }
+        }
+    }
     private void OnDisable()
     {
-        attackCoroutine = null;
+        currentTime = 0;
     }
 
-    public void Attack(float damage)
+    public void AttackDamage(float damage)
     {
-        if (attackCoroutine == null)
-        {
-            attackCoroutine = StartCoroutine(AttackCoroutine(damage));
-        }
-        else
-        {
-            return;
-        }
+        attackDamage = (int)damage;
     }
 
-
-    private IEnumerator AttackCoroutine(float damage)
-    {
-        Debug.Log("AttackCoroutine 시작");
-        while (true)
-        {
-            Collider[] hits = Physics.OverlapCapsule(Vector3.zero, Vector3.one * size, size, enemy);
-            foreach (Collider c in hits)
-            {
-                Debug.Log($"TakeDamage {damage}시도");
-                if (c.gameObject.GetComponent<Enemy>())
-                {
-                    Enemy enemy = c.gameObject.GetComponent<Enemy>();
-                    enemy.TakeDamage((int)damage);
-                }
-            }
-            yield return attackDelay;
-        }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireMesh(transform.GetComponent<MeshFilter>().sharedMesh, transform.position, transform.rotation, Vector3.one * size);
-    }
 }

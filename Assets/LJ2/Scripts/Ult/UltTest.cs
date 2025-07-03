@@ -28,7 +28,7 @@ public class UltTest : MonoBehaviour
     {
         ultDelay = new WaitForSeconds(setUltDelay);
         enemyBullet = LayerMask.GetMask("EnemyBullet");
-        ultLaserController = ultLaser.GetComponent<UltLaserController>();
+        ultLaserController = ultLaser.GetComponentInChildren<UltLaserController>();
         ultAllController = ultAll.GetComponent<UltMapAttack>();
         ultShieldController = shield.GetComponent<UltShieldController>();
     }
@@ -45,7 +45,7 @@ public class UltTest : MonoBehaviour
         if (ultRoutine == null)
         {
             ultRoutine = StartCoroutine(LaserCotoutine());
-            ultLaserController.Attack(damage);
+            ultLaserController.AttackDamage(damage);
         }
         else
         {
