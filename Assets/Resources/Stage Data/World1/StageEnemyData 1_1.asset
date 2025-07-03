@@ -16,9 +16,11 @@ MonoBehaviour:
   - enemyPrefab:
     - {fileID: 4344951356574126065, guid: f1eca56938a899c42bc17e19c999bae7, type: 3}
     - {fileID: 4344951356574126065, guid: 74b27bd8be43ee24f9d325672cef2cd9, type: 3}
+    - {fileID: 4344951356574126065, guid: 931d470595c6b224faca39abbae45ae4, type: 3}
     spawnPos:
     - {x: 56.8, y: 2, z: -25.6}
     - {x: 63.3, y: 2, z: -30.5}
+    - {x: 55, y: 5, z: -20}
     spawnDelay: 2
   - enemyPrefab:
     - {fileID: 4344951356574126065, guid: ca8cd7507fd8c0e448d31eba59e6d242, type: 3}
