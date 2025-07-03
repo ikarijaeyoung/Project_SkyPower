@@ -33,8 +33,8 @@ namespace LJ2
         public float ultDamage;
         public int ultCool;
 
-        public GameObject bulletPrefab;
-        public GameObject ultPrefab;
+        public GameObject bulletPrefab; // TODO : 경로지정
+        public GameObject ultPrefab; // 리소스
 
         public Parry parry;
         public int parryCool;
@@ -209,7 +209,7 @@ namespace LJ2
             }
         }
 
-        public void UseUlt(float ultDamage)
+        public void UseUlt()
         {
             switch(id)
             {                
@@ -229,10 +229,10 @@ namespace LJ2
                     // 궁극기 탄막 1회 - 다단히트
                     break;
                 case 10006:
-                    defense += ultimate.Shield(ultDamage);
+                    defense += ultimate.Shield();
                     break;
                 default:
-                    ultimate.AllAttack(ultDamage);
+                    ultimate.AllAttack();
                     break;
             }
         }
