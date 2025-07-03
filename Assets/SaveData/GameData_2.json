@@ -1,12 +1,12 @@
 {
-    "playerName": "fdffssf",
+    "playerName": "ggg",
     "characterInventory": {
         "characters": [
             {
                 "id": 10001,
                 "level": 1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -15,9 +15,9 @@
             },
             {
                 "id": 10002,
-                "level": 1,
+                "level": -1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -26,7 +26,7 @@
             },
             {
                 "id": 10003,
-                "level": 1,
+                "level": 30,
                 "step": 0,
                 "partySet": 0,
                 "equipId": [
@@ -37,9 +37,9 @@
             },
             {
                 "id": 10004,
-                "level": 1,
+                "level": -1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -50,7 +50,7 @@
                 "id": 10005,
                 "level": 1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -59,9 +59,9 @@
             },
             {
                 "id": 10006,
-                "level": 1,
+                "level": 20,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 1,
                 "equipId": [
                     -1,
                     -1,
@@ -72,7 +72,7 @@
                 "id": 10007,
                 "level": 1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -83,7 +83,7 @@
                 "id": 10008,
                 "level": 1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -92,9 +92,9 @@
             },
             {
                 "id": 10009,
-                "level": 1,
+                "level": 10,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 2,
                 "equipId": [
                     -1,
                     -1,
@@ -103,9 +103,9 @@
             },
             {
                 "id": 10010,
-                "level": 1,
+                "level": -1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -114,9 +114,9 @@
             },
             {
                 "id": 10011,
-                "level": 1,
+                "level": -1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -125,9 +125,9 @@
             },
             {
                 "id": 10012,
-                "level": 1,
+                "level": -1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -136,9 +136,9 @@
             },
             {
                 "id": 10013,
-                "level": 1,
+                "level": -1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -147,9 +147,9 @@
             },
             {
                 "id": 10014,
-                "level": 1,
+                "level": -1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -158,9 +158,9 @@
             },
             {
                 "id": 10015,
-                "level": 1,
+                "level": -1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -169,9 +169,9 @@
             },
             {
                 "id": 10016,
-                "level": 1,
+                "level": -1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -180,9 +180,9 @@
             },
             {
                 "id": 10017,
-                "level": 1,
+                "level": -1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -191,9 +191,9 @@
             },
             {
                 "id": 10018,
-                "level": 1,
+                "level": -1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -202,9 +202,9 @@
             },
             {
                 "id": 10019,
-                "level": 1,
+                "level": -1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -213,9 +213,9 @@
             },
             {
                 "id": 10020,
-                "level": 1,
+                "level": -1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -224,9 +224,9 @@
             },
             {
                 "id": 10021,
-                "level": 1,
+                "level": -1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -235,9 +235,9 @@
             },
             {
                 "id": 10022,
-                "level": 1,
+                "level": -1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -246,9 +246,9 @@
             },
             {
                 "id": 10023,
-                "level": 1,
+                "level": -1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -257,9 +257,9 @@
             },
             {
                 "id": 10024,
-                "level": 1,
+                "level": -1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -268,9 +268,9 @@
             },
             {
                 "id": 10025,
-                "level": 1,
+                "level": -1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -279,9 +279,9 @@
             },
             {
                 "id": 10026,
-                "level": 1,
+                "level": -1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -290,9 +290,9 @@
             },
             {
                 "id": 10027,
-                "level": 1,
+                "level": -1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -341,7 +341,7 @@
             "world": 2,
             "stage": 1,
             "score": 0,
-            "unlock": false,
+            "unlock": true,
             "isClear": false
         },
         {
@@ -437,6 +437,41 @@
         },
         {
             "world": 4,
+            "stage": 5,
+            "score": 0,
+            "unlock": false,
+            "isClear": false
+        },
+        {
+            "world": 5,
+            "stage": 1,
+            "score": 0,
+            "unlock": false,
+            "isClear": false
+        },
+        {
+            "world": 5,
+            "stage": 2,
+            "score": 0,
+            "unlock": false,
+            "isClear": false
+        },
+        {
+            "world": 5,
+            "stage": 3,
+            "score": 0,
+            "unlock": false,
+            "isClear": false
+        },
+        {
+            "world": 5,
+            "stage": 4,
+            "score": 0,
+            "unlock": false,
+            "isClear": false
+        },
+        {
+            "world": 5,
             "stage": 5,
             "score": 0,
             "unlock": false,

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -50,7 +51,7 @@ public struct CharacterSave
     public CharacterSave(int id)
     {
         this.id = id;
-        this.level = 1; // Default level
+        this.level = -1; // Default level // 소유 시, 1레벨로 변경
         this.step = 0; // Default step
         equipId = new int[3];
         equipId[0] = -1;
@@ -59,4 +60,4 @@ public struct CharacterSave
         partySet = PartySet.None;
     }
 }
-public enum PartySet { None, Main, Sub1, Sub2 }
+public enum PartySet { Main, Sub1, Sub2, None }

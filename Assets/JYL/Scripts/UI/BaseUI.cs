@@ -9,7 +9,7 @@ namespace JYL
     {
         private Dictionary<string, GameObject> goDict;
         private Dictionary<string, Component> compDict;
-        private void Awake()
+        protected void Awake()
         {
             RectTransform[] transforms = GetComponentsInChildren<RectTransform>(true);
             goDict = new Dictionary<string, GameObject>(transforms.Length<<2);
@@ -29,6 +29,11 @@ namespace JYL
         // string으로 특정 UI 게임오브젝트 찾기
         public GameObject GetUI(in string name)
         {
+            if (goDict == null)
+            {
+                Debug.Log("goDict없음"); 
+                return null;
+            }
             goDict.TryGetValue(name, out GameObject gameObject);
             if(gameObject == null)
             {
