@@ -58,7 +58,6 @@ namespace KYG_skyPower
             {
                 saveFiles[i] = new GameData();
                 SaveManager.Instance.GameLoad(ref saveFiles[i], i + 1); // ¿Œµ¶Ω∫ 1∫Œ≈Õ
-                Debug.Log($"{i}: {saveFiles[i].playerName}");
             }
         }
 

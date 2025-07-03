@@ -9,6 +9,7 @@ namespace JYL
     {
         // 불러왔던 세이브 데이터 기준으로 데이터를 채운다
         GameData data;
+        
         void Start()
         {
             data = Manager.Game.saveFiles[Manager.Game.currentSaveIndex];

@@ -32,6 +32,7 @@ namespace YSK
         public string subStageName;
         public bool subStageLock;
         public int subStageScore = 0;
+        public StageEnemyData stageEnemyData;
 
         [Header("Map Override")]
         [Tooltip("이 서브 스테이지 전용 맵 프리팹 (null이면 기본 맵 사용)")]

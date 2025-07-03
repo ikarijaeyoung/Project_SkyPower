@@ -8,7 +8,7 @@ public class UltShieldController : MonoBehaviour
 {
     [SerializeField] public bool isReflect = true;
     private Vector3 reflect;
-    public void Reflect(BulletController target)
+    public void Reflect(BulletController target)  // 이상하게 돌아가는 중
     {
         reflect.x = -target.rig.velocity.x * 2;
         reflect.z = -target.rig.velocity.z * 2;
