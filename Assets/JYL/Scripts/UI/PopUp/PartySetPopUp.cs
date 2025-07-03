@@ -37,6 +37,7 @@ namespace JYL
         private void OnEnable() { }
         void Start()
         {
+             // TODO : 상점 연결
             characterLoader = GetComponent<CharacterSaveLoader>();
             //GetEvent("PSCharImg1").Click += OpenInvenPopUp;
             //GetEvent("PSCharImg2").Click += OpenInvenPopUp;
