@@ -133,12 +133,17 @@ PrefabInstance:
     - target: {fileID: 633607537620040076, guid: 7aadf513487cb73468fc319c08aa5b67,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.4076335
       objectReference: {fileID: 0}
     - target: {fileID: 633607537620040076, guid: 7aadf513487cb73468fc319c08aa5b67,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474663884439952060, guid: 7aadf513487cb73468fc319c08aa5b67,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1474663884439952060, guid: 7aadf513487cb73468fc319c08aa5b67,
         type: 3}
@@ -162,8 +167,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1474663884439952060, guid: 7aadf513487cb73468fc319c08aa5b67,
         type: 3}
+      propertyPath: m_overflowMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474663884439952060, guid: 7aadf513487cb73468fc319c08aa5b67,
+        type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474663884439952060, guid: 7aadf513487cb73468fc319c08aa5b67,
+        type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474663884439952060, guid: 7aadf513487cb73468fc319c08aa5b67,
+        type: 3}
+      propertyPath: m_overrideHtmlColors
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474663884439952060, guid: 7aadf513487cb73468fc319c08aa5b67,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4046071551796173628, guid: 7aadf513487cb73468fc319c08aa5b67,
         type: 3}
@@ -270,6 +295,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: StageSelectPopUp
       objectReference: {fileID: 0}
+    - target: {fileID: 5701594767126478752, guid: 7aadf513487cb73468fc319c08aa5b67,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6139530962835221250, guid: 7aadf513487cb73468fc319c08aa5b67,
         type: 3}
       propertyPath: m_text
@@ -303,17 +333,17 @@ PrefabInstance:
     - target: {fileID: 9196543127575821753, guid: 7aadf513487cb73468fc319c08aa5b67,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9196543127575821753, guid: 7aadf513487cb73468fc319c08aa5b67,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9196543127575821753, guid: 7aadf513487cb73468fc319c08aa5b67,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -18,23 +18,18 @@ namespace YSK
 
         private StageData currentStage;
 
-        [Header("Map System")]
+        [Header("Map Connection System")]
         [SerializeField] private Transform endPoint;
         [SerializeField] private Transform startPoint;
         [SerializeField] private float speed = 3f;
         [SerializeField] private float mapLength = 20;
-
-        // 맵 연결 시스템
-        [Header("Map Connection System")]
-        [SerializeField] private bool enableMapConnection = true;
         [SerializeField] private float mapConnectionDistance = 0.1f;
-        [SerializeField] private bool enableMapTransition = true;
         [SerializeField] private float mapTransitionDuration = 1f;
         [SerializeField] private AnimationCurve mapTransitionCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
-        private List<GameObject> spawnedMaps = new();
-        private List<GameObject> movingMaps = new();
-        private List<GameObject> mapBuffer = new(); // 맵 버퍼 (제거 대기)
+        // 두 개의 맵 리스트로 구분
+        private List<GameObject> oldMaps = new(); // 기존 맵들 (제거됨)
+        private List<GameObject> newMaps = new(); // 새로 생성된 맵들 (무한 반복)
         private bool isMapTransitioning = false;
 
         [Header("Transition Settings")]
@@ -66,11 +61,21 @@ namespace YSK
         {
             if (!isMapTransitioning)
             {
-                UpdateMovingMaps();
-                if (enableMapConnection)
-                {
-                    UpdateMapConnections();
-                }
+                UpdateMapMovement();
+                UpdateMapConnections();
+            }
+            
+            // 디버그: F1 키로 맵 상태 확인
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                DebugMapStatus();
+            }
+            
+            // 디버그: F2 키로 ClearCurrentStageAndNext 테스트
+            if (Input.GetKeyDown(KeyCode.F2))
+            {
+                Debug.Log("F2 키로 ClearCurrentStageAndNext 테스트 실행");
+                ClearCurrentStageAndNext();
             }
         }
 
@@ -123,10 +128,15 @@ namespace YSK
 
         private void UpdateMapConnections()
         {
-            if (movingMaps.Count < 2) return;
+            // 모든 맵들을 하나의 리스트로 합쳐서 정렬
+            var allMaps = new List<GameObject>();
+            allMaps.AddRange(oldMaps);
+            allMaps.AddRange(newMaps);
+            
+            if (allMaps.Count < 2) return;
 
             // 맵들을 Z 위치 순으로 정렬
-            var sortedMaps = movingMaps.OrderBy(m => m.transform.position.z).ToList();
+            var sortedMaps = allMaps.OrderBy(m => m.transform.position.z).ToList();
 
             for (int i = 0; i < sortedMaps.Count - 1; i++)
             {
@@ -149,6 +159,89 @@ namespace YSK
             }
         }
 
+        private void UpdateMapMovement()
+        {
+            // 기존 맵들 이동
+            foreach (var map in oldMaps.ToList())
+            {
+                if (map != null)
+                {
+                    MoveOldMap(map);
+                }
+                else
+                {
+                    oldMaps.Remove(map);
+                }
+            }
+
+            // 새 맵들 이동
+            foreach (var map in newMaps.ToList())
+            {
+                if (map != null)
+                {
+                    MoveNewMap(map);
+                }
+                else
+                {
+                    newMaps.Remove(map);
+                }
+            }
+        }
+
+        private void MoveOldMap(GameObject map)
+        {
+            if (map == null) return;
+
+            map.transform.position += Vector3.back * speed * Time.deltaTime;
+
+            if (endPoint == null)
+            {
+                Debug.LogWarning("endPoint가 null입니다!");
+                return;
+            }
+
+            // 기존 맵은 끝점을 지나면 제거
+            if (map.transform.position.z < endPoint.position.z)
+            {
+                oldMaps.Remove(map);
+                Destroy(map);
+                Debug.Log($"기존 맵이 EndPoint를 지나 제거됨: {map.name}");
+            }
+        }
+
+        private void MoveNewMap(GameObject map)
+        {
+            if (map == null) return;
+
+            map.transform.position += Vector3.back * speed * Time.deltaTime;
+
+            if (endPoint == null)
+            {
+                Debug.LogWarning("endPoint가 null입니다!");
+                return;
+            }
+
+            // 새 맵은 끝점을 지나면 뒤쪽으로 이동 (무한 반복)
+            if (map.transform.position.z < endPoint.position.z)
+            {
+                float maxZ = GetMaxZPosition();
+                if (maxZ == float.MinValue)
+                {
+                    maxZ = startPoint != null ? startPoint.position.z : 0f;
+                }
+                else
+                {
+                    maxZ += mapLength;
+                }
+
+                Vector3 newPosition = map.transform.position;
+                newPosition.z = maxZ;
+                map.transform.position = newPosition;
+
+                Debug.Log($"새 맵이 EndPoint를 지나 뒤쪽으로 이동: {map.name} - 새 위치: {newPosition}");
+            }
+        }
+
         #endregion
 
         #region Map Management
@@ -157,23 +250,8 @@ namespace YSK
         {
             Debug.Log($"=== LoadStage 시작: {mainStageID}-{subStageID} ===");
 
-            if (!enableMapTransition)
-            {
-                // 기존 방식: 즉시 맵 교체
-                ClearAllMaps();
-                UpdatePlayerPrefs(mainStageID, subStageID);
-
-                if (!ValidateStageData(mainStageID))
-                    return;
-
-                currentStage = stageDataList.Find(data => data.stageID == mainStageID);
-                SpawnMaps();
-            }
-            else
-            {
-                // 개선된 방식: 맵 연결 전환
-                StartCoroutine(ConnectMapTransition(mainStageID, subStageID));
-            }
+            // 맵 연결 전환 실행
+            StartCoroutine(ConnectMapTransition(mainStageID, subStageID));
 
             Debug.Log($"=== LoadStage 완료: {mainStageID}-{subStageID} ===");
         }
@@ -189,11 +267,19 @@ namespace YSK
 
             if (!ValidateStageData(mainStageID))
             {
+                Debug.LogError($"스테이지 데이터 검증 실패: {mainStageID}");
                 isMapTransitioning = false;
                 yield break;
             }
 
+            // 2. 새 스테이지 데이터를 먼저 설정
             StageData newStage = stageDataList.Find(data => data.stageID == mainStageID);
+            currentStage = newStage;
+
+            // 3. 기존 새 맵들을 oldMaps로 이동 (제거 대기)
+            MoveNewMapsToOldMaps();
+
+            // 4. 새 맵 프리팹 가져오기
             List<GameObject> newMapPrefabs = GetMapPrefabsForSubStage(subStageID);
 
             if (newMapPrefabs == null || newMapPrefabs.Count == 0)
@@ -203,16 +289,10 @@ namespace YSK
                 yield break;
             }
 
-            // 2. 현재 맵들을 버퍼로 이동 (제거 대기)
-            MoveCurrentMapsToBuffer();
-
-            // 3. 새 맵들을 현재 맵 뒤에 연결
+            // 5. 새 맵들을 newMaps 리스트에 생성
             yield return StartCoroutine(SpawnAndConnectNewMaps(newMapPrefabs));
 
-            // 4. 스테이지 데이터 업데이트
-            currentStage = newStage;
-
-            // 5. 이벤트 발생
+            // 6. 이벤트 발생
             OnStageChanged?.Invoke(mainStageID, subStageID);
 
             isMapTransitioning = false;
@@ -220,30 +300,21 @@ namespace YSK
             Debug.Log("맵 연결 전환 완료");
         }
 
-        private void MoveCurrentMapsToBuffer()
-        {
-            Debug.Log($"현재 맵들을 버퍼로 이동: {spawnedMaps.Count}개");
-            
-            foreach (var map in spawnedMaps)
-            {
-                if (map != null)
-                {
-                    mapBuffer.Add(map);
-                }
-            }
-            
-            spawnedMaps.Clear();
-            movingMaps.Clear();
-        }
-
         private IEnumerator SpawnAndConnectNewMaps(List<GameObject> mapPrefabs)
         {
             Debug.Log($"새 맵들 연결 생성: {mapPrefabs.Count}개");
 
-            float maxZ = GetMaxZPositionFromBuffer();
+            // 모든 맵들 중 가장 뒤쪽 Z 위치 찾기
+            float maxZ = GetMaxZPosition();
             if (maxZ == float.MinValue)
             {
                 maxZ = startPoint != null ? startPoint.position.z : 0f;
+                Debug.Log($"활성 맵이 없어서 StartPoint 위치 사용: {maxZ}");
+            }
+            else
+            {
+                maxZ += mapLength;
+                Debug.Log($"기존 맵 뒤에서 새 맵 시작: {maxZ}");
             }
 
             for (int i = 0; i < mapPrefabs.Count; i++)
@@ -258,17 +329,15 @@ namespace YSK
                 );
 
                 map.transform.position = spawnPosition;
-                spawnedMaps.Add(map);
-                movingMaps.Add(map);
+                newMaps.Add(map); // 새 맵 리스트에 추가
+
+                Debug.Log($"새 맵 생성: {map.name} - 위치: {spawnPosition}");
 
                 // 부드러운 등장 효과
-                if (enableMapTransition)
-                {
-                    yield return StartCoroutine(FadeInMap(map));
-                }
+                yield return StartCoroutine(FadeInMap(map));
             }
 
-            Debug.Log($"새 맵들 연결 완료: {spawnedMaps.Count}개");
+            Debug.Log($"새 맵들 연결 완료: {newMaps.Count}개");
         }
 
         private IEnumerator FadeInMap(GameObject map)
@@ -290,14 +359,24 @@ namespace YSK
             cg.alpha = 1f;
         }
 
-        private float GetMaxZPositionFromBuffer()
+        private float GetMaxZPosition()
         {
             float maxZ = float.MinValue;
-            foreach (var map in mapBuffer)
+            
+            // 기존 맵들에서 최대 Z 찾기
+            foreach (var map in oldMaps)
             {
                 if (map != null && map.transform.position.z > maxZ)
                     maxZ = map.transform.position.z;
             }
+            
+            // 새 맵들에서도 최대 Z 찾기
+            foreach (var map in newMaps)
+            {
+                if (map != null && map.transform.position.z > maxZ)
+                    maxZ = map.transform.position.z;
+            }
+            
             return maxZ;
         }
 
@@ -325,51 +404,15 @@ namespace YSK
             PlayerPrefs.Save();
         }
 
-        private void SpawnMaps()
-        {
-            spawnedMaps.Clear();
-            movingMaps.Clear();
-
-            if (currentStage == null)
-            {
-                Debug.LogError("currentStage가 null입니다!");
-                return;
-            }
-
-            int subStageID = PlayerPrefs.GetInt("SelectedSubStage", 1);
-            List<GameObject> mapPrefabsToUse = GetMapPrefabsForSubStage(subStageID);
-
-            if (mapPrefabsToUse == null || mapPrefabsToUse.Count == 0)
-            {
-                Debug.LogWarning($"스테이지 {currentStage.stageID}의 맵 프리팹이 비어있습니다!");
-                return;
-            }
-
-            Debug.Log($"새 맵 생성 시작: {mapPrefabsToUse.Count}개 프리팹 (서브 스테이지 {subStageID})");
-
-            for (int i = 0; i < mapPrefabsToUse.Count; i++)
-            {
-                if (mapPrefabsToUse[i] == null)
-                {
-                    Debug.LogWarning($"맵 프리팹 {i}번이 null입니다!");
-                    continue;
-                }
-
-                GameObject map = Instantiate(mapPrefabsToUse[i]);
-                Vector3 spawnPosition = startPoint != null
-                    ? startPoint.position + Vector3.forward * (mapLength * i)
-                    : Vector3.forward * (mapLength * i);
-
-                map.transform.position = spawnPosition;
-                spawnedMaps.Add(map);
-                movingMaps.Add(map);
-            }
-
-            Debug.Log($"SpawnMaps 완료: 총 {spawnedMaps.Count}개 맵 생성");
-        }
-
         private List<GameObject> GetMapPrefabsForSubStage(int subStageID)
         {
+            // currentStage가 null일 수 있으므로 안전하게 처리
+            if (currentStage == null)
+            {
+                Debug.LogWarning("currentStage가 null입니다. 기본 맵 프리팹을 사용합니다.");
+                return stageDataList.Count > 0 ? stageDataList[0].mapPrefabs : new List<GameObject>();
+            }
+
             List<GameObject> mapPrefabsToUse = currentStage.mapPrefabs;
 
             if (currentStage.subStages != null && currentStage.subStages.Count > 0)
@@ -378,119 +421,38 @@ namespace YSK
                 if (subStageData != null && subStageData.customMapPrefabs != null && subStageData.customMapPrefabs.Count > 0)
                 {
                     mapPrefabsToUse = subStageData.customMapPrefabs;
-                    Debug.Log($"서브 스테이지 {subStageID} 커스텀 맵 사용");
+                    Debug.Log($"커스텀 서브스테이지 {subStageID} 맵 사용: {mapPrefabsToUse.Count}개");
+                }
+                else
+                {
+                    Debug.Log($"서브스테이지 {subStageID} 커스텀 맵 없음, 기본 맵 사용: {mapPrefabsToUse.Count}개");
                 }
             }
 
             return mapPrefabsToUse;
         }
 
-        private void UpdateMovingMaps()
-        {
-            if (movingMaps == null || movingMaps.Count == 0)
-                return;
-
-            foreach (var map in movingMaps.ToList()) // ToList()로 복사본 사용
-            {
-                if (map != null)
-                {
-                    MoveMap(map);
-                }
-                else
-                {
-                    // null 맵 제거
-                    movingMaps.Remove(map);
-                }
-            }
-
-            // 버퍼의 맵들도 이동
-            foreach (var map in mapBuffer.ToList())
-            {
-                if (map != null)
-                {
-                    MoveMap(map);
-                }
-                else
-                {
-                    mapBuffer.Remove(map);
-                }
-            }
-        }
-
-        private void MoveMap(GameObject map)
-        {
-            if (map == null) return;
-
-            map.transform.position += Vector3.back * speed * Time.deltaTime;
-
-            if (endPoint == null)
-            {
-                Debug.LogWarning("endPoint가 null입니다!");
-                return;
-            }
-
-            // 맵이 끝점을 지나면 제거
-            if (map.transform.position.z < endPoint.position.z)
-            {
-                if (spawnedMaps.Contains(map))
-                {
-                    spawnedMaps.Remove(map);
-                    movingMaps.Remove(map);
-                }
-                else if (mapBuffer.Contains(map))
-                {
-                    mapBuffer.Remove(map);
-                }
-                
-                Destroy(map);
-                Debug.Log("맵이 EndPoint를 지나 제거됨");
-            }
-        }
-
-        private float GetMaxZPosition()
-        {
-            float maxZ = float.MinValue;
-            
-            // 현재 맵들에서 최대 Z 찾기
-            foreach (var map in movingMaps)
-            {
-                if (map != null && map.transform.position.z > maxZ)
-                    maxZ = map.transform.position.z;
-            }
-            
-            // 버퍼 맵들에서도 최대 Z 찾기
-            foreach (var map in mapBuffer)
-            {
-                if (map != null && map.transform.position.z > maxZ)
-                    maxZ = map.transform.position.z;
-            }
-            
-            return maxZ;
-        }
-
         public void ClearAllMaps()
         {
-            Debug.Log($"ClearAllMaps 시작: {spawnedMaps.Count}개 맵 정리");
+            Debug.Log($"ClearAllMaps 시작: 기존 맵 {oldMaps.Count}개, 새 맵 {newMaps.Count}개 정리");
 
-            foreach (var map in spawnedMaps)
+            foreach (var map in oldMaps)
             {
                 if (map != null)
                 {
                     Destroy(map);
                 }
             }
-            spawnedMaps.Clear();
-            movingMaps.Clear();
+            oldMaps.Clear();
 
-            // 버퍼 맵들도 정리
-            foreach (var map in mapBuffer)
+            foreach (var map in newMaps)
             {
                 if (map != null)
                 {
                     Destroy(map);
                 }
             }
-            mapBuffer.Clear();
+            newMaps.Clear();
 
             Debug.Log("ClearAllMaps 완료");
         }
@@ -512,26 +474,6 @@ namespace YSK
             if (!isTransitioning)
             {
                 StartCoroutine(TransitionCoroutine(mainStageID, subStageID, isGameStart));
-            }
-            else
-            {
-                Debug.LogWarning("이미 전환 중입니다!");
-            }
-        }
-
-        public void StartStageTransitionOnlyFadeIn(int mainStageID, int subStageID = 1, bool isGameStart = false)
-        {
-            Debug.Log($"StageManager.StartStageTransitionOnlyFadeIn: {mainStageID}-{subStageID}, 게임시작: {isGameStart}");
-
-            if (!enableTransition)
-            {
-                LoadStage(mainStageID, subStageID);
-                return;
-            }
-
-            if (!isTransitioning)
-            {
-                StartCoroutine(TransitionWithFadeInCoroutine(mainStageID, subStageID, isGameStart));
             }
             else
             {
@@ -571,38 +513,6 @@ namespace YSK
             Debug.Log("TransitionCoroutine 완료");
         }
 
-        private IEnumerator TransitionWithFadeInCoroutine(int mainStageID, int subStageID, bool isGameStart)
-        {
-            Debug.Log($"TransitionWithFadeInCoroutine 시작: {mainStageID}-{subStageID}");
-            isTransitioning = true;
-
-            if (isGameStart)
-            {
-                LoadStage(mainStageID, subStageID);
-            }
-            else
-            {
-                if (enableTransition && useGameSceneManagerTransition && Manager.GSM != null)
-                {
-                    // GameSceneManager의 전환 화면을 검은색으로 설정
-                    Manager.GSM.SetTransitionText("스테이지 전환 중...");
-                    Manager.GSM.ShowTransitionScreen();
-
-                    LoadStage(mainStageID, subStageID);
-                    yield return new WaitForSeconds(0.1f);
-
-                    Manager.GSM.HideTransitionScreen();
-                }
-                else
-                {
-                    LoadStage(mainStageID, subStageID);
-                }
-            }
-
-            isTransitioning = false;
-            Debug.Log("TransitionWithFadeInCoroutine 완료");
-        }
-
         #endregion
 
         #region Stage Progression
@@ -612,7 +522,7 @@ namespace YSK
             int currentMainStage = PlayerPrefs.GetInt("SelectedMainStage", 1);
             int currentSubStage = PlayerPrefs.GetInt("SelectedSubStage", 1);
 
-            Debug.Log($"스테이지 클리어: {currentMainStage}-{currentSubStage}");
+            Debug.Log($"=== 스테이지 클리어 시작: {currentMainStage}-{currentSubStage} ===");
 
             var nextStage = CalculateNextStage(currentMainStage, currentSubStage);
 
@@ -623,28 +533,10 @@ namespace YSK
                 return;
             }
 
-            LoadStage(nextStage.mainStage, nextStage.subStage);
+            // 맵 연결 전환 실행
+            StartCoroutine(ConnectMapTransition(nextStage.mainStage, nextStage.subStage));
+            
             Debug.Log($"다음 스테이지로 전환: {nextStage.mainStage}-{nextStage.subStage}");
-        }
-
-        public void ClearCurrentStageAndNextWithTransition()
-        {
-            int currentMainStage = PlayerPrefs.GetInt("SelectedMainStage", 1);
-            int currentSubStage = PlayerPrefs.GetInt("SelectedSubStage", 1);
-
-            Debug.Log($"스테이지 클리어 (전환 화면 사용): {currentMainStage}-{currentSubStage}");
-
-            var nextStage = CalculateNextStage(currentMainStage, currentSubStage);
-
-            if (nextStage.isGameComplete)
-            {
-                Debug.Log("모든 스테이지 클리어! 게임 클리어 처리");
-                OnGameComplete();
-                return;
-            }
-
-            StartStageTransition(nextStage.mainStage, nextStage.subStage, false);
-            Debug.Log($"다음 스테이지로 전환 (전환 화면): {nextStage.mainStage}-{nextStage.subStage}");
         }
 
         private (int mainStage, int subStage, bool isGameComplete) CalculateNextStage(int currentMainStage, int currentSubStage)
@@ -696,12 +588,6 @@ namespace YSK
             LoadStage(mainStageID, subStageID);
         }
 
-        public void ForceStageWithTransition(int mainStageID, int subStageID)
-        {
-            Debug.Log($"강제 스테이지 이동 (전환 화면 사용): {mainStageID}-{subStageID}");
-            StartStageTransition(mainStageID, subStageID, false);
-        }
-
         public void OnStageCompleted()
         {
             int currentMainStage = PlayerPrefs.GetInt("SelectedMainStage", 1);
@@ -725,10 +611,10 @@ namespace YSK
 
         public void ResetStageProgress()
         {
+            ClearAllMaps();
             PlayerPrefs.SetInt("SelectedMainStage", 1);
             PlayerPrefs.SetInt("SelectedSubStage", 1);
             PlayerPrefs.Save();
-            LoadStage(1, 1);
             Debug.Log("스테이지 진행 상태 초기화: 1-1");
         }
 
@@ -773,16 +659,6 @@ namespace YSK
             useGameSceneManagerTransition = use;
         }
 
-        public void SetMapConnectionEnabled(bool enabled)
-        {
-            enableMapConnection = enabled;
-        }
-
-        public void SetMapTransitionEnabled(bool enabled)
-        {
-            enableMapTransition = enabled;
-        }
-
         public void SetMapTransitionDuration(float duration)
         {
             mapTransitionDuration = Mathf.Max(0.1f, duration);
@@ -790,12 +666,7 @@ namespace YSK
 
         public int GetActiveMapCount()
         {
-            return spawnedMaps.Count;
-        }
-
-        public int GetBufferMapCount()
-        {
-            return mapBuffer.Count;
+            return oldMaps.Count + newMaps.Count; // 두 리스트 합친 개수
         }
 
         private void UnlockNextStage(int currentMainStage, int currentSubStage)
@@ -825,5 +696,54 @@ namespace YSK
         }
 
         #endregion
+
+        // 디버그용 메서드 추가
+        public void DebugMapStatus()
+        {
+            Debug.Log("=== 맵 상태 디버그 ===");
+            Debug.Log($"기존 맵 수: {oldMaps.Count}");
+            Debug.Log($"새 맵 수: {newMaps.Count}");
+            Debug.Log($"맵 전환 중: {isMapTransitioning}");
+            Debug.Log($"현재 스테이지: {currentStage?.stageID ?? -1}");
+            Debug.Log($"현재 서브스테이지: {GetCurrentSubStageID()}");
+            
+            Debug.Log("--- 기존 맵들 (제거 예정) ---");
+            for (int i = 0; i < oldMaps.Count; i++)
+            {
+                if (oldMaps[i] != null)
+                {
+                    Debug.Log($"기존 맵 {i}: {oldMaps[i].name} - 위치: {oldMaps[i].transform.position}");
+                }
+            }
+            
+            Debug.Log("--- 새 맵들 (무한 반복) ---");
+            for (int i = 0; i < newMaps.Count; i++)
+            {
+                if (newMaps[i] != null)
+                {
+                    Debug.Log($"새 맵 {i}: {newMaps[i].name} - 위치: {newMaps[i].transform.position}");
+                }
+            }
+            
+            Debug.Log("=== 맵 상태 디버그 완료 ===");
+        }
+
+        // 기존 새 맵들을 oldMaps로 이동하는 메서드 추가
+        private void MoveNewMapsToOldMaps()
+        {
+            Debug.Log($"기존 새 맵들을 oldMaps로 이동: {newMaps.Count}개");
+            
+            foreach (var map in newMaps)
+            {
+                if (map != null)
+                {
+                    oldMaps.Add(map);
+                    Debug.Log($"맵을 oldMaps로 이동: {map.name}");
+                }
+            }
+            
+            newMaps.Clear();
+            Debug.Log($"oldMaps 개수: {oldMaps.Count}, newMaps 개수: {newMaps.Count}");
+        }
     }
 }
