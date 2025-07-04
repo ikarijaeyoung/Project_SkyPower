@@ -74,10 +74,13 @@ namespace JYL
 
             // 무기 리스트 불러오기
             var weaponList = EquipmentInvenManager.Instance.GetItemList("weapon");
+            Debug.Log("무기 개수: " + weaponList.Count);
             GameObject itemSlotPrefab = Resources.Load<GameObject>("Inventory/WeaponSlot");
 
+            int idx = 0;
             foreach (var weapon in weaponList)
             {
+                Debug.Log($"슬롯 생성: {weapon.Equip_Name} ({idx++})");
                 GameObject slot = Instantiate(itemSlotPrefab, invenScroll.transform);
                 slot.GetComponentInChildren<TMP_Text>().text = weapon.Equip_Name;
                 slot.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>("Sprites/Equipment/" + weapon.Equip_Img);
@@ -125,11 +128,11 @@ namespace JYL
 
             foreach (var armor in armorList)
             {
-                GameObject slot = Instantiate(itemSlotPrefab, invenScroll.transform);
-                slot.GetComponentInChildren<TMP_Text>().text = armor.Equip_Name;
-                slot.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>("Sprites/Equipment/" + armor.Equip_Img);
+                GameObject slot = Instantiate(itemSlotPrefab, invenScroll.transform); 
+                slot.GetComponentInChildren<TMP_Text>().text = armor.Equip_Name; 
+                slot.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>("Sprites/Equipment/" + armor.Equip_Img); 
 
-                var capturedArmor = armor;
+                var capturedArmor = armor; 
                 slot.GetComponent<Button>().onClick.AddListener(() =>
                 {
                     EquipmentInvenManager.Instance.EquipItem(selectedChar.id, capturedArmor);
@@ -149,8 +152,8 @@ namespace JYL
             foreach (Transform child in invenScroll.transform)
                 Destroy(child.gameObject);
 
-            var accessoryList = EquipmentInvenManager.Instance.GetItemList("accessory");
-            GameObject itemSlotPrefab = Resources.Load<GameObject>("Inventory/AccessorySlot");
+            var accessoryList = EquipmentInvenManager.Instance.GetItemList("accessory"); 
+            GameObject itemSlotPrefab = Resources.Load<GameObject>("Inventory/AccessorySlot"); 
 
             foreach (var accessory in accessoryList)
             {
