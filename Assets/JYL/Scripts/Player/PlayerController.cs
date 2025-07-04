@@ -23,7 +23,6 @@ namespace JYL
 
         [Header("Set Value")]
         [Range(0.1f, 5)][SerializeField] float bulletReturnTimer = 2f;
-        [Range(0.1f, 3)][SerializeField] float fireDelay = 0.5f;
 
         private PlayerInput playerInput;
         private Rigidbody rig;
@@ -60,7 +59,7 @@ namespace JYL
         private float parryTimer { get; set; } = 0;
         private float attackInputTimer;
 
-        private ObjectPool curBulletPool => bulletPools[poolIndex];
+        public ObjectPool curBulletPool => bulletPools[poolIndex];
         private Coroutine fireRoutine;
 
         private void Awake()

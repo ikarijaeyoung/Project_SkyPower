@@ -95,7 +95,7 @@ namespace KYG_skyPower
         {
             if (isGameCleared || isGameOver) return;
             isGameCleared = true;
-            Time.timeScale = 0f;
+            Time.timeScale = 1f;
             onGameClear?.Invoke();
             UIManager.Instance.ShowPopUp<StageClearPopUp>();
             
