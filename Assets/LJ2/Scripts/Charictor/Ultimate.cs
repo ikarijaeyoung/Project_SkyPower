@@ -9,9 +9,14 @@ public class Ultimate : MonoBehaviour
     public YieldInstruction ultDelay;
     public LayerMask enemyBullet;
 
-    public GameObject ultLaser; // UltLaserController component를 가져야함
-    public GameObject shield;   // ShieldController component를 가져야함
-    public GameObject ultAll;   // AllAttackController component를 가져야함
+    public GameObject ultLaser; 
+    public UltLaserController ultLaserController;
+
+    public GameObject shield;
+    public UltShieldController ultShieldController;
+
+    public GameObject ultAll;
+    public UltMapAttack ultAllController;
 
     public int defense = 1;
 
@@ -19,12 +24,16 @@ public class Ultimate : MonoBehaviour
     {
         ultDelay = new WaitForSeconds(setUltDelay);
         enemyBullet = LayerMask.GetMask("EnemyBullet");
+        ultLaserController = ultLaser.GetComponentInChildren<UltLaserController>();
+        ultShieldController = shield.GetComponentInChildren<UltShieldController>();
+        ultAllController = ultAll.GetComponent<UltMapAttack>();
     }
 
-    public void Laser()
+    public void Laser(float damage)
     {
         if (ultRoutine == null)
         {
+            ultLaserController.AttackDamage(damage);
             ultRoutine = StartCoroutine(LaserCoroutine());
         }
         else
@@ -44,10 +53,11 @@ public class Ultimate : MonoBehaviour
         yield break;
     }
 
-    public int Shield()
+    public int Shield(float damage)
     {
         if (ultRoutine == null)
         {
+            ultShieldController.AttackDamage(damage);
             ultRoutine = StartCoroutine(ShieldCoroutine());
         }
         return defense;
@@ -64,8 +74,9 @@ public class Ultimate : MonoBehaviour
         yield break;
     }
 
-    public void AllAttack()
+    public void AllAttack(float damage)
     {
+        ultAllController.AttackDamage(damage);
         Collider[] hits = Physics.OverlapBox(ultAll.transform.position, ultAll.transform.localScale / 2f, Quaternion.identity, enemyBullet);
 
         foreach (Collider c in hits)
@@ -76,8 +87,6 @@ public class Ultimate : MonoBehaviour
         hits = null;
         ultAll.SetActive(false);
     }
-
-    // 유도탄
 
     // 궁극기 탄막 1회 + 다단히트
 

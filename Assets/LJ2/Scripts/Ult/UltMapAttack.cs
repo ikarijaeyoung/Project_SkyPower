@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UltMapAttack : MonoBehaviour
 {
-    [SerializeField] int damage;
+    [SerializeField] int attackDamage;
 
     private void OnEnable()
     {
@@ -16,9 +16,12 @@ public class UltMapAttack : MonoBehaviour
             if (c.gameObject.GetComponent<Enemy>()) 
             { 
                 Enemy enemy = c.gameObject.GetComponent<Enemy>();
-                enemy.TakeDamage(damage);
-
+                enemy.TakeDamage(attackDamage);
             }
         }
+    }
+    public void AttackDamage(float damage)
+    {
+        attackDamage = (int)damage;
     }
 }

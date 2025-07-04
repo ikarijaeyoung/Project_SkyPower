@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using LJ2;
 
 namespace JYL
 {
@@ -21,15 +22,24 @@ namespace JYL
 
         [Header("Set Value")]
         [Range(0.1f, 5)][SerializeField] float bulletReturnTimer = 2f;
-        [Range(0.1f, 3)][SerializeField] float fireDelay = 2f;
+        [Range(0.1f, 3)][SerializeField] float fireDelay = 1f;
 
         private PlayerInput playerInput;
         private Rigidbody rig;
         private InputAction attackAction;
+        private CharactorController mainCharController;
+        private CharacterSaveLoader charDataLoader;
         //private InputAction parryAction1;
         //private InputAction parryAction2;
         //private InputAction ultAction;
         //private InputAction menuAction;
+
+        private int hp { get; set; }
+        private int attackPower { get; set; }
+        private float attackSpeed { get; set; }
+        private float moveSpeed { get; set; }
+        private int defence { get; set; }
+
 
         // 좌, 우 UI 사이즈
         private float leftMargin;
@@ -85,12 +95,28 @@ namespace JYL
         private void Init()
         {
             playerInput = GetComponent<PlayerInput>();
+            charDataLoader = GetComponent<CharacterSaveLoader>();
+            charDataLoader.GetCharPrefab();
+            foreach(var charData in charDataLoader.charactorController)
+            {
+                switch(charData.partySet)
+                {
+                    case PartySet.Main:
+                    mainCharController = charData;
+                        break;
+                    case PartySet.Sub1:
+
+                        break;
+                    case PartySet.Sub2:
+                        break;
+                }
+            }
             attackAction = playerInput.actions["Attack"];
+
             // parryAction1 = playerInput.actions["parry1"];
             // parryAction2 = playerInput.actions["parry2"];
             // ultAction = playerInput.actions["Ult"];
             // menuAction = playerInput.actions["menu"];
-
 
             // TODO: UI 시스템 구축 후, UI Manager에서 참조하는 식으로 변경
             if(leftUI!= null)
@@ -111,6 +137,11 @@ namespace JYL
                 rightMargin = 0.9f;
                 Debug.LogWarning("오른쪽 UI 참조 안됐음");
             }
+        }
+            // 캐릭터 필드 세팅
+        private void CharacterParameterSetting()
+        {
+            //mainCharController.
         }
         private void SubscribeEvents()
         {
@@ -192,10 +223,10 @@ namespace JYL
 
         private void Fire(InputAction.CallbackContext ctx)
         {
-            BulletPrefabController bullet = curBulletPool.ObjectOut() as BulletPrefabController;
-            bullet.transform.position = muzzlePoint.position;
-            bullet.ReturnToPool(bulletReturnTimer);
-            foreach (BulletInfo info in bullet.bullet)
+            BulletPrefabController bulletPrefab = curBulletPool.ObjectOut() as BulletPrefabController;
+            bulletPrefab.transform.position = muzzlePoint.position;
+            bulletPrefab.ReturnToPool(bulletReturnTimer);
+            foreach (BulletInfo info in bulletPrefab.bulletInfo)
             {
                 if (info.rig == null)
                 {
@@ -204,7 +235,8 @@ namespace JYL
                 info.trans.gameObject.SetActive(true);
                 info.trans.localPosition = info.originPos;
                 info.rig.velocity = Vector3.zero;
-                info.rig.AddForce(playerModel.fireSpeed * info.trans.forward, ForceMode.Impulse);
+                info.bulletController.attackPower = this.attackPower;
+                info.rig.AddForce(playerModel.fireSpeed * info.trans.forward, ForceMode.Impulse); // 이 부분을 커스텀하면 됨
             }
         }
         //private void UseUlt()

@@ -24,7 +24,7 @@ public class TripleShot : BulletPatternData
             {
                 bullet.ReturnToPool(returnToPoolTimer);
 
-                foreach (BulletInfo info in bullet.bullet)
+                foreach (BulletInfo info in bullet.bulletInfo)
                 {
                     if (info.rig != null)
                     {
