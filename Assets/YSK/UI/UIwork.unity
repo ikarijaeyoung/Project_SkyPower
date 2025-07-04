@@ -751,11 +751,66 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2038263006}
     m_Modifications:
+    - target: {fileID: 1181967743936072665, guid: f322565b7e56647479b79dc9a5f91d9c,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee,
+        type: 2}
+    - target: {fileID: 1181967743936072665, guid: f322565b7e56647479b79dc9a5f91d9c,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 2187013722062383899, guid: f322565b7e56647479b79dc9a5f91d9c,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee,
+        type: 2}
+    - target: {fileID: 2187013722062383899, guid: f322565b7e56647479b79dc9a5f91d9c,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 4916006042182519834, guid: f322565b7e56647479b79dc9a5f91d9c,
         type: 3}
       propertyPath: m_Name
       value: StageClearPopUp
       objectReference: {fileID: 0}
+    - target: {fileID: 6435171037033740030, guid: f322565b7e56647479b79dc9a5f91d9c,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee,
+        type: 2}
+    - target: {fileID: 6435171037033740030, guid: f322565b7e56647479b79dc9a5f91d9c,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 8184682943492462164, guid: f322565b7e56647479b79dc9a5f91d9c,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee,
+        type: 2}
+    - target: {fileID: 8184682943492462164, guid: f322565b7e56647479b79dc9a5f91d9c,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 8859013626537880154, guid: f322565b7e56647479b79dc9a5f91d9c,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee,
+        type: 2}
+    - target: {fileID: 8859013626537880154, guid: f322565b7e56647479b79dc9a5f91d9c,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 9218052222213388200, guid: f322565b7e56647479b79dc9a5f91d9c,
         type: 3}
       propertyPath: m_Pivot.x

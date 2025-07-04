@@ -39,6 +39,7 @@ public class CharacterDataHolderPrefabCreator
             ultimate.ultLaser = laserPrefab; // Laser ÇÁ¸®ÆÕ ¿¬°á
             ultimate.shield = shieldPrefab; // Shield ÇÁ¸®ÆÕ ¿¬°á
 
+            var characterModel = (GameObject)PrefabUtility.InstantiatePrefab(data.characterModel);
             var eraseObject = (GameObject)PrefabUtility.InstantiatePrefab(erasePrefab);
             var laserObject = (GameObject)PrefabUtility.InstantiatePrefab(laserPrefab);
             var shieldObject = (GameObject)PrefabUtility.InstantiatePrefab(shieldPrefab);
