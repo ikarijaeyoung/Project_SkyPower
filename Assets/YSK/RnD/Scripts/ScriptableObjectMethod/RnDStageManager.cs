@@ -26,10 +26,13 @@ namespace YSK
         [SerializeField] private float mapConnectionDistance = 0.1f;
         [SerializeField] private float mapTransitionDuration = 1f;
         [SerializeField] private AnimationCurve mapTransitionCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+        [SerializeField] private int mapRepeatCount = 2; // 각 맵을 몇 개씩 생성할지
 
-        // 두 개의 맵 리스트로 구분
+        // 맵 진행 관리
         private List<GameObject> oldMaps = new(); // 기존 맵들 (제거됨)
         private List<GameObject> newMaps = new(); // 새로 생성된 맵들 (무한 반복)
+        private List<GameObject> currentStageMapPrefabs = new(); // 현재 스테이지의 맵 프리팹들
+        private int currentMapIndex = 0; // 현재 진행 중인 맵 인덱스
         private bool isMapTransitioning = false;
 
         [Header("Transition Settings")]
@@ -54,6 +57,7 @@ namespace YSK
         {
             Debug.Log("=== StageManager Start 시작 ===");
             InitializeComponents();
+            //Manager.Game.onGameClear.AddListener(OnGameComplete); // 게임 클리어 이벤트 리스너 등록
             Debug.Log("=== StageManager Start 완료 ===");
         }
 
@@ -63,6 +67,7 @@ namespace YSK
             {
                 UpdateMapMovement();
                 UpdateMapConnections();
+               
             }
             
             // 디버그: F1 키로 맵 상태 확인
@@ -77,6 +82,18 @@ namespace YSK
                 Debug.Log("F2 키로 ClearCurrentStageAndNext 테스트 실행");
                 ClearCurrentStageAndNext();
             }
+            
+            // 디버그: F3 키로 다음 맵 진행 테스트
+            if (Input.GetKeyDown(KeyCode.F3))
+            {
+                Debug.Log("F3 키로 다음 맵 진행 테스트 실행");
+                ProgressToNextMap();
+            }
+        }
+
+        private void OnDestroy()
+        {
+            //Manager.Game.onGameClear.RemoveListener(OnGameComplete); // 게임 클리어 이벤트 리스너 제거
         }
 
         #endregion
@@ -302,26 +319,52 @@ namespace YSK
 
         private IEnumerator SpawnAndConnectNewMaps(List<GameObject> mapPrefabs)
         {
-            Debug.Log($"새 맵들 연결 생성: {mapPrefabs.Count}개");
+            Debug.Log($"새 맵들 연결 생성: {mapPrefabs.Count}개 프리팹");
+
+            // 현재 스테이지 맵 프리팹 저장
+            currentStageMapPrefabs.Clear();
+            currentStageMapPrefabs.AddRange(mapPrefabs);
+            currentMapIndex = 0;
+
+            // 첫 번째 맵을 mapRepeatCount만큼 생성
+            yield return StartCoroutine(SpawnCurrentMapWithRepeat());
+
+            Debug.Log($"첫 번째 맵 생성 완료: {newMaps.Count}개");
+        }
+
+        // 현재 맵 인덱스의 맵을 반복 생성하는 메서드
+        private IEnumerator SpawnCurrentMapWithRepeat()
+        {
+            if (currentMapIndex >= currentStageMapPrefabs.Count)
+            {
+                Debug.LogWarning("더 이상 생성할 맵이 없습니다!");
+                yield break;
+            }
+
+            GameObject currentMapPrefab = currentStageMapPrefabs[currentMapIndex];
+            if (currentMapPrefab == null)
+            {
+                Debug.LogError($"맵 프리팹 {currentMapIndex}가 null입니다!");
+                yield break;
+            }
+
+            Debug.Log($"현재 맵 {currentMapIndex} ({currentMapPrefab.name})을 {mapRepeatCount}개 생성");
 
             // 모든 맵들 중 가장 뒤쪽 Z 위치 찾기
             float maxZ = GetMaxZPosition();
             if (maxZ == float.MinValue)
             {
                 maxZ = startPoint != null ? startPoint.position.z : 0f;
-                Debug.Log($"활성 맵이 없어서 StartPoint 위치 사용: {maxZ}");
             }
             else
             {
                 maxZ += mapLength;
-                Debug.Log($"기존 맵 뒤에서 새 맵 시작: {maxZ}");
             }
 
-            for (int i = 0; i < mapPrefabs.Count; i++)
+            // 현재 맵을 mapRepeatCount만큼 생성
+            for (int i = 0; i < mapRepeatCount; i++)
             {
-                if (mapPrefabs[i] == null) continue;
-
-                GameObject map = Instantiate(mapPrefabs[i]);
+                GameObject map = Instantiate(currentMapPrefab);
                 Vector3 spawnPosition = new Vector3(
                     startPoint != null ? startPoint.position.x : 0f,
                     startPoint != null ? startPoint.position.y : 0f,
@@ -329,15 +372,24 @@ namespace YSK
                 );
 
                 map.transform.position = spawnPosition;
-                newMaps.Add(map); // 새 맵 리스트에 추가
+                newMaps.Add(map);
 
-                Debug.Log($"새 맵 생성: {map.name} - 위치: {spawnPosition}");
+                Debug.Log($"맵 생성: {map.name} (반복 {i + 1}/{mapRepeatCount}) - 위치: {spawnPosition}");
 
-                // 부드러운 등장 효과
-                yield return StartCoroutine(FadeInMap(map));
+                // 부드러운 등장 효과 (첫 번째만)
+                if (i == 0)
+                {
+                    yield return StartCoroutine(FadeInMap(map));
+                }
+                else
+                {
+                    CanvasGroup cg = map.GetComponent<CanvasGroup>();
+                    if (cg == null) cg = map.AddComponent<CanvasGroup>();
+                    cg.alpha = 1f;
+                }
             }
 
-            Debug.Log($"새 맵들 연결 완료: {newMaps.Count}개");
+            Debug.Log($"맵 {currentMapIndex} 생성 완료: {mapRepeatCount}개");
         }
 
         private IEnumerator FadeInMap(GameObject map)
@@ -592,36 +644,45 @@ namespace YSK
         {
             int currentMainStage = PlayerPrefs.GetInt("SelectedMainStage", 1);
             int currentSubStage = PlayerPrefs.GetInt("SelectedSubStage", 1);
-            int score = Manager.Score.Score; // 현재 점수 가져오기
 
-            Debug.Log($"스테이지 완료: {currentMainStage}-{currentSubStage}, 점수: {score}");
+            Debug.Log($"=== 스테이지 완료 처리 시작: {currentMainStage}-{currentSubStage} ===");
 
+            // 점수 가져오기
+            int score = Manager.Score?.Score ?? 0;
+            Debug.Log($"현재 점수: {score}");
+
+            // StageDataManager를 통한 완전한 처리
             if (dataManager != null)
             {
-                dataManager.UpdateStageScore(currentMainStage, currentSubStage, score);
-                dataManager.CompleteStage(currentMainStage, currentSubStage, Time.time);
-                UnlockNextStage(currentMainStage, currentSubStage);
+                dataManager.CompleteStageWithSave(currentMainStage, currentSubStage, score, Time.time);
+                Debug.Log("StageDataManager를 통한 완료 처리 완료");
+            }
+            else
+            {
+                Debug.LogError("StageDataManager가 null입니다!");
             }
 
+            // 게임 클리어 처리
             if (Manager.Game != null)
             {
                 Manager.Game.SetGameClear();
+                Debug.Log("게임 클리어 처리 완료");
             }
+
+            Debug.Log($"=== 스테이지 완료 처리 완료: {currentMainStage}-{currentSubStage} ===");
         }
 
         public void ResetStageProgress()
         {
             ClearAllMaps();
-            PlayerPrefs.SetInt("SelectedMainStage", 1);
-            PlayerPrefs.SetInt("SelectedSubStage", 1);
+             PlayerPrefs.SetInt("SelectedMainStage", 1);
+             PlayerPrefs.SetInt("SelectedSubStage", 1);
             PlayerPrefs.Save();
+            int mainStage = PlayerPrefs.GetInt("SelectedMainStage", 1);
+            int subStage = PlayerPrefs.GetInt("SelectedSubStage", 1);
             Debug.Log("스테이지 진행 상태 초기화: 1-1");
-        }
-
-        public void ChangeStage(int newStageID)
-        {
-            Debug.Log($"ChangeStage 호출: 스테이지 {newStageID}로 변경");
-            LoadStage(newStageID);
+            StartCoroutine(ConnectMapTransition(mainStage,subStage));
+            Debug.Log("스테이지 1-1 맵 생성.");
         }
 
         #endregion
@@ -706,6 +767,8 @@ namespace YSK
             Debug.Log($"맵 전환 중: {isMapTransitioning}");
             Debug.Log($"현재 스테이지: {currentStage?.stageID ?? -1}");
             Debug.Log($"현재 서브스테이지: {GetCurrentSubStageID()}");
+            Debug.Log($"현재 맵 인덱스: {currentMapIndex}/{currentStageMapPrefabs.Count}");
+            Debug.Log($"맵 반복 수: {mapRepeatCount}");
             
             Debug.Log("--- 기존 맵들 (제거 예정) ---");
             for (int i = 0; i < oldMaps.Count; i++)
@@ -744,6 +807,29 @@ namespace YSK
             
             newMaps.Clear();
             Debug.Log($"oldMaps 개수: {oldMaps.Count}, newMaps 개수: {newMaps.Count}");
+        }
+
+        // 다음 맵으로 진행하는 메서드 (외부에서 호출)
+        public void ProgressToNextMap()
+        {
+            Debug.Log($"다음 맵으로 진행 요청: 현재 {currentMapIndex}, 전체 {currentStageMapPrefabs.Count}");
+
+            if (currentMapIndex >= currentStageMapPrefabs.Count - 1)
+            {
+                Debug.Log("마지막 맵입니다. 스테이지 전환을 진행합니다.");
+                // 스테이지 전환
+                ClearCurrentStageAndNext();
+                return;
+            }
+
+            // 기존 맵들을 oldMaps로 이동 (제거 대기)
+            MoveNewMapsToOldMaps();
+
+            // 다음 맵 인덱스로 이동
+            currentMapIndex++;
+
+            // 다음 맵 생성
+            StartCoroutine(SpawnCurrentMapWithRepeat());
         }
     }
 }
