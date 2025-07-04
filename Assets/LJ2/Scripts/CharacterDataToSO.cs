@@ -27,7 +27,13 @@ public class CharacterDataToSO : MonoBehaviour
 
             characterData.id = int.Parse(table.GetData(i, 0));
             characterData.characterModel = (GameObject)AssetDatabase.LoadAssetAtPath($"Assets/Resources/Prefabs/Models/Chatacter_ModelPeb/{characterData.id}.Prefab", typeof(GameObject));
-            Debug.Log(characterData.characterModel);
+            characterData.icon = (Sprite)AssetDatabase.LoadAssetAtPath($"Assets/Resources/Sprites/Characters/Image_Icon/{characterData.id}.png", typeof(Sprite));
+            characterData.image = (Sprite)AssetDatabase.LoadAssetAtPath($"Assets/Resources/Sprites/Characters/Image_Origin/{characterData.id}.png", typeof(Sprite));
+
+            Debug.Log($"icon : {characterData.icon}");
+            Debug.Log($"image : {characterData.image}");
+
+
             Enum.TryParse<Grade>(table.GetData(i, 1), out characterData.grade);
             characterData.characterName = table.GetData(i, 2);
             //Debug.Log(characterData.name);
@@ -67,7 +73,7 @@ public class CharacterDataToSO : MonoBehaviour
             int.TryParse(table.GetData(i, 24), out characterData.parryCool);
             
 
-            //charictorData.image = (Sprite)AssetDatabase.LoadAssetAtPath($"이미지 파일들 경로/{table.GetData(i, 26)}.Prefab", typeof(Sprite));
+            
 
             characterData.upgradeUnitDefault = int.Parse(table.GetData(i, 27));
             characterData.upgradeUnitPlus = int.Parse(table.GetData(i, 28));

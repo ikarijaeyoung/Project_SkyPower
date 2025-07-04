@@ -118,29 +118,29 @@ public class Ultimate : MonoBehaviour
         
     //}
 
-    //// 탄막 변경 + 데미지 증가
-    //public void BulletUpgrade()
-    //{
-    //    if(ultRoutine == null)
-    //    {
-    //        ultRoutine = StartCoroutine(UpgradeRoutine());
-    //    }
-    //    else
-    //    {
-    //        return;
-    //    }
+    // 탄막 변경 + 데미지 증가
+    public void BulletUpgrade()
+    {
+        if(ultRoutine == null)
+        {
+            ultRoutine = StartCoroutine(UpgradeRoutine());
+        }
+        else
+        {
+            return;
+        }
 
-    //}
+    }
 
-    //public IEnumerator UpgradeRoutine()
-    //{
-    //    playerController.poolIndex = 1;
-    //    Debug.Log("Upgrade Bullet Shot");
-    //    yield return ultDelay;
+    public IEnumerator UpgradeRoutine()
+    {
+        playerController.poolIndex = 1;
+        Debug.Log("Upgrade Bullet Shot");
+        yield return ultDelay;
 
-    //    playerController.poolIndex = 0;
-    //    Debug.Log("Normal Bullet Shot");
-    //    ultRoutine = null;
-    //    yield break;
-    //}
+        playerController.poolIndex = 0;
+        Debug.Log("Normal Bullet Shot");
+        ultRoutine = null;
+        yield break;
+    }
 }

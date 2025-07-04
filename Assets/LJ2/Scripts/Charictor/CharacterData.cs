@@ -32,6 +32,8 @@ namespace LJ2
 
         public Parry parry;
         public int parryCool;
+
+        public Sprite icon;
         public Sprite image;
 
         public int upgradeUnitDefault;

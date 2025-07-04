@@ -73,6 +73,7 @@ MonoBehaviour:
   ultPrefab: {fileID: 0}
   parry: 0
   parryCool: 0
+  icon: {fileID: 0}
   image: {fileID: 0}
   upgradeUnit: 0
 --- !u!114 &3530893367787979223
