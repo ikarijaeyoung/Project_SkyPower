@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using KYG_skyPower;
+using JYL;
 
 namespace LJ2
 {
@@ -33,7 +34,8 @@ namespace LJ2
         public float ultDamage;
         public int ultCool;
 
-        public GameObject bulletPrefab; // TODO : 경로지정
+        public PooledObject bulletPrefab; // TODO : 경로지정
+        public PooledObject ultBulletPrefab;
         public GameObject ultPrefab; // 리소스
 
         public Parry parry;
@@ -97,7 +99,7 @@ namespace LJ2
             //Debug.Log($"Character ID: {characterSave.id}, Step: {characterSave.step}, Level : {characterSave.level}");
             level = characterSave.level;
             step = characterSave.step;
-            bulletPrefab = Resources.Load<GameObject>($"Prefabs/bullet/{id}_{step}");
+            bulletPrefab = Resources.Load<PooledObject>($"Prefabs/bullet/{id}_{step}");
             partySet = characterSave.partySet;
 
             // Save의 값에 따라 Data의 값을 변경
@@ -144,10 +146,10 @@ namespace LJ2
                     unit -= upgradeUnit;
                     level++;
 
-                    int index = Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.characters.FindIndex(c => c.id == id);
-                    CharacterSave characterSave = Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.characters[index];
+                    int index = Manager.Game.CurrentSave.characterInventory.characters.FindIndex(c => c.id == id);
+                    CharacterSave characterSave = Manager.Game.CurrentSave.characterInventory.characters[index];
                     characterSave.level = level;
-                    Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.characters[index] = characterSave;
+                    Manager.Game.CurrentSave.characterInventory.characters[index] = characterSave;
                 }
                 else
                 {
@@ -179,10 +181,10 @@ namespace LJ2
             {
                 step++;
 
-                int index = Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.characters.FindIndex(c => c.id == id);
-                CharacterSave characterSave = Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.characters[index];
+                int index = Manager.Game.CurrentSave.characterInventory.characters.FindIndex(c => c.id == id);
+                CharacterSave characterSave = Manager.Game.CurrentSave.characterInventory.characters[index];
                 characterSave.step = step;
-                Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.characters[index] = characterSave;
+                Manager.Game.CurrentSave.characterInventory.characters[index] = characterSave;
             }
             else
             {

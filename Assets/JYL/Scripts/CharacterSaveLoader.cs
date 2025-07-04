@@ -10,10 +10,11 @@ namespace JYL
 
         private string charPrefabPath = "CharacterPrefabs";
 
-        void OnEnable()
-        {
-            GetCharPrefab();
-        }
+        // TODO : 없어도 되는지 테스트
+        //void OnEnable()
+        //{
+        //    GetCharPrefab();
+        //}
 
         void Update() { }
         public void GetCharPrefab()
@@ -23,6 +24,7 @@ namespace JYL
             foreach (var cont in charactorController)
             {
                 cont.SetParameter();
+                Instantiate(cont.gameObject);
             }
             // 전부 셋파라매터 함.
             Array.Sort(charactorController, (a, b) => a.partySet.CompareTo(b.partySet)); // 추가적인 정렬도 가능함.

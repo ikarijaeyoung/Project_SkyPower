@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using LJ2;
 using TMPro;
 
 namespace JYL
@@ -15,14 +16,22 @@ namespace JYL
         private TMP_Text level => GetUI<TMP_Text>("InvenCharLevelText");
         private TMP_Text hp => GetUI<TMP_Text>("InvenCharHPText");
         private TMP_Text ap => GetUI<TMP_Text>("InvenCharAPText");
+        private Image charImage;
+        private CharacterSaveLoader characterLoader;
         // TODO: GameManager.CharacterController[] character => for(int i = 0;i<character.Length;i++) { 인벤토리에 UI추가 }
-        
+
         // private Item[] items;
 
-
+        private void OnEnable()
+        {
+        }
         void Start()
         {
             // 장비 클릭시 활성화
+            characterLoader = GetComponent<CharacterSaveLoader>();
+            characterLoader.GetCharPrefab();
+            Init();
+
             invenScroll.SetActive(false);
             GetEvent("WeaponBtn").Click += OpenWPInven;
             GetEvent("WPEnhanceBtn1").Click += OpenWPEnhance;
@@ -39,6 +48,19 @@ namespace JYL
             level.text = "24";
             hp.text = "2040";
             ap.text = "332";
+        }
+        private void Init()
+        {
+            charImage = GetUI<Image>("InvenCharImage");
+            CharactorController charCont;
+            foreach(CharactorController cont in characterLoader.charactorController)
+            {
+                if(cont.partySet == PartySet.Main)
+                {
+                    charCont = cont;
+                    charImage.sprite = charCont.image;
+                }
+            }
         }
 
         private void OpenWPInven(PointerEventData eventData)

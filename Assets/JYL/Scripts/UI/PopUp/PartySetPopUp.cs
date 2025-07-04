@@ -39,7 +39,7 @@ namespace JYL
         {
              // TODO : 상점 연결
             characterLoader = GetComponent<CharacterSaveLoader>();
-            //GetEvent("PSCharImg1").Click += OpenInvenPopUp;
+            GetEvent("PSCharImg1").Click += OpenInvenPopUp;
             //GetEvent("PSCharImg2").Click += OpenInvenPopUp;
             //GetEvent("PSCharImg3").Click += OpenInvenPopUp;
             CreateIcons();
@@ -80,7 +80,7 @@ namespace JYL
         private void Init()
         {
             charDict = new Dictionary<string, CharactorController>();
-            charDataList = Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.characters;
+            charDataList = Manager.Game.CurrentSave.characterInventory.characters;
             iconList = new List<Image>();
             characterLoader = GetComponent<CharacterSaveLoader>();
             //canvasGroup = GetComponent<CanvasGroup>();
@@ -102,7 +102,18 @@ namespace JYL
             // GameManager.Instance.selectSave.party[index] -> 캐릭터 ID
             // 캐릭터 컨트롤러 (캐릭터 ID)
             UIManager.Instance.selectIndexUI = index;
-            UIManager.Instance.ShowPopUp<InvenPopUp>();
+            if(index == 1)
+            {
+                int mainCharIndex = charDataList.FindIndex(c => c.partySet == PartySet.Main);
+                if (mainCharIndex == -1)
+                {
+                    Debug.Log($"메인 캐릭터는 현재 비어있음");
+                }
+                else if(!isPartySetting)
+                {
+                    UIManager.Instance.ShowPopUp<InvenPopUp>();
+                }
+            }
         }
 
         // 아이콘 및 일러스트들을 생성
@@ -213,7 +224,6 @@ namespace JYL
                     // UI 오브젝트의 이름을 통해 메인, 서브를 판별
                     Util.ExtractTrailNumber($"{targetSlot.name}", out int slotNum);
                     // 만약, 드래그 중인것과 내려놓는곳이 같다면 작업을 하지 않는다
-                    Debug.Log($"{(int)dragCharData.partySet+1} {slotNum}");
                     if ((int)dragCharData.partySet+1 != slotNum)
                     {
                         switch (slotNum)
