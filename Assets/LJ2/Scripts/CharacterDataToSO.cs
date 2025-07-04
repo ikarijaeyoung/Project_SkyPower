@@ -30,13 +30,8 @@ public class CharacterDataToSO : MonoBehaviour
             characterData.icon = (Sprite)AssetDatabase.LoadAssetAtPath($"Assets/Resources/Sprites/Characters/Image_Icon/{characterData.id}.png", typeof(Sprite));
             characterData.image = (Sprite)AssetDatabase.LoadAssetAtPath($"Assets/Resources/Sprites/Characters/Image_Origin/{characterData.id}.png", typeof(Sprite));
 
-            Debug.Log($"icon : {characterData.icon}");
-            Debug.Log($"image : {characterData.image}");
-
-
             Enum.TryParse<Grade>(table.GetData(i, 1), out characterData.grade);
             characterData.characterName = table.GetData(i, 2);
-            //Debug.Log(characterData.name);
             Enum.TryParse<Elemental>(table.GetData(i, 5), out characterData.elemental);
             
             characterData.maxLevel = int.Parse(table.GetData(i, 7));
