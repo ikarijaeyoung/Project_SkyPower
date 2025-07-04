@@ -60,7 +60,7 @@ namespace YSK
 
         public void SyncRuntimeDataWithStageInfo()
         {
-            GameData saveData = Manager.Game.saveFiles[Manager.Game.currentSaveIndex];
+            GameData saveData = Manager.Game.CurrentSave;
             for (int i = 0; i < saveData.stageInfo.Length; i++)
             {
                 if(i>Manager.SDM.runtimeData.Count*5-1)
@@ -70,7 +70,7 @@ namespace YSK
                 }
                 int worldIndex = i / 5;
                 int stageIndex = i % 5;
-                Debug.Log($"{i}  {worldIndex} {stageIndex}");
+                //Debug.Log($"{i}  {worldIndex} {stageIndex}");
                 runtimeData[worldIndex].subStages[stageIndex].bestScore = saveData.stageInfo[i].score;
                 runtimeData[worldIndex].subStages[stageIndex].isUnlocked = saveData.stageInfo[i].unlock;
                 runtimeData[worldIndex].subStages[stageIndex].isCompleted = saveData.stageInfo[i].isClear;

@@ -13,7 +13,7 @@ public class TripleShot : BulletPatternData
     public int shotCount = 3;
     public float delayBetweenshots = 0.1f;
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, GameObject bulletPrefab, float bulletSpeed, ObjectPool pool)
+    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool)
     {
         for (int i = 0; i < shotCount; i++)
         {
@@ -24,7 +24,7 @@ public class TripleShot : BulletPatternData
             {
                 bullet.ReturnToPool(returnToPoolTimer);
 
-                foreach (BulletInfo info in bullet.bullet)
+                foreach (BulletInfo info in bullet.bulletInfo)
                 {
                     if (info.rig != null)
                     {

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using KYG_skyPower;
+using JYL;
+using Unity.VisualScripting;
 
 namespace LJ2
 {
@@ -33,11 +35,14 @@ namespace LJ2
         public float ultDamage;
         public int ultCool;
 
-        public GameObject bulletPrefab;
-        public GameObject ultPrefab;
+        public PooledObject bulletPrefab; // TODO : 경로지정
+        public PooledObject ultBulletPrefab;
+        public GameObject ultPrefab; // 리소스
 
         public Parry parry;
         public int parryCool;
+
+        public Sprite icon;
         public Sprite image;
 
         public int upgradeUnit;
@@ -82,6 +87,8 @@ namespace LJ2
             moveSpeed = characterData.moveSpeed;
             defense = characterData.defense;
             image = characterData.image;
+            icon = characterData.icon;
+            image = characterData.image;
 
 
             // Save의 값을 그대로 가져옴  
@@ -94,9 +101,10 @@ namespace LJ2
                 return;
             }
 
-            Debug.Log($"Character ID: {characterSave.id}, Step: {characterSave.step}, Level : {characterSave.level}");
+            //Debug.Log($"Character ID: {characterSave.id}, Step: {characterSave.step}, Level : {characterSave.level}");
             level = characterSave.level;
             step = characterSave.step;
+            bulletPrefab = Resources.Load<PooledObject>($"Prefabs/bullet/{id}_{step}");
             partySet = characterSave.partySet;
 
             // Save의 값에 따라 Data의 값을 변경
@@ -143,10 +151,10 @@ namespace LJ2
                     unit -= upgradeUnit;
                     level++;
 
-                    int index = Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.characters.FindIndex(c => c.id == id);
-                    CharacterSave characterSave = Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.characters[index];
+                    int index = Manager.Game.CurrentSave.characterInventory.characters.FindIndex(c => c.id == id);
+                    CharacterSave characterSave = Manager.Game.CurrentSave.characterInventory.characters[index];
                     characterSave.level = level;
-                    Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.characters[index] = characterSave;
+                    Manager.Game.CurrentSave.characterInventory.characters[index] = characterSave;
                 }
                 else
                 {
@@ -178,10 +186,10 @@ namespace LJ2
             {
                 step++;
 
-                int index = Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.characters.FindIndex(c => c.id == id);
-                CharacterSave characterSave = Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.characters[index];
+                int index = Manager.Game.CurrentSave.characterInventory.characters.FindIndex(c => c.id == id);
+                CharacterSave characterSave = Manager.Game.CurrentSave.characterInventory.characters[index];
                 characterSave.step = step;
-                Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.characters[index] = characterSave;
+                Manager.Game.CurrentSave.characterInventory.characters[index] = characterSave;
             }
             else
             {
@@ -209,30 +217,33 @@ namespace LJ2
             }
         }
 
-        public void UseUlt(float ultDamage)
+        public void UseUlt()
         {
             switch(id)
             {                
                 case 10001:
-                    ultimate.Laser();
+                    ultimate.Laser(ultDamage);
                     break;
                 case 10002:
                     // 유도탄 미구현
                     break;
                 case 10003:
                     // 탄막 변경 데미지 증가
+                    // ultimate.BulletUpgrade();
                     break;
                 case 10004:
                     // 궁극기 탄막 1회 - 다단히트
+                    // ultimate.BigBullet(ultDamage);
                     break;
                 case 10005:
                     // 궁극기 탄막 1회 - 다단히트
+                    // ultimate.BigBullet(ultDamage);
                     break;
                 case 10006:
-                    defense += ultimate.Shield();
+                    defense += ultimate.Shield(ultDamage);
                     break;
                 default:
-                    ultimate.AllAttack();
+                    ultimate.AllAttack(ultDamage);
                     break;
             }
         }

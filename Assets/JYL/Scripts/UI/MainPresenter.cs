@@ -19,7 +19,6 @@ namespace JYL
         private CharacterSaveLoader characterLoader;
         void Start()
         {
-            
             characterLoader = GetComponent<CharacterSaveLoader>();
             characterLoader.GetCharPrefab();
 
