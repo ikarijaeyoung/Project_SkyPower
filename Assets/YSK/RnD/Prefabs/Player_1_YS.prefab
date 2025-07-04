@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acf716ee6c3828c48b1d345a2009c6f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   poolObject: {fileID: -4137832295422276319, guid: 8cc6e9eedf2774a4a8386e70f82707f2,
     type: 3}
   poolSize: 5
@@ -94,6 +95,7 @@ GameObject:
   - component: {fileID: 8851782413218566099}
   - component: {fileID: 8205956720404344412}
   - component: {fileID: 8139530292015348620}
+  - component: {fileID: 1488597033371610231}
   m_Layer: 6
   m_Name: Player_1_YS
   m_TagString: Untagged
@@ -222,6 +224,27 @@ MonoBehaviour:
   m_DefaultActionMap: PlayerControl
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!95 &1488597033371610231
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3958047286832142781}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5640774715689364979
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,6 +403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acf716ee6c3828c48b1d345a2009c6f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   poolObject: {fileID: 6593559915599189156, guid: f4fa5ebc09b3a7f4a86f3c49a6c1e7f5,
     type: 3}
   poolSize: 5
@@ -427,6 +451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acf716ee6c3828c48b1d345a2009c6f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   poolObject: {fileID: 6593559915599189156, guid: d1e2bb8090d0f7344b2379ea67a9b27b,
     type: 3}
   poolSize: 5

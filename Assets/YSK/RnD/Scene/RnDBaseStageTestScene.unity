@@ -122,37 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &68435473
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 68435474}
-  m_Layer: 0
-  m_Name: EndPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &68435474
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 68435473}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -20}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 159610134}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &87715153
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,93 +231,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &159610132
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 159610134}
-  - component: {fileID: 159610133}
-  m_Layer: 0
-  m_Name: StageManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &159610133
+--- !u!114 &159610133 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 706152575037173864, guid: 08d1a44b1f6aa3042a41d3ac8d5c9a30,
+    type: 3}
+  m_PrefabInstance: {fileID: 8136486533567207042}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 159610132}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dac21446f0da627499591e82758e4f44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageDataList:
-  - {fileID: 11400000, guid: 42cfb91afb7928e44ad33bcd26b088f2, type: 2}
-  - {fileID: 11400000, guid: 1c49c343c7c1d7f4fa92f3b191963113, type: 2}
-  - {fileID: 11400000, guid: 75b7ec7daad056941a8609cd4e71d747, type: 2}
-  - {fileID: 11400000, guid: 0c563732c7779bd48a0d43bee27514ec, type: 2}
-  maxMainStages: 4
-  maxSubStages: 5
-  endPoint: {fileID: 68435474}
-  startPoint: {fileID: 1109402535}
-  speed: 1
-  mapLength: 19.5
-  enableTransition: 1
-  useFadeTransition: 1
-  fadePanel: {fileID: 0}
-  fadeDuration: 1
-  fadeCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  fadeColor: {r: 0, g: 0, b: 0, a: 1}
-  dataManager: {fileID: 280501299}
---- !u!4 &159610134
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 159610132}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1109402535}
-  - {fileID: 68435474}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &204236417
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,13 +329,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 204236417}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalRotation: {x: 0.6427876, y: 0, z: 0, w: 0.7660445}
+  m_LocalPosition: {x: 0, y: 50, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 80, y: 0, z: 0}
 --- !u!114 &204236421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,18 +381,6 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!114 &280501299 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4295750595412288439, guid: 95f1e6e2856ace64ca85360ca9652957,
-    type: 3}
-  m_PrefabInstance: {fileID: 6706897055126270434}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d46c82b1510b4824c9c63c91fe50a8b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &315755692
 GameObject:
   m_ObjectHideFlags: 0
@@ -561,7 +443,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -765,7 +648,7 @@ Transform:
   m_GameObject: {fileID: 362495730}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 40, y: 10, z: 0}
+  m_LocalPosition: {x: 100, y: 25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -833,7 +716,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -1054,7 +938,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -1474,7 +1359,7 @@ GameObject:
   - component: {fileID: 835890005}
   - component: {fileID: 835890004}
   m_Layer: 5
-  m_Name: MainMenuButton
+  m_Name: ResetStage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1544,9 +1429,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 884707761}
-        m_TargetAssemblyTypeName: YSK.GameSceneManager, Assembly-CSharp
-        m_MethodName: LoadMainScene
+      - m_Target: {fileID: 159610133}
+        m_TargetAssemblyTypeName: YSK.StageManager, Assembly-CSharp
+        m_MethodName: ResetStageProgress
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1619,7 +1504,7 @@ GameObject:
   - component: {fileID: 992202004}
   - component: {fileID: 992202003}
   m_Layer: 5
-  m_Name: Method
+  m_Name: ReloadScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1872,37 +1757,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1017007595}
   m_CullTransparentMesh: 1
---- !u!1 &1109402534
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1109402535}
-  m_Layer: 0
-  m_Name: StartPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1109402535
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1109402534}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 159610134}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1164265408
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1919,7 +1773,7 @@ PrefabInstance:
     - target: {fileID: 6982742924317362919, guid: 80ceb1224eee7534b88dda1ba7071ee2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 40.2
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6982742924317362919, guid: 80ceb1224eee7534b88dda1ba7071ee2,
         type: 3}
@@ -1929,7 +1783,7 @@ PrefabInstance:
     - target: {fileID: 6982742924317362919, guid: 80ceb1224eee7534b88dda1ba7071ee2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.04
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 6982742924317362919, guid: 80ceb1224eee7534b88dda1ba7071ee2,
         type: 3}
@@ -2033,7 +1887,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -2322,9 +2177,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1641685611}
-        m_TargetAssemblyTypeName: KYG_skyPower.GameManager, Assembly-CSharp
-        m_MethodName: SetGameClear
+      - m_Target: {fileID: 159610133}
+        m_TargetAssemblyTypeName: YSK.StageManager, Assembly-CSharp
+        m_MethodName: ClearCurrentStageAndNext
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2547,12 +2402,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uBA54\uC778 \uBA54\uB274\uB85C\n"
+  m_text: 'Reset
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -2823,6 +2681,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  saveFiles:
+  - playerName: 
+    characterInventory:
+      characters: []
+    stageInfo: []
+  - playerName: 
+    characterInventory:
+      characters: []
+    stageInfo: []
+  - playerName: 
+    characterInventory:
+      characters: []
+    stageInfo: []
+  selectWorldIndex: 0
+  selectStageIndex: 0
 --- !u!4 &1641685612
 Transform:
   m_ObjectHideFlags: 0
@@ -2900,7 +2773,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -3037,7 +2911,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -3172,7 +3047,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -3313,13 +3189,116 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95f1e6e2856ace64ca85360ca9652957, type: 3}
+--- !u!1001 &8136486533567207042
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 706152575037173864, guid: 08d1a44b1f6aa3042a41d3ac8d5c9a30,
+        type: 3}
+      propertyPath: speed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 706152575037173864, guid: 08d1a44b1f6aa3042a41d3ac8d5c9a30,
+        type: 3}
+      propertyPath: mapLength
+      value: 249
+      objectReference: {fileID: 0}
+    - target: {fileID: 706152575037173864, guid: 08d1a44b1f6aa3042a41d3ac8d5c9a30,
+        type: 3}
+      propertyPath: dataManager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 706152575037173864, guid: 08d1a44b1f6aa3042a41d3ac8d5c9a30,
+        type: 3}
+      propertyPath: maxMainStages
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 706152575037173864, guid: 08d1a44b1f6aa3042a41d3ac8d5c9a30,
+        type: 3}
+      propertyPath: enableTransition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 706152575037173864, guid: 08d1a44b1f6aa3042a41d3ac8d5c9a30,
+        type: 3}
+      propertyPath: useGameSceneManagerTransition
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1439556029962761394, guid: 08d1a44b1f6aa3042a41d3ac8d5c9a30,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 6966564673546112761, guid: 08d1a44b1f6aa3042a41d3ac8d5c9a30,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6966564673546112761, guid: 08d1a44b1f6aa3042a41d3ac8d5c9a30,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6966564673546112761, guid: 08d1a44b1f6aa3042a41d3ac8d5c9a30,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6966564673546112761, guid: 08d1a44b1f6aa3042a41d3ac8d5c9a30,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6966564673546112761, guid: 08d1a44b1f6aa3042a41d3ac8d5c9a30,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6966564673546112761, guid: 08d1a44b1f6aa3042a41d3ac8d5c9a30,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6966564673546112761, guid: 08d1a44b1f6aa3042a41d3ac8d5c9a30,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6966564673546112761, guid: 08d1a44b1f6aa3042a41d3ac8d5c9a30,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6966564673546112761, guid: 08d1a44b1f6aa3042a41d3ac8d5c9a30,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6966564673546112761, guid: 08d1a44b1f6aa3042a41d3ac8d5c9a30,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7958732618646403040, guid: 08d1a44b1f6aa3042a41d3ac8d5c9a30,
+        type: 3}
+      propertyPath: m_Name
+      value: StageManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 08d1a44b1f6aa3042a41d3ac8d5c9a30, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 204236420}
   - {fileID: 1355912750}
-  - {fileID: 159610134}
+  - {fileID: 8136486533567207042}
   - {fileID: 619244132}
   - {fileID: 362495734}
   - {fileID: 87715157}

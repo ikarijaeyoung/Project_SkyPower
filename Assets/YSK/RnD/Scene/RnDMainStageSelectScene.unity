@@ -430,7 +430,7 @@ MonoBehaviour:
   stage2_1ScoreTextName: Stage2_1ScoreText
   stage2_2ScoreTextName: Stage2_2ScoreText
   stage3_1ScoreTextName: Stage3_1ScoreText
-  forceUIUpdate: 1
+  forceUIUpdate: 0
 --- !u!1 &219236899
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,29 +580,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3034378885704754324, guid: f5c2e630598244e479f94589b8fd2b8c,
         type: 3}
-      propertyPath: showProgressBar
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3034378885704754324, guid: f5c2e630598244e479f94589b8fd2b8c,
-        type: 3}
-      propertyPath: enableLoadingScreen
+      propertyPath: enableTransition
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3034378885704754324, guid: f5c2e630598244e479f94589b8fd2b8c,
         type: 3}
-      propertyPath: showProgressPercentage
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3034378885704754324, guid: f5c2e630598244e479f94589b8fd2b8c,
-        type: 3}
-      propertyPath: showLoadingOnSceneStart
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3034378885704754324, guid: f5c2e630598244e479f94589b8fd2b8c,
-        type: 3}
-      propertyPath: customLoadingScreenPrefab
+      propertyPath: transitionScreenPrefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8835225831514424816, guid: b1b5a6fc728c42344ae8ba1539805142,
+        type: 3}
     - target: {fileID: 8088591135873399683, guid: f5c2e630598244e479f94589b8fd2b8c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -720,7 +706,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -855,7 +842,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -1259,7 +1247,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -1394,7 +1383,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -1849,7 +1839,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -1968,26 +1959,31 @@ MonoBehaviour:
       bestScore: 0
       isCompleted: 1
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 2
       isUnlocked: 1
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 3
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 4
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 5
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
   - stageID: 2
     isUnlocked: 0
     bestScore: 0
@@ -1999,26 +1995,31 @@ MonoBehaviour:
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 2
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 3
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 4
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 5
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
   - stageID: 3
     isUnlocked: 0
     bestScore: 0
@@ -2030,26 +2031,31 @@ MonoBehaviour:
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 2
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 3
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 4
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 5
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
   - stageID: 4
     isUnlocked: 0
     bestScore: 0
@@ -2061,26 +2067,31 @@ MonoBehaviour:
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 2
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 3
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 4
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
     - subStageID: 5
       isUnlocked: 0
       bestScore: 0
       isCompleted: 0
       completionTime: 0
+      stageEnemyData: {fileID: 0}
 --- !u!4 &753704083
 Transform:
   m_ObjectHideFlags: 0
@@ -2429,7 +2440,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -2564,7 +2576,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -2699,7 +2712,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -2834,7 +2848,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -3103,7 +3118,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -3238,7 +3254,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -3507,7 +3524,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -3682,7 +3700,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -3817,7 +3836,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -4220,7 +4240,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -4299,7 +4320,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 947018652}
   - {fileID: 696004086}
-  - {fileID: 236508160}
   - {fileID: 145242586}
+  - {fileID: 236508160}
   - {fileID: 692171311}
   - {fileID: 753704083}
