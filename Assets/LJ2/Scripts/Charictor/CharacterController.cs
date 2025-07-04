@@ -222,12 +222,15 @@ namespace LJ2
                     break;
                 case 10003:
                     // Åº¸· º¯°æ µ¥¹ÌÁö Áõ°¡
+                    // ultimate.BulletUpgrade();
                     break;
                 case 10004:
                     // ±Ã±Ø±â Åº¸· 1È¸ - ´Ù´ÜÈ÷Æ®
+                    // ultimate.BigBullet(ultDamage);
                     break;
                 case 10005:
                     // ±Ã±Ø±â Åº¸· 1È¸ - ´Ù´ÜÈ÷Æ®
+                    // ultimate.BigBullet(ultDamage);
                     break;
                 case 10006:
                     defense += ultimate.Shield(ultDamage);

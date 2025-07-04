@@ -9,6 +9,7 @@ namespace JYL
         public Rigidbody rig;
         public Vector3 originPos;
         public BulletController bulletController;
+        public bool canDeactive;
     }
 
     public class BulletPrefabController : PooledObject
@@ -32,6 +33,7 @@ namespace JYL
                 bulletInfo[i].bulletController = GetComponent<BulletController>();
                 bulletInfo[i].trans = transforms[i];
                 bulletInfo[i].originPos = transforms[i].localPosition;
+                bulletInfo[i].canDeactive = true; // 기본값은 true로 설정
             }
         }
     }
