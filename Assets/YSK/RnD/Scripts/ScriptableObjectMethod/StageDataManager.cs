@@ -1,6 +1,6 @@
+using KYG_skyPower;
 using System.Collections.Generic;
 using UnityEngine;
-using YSK;
 
 namespace YSK
 {
@@ -12,10 +12,10 @@ namespace YSK
         public int bestScore;
         public bool isCompleted;
         public float completionTime;
-        
+
         public List<SubStageRuntimeData> subStages = new List<SubStageRuntimeData>();
     }
-    
+
     [System.Serializable]
     public class SubStageRuntimeData
     {
@@ -24,42 +24,66 @@ namespace YSK
         public int bestScore;
         public bool isCompleted;
         public float completionTime;
+        public StageEnemyData stageEnemyData;
     }
-    
-    public class StageDataManager : MonoBehaviour
+
+    public class StageDataManager : Singleton<StageDataManager>
     {
         [Header("Stage Data")]
         [SerializeField] private List<StageData> stageDataList;
-        
+
         [Header("Runtime Data")]
-        [SerializeField] private List<StageRuntimeData> runtimeData = new List<StageRuntimeData>();
-        
+        [SerializeField] public List<StageRuntimeData> runtimeData = new List<StageRuntimeData>();
+
         // 저장 키
         private const string STAGE_DATA_KEY = "StageRuntimeData";
-        
+
         // 이벤트 - 데이터 변경 시 UI 업데이트용
         public static System.Action OnStageDataChanged;
-        
-        private void Start()
+        protected override void Awake() => base.Awake();
+
+        private void Start() { }
+
+        public override void Init()
         {
             InitializeStageDataList();
             InitializeRuntimeData();
             LoadRuntimeData();
-            
+
             // 초기화 완료 후 이벤트 발생
             OnStageDataChanged?.Invoke();
         }
-        
         /// <summary>
         /// StageData 스크립터블 오브젝트들을 자동으로 찾아서 설정
         /// </summary>
+
+        public void SyncRuntimeDataWithStageInfo()
+        {
+            GameData saveData = Manager.Game.saveFiles[Manager.Game.currentSaveIndex];
+            for (int i = 0; i < saveData.stageInfo.Length; i++)
+            {
+                if(i>Manager.SDM.runtimeData.Count*5-1)
+                {
+                    Debug.Log("runtimeData 이상의 맵 데이터 세이브 정보가 있음");
+                    return;
+                }
+                int worldIndex = i / 5;
+                int stageIndex = i % 5;
+                Debug.Log($"{i}  {worldIndex} {stageIndex}");
+                runtimeData[worldIndex].subStages[stageIndex].bestScore = saveData.stageInfo[i].score;
+                runtimeData[worldIndex].subStages[stageIndex].isUnlocked = saveData.stageInfo[i].unlock;
+                runtimeData[worldIndex].subStages[stageIndex].isCompleted = saveData.stageInfo[i].isClear;
+            }
+        }
+
+
         private void InitializeStageDataList()
         {
             if (stageDataList == null || stageDataList.Count == 0)
             {
                 // Resources 폴더에서 StageData 스크립터블 오브젝트들을 찾기
                 StageData[] foundStageData = Resources.FindObjectsOfTypeAll<StageData>();
-                
+
                 if (foundStageData.Length > 0)
                 {
                     stageDataList = new List<StageData>(foundStageData);
@@ -72,17 +96,17 @@ namespace YSK
                 }
             }
         }
-        
+
         private void InitializeRuntimeData()
         {
             runtimeData.Clear();
-            
+
             if (stageDataList == null || stageDataList.Count == 0)
             {
                 Debug.LogWarning("StageDataList가 비어있어서 런타임 데이터를 초기화할 수 없습니다.");
                 return;
             }
-            
+
             foreach (var stageData in stageDataList)
             {
                 var runtimeStage = new StageRuntimeData
@@ -94,7 +118,7 @@ namespace YSK
                     isCompleted = false,
                     completionTime = 0f
                 };
-                
+
                 // 서브 스테이지 데이터 초기화
                 foreach (var subStageData in stageData.subStages)
                 {
@@ -105,18 +129,19 @@ namespace YSK
                         isUnlocked = (stageData.stageID == 1 && subStageData.subStageID == 1),
                         bestScore = subStageData.subStageScore,
                         isCompleted = false,
-                        completionTime = 0f
+                        completionTime = 0f,
+                        stageEnemyData = subStageData.stageEnemyData
                     };
-                    
+
                     runtimeStage.subStages.Add(runtimeSubStage);
                 }
-                
+
                 runtimeData.Add(runtimeStage);
             }
-            
+
             Debug.Log($"런타임 데이터 초기화 완료: {runtimeData.Count}개 스테이지");
         }
-        
+
         /// <summary>
         /// 런타임 데이터를 PlayerPrefs에 저장
         /// </summary>
@@ -127,7 +152,7 @@ namespace YSK
             PlayerPrefs.Save();
             Debug.Log("스테이지 런타임 데이터 저장 완료");
         }
-        
+
         /// <summary>
         /// PlayerPrefs에서 런타임 데이터 로드
         /// </summary>
@@ -137,10 +162,10 @@ namespace YSK
             {
                 string json = PlayerPrefs.GetString(STAGE_DATA_KEY);
                 var wrapper = JsonUtility.FromJson<StageDataWrapper>(json);
-                
+
                 // 저장된 데이터와 현재 StageDataList를 비교하여 동기화
                 SyncRuntimeDataWithStageData(wrapper.stages);
-                
+
                 Debug.Log("스테이지 런타임 데이터 로드 완료");
             }
             else
@@ -148,7 +173,7 @@ namespace YSK
                 Debug.Log("저장된 스테이지 데이터가 없어서 초기값 사용");
             }
         }
-        
+
         /// <summary>
         /// 저장된 런타임 데이터와 현재 StageDataList를 동기화
         /// </summary>
@@ -159,15 +184,15 @@ namespace YSK
                 Debug.LogWarning("저장된 데이터가 null입니다.");
                 return;
             }
-            
+
             // 기존 런타임 데이터를 저장된 데이터로 교체
             runtimeData = new List<StageRuntimeData>();
-            
+
             foreach (var stageData in stageDataList)
             {
                 // 저장된 데이터에서 해당 스테이지 찾기
                 var savedStage = savedData.Find(s => s.stageID == stageData.stageID);
-                
+
                 if (savedStage != null)
                 {
                     // 저장된 데이터 사용
@@ -180,12 +205,12 @@ namespace YSK
                         completionTime = savedStage.completionTime,
                         subStages = new List<SubStageRuntimeData>()
                     };
-                    
+
                     // 서브 스테이지 동기화
                     foreach (var subStageData in stageData.subStages)
                     {
                         var savedSubStage = savedStage.subStages.Find(s => s.subStageID == subStageData.subStageID);
-                        
+
                         if (savedSubStage != null)
                         {
                             runtimeStage.subStages.Add(savedSubStage);
@@ -204,7 +229,7 @@ namespace YSK
                             runtimeStage.subStages.Add(newSubStage);
                         }
                     }
-                    
+
                     runtimeData.Add(runtimeStage);
                 }
                 else
@@ -219,7 +244,7 @@ namespace YSK
                         completionTime = 0f,
                         subStages = new List<SubStageRuntimeData>()
                     };
-                    
+
                     foreach (var subStageData in stageData.subStages)
                     {
                         var newSubStage = new SubStageRuntimeData
@@ -232,12 +257,12 @@ namespace YSK
                         };
                         newStage.subStages.Add(newSubStage);
                     }
-                    
+
                     runtimeData.Add(newStage);
                 }
             }
         }
-        
+
         /// <summary>
         /// 스테이지 해금
         /// </summary>
@@ -252,7 +277,7 @@ namespace YSK
                 Debug.Log($"스테이지 {stageID} 해금 완료");
             }
         }
-        
+
         /// <summary>
         /// 서브 스테이지 해금
         /// </summary>
@@ -271,7 +296,7 @@ namespace YSK
                 }
             }
         }
-        
+
         /// <summary>
         /// 스테이지 점수 업데이트
         /// </summary>
@@ -290,7 +315,7 @@ namespace YSK
                 }
             }
         }
-        
+
         /// <summary>
         /// 스테이지 완료 처리
         /// </summary>
@@ -304,21 +329,21 @@ namespace YSK
                 {
                     subStage.isCompleted = true;
                     subStage.completionTime = completionTime;
-                    
+
                     // 모든 서브 스테이지가 완료되면 메인 스테이지도 완료
                     bool allSubStagesCompleted = stage.subStages.TrueForAll(s => s.isCompleted);
                     if (allSubStagesCompleted)
                     {
                         stage.isCompleted = true;
                     }
-                    
+
                     SaveRuntimeData();
                     OnStageDataChanged?.Invoke(); // UI 업데이트 이벤트 발생
                     Debug.Log($"스테이지 {stageID}-{subStageID} 완료 처리");
                 }
             }
         }
-        
+
         /// <summary>
         /// 스테이지 해금 상태 확인
         /// </summary>
@@ -327,7 +352,7 @@ namespace YSK
             var stage = runtimeData.Find(s => s.stageID == stageID);
             return stage?.isUnlocked ?? false;
         }
-        
+
         /// <summary>
         /// 서브 스테이지 해금 상태 확인
         /// </summary>
@@ -341,7 +366,7 @@ namespace YSK
             }
             return false;
         }
-        
+
         /// <summary>
         /// 스테이지 점수 가져오기
         /// </summary>
@@ -355,7 +380,7 @@ namespace YSK
             }
             return 0;
         }
-        
+
         /// <summary>
         /// 전체 스테이지 데이터 리스트 가져오기
         /// </summary>
@@ -363,7 +388,7 @@ namespace YSK
         {
             return stageDataList;
         }
-        
+
         /// <summary>
         /// 특정 스테이지 데이터 가져오기
         /// </summary>
@@ -371,7 +396,7 @@ namespace YSK
         {
             return stageDataList?.Find(s => s.stageID == stageID);
         }
-        
+
         /// <summary>
         /// 런타임 데이터 초기화 (테스트용)
         /// </summary>
@@ -382,7 +407,8 @@ namespace YSK
             Debug.Log("모든 스테이지 진행도가 초기화되었습니다.");
         }
 
-        #if UNITY_EDITOR
+
+#if UNITY_EDITOR
         /// <summary>
         /// 인스펙터에서 값이 변경될 때 호출
         /// </summary>
@@ -415,13 +441,13 @@ namespace YSK
                 }
             }
         }
-        #endif
+#endif
     }
-    
+
     // JSON 직렬화를 위한 래퍼 클래스
     [System.Serializable]
     public class StageDataWrapper
     {
         public List<StageRuntimeData> stages;
     }
-} 
+}

@@ -11,11 +11,11 @@ namespace JYL
     {
         // 게임매니저에서 캐릭터 정보를 불러와야 함
         private GameObject invenScroll => GetUI("InvenScroll");
-        private TMP_Text name => GetUI<TMP_Text>("InvenCharNameText");
+        private TMP_Text invenCharName => GetUI<TMP_Text>("InvenCharNameText");
         private TMP_Text level => GetUI<TMP_Text>("InvenCharLevelText");
         private TMP_Text hp => GetUI<TMP_Text>("InvenCharHPText");
         private TMP_Text ap => GetUI<TMP_Text>("InvenCharAPText");
-        // GameManager.CharacterController[] character => for(int i = 0;i<character.Length;i++) { 인벤토리에 UI추가 }
+        // TODO: GameManager.CharacterController[] character => for(int i = 0;i<character.Length;i++) { 인벤토리에 UI추가 }
         
         // private Item[] items;
 
@@ -35,7 +35,7 @@ namespace JYL
             // 현재 캐릭터의 정보가 표시된다
             // index는 UIManager가 관리
             // GameManager.Instance.character[index]
-            name.text = "캐릭터1";
+            invenCharName.text = "캐릭터1";
             level.text = "24";
             hp.text = "2040";
             ap.text = "332";

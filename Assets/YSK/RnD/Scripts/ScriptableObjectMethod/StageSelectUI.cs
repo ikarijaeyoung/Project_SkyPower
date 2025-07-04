@@ -91,9 +91,9 @@ namespace YSK
             
             
             // 메뉴 버튼들 연결
-            ConnectMenuButton(mainMenuButtonName, "RnDMainMenu");
-            ConnectMenuButton(mainStageSelectButtonName, "RnDMainStageSelectScene");
-            ConnectMenuButton(testSceneButtonName, "RnDBaseStageTestScene");
+            ConnectMenuButton(mainMenuButtonName, "bMainScene_JYL");
+            ConnectMenuButton(mainStageSelectButtonName, "cStoreScene_JYL");
+            ConnectMenuButton(testSceneButtonName, "aTitleScene_JYL");
 
             // 스테이지 버튼들 연결
             ConnectStageButton(stage1_1ButtonName, 1, 1);
@@ -333,12 +333,12 @@ namespace YSK
             if (GameSceneManager.Instance != null)
             {
                 Debug.Log($"GameSceneManager.Instance 찾음, 씬 로드 시작");
-                GameSceneManager.Instance.LoadGameSceneWithStage("RnDBaseStageTestScene", mainStage, subStage);
+                GameSceneManager.Instance.LoadGameSceneWithStage("dStageScene_JYL", mainStage, subStage);
             }
             else
             {
                 Debug.LogError("GameSceneManager.Instance가 null입니다!");
-                Debug.LogError("씬에 GameSceneManager 컴포넌트가 있는지 확인해주세요!");
+                Debug.LogError("씬에 GameSceneManager 오브젝트가 있는지 확인해주세요!");
             }
         }
 

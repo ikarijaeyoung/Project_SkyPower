@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace JYL
     {
         private Dictionary<string, GameObject> goDict;
         private Dictionary<string, Component> compDict;
-        private void Awake()
+        protected void Awake()
         {
             RectTransform[] transforms = GetComponentsInChildren<RectTransform>(true);
             goDict = new Dictionary<string, GameObject>(transforms.Length<<2);
@@ -29,14 +30,44 @@ namespace JYL
         // string으로 특정 UI 게임오브젝트 찾기
         public GameObject GetUI(in string name)
         {
+            if (goDict == null)
+            {
+                Debug.Log("goDict없음"); 
+                return null;
+            }
             goDict.TryGetValue(name, out GameObject gameObject);
             if(gameObject == null)
             {
-                Debug.LogError($"다음 UI 오브젝트가 없습니다: {name}");
+                gameObject = GameObject.Find($"{name}");
+                if (gameObject == null)
+                {
+                    Debug.LogError($"다음 UI 오브젝트가 없습니다: {name}");
+                }
+                goDict.TryAdd(name, gameObject);
             }
             return gameObject; // 없을경우 Null
         }
 
+        // 이름으로 딕셔너리에 추가하기. 씬에서 추가되는 경우에 씀. 추가한 후 가져옴
+        public GameObject AddUIToDictionary(GameObject go)
+        {
+            if(goDict == null)
+            {
+                Debug.Log("UI 딕셔너리가 없음");
+                return null;
+            }
+            if (!goDict.TryAdd(go.name, go))
+            {
+                Debug.Log($"이미 UI가 딕셔너리에 있음.:{go.name}");
+            }
+
+            return go;
+        }
+        public GameObject DeleteFromDictionary(in string name,in GameObject go)
+        {
+            goDict.Remove<string,GameObject>(name,out GameObject outObject);
+            return outObject;
+        }
         // string으로 특정 UI 컴포넌트 찾기
         public T GetUI<T>(in string name) where T : Component
         {

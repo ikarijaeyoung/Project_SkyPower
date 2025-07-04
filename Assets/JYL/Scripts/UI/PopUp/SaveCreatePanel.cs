@@ -3,11 +3,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using KYG_skyPower;
 
 namespace JYL
 {
     public class SaveCreatePanel : BaseUI
     {
+        [SerializeField] CharacterInit characterInit;
         [SerializeField] int maxInputCount = 8;
         private TMP_InputField inputField;
         private Image bgImage;
@@ -17,11 +19,9 @@ namespace JYL
         private Color warningColor = Color.red;
         private Color correctColor = Color.green;
 
-        private void Start()
-        {
-        }
         private void OnEnable()
         {
+            characterInit = GetComponent<CharacterInit>();
             bgImage = GetUI<Image>("SaveInput");
             warningText = GetUI<TMP_Text>("SaveWarningText");
             inputField = GetUI<TMP_InputField>("SaveInput");
@@ -43,16 +43,12 @@ namespace JYL
         }
         private void OnStartClick(PointerEventData eventData)
         {
-            // 게임매니저에 현재 선택한 세이브 파일을 지정함
-            // 씬매니저를 통해 씬 전환
-            // GameManager.Instance.selectSaveFile = 지정 함수 또는 직접 지정
-            // GameSceneManager
             if (correctInput)
             {
-                // 다음 씬으로 전환 및 세이브 파일 생성
-                // SaveManager.Instance.PlayerSave;
-                // GameSceneManager.Instance.세이브파일 로드(최신화)
-                // GameSceneManager.Instance.SceneChange();
+                int index = Manager.Game.currentSaveIndex;
+                characterInit.InitCharacterInfo();
+                Manager.Save.GameSave(Manager.Game.saveFiles[index], index+1,inputField.text);
+                Manager.Game.ResetSaveRef();
                 SceneManager.LoadSceneAsync("bMainScene_JYL");
             }
             else

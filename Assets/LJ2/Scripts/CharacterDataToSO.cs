@@ -1,4 +1,5 @@
 using IO;
+using LJ2;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +10,6 @@ public class CharacterDataToSO : MonoBehaviour
 {
     [SerializeField] private CsvTable table;
     private CharacterData characterData;
-    [SerializeField] public CharacterInventory characterInventory;
 
 
     private void Start()
@@ -26,11 +26,9 @@ public class CharacterDataToSO : MonoBehaviour
             characterData = ScriptableObject.CreateInstance<CharacterData>();
 
             characterData.id = int.Parse(table.GetData(i, 0));
-            characterInventory.AddCharacter(characterData.id);
 
-            
             Enum.TryParse<Grade>(table.GetData(i, 1), out characterData.grade);
-            characterData.name = table.GetData(i, 2);
+            characterData.characterName = table.GetData(i, 2);
             //Debug.Log(characterData.name);
             Enum.TryParse<Elemental>(table.GetData(i, 5), out characterData.elemental);
             
@@ -69,8 +67,10 @@ public class CharacterDataToSO : MonoBehaviour
 
             //charictorData.image = (Sprite)AssetDatabase.LoadAssetAtPath($"이미지 파일들 경로/{table.GetData(i, 26)}.Prefab", typeof(Sprite));
 
+            characterData.upgradeUnitDefault = int.Parse(table.GetData(i, 27));
+            characterData.upgradeUnitPlus = int.Parse(table.GetData(i, 28));
 
-            string assetPath = $"Assets/LJ2/Scripts/Charictor/{characterData.name}.asset";
+            string assetPath = $"Assets/LJ2/Scripts/Charictor/{characterData.characterName}.asset";
             AssetDatabase.CreateAsset(characterData, assetPath);
         }
         AssetDatabase.SaveAssets();
