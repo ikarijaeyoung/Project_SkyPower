@@ -10,25 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5043dd61d89d6e247ada5222321b7ca1, type: 3}
-  m_Name: CharictorDataTest
+  m_Name: "\uB9AD \uB9AC\uCCD0+step"
   m_EditorClassIdentifier: 
-  id: 0
-  grade: 0
-  name: test
+  id: 10009
+  grade: 1
+  characterName: "\uB9AD \uB9AC\uCCD0+step"
+  characterModel: {fileID: 6800547682367294024, guid: d02937506a8c017408f6c32c59a06264,
+    type: 3}
   elemental: 0
-  maxLevel: 0
-  hp: 0
-  hpPlus: 0
-  attackType: {fileID: 0}
-  attackDamage: 0
-  damagePlus: 0
-  attackSpeed: 0
-  moveSpeed: 0
-  defense: 0
-  ultCoolDefault: 0
-  ultCoolReduce: 0
+  maxLevel: 30
+  hp: 100
+  hpPlus: 5
+  bulletPrefab: {fileID: 0}
+  attackDamage: 10
+  damagePlus: 5
+  attackSpeed: 1
+  moveSpeed: 100
+  defense: 1
+  ultCoolDefault: 100
+  ultCoolReduce: 10
   ultLore: 
   ultVisual: {fileID: 0}
   parry: 0
   parryCool: 0
   image: {fileID: 0}
+  upgradeUnitDefault: 2500
+  upgradeUnitPlus: 2500

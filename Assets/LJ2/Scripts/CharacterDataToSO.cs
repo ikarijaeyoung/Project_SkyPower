@@ -26,8 +26,8 @@ public class CharacterDataToSO : MonoBehaviour
             characterData = ScriptableObject.CreateInstance<CharacterData>();
 
             characterData.id = int.Parse(table.GetData(i, 0));
-            // characterData.characterModel = (GameObject)AssetDatabase.LoadAssetAtPath($"Assets/LJ2/Prefabs/Charictor/{characterData.id}.prefab", typeof(GameObject));
-            
+            characterData.characterModel = (GameObject)AssetDatabase.LoadAssetAtPath($"Assets/Resources/Prefabs/Models/Chatacter_ModelPeb/{characterData.id}.Prefab", typeof(GameObject));
+            Debug.Log(characterData.characterModel);
             Enum.TryParse<Grade>(table.GetData(i, 1), out characterData.grade);
             characterData.characterName = table.GetData(i, 2);
             //Debug.Log(characterData.name);

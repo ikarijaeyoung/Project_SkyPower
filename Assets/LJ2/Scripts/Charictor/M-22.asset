@@ -10,16 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5043dd61d89d6e247ada5222321b7ca1, type: 3}
-  m_Name: "\uB9AD \uB9AC\uCCD0+"
+  m_Name: M-22
   m_EditorClassIdentifier: 
-  id: 10009
+  id: 10028
   grade: 1
-  characterName: 
-  elemental: 0
+  characterName: M-22
+  characterModel: {fileID: 93737742307616152, guid: d7810790045da7f4882f503d09d0517f,
+    type: 3}
+  elemental: 1
   maxLevel: 30
   hp: 100
   hpPlus: 5
-  attackType: {fileID: 0}
+  bulletPrefab: {fileID: 0}
   attackDamage: 10
   damagePlus: 5
   attackSpeed: 1
@@ -31,6 +33,6 @@ MonoBehaviour:
   ultVisual: {fileID: 0}
   parry: 0
   parryCool: 0
-  image: {fileID: 21300000, guid: 683f7a0c1bea59c488fc02f5f902395b, type: 3}
+  image: {fileID: 0}
   upgradeUnitDefault: 2500
   upgradeUnitPlus: 2500
