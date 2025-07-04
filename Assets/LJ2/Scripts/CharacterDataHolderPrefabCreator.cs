@@ -6,6 +6,9 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class CharacterDataHolderPrefabCreator
 {
+#if UNITY_EDITOR
+
+
     [MenuItem("Tools/CharacterDataHolder 프리팹 자동생성")]
     public static void CreatePrefabsForAllCharacterData()
     {
@@ -56,4 +59,7 @@ public class CharacterDataHolderPrefabCreator
 
         Debug.Log("각 CharacterData별로 CharacterDataHolder 프리팹 자동생성 완료");
     }
+    #endif
+
+
 }

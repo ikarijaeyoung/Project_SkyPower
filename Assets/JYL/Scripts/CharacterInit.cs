@@ -8,7 +8,7 @@ namespace JYL
 {
     public class CharacterInit : MonoBehaviour
     {
-        [SerializeField] CsvTable table;
+        [SerializeField] public CsvTable table;
         void Start()
         {
             CsvReader.Read(table);

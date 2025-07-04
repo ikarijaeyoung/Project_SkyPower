@@ -8,7 +8,8 @@ using UnityEngine;
 
 public class CharacterDataToSO : MonoBehaviour
 {
-    [SerializeField] private CsvTable table;
+#if UNITY_EDITOR
+    [SerializeField] public CsvTable table;
     private CharacterData characterData;
 
 
@@ -79,4 +80,5 @@ public class CharacterDataToSO : MonoBehaviour
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
+    #endif
 }
