@@ -26,7 +26,8 @@ public class CharacterDataToSO : MonoBehaviour
             characterData = ScriptableObject.CreateInstance<CharacterData>();
 
             characterData.id = int.Parse(table.GetData(i, 0));
-
+            // characterData.characterModel = (GameObject)AssetDatabase.LoadAssetAtPath($"Assets/LJ2/Prefabs/Charictor/{characterData.id}.prefab", typeof(GameObject));
+            
             Enum.TryParse<Grade>(table.GetData(i, 1), out characterData.grade);
             characterData.characterName = table.GetData(i, 2);
             //Debug.Log(characterData.name);
@@ -45,10 +46,11 @@ public class CharacterDataToSO : MonoBehaviour
             characterData.ultCoolDefault = int.Parse(table.GetData(i, 18));
             characterData.ultCoolReduce = int.Parse(table.GetData(i, 19));
             //characterData.ultLore = table.GetData(i, 21);
-            //characterData.ultVisual = (GameObject)AssetDatabase.LoadAssetAtPath($"정해진 경로/{table.GetData(i, 22)}.Prefab", typeof(GameObject));
+            //characterData.ultVisual = (GameObject)AssetDatabase.LoadAssetAtPath($"정해진 경로/{character.id}.Prefab", typeof(GameObject));
+            //characterData.bulletPrefab = (GameObject)AssetDatabase.LoadAssetAtPath($"정해진 경로/{character.id}.Prefab", typeof(GameObject));
 
             Enum.TryParse<Parry>(table.GetData(i, 23), out characterData.parry);
-            Debug.Log(characterData.parry);
+            // Debug.Log(characterData.parry);
             /* TryParse Debug 코드
             string raw = table.GetData(i, 23);
             string clean = raw.Trim();
