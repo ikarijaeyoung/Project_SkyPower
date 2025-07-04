@@ -363,6 +363,7 @@ namespace JYL
             ScoreManager.Instance.onScoreChanged.RemoveListener(GetUltGage);
         }
     }
+
 }
 
 // 버튼 순서에 맞게 알아서 배치되게

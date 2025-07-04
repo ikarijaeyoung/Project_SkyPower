@@ -143,7 +143,7 @@ namespace JYL
                     // TODO Add Test
                     AddUIToDictionary(go.gameObject);
                     imgIndex++;
-                    go.GetComponentInChildren<Image>().sprite = character.image;
+                    go.GetComponentInChildren<Image>().sprite = character.icon;
                     GetEvent($"{go.name}").Drag += BeginIconDrag;
                     GetEvent($"{go.name}").Drag += IconDrag;
                     GetEvent($"{go.name}").EndDrag += OnIconDragEnd;
