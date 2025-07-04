@@ -9,7 +9,10 @@ namespace IO
     public class Csv
     {
         [SerializeField] private string _filePath;
-        [SerializeField] string ResourcePath;
+        [SerializeField] private string ResourcePath;
+
+        public string filePath => _filePath;
+        public string resourcePath => ResourcePath;
         public string FilePath => Path.Combine(CsvReader.BasePath, _filePath);
 
         [field: SerializeField] public char SplitSymbol { get; private set; }

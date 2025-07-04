@@ -38,7 +38,7 @@ namespace IO
             PrintResult(csv, isReadSuccessful);
         }
 
-        private static bool ReadToTable(CsvTable csv, string[] lines)
+        public static bool ReadToTable(CsvTable csv, string[] lines)
         {
             string[] firstLineFields = lines[0].Split(csv.SplitSymbol);
             int rows = lines.Length;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using KYG_skyPower;
 using JYL;
+using Unity.VisualScripting;
 
 namespace LJ2
 {
@@ -40,6 +41,8 @@ namespace LJ2
 
         public Parry parry;
         public int parryCool;
+
+        public Sprite icon;
         public Sprite image;
 
         public int upgradeUnit;
@@ -83,6 +86,8 @@ namespace LJ2
             attackSpeed = characterData.attackSpeed;
             moveSpeed = characterData.moveSpeed;
             defense = characterData.defense;
+            image = characterData.image;
+            icon = characterData.icon;
             image = characterData.image;
 
 

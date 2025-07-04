@@ -8,7 +8,8 @@ using UnityEngine;
 
 public class CharacterDataToSO : MonoBehaviour
 {
-    [SerializeField] private CsvTable table;
+#if UNITY_EDITOR
+    [SerializeField] public CsvTable table;
     private CharacterData characterData;
 
 
@@ -27,10 +28,11 @@ public class CharacterDataToSO : MonoBehaviour
 
             characterData.id = int.Parse(table.GetData(i, 0));
             characterData.characterModel = (GameObject)AssetDatabase.LoadAssetAtPath($"Assets/Resources/Prefabs/Models/Chatacter_ModelPeb/{characterData.id}.Prefab", typeof(GameObject));
-            Debug.Log(characterData.characterModel);
+            characterData.icon = (Sprite)AssetDatabase.LoadAssetAtPath($"Assets/Resources/Sprites/Characters/Image_Icon/{characterData.id}.png", typeof(Sprite));
+            characterData.image = (Sprite)AssetDatabase.LoadAssetAtPath($"Assets/Resources/Sprites/Characters/Image_Origin/{characterData.id}.png", typeof(Sprite));
+
             Enum.TryParse<Grade>(table.GetData(i, 1), out characterData.grade);
             characterData.characterName = table.GetData(i, 2);
-            //Debug.Log(characterData.name);
             Enum.TryParse<Elemental>(table.GetData(i, 5), out characterData.elemental);
             
             characterData.maxLevel = int.Parse(table.GetData(i, 7));
@@ -67,7 +69,7 @@ public class CharacterDataToSO : MonoBehaviour
             int.TryParse(table.GetData(i, 24), out characterData.parryCool);
             
 
-            //charictorData.image = (Sprite)AssetDatabase.LoadAssetAtPath($"이미지 파일들 경로/{table.GetData(i, 26)}.Prefab", typeof(Sprite));
+            
 
             characterData.upgradeUnitDefault = int.Parse(table.GetData(i, 27));
             characterData.upgradeUnitPlus = int.Parse(table.GetData(i, 28));
@@ -78,4 +80,5 @@ public class CharacterDataToSO : MonoBehaviour
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
+    #endif
 }
