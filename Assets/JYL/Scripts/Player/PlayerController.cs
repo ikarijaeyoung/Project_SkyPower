@@ -137,11 +137,15 @@ namespace JYL
                 rightMargin = 0.9f;
                 Debug.LogWarning("오른쪽 UI 참조 안됐음");
             }
+
+            CharacterParameterSetting();
+
         }
             // 캐릭터 필드 세팅
         private void CharacterParameterSetting()
         {
             //mainCharController.
+            attackPower = mainCharController.attackDamage;
         }
         private void SubscribeEvents()
         {
