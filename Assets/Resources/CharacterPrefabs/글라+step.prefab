@@ -50,12 +50,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterData: {fileID: 11400000, guid: 957393b320ca78241b45832709edbf1e, type: 2}
-  saveTester: {fileID: 0}
   parrying: {fileID: 3320053539866327546}
   ultimate: {fileID: 7118494388672368131}
-  id: 0
   grade: 0
-  name: 
+  charName: 
   elemental: 0
   level: 0
   step: 0
@@ -65,6 +63,7 @@ MonoBehaviour:
   attackSpeed: 0
   moveSpeed: 0
   defense: 0
+  partySet: 0
   ultLevel: 0
   ultDamage: 0
   ultCool: 0
@@ -127,6 +126,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Laser
+      objectReference: {fileID: 0}
+    - target: {fileID: 1245939337628991872, guid: 9f306954192d7074d9988a9d41e2f2de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5209182111593434329, guid: 9f306954192d7074d9988a9d41e2f2de,
         type: 3}
@@ -252,6 +256,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Erase
       objectReference: {fileID: 0}
+    - target: {fileID: 4856827749028106880, guid: e90ac312efb039242bc3fbe9269974a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -275,6 +284,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shield
+      objectReference: {fileID: 0}
+    - target: {fileID: 2455596578737599570, guid: 9a8965262ae861b4ead53351321299a8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8025910177887852343, guid: 9a8965262ae861b4ead53351321299a8,
         type: 3}

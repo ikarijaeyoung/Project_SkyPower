@@ -283,10 +283,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f62f5b9533e00459de0ad62a8eba38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableLoadingScreen: 0
-  showLoadingOnSceneStart: 0
-  minLoadingTime: 1
-  customLoadingScreenPrefab: {fileID: 0}
+  enableTransition: 1
+  showTransitionOnSceneStart: 0
+  minTransitionTime: 2
+  transitionScreenPrefab: {fileID: 0}
+  transitionPrefabPath: YSK/UI/TransitionCanvas1
+  transitionTexts:
+  - "\uC52C\uC744 \uB85C\uB529 \uC911\uC785\uB2C8\uB2E4..."
+  - "\uC7A0\uC2DC\uB9CC \uAE30\uB2E4\uB824\uC8FC\uC138\uC694..."
+  - "\uACE7 \uC2DC\uC791\uB429\uB2C8\uB2E4..."
+  textChangeInterval: 0.8
+  enableTextAnimation: 1
+  transitionFont: {fileID: 0}
+  fontSize: 56
+  textColor: {r: 1, g: 1, b: 1, a: 1}
+  textAlignment: 514
+  enableTextShadow: 0
+  shadowColor: {r: 0, g: 0, b: 0, a: 1}
+  shadowOffset: {x: 1, y: -1}
+  transitionColor: {r: 0, g: 0, b: 0, a: 1}
+  fadeOutDuration: 1
 --- !u!4 &257510709
 Transform:
   m_ObjectHideFlags: 0
@@ -684,10 +700,10 @@ MonoBehaviour:
       m_Calls: []
   m_text: Press Any key...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6c3783b6c551cf040a8f54e80b06db28, type: 2}
-  m_sharedMaterial: {fileID: -5548453337289332318, guid: 6c3783b6c551cf040a8f54e80b06db28,
-    type: 2}
-  m_fontSharedMaterials: []
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -819,10 +835,10 @@ MonoBehaviour:
       m_Calls: []
   m_text: Sky Power
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6c3783b6c551cf040a8f54e80b06db28, type: 2}
-  m_sharedMaterial: {fileID: -5548453337289332318, guid: 6c3783b6c551cf040a8f54e80b06db28,
-    type: 2}
-  m_fontSharedMaterials: []
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
