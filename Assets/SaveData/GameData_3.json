@@ -1,10 +1,11 @@
 {
-    "playerName": "ggg",
+    "playerName": "5555555",
+    "gold": 1000,
     "characterInventory": {
         "characters": [
             {
                 "id": 10001,
-                "level": 1,
+                "level": -1,
                 "step": 0,
                 "partySet": 3,
                 "equipId": [
@@ -26,9 +27,9 @@
             },
             {
                 "id": 10003,
-                "level": 30,
+                "level": -1,
                 "step": 0,
-                "partySet": 0,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -48,7 +49,7 @@
             },
             {
                 "id": 10005,
-                "level": 1,
+                "level": -1,
                 "step": 0,
                 "partySet": 3,
                 "equipId": [
@@ -59,9 +60,9 @@
             },
             {
                 "id": 10006,
-                "level": 20,
+                "level": -1,
                 "step": 0,
-                "partySet": 1,
+                "partySet": 3,
                 "equipId": [
                     -1,
                     -1,
@@ -70,7 +71,7 @@
             },
             {
                 "id": 10007,
-                "level": 1,
+                "level": -1,
                 "step": 0,
                 "partySet": 3,
                 "equipId": [
@@ -81,7 +82,7 @@
             },
             {
                 "id": 10008,
-                "level": 1,
+                "level": -1,
                 "step": 0,
                 "partySet": 3,
                 "equipId": [
@@ -92,9 +93,9 @@
             },
             {
                 "id": 10009,
-                "level": 10,
+                "level": 1,
                 "step": 0,
-                "partySet": 2,
+                "partySet": 0,
                 "equipId": [
                     -1,
                     -1,
@@ -158,9 +159,9 @@
             },
             {
                 "id": 10015,
-                "level": -1,
+                "level": 1,
                 "step": 0,
-                "partySet": 3,
+                "partySet": 1,
                 "equipId": [
                     -1,
                     -1,
@@ -290,8 +291,19 @@
             },
             {
                 "id": 10027,
-                "level": -1,
+                "level": 1,
                 "step": 0,
+                "partySet": 2,
+                "equipId": [
+                    -1,
+                    -1,
+                    -1
+                ]
+            },
+            {
+                "id": 10028,
+                "level": -1,
+                "step": 1,
                 "partySet": 3,
                 "equipId": [
                     -1,
@@ -313,28 +325,28 @@
             "world": 1,
             "stage": 2,
             "score": 0,
-            "unlock": false,
+            "unlock": true,
             "isClear": false
         },
         {
             "world": 1,
             "stage": 3,
             "score": 0,
-            "unlock": false,
+            "unlock": true,
             "isClear": false
         },
         {
             "world": 1,
             "stage": 4,
             "score": 0,
-            "unlock": false,
+            "unlock": true,
             "isClear": false
         },
         {
             "world": 1,
             "stage": 5,
             "score": 0,
-            "unlock": false,
+            "unlock": true,
             "isClear": false
         },
         {
@@ -348,7 +360,7 @@
             "world": 2,
             "stage": 2,
             "score": 0,
-            "unlock": false,
+            "unlock": true,
             "isClear": false
         },
         {
@@ -437,41 +449,6 @@
         },
         {
             "world": 4,
-            "stage": 5,
-            "score": 0,
-            "unlock": false,
-            "isClear": false
-        },
-        {
-            "world": 5,
-            "stage": 1,
-            "score": 0,
-            "unlock": false,
-            "isClear": false
-        },
-        {
-            "world": 5,
-            "stage": 2,
-            "score": 0,
-            "unlock": false,
-            "isClear": false
-        },
-        {
-            "world": 5,
-            "stage": 3,
-            "score": 0,
-            "unlock": false,
-            "isClear": false
-        },
-        {
-            "world": 5,
-            "stage": 4,
-            "score": 0,
-            "unlock": false,
-            "isClear": false
-        },
-        {
-            "world": 5,
             "stage": 5,
             "score": 0,
             "unlock": false,

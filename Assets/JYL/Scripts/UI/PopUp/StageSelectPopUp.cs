@@ -10,8 +10,6 @@ namespace JYL
     public class StageSelectPopUp : BaseUI
     {
         private List<StageRuntimeData> stageData;
-        [SerializeField]private Sprite lockSprite;
-        [SerializeField]private Sprite unLockSprite;
         // UIManager에 현재 선택한 월드의 인덱스를 참조할 필요가 있음.
         // 만약 해당 월드가 lock된 경우, 클릭을 막음. 해당 정보는 게임 매니저 또는 스테이지매니저, 씬매니저에 있음
         void Start()
@@ -24,8 +22,12 @@ namespace JYL
             {
                 if (stageData[i].subStages[0].isUnlocked)
                 {
-                    GetUI<Image>($"Stage{i + 1}").sprite = unLockSprite;
+                    Image img = GetUI<Image>($"StageFront{i + 1}");
+                    Color alpha = img.color;
+                    alpha.a = 0f;
+                    img.color = alpha;
                     GetEvent($"Stage{i + 1}").Click += OnStageClick;
+                    Debug.Log("수행됨");
                     if (i + 1 <= stageData.Count && !stageData[i + 1].subStages[0].isUnlocked)
                     {
                         GetUI($"World{i + 1}SelectIcon").gameObject.SetActive(true);
@@ -33,8 +35,15 @@ namespace JYL
                 }
                 else
                 {
-                    GetUI<Image>($"Stage{i+1}").sprite = lockSprite;
+                    GetUI<Button>($"Stage{i + 1}").interactable = false;
                 }
+            }
+        }
+        private void OnDisable()
+        {
+            for(int i =0;i<stageData.Count;i++)
+            {
+                GetEvent($"Stage{i+1}").Click-= OnStageClick;
             }
         }
         void Update()

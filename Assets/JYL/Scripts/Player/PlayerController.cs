@@ -3,7 +3,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using KYG_skyPower;
 
 namespace JYL
 {
@@ -11,7 +13,7 @@ namespace JYL
     {
         [Header("Set Scriptable Object")]
         [SerializeField] PlayerModel playerModel; // -> 캐릭터 컨트롤러로 대체 예정
-
+        [SerializeField] HUDPresenter hud;
         [Header("Set References")]
         [SerializeField] List<ObjectPool> bulletPools;
         [SerializeField] public Transform muzzlePoint { get; set; }
@@ -24,6 +26,7 @@ namespace JYL
         [Header("Set Value")]
         [Range(0.1f, 5)][SerializeField] float bulletReturnTimer = 2f;
 
+        public UnityEvent<int> onHpChanged;
         private PlayerInput playerInput;
         private Rigidbody rig;
         private InputAction attackAction;
@@ -31,12 +34,22 @@ namespace JYL
         private InputAction parryAction2;
         private InputAction ultAction;
 
-        private CharactorController mainCharController;
-        private CharactorController sub1CharController;
-        private CharactorController sub2CharController;
+        public CharactorController mainCharController;
+        public CharactorController sub1CharController;
+        public CharactorController sub2CharController;
         private CharacterSaveLoader charDataLoader;
 
-        private int hp { get; set; }
+        private int hp;
+        public int Hp
+        {
+            get { return hp; }
+            private set 
+            {
+                hp = value;
+                onHpChanged?.Invoke(hp);
+            }
+        }
+
         private int attackPower { get; set; }
         private float attackSpeed { get; set; }
         private float moveSpeed { get; set; }
@@ -82,15 +95,13 @@ namespace JYL
             {
                 parryTimer -= Time.deltaTime;
             }
-            if (hp<=0)
-            {
-                // TODO: 게임오버
-            }
         }
 
         private void FixedUpdate() { }
 
-        private void LateUpdate() { }
+        private void LateUpdate() 
+        {
+        }
 
         private void OnDisable()
         {
@@ -117,7 +128,7 @@ namespace JYL
                         break;
                 }
             }
-
+            // 오브젝트 풀 설정
             bulletPools[0].poolObject = mainCharController.bulletPrefab;
             bulletPools[0].ClearPool();
             bulletPools[0].CreatePool();
@@ -130,6 +141,8 @@ namespace JYL
             ultAction = playerInput.actions["Ult"];
             parryAction1 = playerInput.actions["Parry1"];
             parryAction2 = playerInput.actions["Parry2"];
+
+
 
             if (leftUI != null)
             {
@@ -275,7 +288,7 @@ namespace JYL
             fireRoutine = null;
         }
 
-        private void TakeDamage(int damage)
+        public void TakeDamage(int damage)
         {
             if(mainCharController.defense>0)
             {
@@ -284,8 +297,29 @@ namespace JYL
             }
             if(mainCharController.defense <=0)
             {
-                hp-=damage;
+                Hp-=damage;
+                if(Hp <= 0)
+                {
+                    Hp = 0;
+                    Manager.Game.SetGameOver();
+                }
+                hud.CurHp = Hp;
             }
+        }
+
+        public void GetUltGage(int amount)
+        {
+            if(ultGage + amount >100)
+            {
+                ultGage = 100;
+                hud.UltGage = 1f;
+            }
+            else
+            {
+                ultGage += amount;
+                hud.UltGage = (float)ultGage / 100;
+            }
+            
         }
 
         private void UseUlt(InputAction.CallbackContext ctx)
@@ -318,6 +352,7 @@ namespace JYL
             ultAction.started += UseUlt;
             parryAction1.started += UseParry1;
             parryAction2.started += UseParry2;
+            ScoreManager.Instance.onScoreChanged.AddListener(GetUltGage);
         }
         private void UnSubscribeEvents()
         {
@@ -325,6 +360,7 @@ namespace JYL
             ultAction.started -= UseUlt;
             parryAction1.started -= UseParry1;
             parryAction2.started -= UseParry2;
+            ScoreManager.Instance.onScoreChanged.RemoveListener(GetUltGage);
         }
     }
 }

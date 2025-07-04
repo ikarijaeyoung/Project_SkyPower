@@ -51,13 +51,30 @@ public struct CharacterSave
     public CharacterSave(int id)
     {
         this.id = id;
-        this.level = -1; // Default level // 소유 시, 1레벨로 변경
+        switch(id)
+        {
+            case 10009:
+                partySet = PartySet.Main;
+                level = 1;
+                break;
+            case 10015:
+                partySet = PartySet.Sub1;
+                level = 1;
+                break;
+            case 10027:
+                partySet = PartySet.Sub2;
+                level = 1;
+                break;
+            default:
+                level = -1;// Default level // 소유 시, 1레벨로 변경
+                partySet = PartySet.None;
+                break;
+        }
         this.step = 0; // Default step
         equipId = new int[3];
         equipId[0] = -1;
         equipId[1] = -1;
         equipId[2] = -1;
-        partySet = PartySet.None;
     }
 }
 public enum PartySet { Main, Sub1, Sub2, None }

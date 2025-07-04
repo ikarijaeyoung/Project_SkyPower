@@ -11,20 +11,25 @@ namespace JYL
 {
     public class TitlePresenter : BaseUI
     {
-        private GameObject titleImage;
-
+        public bool isTitleScene = true;
+        private bool isAnyBtnPressed = false;
         void OnEnable() => Init();
 
         void OnDisable()
         {
             GetEvent("PressKeyBack").Click -= OnAnyBtnClick;
             UIManager.Instance.CleanPopUp();
+            isTitleScene = false;
         }
-
+        private void LateUpdate()
+        {
+            if(isAnyBtnPressed)
+            {
+                InputSystem.onAnyButtonPress.CallOnce(action => OnAnyBtnPress(action));
+            }
+        }
         private void Init()
         {
-            titleImage = GetUI("TitleImage");
-
             InputSystem.onAnyButtonPress.CallOnce(action => OnAnyBtnPress(action));
 
             GetEvent("PressKeyBack").Click += OnAnyBtnClick;
@@ -32,13 +37,14 @@ namespace JYL
 
         private void OnAnyBtnPress(InputControl control)
         {
-            if (!PopUpUI.IsPopUpActive)
+            if (!PopUpUI.IsPopUpActive&&isTitleScene)
             {
                 // 버튼에 해당하면서 키보드 또는 게임패드 또는 마우스 왼쪽버튼 입력일 경우
                 if (control is ButtonControl && (control.device is Keyboard || control.device is Gamepad gamepad))
                 {
                     UIManager.Instance.ShowPopUp<SavePanel>();
                 }
+                isAnyBtnPressed = true;
             }
         }
         private void OnAnyBtnClick(PointerEventData eventData)
