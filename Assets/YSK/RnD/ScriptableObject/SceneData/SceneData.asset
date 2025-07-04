@@ -13,38 +13,33 @@ MonoBehaviour:
   m_Name: SceneData
   m_EditorClassIdentifier: 
   scenes:
-  - sceneName: RndMainMenu
-    displayName: "\uBA54\uC778 \uBA54\uB274"
-    description: "\uBA54\uC778 \uBA54\uB274 \uC52C"
-    requiresLoadingScreen: 1
-    minLoadingTime: 1
-  - sceneName: RnDMainStageSelectScene
-    displayName: "\uBA54\uC778 \uC2A4\uD14C\uC774\uC9C0 \uC120\uD0DD"
-    description: "\uBA54\uC778 \uC2A4\uD14C\uC774\uC9C0 \uC120\uD0DD \uC52C"
+  - sceneName: aTitleScene_JYL
+    displayName: TitleScenes
+    description: "\uD0C0\uC774\uD2C0"
+    sceneType: 0
     requiresLoadingScreen: 0
-    minLoadingTime: 1
-  - sceneName: RnDSubStageSelectScene
-    displayName: "\uC11C\uBE0C \uC2A4\uD14C\uC774\uC9C0 \uC120\uD0DD"
-    description: "\uC11C\uBE0C \uC2A4\uD14C\uC774\uC9C0 \uC120\uD0DD \uC52C"
-    requiresLoadingScreen: 1
-    minLoadingTime: 1
-  - sceneName: RnDBaseStageScene
-    displayName: "\uAE30\uBCF8 \uC2A4\uD14C\uC774\uC9C0"
-    description: "\uAE30\uBCF8 \uAC8C\uC784 \uC2A4\uD14C\uC774\uC9C0"
-    requiresLoadingScreen: 1
-    minLoadingTime: 1.5
-  - sceneName: RnDEndlessStageScene
-    displayName: "\uBB34\uD55C \uC2A4\uD14C\uC774\uC9C0"
-    description: "\uBB34\uD55C \uC2A4\uD14C\uC774\uC9C0"
-    requiresLoadingScreen: 1
-    minLoadingTime: 1.5
-  - sceneName: RnDPartyScene
-    displayName: "\uD30C\uD2F0"
-    description: "\uD30C\uD2F0 \uC52C"
-    requiresLoadingScreen: 1
-    minLoadingTime: 1
-  - sceneName: RnDStoreScene
-    displayName: "\uC0C1\uC810"
-    description: "\uC0C1\uC810 \uC52C"
-    requiresLoadingScreen: 1
-    minLoadingTime: 1
+    minLoadingTime: 0.1
+  - sceneName: bMainScene_JYL
+    displayName: "\uBA54\uC778 \uBA54\uB274"
+    description: 
+    sceneType: 1
+    requiresLoadingScreen: 0
+    minLoadingTime: 0.1
+  - sceneName: cStoreScene_JYL
+    displayName: "\uC0C1\uC810\uC52C"
+    description: 
+    sceneType: 2
+    requiresLoadingScreen: 0
+    minLoadingTime: 0.1
+  - sceneName: dStageScene_JYL
+    displayName: "\uC2A4\uD14C\uC774\uC9C0"
+    description: 
+    sceneType: 4
+    requiresLoadingScreen: 0
+    minLoadingTime: 0.1
+  - sceneName: RnDBaseStageTestScene
+    displayName: StageTestScene
+    description: 
+    sceneType: 5
+    requiresLoadingScreen: 0
+    minLoadingTime: 0.1

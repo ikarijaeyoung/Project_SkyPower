@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static EnemyData; // 
 
 namespace JYL
 {
     public class ObjectPool : MonoBehaviour
     {
+        public EnemyType enemyType;
         [Header("Set References")]
         [SerializeField] PooledObject poolObject;
         

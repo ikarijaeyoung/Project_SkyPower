@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class EnemyItemManager : MonoBehaviour
 {
-    // 아이템 드롭 매니저
+    // TODO : 임시로 EnemyItemManager를 사용함. => ScoreManager.cs 로 옮길것인가? 그대로 사용할 것인가?
     public GameObject itemPrefab;
     public int itemCount = 40; // 아이템 개수
     public float itemMoveLimitRange = 2f; // 아이템이 떨어지는 반경 제한
     public float dropItemSpeed = 0.5f; // 아이템이 퍼져나가는 속력 , 아이템이 떨어지는 속력.
     public float itemStopTime = 1f; // 몇 초 뒤에 멈출것인가.
-
     void OnEnable()
     {
         Enemy.OnEnemyDied += HandleEnemyDeath;
@@ -43,8 +43,11 @@ public class EnemyItemManager : MonoBehaviour
 
         foreach (Rigidbody rb in itemRbs)
         {
-            rb.velocity = Vector3.zero;
-            rb.AddForce(new Vector3(dropItemSpeed, 0, 0), ForceMode.Impulse);
-        }
+            if (rb != null)
+            {
+                rb.velocity = Vector3.zero;
+                rb.AddForce(new Vector3(0, 0, -dropItemSpeed), ForceMode.Impulse);
+            }
+        }  
     }
 }

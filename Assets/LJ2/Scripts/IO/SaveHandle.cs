@@ -116,7 +116,7 @@ namespace IO
         private void PrintErrorMessage(string message)
         {
 #if UNITY_EDITOR
-            Debug.LogError(message);
+            Debug.LogWarning(message);
 #endif
             // Add Error Log - To be replaced with a centralized logging system in the future
         }
@@ -143,7 +143,7 @@ namespace IO
             Directory.CreateDirectory(BasePath);
 
             string filePath = GetFilePath(target.FileName, index);
-            string jsonString = JsonUtility.ToJson(target);
+            string jsonString = JsonUtility.ToJson(target,true);
 
             if (IsFileEmpty(jsonString)) return;
 
@@ -161,11 +161,19 @@ namespace IO
         public void Load<T>(ref T target, int index) where T : SaveData, new()
         {
             string filePath = GetFilePath(target.GetType().ToString(), index);
+
+            if (!IsFileAccessible(filePath))
+            {
+                Debug.Log($"파일에 접촉 불가능:{filePath}");
+                return;
+            }
             string jsonString = File.ReadAllText(filePath);
 
-            if (!IsFileAccessible(filePath)) return;
-
-            if (IsFileEmpty(jsonString)) return;
+            if (IsFileEmpty(jsonString))
+            {
+                Debug.Log($"파일이 비어있음:{jsonString}");
+                return;
+            }
 
             target = JsonUtility.FromJson<T>(jsonString);
         }

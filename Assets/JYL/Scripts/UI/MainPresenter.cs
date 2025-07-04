@@ -1,33 +1,48 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+using LJ2;
+
 namespace JYL
 {
     public class MainPresenter : BaseUI
     {
         private GameObject mainScreen;
-        private RawImage charImg1;
-        private RawImage charImg2;
-        private RawImage charImg3;
-        
+        private Image charImg1;
+        private Image charImg2;
+        private Image charImg3;
+        private event Action onEnterMain;
+        private CharacterSaveLoader characterLoader;
         void Start()
         {
+            characterLoader = GetComponent<CharacterSaveLoader>();
+            characterLoader.GetCharPrefab();
+
             mainScreen = GetUI("MainScreen");
-            charImg1 = GetUI<RawImage>("CharImage1");
-            charImg2 = GetUI<RawImage>("CharImage2");
-            charImg3 = GetUI<RawImage>("CharImage3");
-            
+            charImg1 = GetUI<Image>("CharImage1");
+            charImg2 = GetUI<Image>("CharImage2");
+            charImg3 = GetUI<Image>("CharImage3");
+            SetPartyImage();
+
             GetEvent("ShopBtn").Click += OpenShop;
             GetEvent("PartySetBtn").Click += OpenPartySetting;
             GetEvent("PlayBtn").Click += OpenGameMode;
-            GetEvent("InfoBtn").Click += OpenGameInfo;
+
+            // GetEvent("InfoBtn").Click += OpenGameInfo;
+        }
+        private void LateUpdate()
+        {
+            CheckPopUp();
         }
         private void OpenShop(PointerEventData eventData)
         {
             // TODO : 상점 구현
             // GameSceneManager.Instance.SceneChange("Shop");
+            SceneManager.LoadSceneAsync("cStoreScene_JYL");
         }
         private void OpenPartySetting(PointerEventData eventData)
         {
@@ -37,9 +52,44 @@ namespace JYL
         {
             UIManager.Instance.ShowPopUp<GameModePopUp>();
         }
-        private void OpenGameInfo(PointerEventData eventData)
+        //private void OpenGameInfo(PointerEventData eventData)
+        //{
+        //    // TODO : 후순위 구현 예정
+        //}
+        private void SetPartyImage()
         {
-            // TODO : 후순위 구현 예정
+            foreach (CharactorController character in characterLoader.charactorController)
+            {
+                switch (character.partySet)
+                {
+                    case PartySet.Main:
+                        charImg1.sprite = character.image;
+                        break;
+                    case PartySet.Sub1:
+                        charImg2.sprite = character.image;
+                        break;
+                    case PartySet.Sub2:
+                        charImg3.sprite = character.image;
+                        break;
+                }
+            }
+        }
+        private void CheckPopUp()
+        {
+            if (PopUpUI.IsPopUpActive && onEnterMain == null)
+            {
+                onEnterMain += characterLoader.GetCharPrefab;
+                onEnterMain += SetPartyImage;
+            }
+            else if (!PopUpUI.IsPopUpActive)
+            {
+                onEnterMain?.Invoke();
+                if (onEnterMain != null)
+                {
+                    onEnterMain -= characterLoader.GetCharPrefab;
+                    onEnterMain -= SetPartyImage;
+                }
+            }
         }
     }
 }

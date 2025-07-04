@@ -189,40 +189,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0c563732c7779bd48a0d43bee27514ec, type: 2}
   maxMainStages: 4
   maxSubStages: 5
+  dataManager: {fileID: 0}
   endPoint: {fileID: 68435474}
   startPoint: {fileID: 1109402535}
   speed: 1
   mapLength: 19.8
+  useGameSceneManagerTransition: 1
   enableTransition: 1
-  useFadeTransition: 1
-  fadePanel: {fileID: 0}
-  fadeDuration: 1
-  fadeCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  fadeColor: {r: 0, g: 0, b: 0, a: 1}
-  dataManager: {fileID: 0}
 --- !u!4 &159610134
 Transform:
   m_ObjectHideFlags: 0
@@ -507,7 +480,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_sharedMaterial: {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -3859960208976514627, guid: 09b067a071911144bbc0792c4cdd9576, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:

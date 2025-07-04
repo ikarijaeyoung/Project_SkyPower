@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using KYG_skyPower;
 
 public class EnemyItem : MonoBehaviour
 {
@@ -42,7 +43,8 @@ public class EnemyItem : MonoBehaviour
     }
     void Collect()
     {
-        Debug.Log("Enemy item collected.");
+        ScoreManager.Instance.AddScore(1);
+        Debug.Log($"{ScoreManager.Instance.Score}");
         Destroy(gameObject);
     }
 }

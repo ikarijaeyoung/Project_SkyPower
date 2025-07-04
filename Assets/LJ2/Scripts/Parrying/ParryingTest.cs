@@ -10,16 +10,17 @@ public class ParryingTest : MonoBehaviour
     [SerializeField] float destroyRadius;
     [SerializeField] LayerMask enemyBullet;
     [SerializeField] LayerMask destroyLayer;
-    [SerializeField] SphereCollider charactorCollider;
-    private Coroutine coroutine;
+    [SerializeField] SphereCollider characterCollider;
+    private Coroutine parryCoroutine;
 
+    public bool isReflect = true;
 
     public YieldInstruction coroutineDelay;
 
     private void Awake()
     {
         coroutineDelay = new WaitForSeconds(invincibleTime);
-        charactorCollider = GetComponent<SphereCollider>();
+        characterCollider = GetComponent<SphereCollider>();
     }
 
     private void Update()
@@ -33,6 +34,7 @@ public class ParryingTest : MonoBehaviour
     public void Parrying()
     {
         Collider[] canParrying = Physics.OverlapSphere(transform.position, parryingRadius, enemyBullet);
+        Transform[] trasnforms = new Transform[canParrying.Length];
         Debug.Log("패링 진입");
         if (canParrying.Length > 0)
         {
@@ -44,21 +46,34 @@ public class ParryingTest : MonoBehaviour
                 Debug.Log("반복문 진입");
 
             }
-            coroutine = StartCoroutine(EraseCoroutine());
+            parryCoroutine = StartCoroutine(EraseCoroutine());
 
         }
         else return;
 
+        if (isReflect)
+        {
+            foreach(Transform t in trasnforms)
+            {
+                Rigidbody rb = t.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    Vector3 reflectDirection = (t.position - transform.position).normalized;
+                    rb.AddForce(reflectDirection * 10f, ForceMode.Impulse);
+                    Debug.Log("반사 시도");
+                }
+            }
+        }
     }
     
     private IEnumerator InvincibleCoroutine()
     {
         Debug.Log("코루틴 진입");
 
-        charactorCollider.enabled = false;
+        characterCollider.enabled = false;
         yield return coroutineDelay;
-        charactorCollider.enabled = true;
-        coroutine = null;
+        characterCollider.enabled = true;
+        parryCoroutine = null;
         yield break;
 
     }
@@ -74,12 +89,12 @@ public class ParryingTest : MonoBehaviour
         {
             Debug.Log("반복문 진입");
 
-            c.gameObject.SetActive(false);
+            c.gameObject.SetActive(false); 
 
         }
         
         hits = null;
-        coroutine = null;
+        parryCoroutine = null;
         Debug.Log("코루틴 종료");
 
         yield break;

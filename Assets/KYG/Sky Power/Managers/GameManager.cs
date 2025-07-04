@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
 using LJ2;
+using IO;
 
 
 namespace KYG_skyPower
@@ -30,29 +31,33 @@ namespace KYG_skyPower
     {
         public UnityEvent onGameOver, onPause, onResume, onGameClear;
 
-        public CharictorSave[] saveFiles = new CharictorSave[3]; // 세이브 파일 3개
+        public GameData[] saveFiles = new GameData[3]; // 세이브 파일 3개
 
         public int currentSaveIndex { get; private set; } = 0;
 
-        public CharictorSave CurrentSave => saveFiles[currentSaveIndex]; // 세이브 파일 인덱스로 배열
+        public GameData CurrentSave => saveFiles[currentSaveIndex]; // 세이브 파일 인덱스로 배열
 
         public bool isGameOver { get; private set; } // 게임 오버
         public bool isPaused { get; private set; } // 게임 일시 정지
 
         public bool isGameCleared { get; private set; } // 게임 클리어
 
-
+        public int selectWorldIndex=0;
+        public int selectStageIndex=0;
 
         //[SerializeField] private int defaultPlayerHP = 5;
         //public int playerHp { get; private set; } // 플레이어에 붙을 수도 있지만 나중에 추가 될지 몰라 주석 처리
 
         public override void Init() // 게임 시작시 세이브 데이터 로드
         {
+            ResetSaveRef();
+        }
+        public void ResetSaveRef()
+        {
             for (int i = 0; i < saveFiles.Length; i++)
             {
-                saveFiles[i] = new CharictorSave();
-                SaveManager.Instance.PlayerLoad(saveFiles[i], i + 1); // 인덱스 1부터
-
+                saveFiles[i] = new GameData();
+                SaveManager.Instance.GameLoad(ref saveFiles[i], i + 1); // 인덱스 1부터
             }
         }
 
@@ -113,6 +118,11 @@ namespace KYG_skyPower
             Debug.Log("게임 재개");
         }
 
+        public void ResetStageIndex()
+        {
+            selectWorldIndex = 0;
+            selectStageIndex = 0;
+        }
         /*private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape))

@@ -1,16 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Rendering.LookDev;
-using UnityEngine;
+using KYG_skyPower;
+using TMPro;
 using UnityEngine.EventSystems;
+
 namespace JYL
 {
     public class SavePanel : BaseUI
     {
         private void OnEnable()
         {
-            // 게임매니저에서 세이브 파일을 Init함
-            // GameManager.Instance.SaveInit();
+            Manager.Game.ResetSaveRef();
+            for (int i = 0; i < 3; i++)
+            {
+                GameData data = Manager.Game.saveFiles[i];
+
+                if (data == null || data.isEmpty)
+                {
+                    GetUI<TMP_Text>($"SaveText{i + 1}").text = "File Empty";
+                }
+                else
+                {
+                    GetUI<TMP_Text>($"SaveText{i + 1}").text = Manager.Game.saveFiles[i].playerName;
+                }
+            }
         }
         void Start()
         {
@@ -21,46 +32,19 @@ namespace JYL
 
         private void OnSaveSlotBtnClick(PointerEventData eventData)
         {
-            // TODO : 세이브 매니저에서 함수 완성 시 구현
-            // string SaveManager.Instance.CheckSave()
-            string name = eventData.pointerClick.name;
-            char lastChar = name[name.Length - 1];
-            Util.ExtractTrailNumber(name, out int index);
-            // GameManager.saveIndex = index-1;
+            string name = eventData.pointerClick.name; // 클릭한 UI의 게임오브젝트 이름
+            Util.ExtractTrailNumber(name, out int index); // 스트링의 끝에 붙어 있는 숫자
+            Manager.Game.SelectSaveFile(index - 1);
 
-            // TODO: UI 트랜지션 테스트
-            switch(index)
+            GameData data = Manager.Game.saveFiles[index - 1];
+            if (!data.isEmpty && data != null)
             {
-                case 1:
-            UIManager.Instance.ShowPopUp<SaveFilePanel>();
-
-                    break;
-                case 2:
-            UIManager.Instance.ShowPopUp<SaveCreatePanel>();
-                    break;
-                case 3:
-            UIManager.Instance.ShowPopUp<SaveCreatePanel>();
-                    break;
+                UIManager.Instance.ShowPopUp<SaveFilePanel>();
             }
-        }
-        // 여기서 세이브파일 정보들 불러와야 함
-        private void SavePanelPop()
-        {
-
-            // 게임매니저 역할
-            // CharacterSave[] saveFile = new CharacterSave[3]; - 3개의 배열로 가짐
-            // Manager.Save.PlayerLoad(CharacterSave[index],index+1); - 게임매니저에서 3개의 파일 로드 시도
-            // int saveIndex = 0~2; - 지정된 세이브 파일 인덱스
-            // saveFile[saveIndex] - 현재 사용중인 세이브파일
-
-            // UI 클릭
-            // 요소 표시 할때 != null -> saveFile[index].name
-            // ==null -> empty
-
-
-            //TODO : 트렌지션 효과(ex.fade out)
-            UIManager.Instance.ShowPopUp<SavePanel>();
-            // fade in
+            else
+            {
+                UIManager.Instance.ShowPopUp<SaveCreatePanel>();
+            }
         }
     }
 }

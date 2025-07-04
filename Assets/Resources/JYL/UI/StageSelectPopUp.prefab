@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6727756468005899504}
   - component: {fileID: 3643135385585151633}
   m_Layer: 5
-  m_Name: WorldNowIcon (6)
+  m_Name: World7SelectIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 1669972100133970652}
   - component: {fileID: 8262993340797012259}
   m_Layer: 5
-  m_Name: WorldNowIcon (3)
+  m_Name: World4SelectIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -656,7 +656,7 @@ GameObject:
   - component: {fileID: 3912235859755112268}
   - component: {fileID: 1828785569824218535}
   m_Layer: 5
-  m_Name: WorldNowIcon (5)
+  m_Name: World6SelectIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1082,7 +1082,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4807964, g: 1, b: 0.20440245, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1397,7 +1397,7 @@ GameObject:
   - component: {fileID: 365003526308280562}
   - component: {fileID: 3005656312416872603}
   m_Layer: 5
-  m_Name: WorldNowIcon (4)
+  m_Name: World5SelectIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1859,7 +1859,7 @@ GameObject:
   - component: {fileID: 3927920229283600787}
   - component: {fileID: 2540690254991055597}
   m_Layer: 5
-  m_Name: WorldNowIcon (8)
+  m_Name: World9SelectIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2989,7 +2989,7 @@ GameObject:
   - component: {fileID: 6579562306260208}
   - component: {fileID: 4317343050283522220}
   m_Layer: 5
-  m_Name: WorldNowIcon (1)
+  m_Name: World2SelectIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3061,12 +3061,12 @@ GameObject:
   - component: {fileID: 2424033044802873375}
   - component: {fileID: 7697356510887261377}
   m_Layer: 5
-  m_Name: WorldNowIcon
+  m_Name: World1SelectIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &742502774016572505
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3401,7 +3401,7 @@ GameObject:
   - component: {fileID: 7654658896462779139}
   - component: {fileID: 8308020283926247648}
   m_Layer: 5
-  m_Name: WorldNowIcon (2)
+  m_Name: World3SelectIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3473,7 +3473,7 @@ GameObject:
   - component: {fileID: 1968946445019667554}
   - component: {fileID: 4508663900950619142}
   m_Layer: 5
-  m_Name: WorldNowIcon (7)
+  m_Name: World8SelectIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3545,7 +3545,7 @@ GameObject:
   - component: {fileID: 2924966972145205775}
   - component: {fileID: 7548566749542677209}
   m_Layer: 5
-  m_Name: WorldNowIcon (9)
+  m_Name: World10SelectIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
