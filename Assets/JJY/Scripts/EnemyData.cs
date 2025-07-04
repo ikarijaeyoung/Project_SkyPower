@@ -6,20 +6,16 @@ using UnityEngine;
 public class EnemyData : ScriptableObject
 {
     [Header("Enemy Stats")]
-    public int maxHP; // Player 공격력의 1.5배
+    public int maxHP;
     public Sprite enemyIcon;
-    public GameObject bulletPrefab; // 몬스터가 발사하는 총알 프리팹. => BulletPatternData를 상속받은 스크립트로 변경할 것.
     public EnemyType enemyType; // 각 타입마다 ObjectPool다름
-
-    // Binary Tree Pattern을 여기서 어떻게 사용하나?
-
-    // 움직임은 Animator로 만들것. => Player기준 MainCamera의 위치 정보 필요.
 }
 public enum EnemyType
 {
     Normal,
     Elite,
     Boss
+    // 지상적? => 지상적 전용 ObjectPool? == 지상적은 공중유닛과 다른 BulletPrefab(외형).
 }
 [CreateAssetMenu(fileName = "NewItemData", menuName = "ScriptableObject/ItemData")]
 public class EnemyDropItemData : ScriptableObject

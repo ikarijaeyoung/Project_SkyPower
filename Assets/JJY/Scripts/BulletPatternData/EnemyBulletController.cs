@@ -3,20 +3,27 @@ using System.Collections.Generic;
 using JYL;
 using UnityEngine;
 
-public class EnemyBulletController : MonoBehaviour
+namespace JJY
 {
-    public Rigidbody rb;
-    public ObjectPool objectPool;
-    public Enemy enemy;
-    void Awake()
+    public class EnemyBulletController : MonoBehaviour
     {
-        Init();
-    }
-    void Init()
-    {
-        rb = GetComponent<Rigidbody>();
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
-        rb.useGravity = false;
-        objectPool = enemy.objectPool;
+        public Rigidbody rb;
+        public Collider col;
+        void Awake()
+        {
+            Init();
+        }
+        void Init()
+        {
+            rb = GetComponent<Rigidbody>();
+            col = GetComponent<Collider>();
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+            rb.useGravity = false;
+            col.isTrigger = true;
+        }
+        private void OnTriggerEnter(Collider other)
+        {
+            // gameObject.SetActive(false);
+        }
     }
 }

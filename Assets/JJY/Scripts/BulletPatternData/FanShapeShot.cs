@@ -12,11 +12,13 @@ public class FanShapeShot : BulletPatternData
     public float fireDelayBetweenShots = 0.1f;
     public float fanShapeangle = 90;
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, GameObject bulletPrefab, float bulletSpeed)
+    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool)
     {
         for (int i = 0; i < shotCount; i++)
         {
-            BulletPrefabController bullet = objectPool.ObjectOut() as BulletPrefabController;
+            BulletPrefabController bullet = pool.ObjectOut() as BulletPrefabController;
+            bullet.objectPool = pool;
+
             float angle = i * (fanShapeangle / (shotCount - 1)) - (fanShapeangle / 2) + 180;
             firePoints[0].rotation = Quaternion.Euler(0, angle, 0); // Y축을 기준으로 회전
             firePoints[0].forward = firePoints[0].rotation * Vector3.forward; // 회전된 방향으로 총구를 향하게 함

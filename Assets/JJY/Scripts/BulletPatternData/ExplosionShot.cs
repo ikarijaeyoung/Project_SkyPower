@@ -12,9 +12,11 @@ public class ExplosionShot : BulletPatternData
     public float returnToPoolTimer = 5f;
     public float explosionDelay = 1f;
     public int explosionBullets = 4;
-    public override IEnumerator Shoot(Transform[] firePoints, GameObject bulletPrefab, float bulletSpeed)
+    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool)
     {
-        BulletPrefabController bullet = objectPool.ObjectOut() as BulletPrefabController;
+        BulletPrefabController bullet = pool.ObjectOut() as BulletPrefabController;
+
+        bullet.objectPool = pool;
 
         if (bullet != null)
         {
@@ -41,7 +43,9 @@ public class ExplosionShot : BulletPatternData
                 float angle = i * (360f / explosionBullets);
                 Vector3 dir = Quaternion.Euler(0, angle, 0) * Vector3.forward;
 
-                BulletPrefabController explosionBullet = objectPool.ObjectOut() as BulletPrefabController;
+                BulletPrefabController explosionBullet = pool.ObjectOut() as BulletPrefabController;
+
+                bullet.objectPool = pool;
 
                 if (explosionBullet != null)
                 {
