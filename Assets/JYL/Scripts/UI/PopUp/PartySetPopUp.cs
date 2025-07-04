@@ -11,18 +11,16 @@ namespace JYL
 {
     public class PartySetPopUp : BaseUI
     {
-        private event Action OnPartySetEnter;
         private string iconPrefabPath = "JYL/UI/CharacterIconPrefab";
         private CharacterSaveLoader characterLoader;
         private Image mainIllustImg;
         private Image sub1IllustImg;
         private Image sub2IllustImg;
-        private Image iconPrefab;
+        private GameObject iconPrefab;
         private RectTransform parent;
-        private List<Image> iconList;
+        private List<GameObject> iconList;
         private Dictionary<string, CharactorController> charDict;
         private List<CharacterSave> charDataList;
-        private RectTransform dragIconTransform;
         public static bool isPartySetting = false;
         private bool isMainSet = false;
         private bool isSub1Set = false;
@@ -81,7 +79,7 @@ namespace JYL
         {
             charDict = new Dictionary<string, CharactorController>();
             charDataList = Manager.Game.CurrentSave.characterInventory.characters;
-            iconList = new List<Image>();
+            iconList = new List<GameObject>();
             characterLoader = GetComponent<CharacterSaveLoader>();
             //canvasGroup = GetComponent<CanvasGroup>();
             mainIllustImg = GetUI<Image>("PSCharImg1");
@@ -90,7 +88,7 @@ namespace JYL
             parent = GetUI<RectTransform>("Content");
             warningText = GetUI<TMP_Text>("PartySetWarningText");
             //popUpPanel = GetUI<RectTransform>("PartySetPopUp");
-            iconPrefab = Resources.Load<Image>(iconPrefabPath);
+            iconPrefab = Resources.Load<GameObject>(iconPrefabPath);
             characterLoader.GetCharPrefab();
         }
 
@@ -121,7 +119,7 @@ namespace JYL
         {
             if (iconList.Count > 0)
             {
-                foreach (Image icon in iconList)
+                foreach (GameObject icon in iconList)
                 {
                     GameObject outIcon = DeleteFromDictionary(icon.gameObject.name, icon.gameObject);
                     Destroy(outIcon);
@@ -139,13 +137,13 @@ namespace JYL
                 // 레벨 1 이상인 경우에만 이벤트 등록. 소유중인 캐릭터들임
                 if (character.level > 0)
                 {
-                    Image go;
+                    GameObject go;
                     go = Instantiate(iconPrefab, parent);
                     go.name = $"StayCharImg{imgIndex + 1}";
                     // TODO Add Test
                     AddUIToDictionary(go.gameObject);
                     imgIndex++;
-                    go.sprite = character.image;
+                    go.GetComponentInChildren<Image>().sprite = character.image;
                     GetEvent($"{go.name}").Drag += BeginIconDrag;
                     GetEvent($"{go.name}").Drag += IconDrag;
                     GetEvent($"{go.name}").EndDrag += OnIconDragEnd;

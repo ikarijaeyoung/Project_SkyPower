@@ -24,7 +24,6 @@ namespace JYL
             foreach (var cont in charactorController)
             {
                 cont.SetParameter();
-                Instantiate(cont.gameObject);
             }
             // 전부 셋파라매터 함.
             Array.Sort(charactorController, (a, b) => a.partySet.CompareTo(b.partySet)); // 추가적인 정렬도 가능함.
