@@ -12,7 +12,7 @@ public class ExplosionShot : BulletPatternData
     public float returnToPoolTimer = 5f;
     public float explosionDelay = 1f;
     public int explosionBullets = 4;
-    public override IEnumerator Shoot(Transform[] firePoints, GameObject bulletPrefab, float bulletSpeed, ObjectPool pool)
+    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool)
     {
         BulletPrefabController bullet = pool.ObjectOut() as BulletPrefabController;
 

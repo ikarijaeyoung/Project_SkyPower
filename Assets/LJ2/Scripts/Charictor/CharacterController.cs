@@ -230,10 +230,10 @@ namespace LJ2
                     // ±Ã±Ø±â Åº¸· 1È¸ - ´Ù´ÜÈ÷Æ®
                     break;
                 case 10006:
-                    defense += ultimate.Shield();
+                    defense += ultimate.Shield(ultDamage);
                     break;
                 default:
-                    ultimate.AllAttack();
+                    ultimate.AllAttack(ultDamage);
                     break;
             }
         }

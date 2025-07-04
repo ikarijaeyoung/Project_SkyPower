@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     public Transform[] firePoints;
     public BulletPatternData[] BulletPattern;
     private Coroutine curFireCoroutine;
-    public ObjectPool objectPool;
+    public ObjectPool curObjectPool;
     public float bulletSpeed = 1f;
     public float fireDelay = 1.5f;
 
@@ -42,10 +42,10 @@ public class Enemy : MonoBehaviour
     }
     public void Init(ObjectPool objectPool)
     {
-        this.objectPool = objectPool;
-        currentHP = enemyData.maxHP; // Player의 공격력 * 1.5배
+        curObjectPool = objectPool;
+        currentHP = enemyData.maxHP;
         //autoFire = true;
-        StartCoroutine(ChangeFireMode());
+        // StartCoroutine(ChangeFireMode());
     }
     void OnTriggerEnter(Collider other)
     {
@@ -89,7 +89,7 @@ public class Enemy : MonoBehaviour
         while (autoFire)
         {
             int ranNum = UnityEngine.Random.Range(0, BulletPattern.Length);
-            curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, enemyData.bulletPrefab, bulletSpeed, objectPool));
+            curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, bulletSpeed, curObjectPool));
             yield return new WaitForSeconds(fireDelay);
             StopCoroutine(curFireCoroutine);
             curFireCoroutine = null;
@@ -109,6 +109,6 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("지금 공격함");
         int ranNum = UnityEngine.Random.Range(0, BulletPattern.Length);
-        StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, enemyData.bulletPrefab, bulletSpeed, objectPool));
+        curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, bulletSpeed, curObjectPool));
     }
 }

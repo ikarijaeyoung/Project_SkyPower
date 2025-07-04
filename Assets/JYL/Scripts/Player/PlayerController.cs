@@ -147,6 +147,11 @@ namespace JYL
             //mainCharController.
             attackPower = mainCharController.attackDamage;
         }
+            // 캐릭터 필드 세팅
+        private void CharacterParameterSetting()
+        {
+            //mainCharController.
+        }
         private void SubscribeEvents()
         {
             attackAction.started += Fire;

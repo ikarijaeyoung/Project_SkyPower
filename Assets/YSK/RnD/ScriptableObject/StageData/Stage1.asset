@@ -18,10 +18,8 @@ MonoBehaviour:
   duration: 300
   mainStageLock: 0
   mapPrefabs:
-  - {fileID: 255603948662158416, guid: 362c57ffea7d3bb48b6a9f390332d77c, type: 3}
-  - {fileID: 7668984884236379141, guid: 56f251c5778277c4ca0472a6d0f91b9c, type: 3}
-  - {fileID: 8380167807526418686, guid: f57e2afa53beb734f85838d709b918a7, type: 3}
-  - {fileID: 8380167807526418686, guid: 99ad706c52e03b449b4e9c858dfd610b, type: 3}
+  - {fileID: 9008328495826410877, guid: c098b361bd597dd4b81dc46070f131b9, type: 3}
+  - {fileID: 9008328495826410877, guid: c098b361bd597dd4b81dc46070f131b9, type: 3}
   subStages:
   - subStageID: 1
     subStageName: 
@@ -29,38 +27,37 @@ MonoBehaviour:
     subStageScore: 0
     stageEnemyData: {fileID: 11400000, guid: 4ba5f9d4beb59164185c4adf3149e85b, type: 2}
     customMapPrefabs:
-    - {fileID: 8380167807526418686, guid: f57e2afa53beb734f85838d709b918a7, type: 3}
-    - {fileID: 7668984884236379141, guid: 56f251c5778277c4ca0472a6d0f91b9c, type: 3}
-    - {fileID: 255603948662158416, guid: 362c57ffea7d3bb48b6a9f390332d77c, type: 3}
-    - {fileID: 8380167807526418686, guid: 99ad706c52e03b449b4e9c858dfd610b, type: 3}
+    - {fileID: 9008328495826410877, guid: c098b361bd597dd4b81dc46070f131b9, type: 3}
+    - {fileID: 9008328495826410877, guid: c098b361bd597dd4b81dc46070f131b9, type: 3}
   - subStageID: 2
     subStageName: 
     subStageLock: 0
     subStageScore: 0
     stageEnemyData: {fileID: 11400000, guid: 4ba5f9d4beb59164185c4adf3149e85b, type: 2}
     customMapPrefabs:
-    - {fileID: 255603948662158416, guid: 0cbc744a2edf4be4c9a032658a1e11a7, type: 3}
-    - {fileID: 7668984884236379141, guid: 84f01115942a1874eb33a9264331240a, type: 3}
-    - {fileID: 8380167807526418686, guid: c4c694f42437f1d4fbf7d42b4d9d9161, type: 3}
-    - {fileID: 8380167807526418686, guid: 4a7efd12c417c4e45af6bd8dc5876fdf, type: 3}
+    - {fileID: 3150122496668814207, guid: 8d954335c21f4cc4493449e3ed7f9687, type: 3}
+    - {fileID: 5316317230086782272, guid: 9a4092149594b7f45aa18fdaff74e62c, type: 3}
   - subStageID: 3
     subStageName: 
     subStageLock: 0
     subStageScore: 0
     stageEnemyData: {fileID: 0}
     customMapPrefabs:
-    - {fileID: 255603948662158416, guid: a5195e74c05235f4897aa802bfb6a25d, type: 3}
-    - {fileID: 7668984884236379141, guid: 94bbef344085d844d84ba30e59f4fabe, type: 3}
-    - {fileID: 8380167807526418686, guid: f58e5c46a8da8a74e899d311c0684644, type: 3}
+    - {fileID: 5316317230086782272, guid: 9a4092149594b7f45aa18fdaff74e62c, type: 3}
+    - {fileID: 3326243892134864293, guid: bf14bc5f30d80034d9a47a99fd075dab, type: 3}
   - subStageID: 4
     subStageName: 
     subStageLock: 0
     subStageScore: 0
     stageEnemyData: {fileID: 0}
-    customMapPrefabs: []
+    customMapPrefabs:
+    - {fileID: 3326243892134864293, guid: bf14bc5f30d80034d9a47a99fd075dab, type: 3}
+    - {fileID: 7616411774398470413, guid: 01fb1bd7b70888648b55028b577c2566, type: 3}
   - subStageID: 5
     subStageName: 
     subStageLock: 0
     subStageScore: 0
     stageEnemyData: {fileID: 0}
-    customMapPrefabs: []
+    customMapPrefabs:
+    - {fileID: 7616411774398470413, guid: 01fb1bd7b70888648b55028b577c2566, type: 3}
+    - {fileID: 9008328495826410877, guid: c098b361bd597dd4b81dc46070f131b9, type: 3}

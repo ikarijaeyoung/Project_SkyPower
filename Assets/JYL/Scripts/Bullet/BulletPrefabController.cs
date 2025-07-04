@@ -11,7 +11,7 @@ namespace JYL
     }
     public class BulletPrefabController : PooledObject
     {
-        public ObjectPool objectPool;// 여러 종류의 Enemy에서 같은 BulletPattern을 사용할 때, 서로 다른 ObjetPool을 사용할 때 구분하기 위해 필요함.
+        public ObjectPool objectPool; // 여러 종류의 Enemy에서 같은 BulletPattern을 사용할 때, 서로 다른 ObjetPool을 사용할 때 구분하기 위해 필요함.
         public BulletInfo[] bulletInfo;
         private Transform[] transforms;
         
