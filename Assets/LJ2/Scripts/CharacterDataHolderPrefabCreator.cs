@@ -44,6 +44,7 @@ public class CharacterDataHolderPrefabCreator
             var laserObject = (GameObject)PrefabUtility.InstantiatePrefab(laserPrefab);
             var shieldObject = (GameObject)PrefabUtility.InstantiatePrefab(shieldPrefab);
 
+            characterModel.transform.SetParent(go.transform); // CharacterModel 프리팹을 생성된 GameObject의 자식으로 설정
             eraseObject.transform.SetParent(go.transform); // Erase 프리팹을 생성된 GameObject의 자식으로 설정
             laserObject.transform.SetParent(go.transform); // Laser 프리팹을 생성된 GameObject의 자식으로 설정
             shieldObject.transform.SetParent(go.transform); // Shield 프리팹을 생성된 GameObject의 자식으로 설정
