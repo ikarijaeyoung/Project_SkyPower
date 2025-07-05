@@ -20,8 +20,6 @@ public class ExplosionShot : BulletPatternData
 
         if (bullet != null)
         {
-            bullet.ReturnToPool(returnToPoolTimer);
-
             foreach (BulletInfo info in bullet.bulletInfo)
             {
                 if (info.rig != null)
@@ -36,6 +34,7 @@ public class ExplosionShot : BulletPatternData
 
             Debug.Log("ExplosionSHot : 펑, 마저 구현해야함.");
             Vector3 explosionPos = bullet.transform.position;
+            bullet.ReturnToPool(returnToPoolTimer);
             bullet.gameObject.SetActive(false);
 
             for (int i = 0; i < explosionBullets; i++)
@@ -45,7 +44,7 @@ public class ExplosionShot : BulletPatternData
 
                 BulletPrefabController explosionBullet = pool.ObjectOut() as BulletPrefabController;
 
-                bullet.objectPool = pool;
+                explosionBullet.objectPool = pool;
 
                 if (explosionBullet != null)
                 {
