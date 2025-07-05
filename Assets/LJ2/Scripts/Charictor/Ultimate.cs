@@ -28,6 +28,9 @@ public class Ultimate : MonoBehaviour
     public GameObject ultAll;
     public UltMapAttack ultAllController;
 
+    public GameObject ultFire; // Fire 프리팹 연결 (추가된 부분)
+    public UltLaserController ultFireController; // Fire 컨트롤러 (추가된 부분)
+
     public int defense = 1;
 
     public void Awake()
@@ -38,6 +41,7 @@ public class Ultimate : MonoBehaviour
         ultLaserController = ultLaser.GetComponentInChildren<UltLaserController>();
         ultShieldController = shield.GetComponentInChildren<UltShieldController>();
         ultAllController = ultAll.GetComponent<UltMapAttack>();
+        ultFireController = ultFire.GetComponentInChildren<UltLaserController>(); // Fire 컨트롤러 초기화 (추가된 부분) 
     }
 
     public void Laser(float damage)
@@ -59,6 +63,30 @@ public class Ultimate : MonoBehaviour
         yield return ultDelay;
 
         ultLaser.SetActive(false);
+        Debug.Log("Laser Off");
+        ultRoutine = null;
+        yield break;
+    }
+
+    public void Fire(float damage)
+    {
+        if (ultRoutine == null)
+        {
+            ultFireController.AttackDamage(damage);
+            ultRoutine = StartCoroutine(FireCoroutine());
+        }
+        else
+        {
+            return;
+        }
+    }
+    private IEnumerator FireCoroutine()
+    {
+        ultFire.SetActive(true);
+        Debug.Log("Laser Active");
+        yield return ultDelay;
+
+        ultFire.SetActive(false);
         Debug.Log("Laser Off");
         ultRoutine = null;
         yield break;
@@ -87,7 +115,19 @@ public class Ultimate : MonoBehaviour
 
     public void AllAttack(float damage)
     {
-        ultAllController.AttackDamage(damage);
+        if (ultRoutine == null)
+        {
+            ultAllController.AttackDamage(damage);
+            ultRoutine = StartCoroutine(EraseCoroutine());
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    private IEnumerator EraseCoroutine()
+    {
         Collider[] hits = Physics.OverlapBox(ultAll.transform.position, ultAll.transform.localScale / 2f, Quaternion.identity, enemyBullet);
 
         foreach (Collider c in hits)
@@ -95,8 +135,14 @@ public class Ultimate : MonoBehaviour
             c.gameObject.SetActive(false);
         }
         ultAll.SetActive(true);
-        hits = null;
+
+        yield return ultDelay;
         ultAll.SetActive(false);
+        hits = null;
+        ultRoutine = null;
+        Debug.Log("코루틴 종료");
+
+        yield break;
     }
 
     // 궁극기 탄막 1회 + 다단히트

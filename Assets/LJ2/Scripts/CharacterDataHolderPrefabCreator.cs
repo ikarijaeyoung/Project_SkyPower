@@ -22,6 +22,7 @@ public class CharacterDataHolderPrefabCreator
         var erasePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/LJ2/Prefabs/Erase.Prefab");
         var laserPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/LJ2/Prefabs/Laser.Prefab");
         var shieldPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/LJ2/Prefabs/Shield.Prefab");
+        var firePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/LJ2/Prefabs/Fire.Prefab");
 
         foreach (var guid in guids)
         {
@@ -42,17 +43,20 @@ public class CharacterDataHolderPrefabCreator
 
             ultimate.ultAll = erasePrefab; // Erase 프리팹 연결
             ultimate.ultLaser = laserPrefab; // Laser 프리팹 연결
+            ultimate.ultFire = firePrefab; // Fire 프리팹 연결
             ultimate.shield = shieldPrefab; // Shield 프리팹 연결
 
             var characterModel = (GameObject)PrefabUtility.InstantiatePrefab(data.characterModel);
             var eraseObject = (GameObject)PrefabUtility.InstantiatePrefab(erasePrefab);
             var laserObject = (GameObject)PrefabUtility.InstantiatePrefab(laserPrefab);
             var shieldObject = (GameObject)PrefabUtility.InstantiatePrefab(shieldPrefab);
+            var fireObject = (GameObject)PrefabUtility.InstantiatePrefab(firePrefab);
 
             characterModel.transform.SetParent(go.transform); // CharacterModel 프리팹을 생성된 GameObject의 자식으로 설정
             eraseObject.transform.SetParent(go.transform); // Erase 프리팹을 생성된 GameObject의 자식으로 설정
             laserObject.transform.SetParent(go.transform); // Laser 프리팹을 생성된 GameObject의 자식으로 설정
             shieldObject.transform.SetParent(go.transform); // Shield 프리팹을 생성된 GameObject의 자식으로 설정
+            fireObject.transform.SetParent(go.transform); // Fire 프리팹을 생성된 GameObject의 자식으로 설정
 
             string prefabPath = $"{saveDir}/{data.characterName}.prefab";
             PrefabUtility.SaveAsPrefabAsset(go, prefabPath);

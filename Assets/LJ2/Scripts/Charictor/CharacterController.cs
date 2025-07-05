@@ -266,8 +266,7 @@ namespace LJ2
                     ultimate.BigBullet(ultDamage);
                     break;
                 case 10005:
-                    // ±Ã±Ø±â Åº¸· 1È¸ - ´Ù´ÜÈ÷Æ®
-                    ultimate.BigBullet(ultDamage);
+                    ultimate.Fire(ultDamage);
                     break;
                 case 10006:
                     defense += ultimate.Shield(ultDamage);
