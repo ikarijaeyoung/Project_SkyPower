@@ -7,7 +7,7 @@ public class UltLaserController : MonoBehaviour
     
     [SerializeField] private float attackDelay;
     private float currentTime;
-    private int attackDamage;
+    private int attackDamage = 2;
 
     private void Update()
     {
@@ -31,6 +31,7 @@ public class UltLaserController : MonoBehaviour
             {
                 Debug.Log($"TakeDamage {enemyComponent.name} 시도");
                 enemyComponent.TakeDamage(attackDamage);
+                Debug.Log($"TakeDamage {attackDamage} 성공");
             }
         }
     }
@@ -41,7 +42,9 @@ public class UltLaserController : MonoBehaviour
 
     public void AttackDamage(float damage)
     {
+        Debug.Log($"UltLaserController AttackDamage: {damage}");
         attackDamage = (int)damage;
+        Debug.Log($"UltLaserController AttackDamage: {attackDamage}");
     }
 
 }
