@@ -22,7 +22,7 @@ namespace JYL
 
         public void InitCharacterInfo()
         {
-            for(int i =2;i<table.Table.GetLength(0);i++)
+            for(int i =2;i<=table.Table.GetLength(0);i++)
             {
                 int id = int.Parse(table.GetData(i, 0));
                 Manager.Game.CurrentSave.characterInventory.AddCharacter(id);

@@ -18,15 +18,13 @@ namespace JYL
         private TMP_Text ap => GetUI<TMP_Text>("InvenCharAPText");
         private Image charImage;
         private CharacterSaveLoader characterLoader;
-        // TODO: GameManager.CharacterController[] character => for(int i = 0;i<character.Length;i++) { 인벤토리에 UI추가 }
-
-        // private Item[] items;
 
         private void OnEnable()
         {
         }
         void Start()
         {
+            
             // 장비 클릭시 활성화
             characterLoader = GetComponent<CharacterSaveLoader>();
             characterLoader.GetCharPrefab();
@@ -69,6 +67,9 @@ namespace JYL
             // 해당 정보는 강화창에서 불러옴 여기서 안불러옴
             UIManager.Instance.selectIndexUI = 1;
             UIManager.Instance.ShowPopUp<EnhancePopUp>();
+            // UI 생성할 때, UI에다가 이벤트 다세요.
+            // Image img = Instantiate();
+            // GetEvent($"img.gameObject.name").Click += 이벤트함수;
         }
 
         private void OpenWPEnhance(PointerEventData eventData)

@@ -111,10 +111,10 @@ namespace IO
                 Debug.LogError($"[CsvReader] CSV file is empty: {csv.FilePath}");
                 return false;
             }
-
 #else
+            TextAsset textAsset;
             // 빌드 환경에서는 Resources.Load 사용
-            TextAsset textAsset = Resources.Load<TextAsset>(csv.ResourcePath);
+            textAsset = Resources.Load<TextAsset>(csv.ResourcePath);
             if (textAsset == null)
             {
                 Debug.LogError($"[CsvReader] Resource not found: Resources/{csv.ResourcePath}");

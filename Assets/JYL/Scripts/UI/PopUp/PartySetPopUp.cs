@@ -143,7 +143,7 @@ namespace JYL
                     // TODO Add Test
                     AddUIToDictionary(go.gameObject);
                     imgIndex++;
-                    go.GetComponentInChildren<Image>().sprite = character.image;
+                    go.GetComponentInChildren<Image>().sprite = character.icon;
                     GetEvent($"{go.name}").Drag += BeginIconDrag;
                     GetEvent($"{go.name}").Drag += IconDrag;
                     GetEvent($"{go.name}").EndDrag += OnIconDragEnd;
@@ -171,9 +171,53 @@ namespace JYL
                         break;
                 }
             }
-            if (!isMainSet) mainIllustImg.sprite = null;
-            if (!isSub1Set) sub1IllustImg.sprite = null;
-            if (!isSub2Set) sub2IllustImg.sprite = null;
+            CheckPartySlotNull();
+ 
+        }
+        private void CheckPartySlotNull()
+        {
+            // 메인
+            if (!isMainSet)
+            {
+                mainIllustImg.sprite = null;
+                Color c = mainIllustImg.color;
+                c.a = 0f;
+                mainIllustImg.color = c;
+            }
+            else
+            {
+                Color c = mainIllustImg.color;
+                c.a = 1f;
+                mainIllustImg.color = c;
+            }
+            // 서브1
+            if (!isSub1Set)
+            {
+                sub1IllustImg.sprite = null;
+                Color c = sub1IllustImg.color;
+                c.a = 0f;
+                sub1IllustImg.color = c;
+            }
+            else
+            {
+                Color c = sub1IllustImg.color;
+                c.a = 1f;
+                sub1IllustImg.color = c;
+            }
+            // 서브2
+            if (!isSub2Set)
+            {
+                sub2IllustImg.sprite = null;
+                Color c = sub2IllustImg.color;
+                c.a = 0f;
+                sub2IllustImg.color = c;
+            }
+            else
+            {
+                Color c = sub2IllustImg.color;
+                c.a = 1f;
+                sub2IllustImg.color = c;
+            }
         }
         // 아이콘 드래그 시작
         private void BeginIconDrag(PointerEventData eventData)

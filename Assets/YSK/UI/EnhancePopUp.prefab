@@ -2519,6 +2519,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e1c2e3c064f13b439fdbd0a2f830e58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charEnhanceImg: {fileID: 0}
+  wpEnhanceImg: {fileID: 0}
+  amEnhanceImg: {fileID: 0}
 --- !u!1 &7736970883350343829
 GameObject:
   m_ObjectHideFlags: 0

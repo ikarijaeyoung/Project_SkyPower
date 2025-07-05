@@ -3,7 +3,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using KYG_skyPower;
 
 namespace JYL
 {
@@ -11,7 +13,7 @@ namespace JYL
     {
         [Header("Set Scriptable Object")]
         [SerializeField] PlayerModel playerModel; // -> 캐릭터 컨트롤러로 대체 예정
-
+        [SerializeField] HUDPresenter hud;
         [Header("Set References")]
         [SerializeField] List<ObjectPool> bulletPools;
         [SerializeField] public Transform muzzlePoint { get; set; }
@@ -23,8 +25,8 @@ namespace JYL
 
         [Header("Set Value")]
         [Range(0.1f, 5)][SerializeField] float bulletReturnTimer = 2f;
-        [Range(0.1f, 3)][SerializeField] float fireDelay = 0.5f;
 
+        public UnityEvent<int> onHpChanged;
         private PlayerInput playerInput;
         private Rigidbody rig;
         private InputAction attackAction;
@@ -32,12 +34,23 @@ namespace JYL
         private InputAction parryAction2;
         private InputAction ultAction;
 
-        private CharactorController mainCharController;
-        private CharactorController sub1CharController;
-        private CharactorController sub2CharController;
+        public CharactorController mainCharController;
+        public CharactorController sub1CharController;
+        public CharactorController sub2CharController;
         private CharacterSaveLoader charDataLoader;
 
-        private int hp { get; set; }
+        private int hp;
+        public int Hp
+        {
+            get { return hp; }
+            private set 
+            {
+                hp = value;
+                onHpChanged?.Invoke(hp);
+                curBulletPool.ObjectOut();
+            }
+        }
+
         private int attackPower { get; set; }
         private float attackSpeed { get; set; }
         private float moveSpeed { get; set; }
@@ -60,7 +73,7 @@ namespace JYL
         private float parryTimer { get; set; } = 0;
         private float attackInputTimer;
 
-        private ObjectPool curBulletPool => bulletPools[poolIndex];
+        public ObjectPool curBulletPool => bulletPools[poolIndex];
         private Coroutine fireRoutine;
 
         private void Awake()
@@ -83,15 +96,13 @@ namespace JYL
             {
                 parryTimer -= Time.deltaTime;
             }
-            if (hp<=0)
-            {
-                // TODO: 게임오버
-            }
         }
 
         private void FixedUpdate() { }
 
-        private void LateUpdate() { }
+        private void LateUpdate() 
+        {
+        }
 
         private void OnDisable()
         {
@@ -111,14 +122,20 @@ namespace JYL
                         mainCharController = charData;
                         break;
                     case PartySet.Sub1:
-                        sub1CharController = charData;
+                        if(charData.grade != Grade.R)
+                        {
+                            sub1CharController = charData;
+                        }
                         break;
                     case PartySet.Sub2:
-                        sub2CharController = charData;
+                        if(charData.grade != Grade.R)
+                        {
+                            sub2CharController = charData;
+                        }
                         break;
                 }
             }
-
+            // 오브젝트 풀 설정
             bulletPools[0].poolObject = mainCharController.bulletPrefab;
             bulletPools[0].ClearPool();
             bulletPools[0].CreatePool();
@@ -131,6 +148,8 @@ namespace JYL
             ultAction = playerInput.actions["Ult"];
             parryAction1 = playerInput.actions["Parry1"];
             parryAction2 = playerInput.actions["Parry2"];
+
+
 
             if (leftUI != null)
             {
@@ -187,20 +206,7 @@ namespace JYL
             {
                 return Vector2.zero;
             }
-            // 카메라 기준 스크린 좌표로 판단
-            //Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
-
-            // 플레이어가 카메라 뒤에 있다는 뜻
-            //if (screenPos.z <= 0) return Vector2.zero;
-
-            //if (screenPos.x <= 0 && inputDirection.x < 0) inputDirection.x = 0;
-            //if (screenPos.x >= Camera.main.pixelWidth && inputDirection.x > 0) inputDirection.x = 0;
-            //if (screenPos.y <= 0 && inputDirection.y < 0) inputDirection.y = 0;
-            //if (screenPos.y >= Camera.main.pixelHeight && inputDirection.y > 0) inputDirection.y = 0;
-
-            // 뷰포트 기준 좌표로 좀 더 간단화 가능
-            // 뷰포트는 0~1사이의 값으로만 정해져 있다. 매우 정확하게 떨어지진 않겠지만, 어느정도 커버가 된다
-
+            
             Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
             if (viewportPos.z <= 0) return Vector2.zero;
 
@@ -262,7 +268,7 @@ namespace JYL
                     else if(poolIndex == 1)
                     {
                         info.bulletController.attackPower = (int)mainCharController.ultDamage;
-                        info.bulletController.canDeactive = false;
+                        // info.bulletController.canDeactive = false; 다단히트일 때 활성화
                     }
                     info.rig.AddForce(playerModel.fireSpeed * info.trans.forward, ForceMode.Impulse); // 이 부분을 커스텀하면 됨
                 }
@@ -276,7 +282,7 @@ namespace JYL
             fireRoutine = null;
         }
 
-        private void TakeDamage(int damage)
+        public void TakeDamage(int damage)
         {
             if(mainCharController.defense>0)
             {
@@ -285,8 +291,29 @@ namespace JYL
             }
             if(mainCharController.defense <=0)
             {
-                hp-=damage;
+                Hp-=damage;
+                if(Hp <= 0)
+                {
+                    Hp = 0;
+                    Manager.Game.SetGameOver();
+                }
+                hud.CurHp = Hp;
             }
+        }
+
+        public void GetUltGage(int amount)
+        {
+            if(ultGage + amount >100)
+            {
+                ultGage = 100;
+                hud.UltGage = 1f;
+            }
+            else
+            {
+                ultGage += amount;
+                hud.UltGage = (float)ultGage / 100;
+            }
+            
         }
 
         private void UseUlt(InputAction.CallbackContext ctx)
@@ -299,7 +326,7 @@ namespace JYL
         }
         private void UseParry1(InputAction.CallbackContext ctx)
         {
-            if (parryTimer <= 0)
+            if (sub1CharController!= null && parryTimer <= 0)
             {
                 sub1CharController.UseParry();
                 parryTimer = sub1CharController.parryCool;
@@ -307,7 +334,7 @@ namespace JYL
         }
         private void UseParry2(InputAction.CallbackContext ctx)
         {
-            if (parryTimer <= 0)
+            if (sub2CharController != null && parryTimer <= 0)
             {
                 sub2CharController.UseParry();
                 parryTimer = sub2CharController.parryCool;
@@ -319,6 +346,7 @@ namespace JYL
             ultAction.started += UseUlt;
             parryAction1.started += UseParry1;
             parryAction2.started += UseParry2;
+            ScoreManager.Instance.onScoreChanged.AddListener(GetUltGage);
         }
         private void UnSubscribeEvents()
         {
@@ -326,8 +354,10 @@ namespace JYL
             ultAction.started -= UseUlt;
             parryAction1.started -= UseParry1;
             parryAction2.started -= UseParry2;
+            ScoreManager.Instance.onScoreChanged.RemoveListener(GetUltGage);
         }
     }
+
 }
 
 // 버튼 순서에 맞게 알아서 배치되게
