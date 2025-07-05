@@ -36,6 +36,8 @@ public class TripleShotToPlayerPos : BulletPatternData
                         info.trans.gameObject.SetActive(true);
                         info.trans.localPosition = info.originPos;
                         info.trans.position = firePoints[0].position;
+                        // √—æÀ¿« forward∏¶ Muzzlepoint¿« forward∑Œ ∏¬√„
+                        info.trans.rotation = firePoints[0].rotation;
                         info.rig.velocity = Vector3.zero;
                         info.rig.AddForce(firePoints[0].forward * bulletSpeed, ForceMode.Impulse);
                     }
