@@ -107,37 +107,37 @@ public class Enemy : MonoBehaviour
     }
     public void AnimationFire()
     {
-        // Debug.Log("지금 공격함");
-        // int ranNum = UnityEngine.Random.Range(0, BulletPattern.Length);
-        // curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, bulletSpeed, curObjectPool));
+        Debug.Log("지금 공격함");
+        int ranNum = UnityEngine.Random.Range(0, BulletPattern.Length);
+        curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, bulletSpeed, curObjectPool));
 
-        Debug.Log("AnimationFire 호출됨. 현재 autoFire: " + autoFire);
-        if (!autoFire) // 현재 발사 중이 아니라면 (자동 발사 시작)
-        {
-            autoFire = true;
-            StartAutoFire();
-        }
-        else // 현재 발사 중이라면 (자동 발사 중지)
-        {
-            autoFire = false; 
-            StopAutoFire();
-        }
+        // Debug.Log("AnimationFire 호출됨. 현재 autoFire: " + autoFire);
+        // if (!autoFire) // 현재 발사 중이 아니라면 (자동 발사 시작)
+        // {
+        //     autoFire = true;
+        //     StartAutoFire();
+        // }
+        // else // 현재 발사 중이라면 (자동 발사 중지)
+        // {
+        //     autoFire = false; 
+        //     StopAutoFire();
+        // }
     }
-    private void StartAutoFire()
-    {
-        if (curFireCoroutine == null) // 이미 실행 중이 아니라면 시작
-        {
-            curFireCoroutine = StartCoroutine(ChangeFireMode());
-        }
-    }
+    // private void StartAutoFire()
+    // {
+    //     if (curFireCoroutine == null) // 이미 실행 중이 아니라면 시작
+    //     {
+    //         curFireCoroutine = StartCoroutine(ChangeFireMode());
+    //     }
+    // }
 
-    // 자동 발사 중지
-    private void StopAutoFire()
-    {
-        if (curFireCoroutine != null) // 실행 중이라면 중지
-        {
-            StopCoroutine(curFireCoroutine);
-            curFireCoroutine = null;
-        }
-    }
+    // // 자동 발사 중지
+    // private void StopAutoFire()
+    // {
+    //     if (curFireCoroutine != null) // 실행 중이라면 중지
+    //     {
+    //         StopCoroutine(curFireCoroutine);
+    //         curFireCoroutine = null;
+    //     }
+    // }
 }
