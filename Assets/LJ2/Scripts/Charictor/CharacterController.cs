@@ -74,31 +74,31 @@ namespace LJ2
             //}
         }
 
-        public void ApplyEquipmentStat()
-        {
-            var equips = EquipmentInvenManager.Instance.GetEquippedItems(id);
+        //public void ApplyEquipmentStat()
+        //{
+        //    var equips = EquipmentInvenManager.Instance.GetEquippedItems(id);
 
-            // 기본값 세팅
-            attackDamage = (int)characterData.attackDamage;
-            defense = characterData.defense;
-            Hp = characterData.hp;
+        //    // 기본값 세팅
+        //    attackDamage = (int)characterData.attackDamage;
+        //    defense = characterData.defense;
+        //    Hp = characterData.hp;
 
-            // 무기
-            if (equips.weapon != null)
-                attackDamage += equips.weapon.Base_Value;
+        //    // 무기
+        //    if (equips.weapon != null)
+        //        attackDamage += equips.weapon.Base_Value;
 
-            // 방어구
-            if (equips.armor != null)
-                defense += equips.armor.Base_Value;
+        //    // 방어구
+        //    if (equips.armor != null)
+        //        defense += equips.armor.Base_Value;
 
-            // 악세서리
-            if (equips.accessory != null)
-            {
-                // 예시: 체력 증가
-                Hp += equips.accessory.Base_Value;
-                // 효과 타입별로 추가 구현 (Effect_Type 등)
-            }
-        }
+        //    // 악세서리
+        //    if (equips.accessory != null)
+        //    {
+        //        // 예시: 체력 증가
+        //        Hp += equips.accessory.Base_Value;
+        //        // 효과 타입별로 추가 구현 (Effect_Type 등)
+        //    }
+        //}
         public void SetParameter()
         {
             // Data의 값을 그대로 가져옴
@@ -157,8 +157,8 @@ namespace LJ2
             if(partySet == PartySet.Main)
             {
                 // TODO : 장비 스탯 추가 적용
-                //Hp = characterData.hp + (characterData.hpPlus * (level - 1)) + armor.hp;
-                //attackDamage = (int)(characterData.attackDamage + (characterData.damagePlus * (level - 1)))+weapon.attackPower; 
+                Hp = characterData.hp + (characterData.hpPlus * (level - 1));// + armor.hp;
+                attackDamage = (int)(characterData.attackDamage + (characterData.damagePlus * (level - 1)));//+weapon.attackPower; 
             }
             else
             {
