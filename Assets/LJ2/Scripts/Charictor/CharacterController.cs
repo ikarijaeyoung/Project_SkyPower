@@ -124,7 +124,7 @@ namespace LJ2
             //Debug.Log($"Character ID: {characterSave.id}, Step: {characterSave.step}, Level : {characterSave.level}");
             level = characterSave.level;
             step = characterSave.step;
-            bulletPrefab = Resources.Load<PooledObject>($"Prefabs/bullet/{id}_{step}");
+            //bulletPrefab = Resources.Load<PooledObject>($"Prefabs/bullet/{id}_{step}");
             partySet = characterSave.partySet;
 
             // Save의 값에 따라 Data의 값을 변경

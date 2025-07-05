@@ -50,7 +50,7 @@ public class UltTest : MonoBehaviour
             ultAllController.AttackDamage(damage);
             ultShieldController.AttackDamage(damage);
             ultBulletController.AttackDamage(damage);
-            ultRoutine = StartCoroutine(UltBulletCotoutine());
+            ultRoutine = StartCoroutine(EraseCoroutine());
         }
         else
         {
@@ -126,6 +126,8 @@ public class UltTest : MonoBehaviour
 
         }
         ultAll.SetActive(true);
+
+        yield return ultDelay;
         ultAll.SetActive(false);
         hits = null;
         ultRoutine = null;
