@@ -1,11 +1,12 @@
+using KYG_skyPower;
+using LJ2;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using LJ2;
-using TMPro;
-
+using KYG_skyPower; // EquipmentInvenManager, EquipmentDataSO, CharacterEquipmentSlots
 namespace JYL
 {
     public class InvenPopUp : BaseUI
@@ -83,6 +84,32 @@ namespace JYL
         private void OpenWPInven(PointerEventData eventData)
         {
             invenScroll.SetActive(true);
+            foreach (Transform child in invenScroll.transform)
+                Destroy(child.gameObject);
+
+            // 무기 리스트 불러오기
+            var weaponList = EquipmentInvenManager.Instance.GetItemList("weapon");
+            Debug.Log("무기 개수: " + weaponList.Count);
+            GameObject itemSlotPrefab = Resources.Load<GameObject>("Inventory/WeaponSlot");
+
+            int idx = 0;
+            foreach (var weapon in weaponList)
+            {
+                Debug.Log($"슬롯 생성: {weapon.Equip_Name} ({idx++})");
+                GameObject slot = Instantiate(itemSlotPrefab, invenScroll.transform);
+                slot.GetComponentInChildren<TMP_Text>().text = weapon.Equip_Name;
+                slot.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>("Sprites/Equipment/" + weapon.Equip_Img);
+
+                var capturedWeapon = weapon;
+                slot.GetComponent<Button>().onClick.AddListener(() =>
+                {
+                    // 선택 캐릭터에 장비 착용
+                    EquipmentInvenManager.Instance.EquipItem(selectedChar.id, capturedWeapon);
+                    selectedChar.ApplyEquipmentStat(); // (이 함수는 CharactorController에 추가 필요)
+                });
+            }
+        }
+        
             // 인벤토리 매니저에서 무기로 타입 지정해서 정보들 가져옴
             // items = InvenManager.Instance.GetItemList(Type weapon)
             // items를 가지고 invenscroll 구현
@@ -92,7 +119,7 @@ namespace JYL
             // 해당 UI 클릭 시, 장착중이던 장비와 교환
             // InvenManager.Instance.Add()
             // InvenManager.Instance.RemoveAt(인벤ID값으로 찾아 지우기)
-        }
+        
 
         // 아이템 교체 함수
         // 캐릭터 컨트롤러에 장비중인 아이템의 ID값 변경 필요
@@ -100,10 +127,48 @@ namespace JYL
         private void OpenAMInven(PointerEventData eventData)
         {
             invenScroll.SetActive(true);
+            foreach (Transform child in invenScroll.transform)
+                Destroy(child.gameObject);
+
+            var armorList = EquipmentInvenManager.Instance.GetItemList("armor");
+            GameObject itemSlotPrefab = Resources.Load<GameObject>("Inventory/ArmorSlot");
+
+            foreach (var armor in armorList)
+            {
+                GameObject slot = Instantiate(itemSlotPrefab, invenScroll.transform); 
+                slot.GetComponentInChildren<TMP_Text>().text = armor.Equip_Name; 
+                slot.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>("Sprites/Equipment/" + armor.Equip_Img); 
+
+                var capturedArmor = armor; 
+                slot.GetComponent<Button>().onClick.AddListener(() =>
+                {
+                    EquipmentInvenManager.Instance.EquipItem(selectedChar.id, capturedArmor);
+                    selectedChar.ApplyEquipmentStat();
+                });
+            }
         }
         private void OpenACInven(PointerEventData eventData)
         {
             invenScroll.SetActive(true);
+            foreach (Transform child in invenScroll.transform)
+                Destroy(child.gameObject);
+
+            var accessoryList = EquipmentInvenManager.Instance.GetItemList("accessory"); 
+            GameObject itemSlotPrefab = Resources.Load<GameObject>("Inventory/AccessorySlot"); 
+
+            foreach (var accessory in accessoryList)
+            {
+                GameObject slot = Instantiate(itemSlotPrefab, invenScroll.transform);
+                slot.GetComponentInChildren<TMP_Text>().text = accessory.Equip_Name;
+                slot.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>("Sprites/Equipment/" + accessory.Equip_Img);
+
+                var capturedAccessory = accessory;
+                slot.GetComponent<Button>().onClick.AddListener(() =>
+                {
+                    EquipmentInvenManager.Instance.EquipItem(selectedChar.id, capturedAccessory);
+                    selectedChar.ApplyEquipmentStat();
+                });
+            }
         }
     }
 }
