@@ -38,19 +38,19 @@ public class UltTest : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.KeypadEnter))
         {
-            Ult(ultDamage);
+            Ult();
         }
     }
 
-    public void Ult(float damage)
+    public void Ult()
     {
         if (ultRoutine == null)
         {
-            ultLaserController.AttackDamage(damage);
-            ultAllController.AttackDamage(damage);
-            ultShieldController.AttackDamage(damage);
-            ultBulletController.AttackDamage(damage);
-            ultRoutine = StartCoroutine(UltBulletCotoutine());
+            ultLaserController.AttackDamage(ultDamage);
+            ultAllController.AttackDamage(ultDamage);
+            ultShieldController.AttackDamage(ultDamage);
+            ultBulletController.AttackDamage(ultDamage);
+            ultRoutine = StartCoroutine(LaserCotoutine());
         }
         else
         {
@@ -126,6 +126,8 @@ public class UltTest : MonoBehaviour
 
         }
         ultAll.SetActive(true);
+
+        yield return ultDelay;
         ultAll.SetActive(false);
         hits = null;
         ultRoutine = null;

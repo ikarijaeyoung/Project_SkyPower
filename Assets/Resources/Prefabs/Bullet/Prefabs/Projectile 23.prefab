@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 135567518640564876}
   - component: {fileID: 114065039287725156}
   - component: {fileID: -8999714592767087420}
+  - component: {fileID: -8749456689674904964}
   m_Layer: 0
   m_Name: Projectile 23
   m_TagString: Untagged
@@ -5094,6 +5095,20 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!114 &-8749456689674904964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047741547062842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53148eec02051804e9b4b94e48bac886, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  returnPool: {fileID: 0}
+  objectPool: {fileID: 0}
 --- !u!1 &1322666646146556
 GameObject:
   m_ObjectHideFlags: 0

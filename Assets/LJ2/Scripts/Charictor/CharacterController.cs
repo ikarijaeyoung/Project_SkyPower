@@ -124,7 +124,7 @@ namespace LJ2
             //Debug.Log($"Character ID: {characterSave.id}, Step: {characterSave.step}, Level : {characterSave.level}");
             level = characterSave.level;
             step = characterSave.step;
-            bulletPrefab = Resources.Load<PooledObject>($"Prefabs/bullet/{id}_{step}");
+            //bulletPrefab = Resources.Load<PooledObject>($"Prefabs/bullet/{id}_{step}");
             partySet = characterSave.partySet;
 
             // Save의 값에 따라 Data의 값을 변경
@@ -238,7 +238,8 @@ namespace LJ2
                     break;
                 case Parry.반사B:
                     parrying.Parry();
-                    // 반사 기능 미구현
+                    // 반사 기능 미구현으로 인해 무적으로 처리
+                    parrying.Invicible();
                     break;
                 case Parry.무적:
                     parrying.Parry();
@@ -259,15 +260,14 @@ namespace LJ2
                     break;
                 case 10003:
                     // 탄막 변경 데미지 증가
-                    // ultimate.BulletUpgrade();
+                    ultimate.BulletUpgrade();
                     break;
                 case 10004:
                     // 궁극기 탄막 1회 - 다단히트
-                    // ultimate.BigBullet(ultDamage);
+                    ultimate.BigBullet(ultDamage);
                     break;
                 case 10005:
-                    // 궁극기 탄막 1회 - 다단히트
-                    // ultimate.BigBullet(ultDamage);
+                    ultimate.Fire(ultDamage);
                     break;
                 case 10006:
                     defense += ultimate.Shield(ultDamage);

@@ -49,7 +49,7 @@ public class CharacterDataToSO : MonoBehaviour
             characterData.ultCoolReduce = int.Parse(table.GetData(i, 19));
             //characterData.ultLore = table.GetData(i, 21);
             //characterData.ultVisual = (GameObject)AssetDatabase.LoadAssetAtPath($"정해진 경로/{character.id}.Prefab", typeof(GameObject));
-            //characterData.bulletPrefab = (GameObject)AssetDatabase.LoadAssetAtPath($"정해진 경로/{character.id}.Prefab", typeof(GameObject));
+            characterData.bulletPrefab = (GameObject)AssetDatabase.LoadAssetAtPath($"Assets/LJ2/Prefabs/Bullets/Prefabs/{table.GetData(i, 29)}.prefab", typeof(GameObject));
 
             Enum.TryParse<Parry>(table.GetData(i, 23), out characterData.parry);
             // Debug.Log(characterData.parry);
