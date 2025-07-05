@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using KYG_skyPower;
 
 namespace JYL
 {
@@ -19,7 +20,6 @@ namespace JYL
         {
             if(Input.GetKeyDown(KeyCode.Escape))
             {
-                Debug.Log($"{PopUpUI.IsPopUpActive}, {Util.escPressed}");
             }
             if(Input.GetKeyDown(KeyCode.Escape)&&!PopUpUI.IsPopUpActive&&!Util.escPressed)
             {
@@ -36,10 +36,12 @@ namespace JYL
             switch (num)
             {
                 case 1:
-
+                    Manager.Game.CurrentSave.gold -= 200;
                     UIManager.Instance.ShowPopUp<GachaPopUp>();
                     break;
                 case 5:
+                    Manager.Game.CurrentSave.gold -= 500;
+                    Manager.Game.SaveGameProgress();
                     UIManager.Instance.ShowPopUp<Gacha5PopUp>();
                     break;
             }
