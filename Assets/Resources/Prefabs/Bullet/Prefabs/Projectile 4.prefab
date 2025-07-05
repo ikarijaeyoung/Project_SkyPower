@@ -14631,6 +14631,7 @@ GameObject:
   - component: {fileID: 54729807578932012}
   - component: {fileID: 135951470721667518}
   - component: {fileID: -5212141310769790337}
+  - component: {fileID: -7940932974648686044}
   m_Layer: 0
   m_Name: Projectile 4
   m_TagString: Untagged
@@ -19696,6 +19697,20 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!114 &-7940932974648686044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449260960837898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53148eec02051804e9b4b94e48bac886, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  returnPool: {fileID: 0}
+  objectPool: {fileID: 0}
 --- !u!1 &1450556779679700
 GameObject:
   m_ObjectHideFlags: 0

@@ -32,6 +32,7 @@ public class Ultimate : MonoBehaviour
 
     public void Awake()
     {
+        playerController = GetComponent<PlayerController>();
         ultDelay = new WaitForSeconds(setUltDelay);
         enemyBullet = LayerMask.GetMask("EnemyBullet");
         ultLaserController = ultLaser.GetComponentInChildren<UltLaserController>();
@@ -99,24 +100,26 @@ public class Ultimate : MonoBehaviour
     }
 
     // 궁극기 탄막 1회 + 다단히트
-    //public void BigBullet(float damage)
-    //{
-    //    playerController.poolIndex = 1;
-    //    BulletPrefabController bulletPrefab = playerController.curBulletPool.ObjectOut() as BulletPrefabController;
-    //    bulletPrefab.transform.position = playerController.muzzlePoint.position;
-    //    bulletPrefab.ReturnToPool(bulletReturnTimer);
+    public void BigBullet(float damage)
+    {
+        playerController.poolIndex = 1;
+        BulletPrefabController bulletPrefab = playerController.curBulletPool.ObjectOut() as BulletPrefabController;
+        bulletPrefab.transform.position = playerController.muzzlePoint.position;
+        bulletPrefab.ReturnToPool(bulletReturnTimer);
 
-    //    if (bulletPrefab.bulletInfo[0].rig != null)
-    //    {
-    //        bulletPrefab.bulletInfo[0].trans.gameObject.SetActive(true);
-    //        bulletPrefab.bulletInfo[0].trans.localPosition = bulletPrefab.bulletInfo[0].originPos;
-    //        bulletPrefab.bulletInfo[0].rig.velocity = Vector3.zero;
-    //        bulletPrefab.bulletInfo[0].bulletController.attackPower = (int)damage;
-    //        bulletPrefab.bulletInfo[0].rig.AddForce(bulletSpeed * bulletPrefab.bulletInfo[0].trans.forward, ForceMode.Impulse); // 이 부분을 커스텀하면 됨
-    //        bulletPrefab.bulletInfo[0].canDeactive = false; // 다단히트이므로 false로 설정
-    //    }
-        
-    //}
+        if (bulletPrefab.bulletInfo[0].rig != null)
+        {
+            bulletPrefab.bulletInfo[0].trans.gameObject.SetActive(true);
+            bulletPrefab.bulletInfo[0].trans.localPosition = bulletPrefab.bulletInfo[0].originPos;
+            bulletPrefab.bulletInfo[0].rig.velocity = Vector3.zero;
+            bulletPrefab.bulletInfo[0].bulletController.attackPower = (int)damage;
+            bulletPrefab.bulletInfo[0].rig.AddForce(bulletSpeed * bulletPrefab.bulletInfo[0].trans.forward, ForceMode.Impulse); // 이 부분을 커스텀하면 됨
+            bulletPrefab.bulletInfo[0].canDeactive = false; // 다단히트이므로 false로 설정
+        }
+
+        playerController.poolIndex = 0; // 다시 기본 총알로 변경
+
+    }
 
     // 탄막 변경 + 데미지 증가
     public void BulletUpgrade()

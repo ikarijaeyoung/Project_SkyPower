@@ -1,3 +1,4 @@
+using JYL;
 using LJ2;
 using System.Linq;
 using UnityEditor;
@@ -37,6 +38,7 @@ public class CharacterDataHolderPrefabCreator
             holder.parrying = parry;  // CharactorController에 Parrying 컴포넌트 연결
             var ultimate = go.AddComponent<Ultimate>();  // Ultimate 컴포넌트 추가
             holder.ultimate = ultimate;  // CharactorController에 Ultimate 컴포넌트 연결
+            holder.bulletPrefab = data.bulletPrefab.GetComponent<BulletPrefabController>(); // Bullet 프리팹 연결
 
             ultimate.ultAll = erasePrefab; // Erase 프리팹 연결
             ultimate.ultLaser = laserPrefab; // Laser 프리팹 연결

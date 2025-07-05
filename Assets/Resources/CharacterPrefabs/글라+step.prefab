@@ -53,28 +53,29 @@ MonoBehaviour:
   characterData: {fileID: 11400000, guid: 957393b320ca78241b45832709edbf1e, type: 2}
   parrying: {fileID: 3320053539866327546}
   ultimate: {fileID: 7118494388672368131}
-  grade: 1
-  charName: "\uAE00\uB77C+step"
-  elemental: 2
+  grade: 0
+  charName: 
+  elemental: 0
   level: 0
   step: 0
   exp: 0
   Hp: 0
   attackDamage: 0
-  attackSpeed: 1
-  moveSpeed: 100
-  defense: 1
+  attackSpeed: 0
+  moveSpeed: 0
+  defense: 0
   partySet: 0
   ultLevel: 0
   ultDamage: 0
   ultCool: 0
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 8242613537891226912, guid: ff738af49378d114a81aad3a623c205b,
+    type: 3}
   ultBulletPrefab: {fileID: 0}
   ultPrefab: {fileID: 0}
   parry: 0
   parryCool: 0
-  icon: {fileID: 21300000, guid: d5fc58f437bd11b44a944624bd627f53, type: 3}
-  image: {fileID: 21300000, guid: f1a99f2fd26099346898b1716962a4f6, type: 3}
+  icon: {fileID: 0}
+  image: {fileID: 0}
   upgradeUnit: 0
 --- !u!114 &3320053539866327546
 MonoBehaviour:
