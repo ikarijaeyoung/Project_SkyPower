@@ -111,8 +111,8 @@ namespace JYL
                 slot.GetComponent<Button>().onClick.AddListener(() =>
                 {
                     // 선택 캐릭터에 장비 착용
-                    EquipmentInvenManager.Instance.EquipItem(selectedChar.id, capturedWeapon);
-                    selectedChar.ApplyEquipmentStat(); // (이 함수는 CharactorController에 추가 필요)
+                    //EquipmentInvenManager.Instance.EquipItem(selectedChar.id, capturedWeapon);
+                    //selectedChar.ApplyEquipmentStat(); // (이 함수는 CharactorController에 추가 필요)
                 });
             }
         }
@@ -149,8 +149,8 @@ namespace JYL
                 var capturedArmor = armor; 
                 slot.GetComponent<Button>().onClick.AddListener(() =>
                 {
-                    EquipmentInvenManager.Instance.EquipItem(selectedChar.id, capturedArmor);
-                    selectedChar.ApplyEquipmentStat();
+                    //EquipmentInvenManager.Instance.EquipItem(selectedChar.id, capturedArmor);
+                    //selectedChar.ApplyEquipmentStat();
                 });
             }
         }
@@ -172,8 +172,8 @@ namespace JYL
                 var capturedAccessory = accessory;
                 slot.GetComponent<Button>().onClick.AddListener(() =>
                 {
-                    EquipmentInvenManager.Instance.EquipItem(selectedChar.id, capturedAccessory);
-                    selectedChar.ApplyEquipmentStat();
+                    //EquipmentInvenManager.Instance.EquipItem(selectedChar.id, capturedAccessory);
+                    //selectedChar.ApplyEquipmentStat();
                 });
             }
         }
