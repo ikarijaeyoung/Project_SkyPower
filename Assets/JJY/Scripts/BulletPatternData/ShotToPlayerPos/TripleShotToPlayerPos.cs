@@ -23,10 +23,9 @@ public class TripleShotToPlayerPos : BulletPatternData
         {
             BulletPrefabController bulletPrefab = pool.ObjectOut() as BulletPrefabController;
 
-            bulletPrefab.objectPool = pool;
-
             if (bulletPrefab != null)
             {
+                bulletPrefab.objectPool = pool;
                 bulletPrefab.ReturnToPool(returnToPoolTimer);
 
                 foreach (BulletInfo info in bulletPrefab.bulletInfo)

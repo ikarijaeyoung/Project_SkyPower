@@ -1154,6 +1154,84 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1001 &1582735438
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1579580377331602160, guid: fa6238d9cd3991d44a6e31746017221b,
+        type: 3}
+      propertyPath: curObjectPool
+      value: 
+      objectReference: {fileID: 588646113}
+    - target: {fileID: 4344951356574126065, guid: fa6238d9cd3991d44a6e31746017221b,
+        type: 3}
+      propertyPath: m_Name
+      value: FlyEnemy - TripleShotToPlayerPos
+      objectReference: {fileID: 0}
+    - target: {fileID: 4344951356574126065, guid: fa6238d9cd3991d44a6e31746017221b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398885731801022728, guid: fa6238d9cd3991d44a6e31746017221b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398885731801022728, guid: fa6238d9cd3991d44a6e31746017221b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398885731801022728, guid: fa6238d9cd3991d44a6e31746017221b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398885731801022728, guid: fa6238d9cd3991d44a6e31746017221b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398885731801022728, guid: fa6238d9cd3991d44a6e31746017221b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398885731801022728, guid: fa6238d9cd3991d44a6e31746017221b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398885731801022728, guid: fa6238d9cd3991d44a6e31746017221b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398885731801022728, guid: fa6238d9cd3991d44a6e31746017221b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398885731801022728, guid: fa6238d9cd3991d44a6e31746017221b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398885731801022728, guid: fa6238d9cd3991d44a6e31746017221b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fa6238d9cd3991d44a6e31746017221b, type: 3}
 --- !u!1001 &1630515851
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1434,6 +1512,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlyEnemy_003
       objectReference: {fileID: 0}
+    - target: {fileID: 6907872983839026229, guid: b46ea5bd70a675a47a13545cda18772e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7800983058062224057, guid: b46ea5bd70a675a47a13545cda18772e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1687,6 +1770,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FlyEnemy_001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532545821888678440, guid: 52f8ad2cde60745459727b5011250b43,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7887763656334246655, guid: 52f8ad2cde60745459727b5011250b43,
         type: 3}
@@ -2175,6 +2263,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BossEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2805938320730954864, guid: fc9a7f436dd0d0f47962a32477464126,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2415,6 +2508,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlyEnemy_002
       objectReference: {fileID: 0}
+    - target: {fileID: 8140211205730494619, guid: 7ffeef2bd24811449a13e1e820d0c745,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2513,6 +2611,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EliteEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 8515178040553279289, guid: d97f678c271179441b89f1dbe9ace5ea,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2545,6 +2648,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FlyEnemy_004
+      objectReference: {fileID: 0}
+    - target: {fileID: 4165575709432290385, guid: ec1de822014c4e149970d7469b5cef09,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8201612364396861573, guid: ec1de822014c4e149970d7469b5cef09,
         type: 3}
@@ -2680,6 +2788,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlyEnemy_005
       objectReference: {fileID: 0}
+    - target: {fileID: 8351887547980912979, guid: 1d1ebdd9b131d2b45ba677bc6d805877,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2724,3 +2837,4 @@ SceneRoots:
   - {fileID: 4909116749882181997}
   - {fileID: 1820883890}
   - {fileID: 5440576199925021698}
+  - {fileID: 1582735438}
