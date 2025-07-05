@@ -47,6 +47,7 @@ namespace JYL
             {
                 hp = value;
                 onHpChanged?.Invoke(hp);
+                curBulletPool.ObjectOut();
             }
         }
 
@@ -274,7 +275,7 @@ namespace JYL
                     else if(poolIndex == 1)
                     {
                         info.bulletController.attackPower = (int)mainCharController.ultDamage;
-                        info.bulletController.canDeactive = false;
+                        // info.bulletController.canDeactive = false; 다단히트일 때 활성화
                     }
                     info.rig.AddForce(playerModel.fireSpeed * info.trans.forward, ForceMode.Impulse); // 이 부분을 커스텀하면 됨
                 }

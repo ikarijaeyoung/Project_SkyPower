@@ -73,12 +73,32 @@ namespace LJ2
             //    SetParameter();
             //}
         }
-        public void SetParameter()
+        public void SetParameter() // TODO 이큅로더 완성되면 여기에 매개변수로 넣음 EquipSaveLoader equips
         {
             // Data의 값을 그대로 가져옴
             // bulletPrefab = characterData.bulletPrefab;
             // ultPrefab = characterData.ultVisual;
             // image = charictorData.image;
+            
+            //EquipController weapon;
+            //EquipController armor;
+            //EquipController acce;
+            //foreach(var item in equips)
+            //{
+            //    // 0번 = 무기, 1번이 방어구, 2번이 악세
+            //    switch(item.id)
+            //    { 
+            //    case Manager.Game.CurrentSave.equip[0].id:
+            //        weapon = item;
+            //        break;
+            //    case Manager.Game.CurrentSave.equip[1].id:
+            //        armor = item;
+            //        break;
+            //    case Manager.Game.CurrentSave.equip[2].id:
+            //        acce = item;
+            //        break;
+            //    }
+            //}
 
             grade = characterData.grade;
             charName = characterData.characterName;
@@ -108,8 +128,18 @@ namespace LJ2
             partySet = characterSave.partySet;
 
             // Save의 값에 따라 Data의 값을 변경
-            Hp = characterData.hp + (characterData.hpPlus * (level - 1));
-            attackDamage = (int)(characterData.attackDamage + (characterData.damagePlus * (level - 1)));
+            if(partySet == PartySet.Main)
+            {
+                // TODO : 장비 스탯 추가 적용
+                //Hp = characterData.hp + (characterData.hpPlus * (level - 1)) + armor.hp;
+                //attackDamage = (int)(characterData.attackDamage + (characterData.damagePlus * (level - 1)))+weapon.attackPower; 
+            }
+            else
+            {
+                Hp = characterData.hp + (characterData.hpPlus * (level - 1));
+                attackDamage = (int)(characterData.attackDamage + (characterData.damagePlus * (level - 1)));
+            }
+
             ultLevel = step + 1;
             ultCool = characterData.ultCoolDefault - (characterData.ultCoolReduce * step);
             upgradeUnit = characterData.upgradeUnitDefault + (characterData.upgradeUnitPlus * level);
