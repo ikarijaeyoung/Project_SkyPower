@@ -10,14 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 4036995283409360}
   - component: {fileID: 198134207313987930}
-  - component: {fileID: 114436793558689382}
   - component: {fileID: 199626401336443300}
   - component: {fileID: 108858597636685324}
   - component: {fileID: 54610850387007412}
   - component: {fileID: 135627091332810106}
   - component: {fileID: 114460598514863804}
   - component: {fileID: -8644279757402236871}
-  m_Layer: 0
+  - component: {fileID: 2817650460345190105}
+  m_Layer: 7
   m_Name: Projectile 22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4851,26 +4851,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &114436793558689382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1034045548656336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 605a456cfc02f6b499a64717539a27e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 15
-  hitOffset: 0.1
-  UseFirePointRotation: 0
-  rotationOffset: {x: 0, y: 0, z: 0}
-  hit: {fileID: 1036333269638840, guid: c5a11cdca0c02ec46af89a4f25515b5f, type: 3}
-  flash: {fileID: 1368339559166676, guid: 1702711b22bc3204d80c7f85a3de0c80, type: 3}
-  Detached:
-  - {fileID: 1512875676520532}
 --- !u!199 &199626401336443300
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -5002,7 +4982,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 7.3333335, z: 8, w: -10.666667}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -5049,7 +5029,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -5090,6 +5070,24 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!114 &2817650460345190105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034045548656336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c232919127a25b54b842d8bb6a7c7017, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ticTime: 0.5
+  flash: {fileID: 1368339559166676, guid: 33cfe973f8fc9a747b6f14323c2f71f1, type: 3}
+  hit: {fileID: 1036333269638840, guid: 1e51cd50fb4e16043ad9c23b99883643, type: 3}
+  rig: {fileID: 54610850387007412}
+  attackPower: 0
+  canDeactive: 1
 --- !u!1 &1512875676520532
 GameObject:
   m_ObjectHideFlags: 0
