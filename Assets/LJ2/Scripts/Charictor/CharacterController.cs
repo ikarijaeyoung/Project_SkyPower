@@ -238,7 +238,8 @@ namespace LJ2
                     break;
                 case Parry.반사B:
                     parrying.Parry();
-                    // 반사 기능 미구현
+                    // 반사 기능 미구현으로 인해 무적으로 처리
+                    parrying.Invicible();
                     break;
                 case Parry.무적:
                     parrying.Parry();
