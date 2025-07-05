@@ -122,10 +122,16 @@ namespace JYL
                         mainCharController = charData;
                         break;
                     case PartySet.Sub1:
-                        sub1CharController = charData;
+                        if(charData.grade != Grade.R)
+                        {
+                            sub1CharController = charData;
+                        }
                         break;
                     case PartySet.Sub2:
-                        sub2CharController = charData;
+                        if(charData.grade != Grade.R)
+                        {
+                            sub2CharController = charData;
+                        }
                         break;
                 }
             }
@@ -200,20 +206,7 @@ namespace JYL
             {
                 return Vector2.zero;
             }
-            // 카메라 기준 스크린 좌표로 판단
-            //Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
-
-            // 플레이어가 카메라 뒤에 있다는 뜻
-            //if (screenPos.z <= 0) return Vector2.zero;
-
-            //if (screenPos.x <= 0 && inputDirection.x < 0) inputDirection.x = 0;
-            //if (screenPos.x >= Camera.main.pixelWidth && inputDirection.x > 0) inputDirection.x = 0;
-            //if (screenPos.y <= 0 && inputDirection.y < 0) inputDirection.y = 0;
-            //if (screenPos.y >= Camera.main.pixelHeight && inputDirection.y > 0) inputDirection.y = 0;
-
-            // 뷰포트 기준 좌표로 좀 더 간단화 가능
-            // 뷰포트는 0~1사이의 값으로만 정해져 있다. 매우 정확하게 떨어지진 않겠지만, 어느정도 커버가 된다
-
+            
             Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
             if (viewportPos.z <= 0) return Vector2.zero;
 
@@ -333,7 +326,7 @@ namespace JYL
         }
         private void UseParry1(InputAction.CallbackContext ctx)
         {
-            if (parryTimer <= 0)
+            if (sub1CharController!= null && parryTimer <= 0)
             {
                 sub1CharController.UseParry();
                 parryTimer = sub1CharController.parryCool;
@@ -341,7 +334,7 @@ namespace JYL
         }
         private void UseParry2(InputAction.CallbackContext ctx)
         {
-            if (parryTimer <= 0)
+            if (sub2CharController != null && parryTimer <= 0)
             {
                 sub2CharController.UseParry();
                 parryTimer = sub2CharController.parryCool;

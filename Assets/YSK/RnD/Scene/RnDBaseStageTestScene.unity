@@ -2683,14 +2683,17 @@ MonoBehaviour:
         m_CallState: 2
   saveFiles:
   - playerName: 
+    gold: 1000
     characterInventory:
       characters: []
     stageInfo: []
   - playerName: 
+    gold: 1000
     characterInventory:
       characters: []
     stageInfo: []
   - playerName: 
+    gold: 1000
     characterInventory:
       characters: []
     stageInfo: []
