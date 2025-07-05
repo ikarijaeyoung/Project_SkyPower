@@ -19,39 +19,46 @@ namespace JYL
         private TMP_Text ap => GetUI<TMP_Text>("InvenCharAPText");
         private Image charImage;
         private CharacterSaveLoader characterLoader;
+        private CharactorController mainController;
 
+        private new void Awake()
+        {
+            base.Awake();
+            characterLoader = GetComponent<CharacterSaveLoader>();
+            
+        }
         private void OnEnable()
         {
+            Init();
         }
         void Start()
         {
             
             // 장비 클릭시 활성화
-            characterLoader = GetComponent<CharacterSaveLoader>();
-            characterLoader.GetCharPrefab();
-            Init();
 
             invenScroll.SetActive(false);
-            GetEvent("CharEnhanceBtn1").Click += OpenCharEnhance;
+            GetEvent("CharEnhanceBtn").Click += OpenCharEnhance;
             GetEvent("WeaponBtn").Click += OpenWPInven;
-            GetEvent("WPEnhanceBtn2").Click += OpenWPEnhance;
+            GetEvent("WPEnhanceBtn1").Click += OpenWPEnhance;
             GetEvent("ArmorBtn").Click += OpenAMInven;
-            GetEvent("AMEnhanceBtn3").Click += OpenAMEnhance;
+            GetEvent("AMEnhanceBtn2").Click += OpenAMEnhance;
             GetEvent("AccessoryBtn").Click += OpenACInven;
 
             // 현재 캐릭터의 정보가 표시된다
             // index는 UIManager가 관리
             // GameManager.Instance.character[index]
-            invenCharName.text = "캐릭터1";
-            level.text = "24";
-            hp.text = "2040";
-            ap.text = "332";
-            Init();
+
         }
         private void Init()
         {
+            characterLoader.GetCharPrefab();
             charImage = GetUI<Image>("InvenCharImage");
             charImage.sprite = characterLoader.mainController.image;
+            Debug.Log($"{invenCharName.text} : {mainController.charName}");
+            invenCharName.text = $"{mainController.charName}";
+            level.text = $"{mainController.level}";
+            hp.text = $"{mainController.Hp}";
+            ap.text = $"{mainController.attackDamage}";
         }
         private void OpenCharEnhance(PointerEventData eventData)
         {
