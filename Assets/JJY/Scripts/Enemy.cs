@@ -31,6 +31,9 @@ public class Enemy : MonoBehaviour
     [Header("Animator")]
     private Animator animator;
 
+    [Header("Death Effect")]
+    public GameObject deathEffectPrefab;
+    public float destroyDelay;
     void Awake()
     {
         modelRenderer = GetComponentInChildren<Renderer>();
@@ -80,8 +83,41 @@ public class Enemy : MonoBehaviour
             StopCoroutine(curFireCoroutine);
             curFireCoroutine = null;
         }
-        // TODO : 죽는 애니메이션 실행.
-        // animator.SetBool("IsDead", true);
+        if (deathEffectPrefab != null)
+        {
+            GameObject instance = Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
+
+            ParticleSystem ps = instance.GetComponent<ParticleSystem>();
+            if (ps == null && instance.transform.childCount > 0) // 자식 GameObject에 파티클 시스템이 있을 경우
+            {
+                ps = instance.transform.GetChild(0)?.GetComponent<ParticleSystem>();
+            }
+            if (ps != null)
+            {
+                Destroy(instance, ps.main.duration);
+                destroyDelay = ps.main.duration;
+            }
+        }
+        if (modelRenderer != null)
+        {
+            modelRenderer.enabled = false;
+        }
+        Collider enemyCollider = GetComponent<Collider>();
+        if (enemyCollider != null)
+        {
+            enemyCollider.enabled = false;
+        }
+        Rigidbody enemyRb = GetComponent<Rigidbody>();
+        if (enemyRb != null)
+        {
+            enemyRb.velocity = Vector3.zero;
+            enemyRb.isKinematic = true;
+        }
+        StartCoroutine(DestroyAfterDelay(destroyDelay));
+    }
+    private IEnumerator DestroyAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         Destroy(gameObject);
     }
     IEnumerator ChangeFireMode()
@@ -110,34 +146,5 @@ public class Enemy : MonoBehaviour
         Debug.Log("지금 공격함");
         int ranNum = UnityEngine.Random.Range(0, BulletPattern.Length);
         curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, bulletSpeed, curObjectPool));
-
-        // Debug.Log("AnimationFire 호출됨. 현재 autoFire: " + autoFire);
-        // if (!autoFire) // 현재 발사 중이 아니라면 (자동 발사 시작)
-        // {
-        //     autoFire = true;
-        //     StartAutoFire();
-        // }
-        // else // 현재 발사 중이라면 (자동 발사 중지)
-        // {
-        //     autoFire = false; 
-        //     StopAutoFire();
-        // }
     }
-    // private void StartAutoFire()
-    // {
-    //     if (curFireCoroutine == null) // 이미 실행 중이 아니라면 시작
-    //     {
-    //         curFireCoroutine = StartCoroutine(ChangeFireMode());
-    //     }
-    // }
-
-    // // 자동 발사 중지
-    // private void StopAutoFire()
-    // {
-    //     if (curFireCoroutine != null) // 실행 중이라면 중지
-    //     {
-    //         StopCoroutine(curFireCoroutine);
-    //         curFireCoroutine = null;
-    //     }
-    // }
 }
