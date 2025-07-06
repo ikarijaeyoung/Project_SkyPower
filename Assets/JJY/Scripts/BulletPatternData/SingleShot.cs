@@ -16,6 +16,7 @@ public class SingleShot : BulletPatternData
         {
             bulletPrefab.objectPool = pool;
             bulletPrefab.ReturnToPool(returnToPoolTimer);
+            bulletPrefab.transform.position = firePoints[0].position;
 
             foreach (BulletInfo info in bulletPrefab.bulletInfo)
             {

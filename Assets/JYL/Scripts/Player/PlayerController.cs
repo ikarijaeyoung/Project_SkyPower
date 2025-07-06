@@ -112,10 +112,12 @@ namespace JYL
             charDataLoader.GetCharPrefab();
            
             mainCharController = charDataLoader.mainController;
+            
             if(charDataLoader.sub1Controller.grade != Grade.R)
             {
                 sub1CharController = charDataLoader.sub1Controller;
             }
+
             if(charDataLoader.sub1Controller.grade != Grade.R)
             {
                 sub2CharController = charDataLoader.sub2Controller;
@@ -183,7 +185,7 @@ namespace JYL
                 return;
             }
             Vector3 moveDir = new Vector3(clampInput.x, 0f, clampInput.y);
-            rig.velocity = moveDir * moveSpeed;
+            rig.velocity = moveDir * moveSpeed*0.05f;
         }
 
         private Vector2 ClampMoveInput(Vector2 inputDirection)
@@ -196,11 +198,11 @@ namespace JYL
             Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
             if (viewportPos.z <= 0) return Vector2.zero;
 
-            if (viewportPos.x <= leftMargin && inputDirection.x < 0) inputDirection.x = 0;
-            if (viewportPos.x >= rightMargin && inputDirection.x > 0) inputDirection.x = 0;
+            if (viewportPos.x <= leftMargin+0.01f && inputDirection.x < 0) inputDirection.x = 0;
+            if (viewportPos.x >= rightMargin-0.01f && inputDirection.x > 0) inputDirection.x = 0;
 
-            if (viewportPos.y <= 0 && inputDirection.y < 0) inputDirection.y = 0;
-            if (viewportPos.y >= 1 && inputDirection.y > 0) inputDirection.y = 0;
+            if (viewportPos.y-0.01f <= 0 && inputDirection.y < 0) inputDirection.y = 0;
+            if (viewportPos.y+0.01f >= 1 && inputDirection.y > 0) inputDirection.y = 0;
 
             return inputDirection;
         }
@@ -346,33 +348,3 @@ namespace JYL
     }
 
 }
-
-// 버튼 순서에 맞게 알아서 배치되게
-
-// Dictionary<string,Scene> sceneList;
-// sceneList  시작할 때, 빌드에 포함 된 씬 전부 저장
-// public int curScene  = sceneList[0]; // sceneList[scene.Title];
-
-// 
-// void SceneChange(string sceneName)
-// {
-//      씬 전환 적업이 일어남
-//      들어오는게 스테이지 = 
-//      -> 데이터 여기서 들어옴
-//      스테이지의 스크립터블 오브젝트가 필요함
-//      스테이지 저장
-//      stage_1,1
-//      string.split('_',',') -> string[] s = "stage","1","1" 
-//      s[0] => curScene
-//      int 
-//      s[1],[2] => int.parse
-//      curscene = 
-//      1-1 => 월드 변수, 스테이지 변수
-//      string 숫자 받아ㅏ오면됨
-//      curScene = sceneName
-// }
-// 
-// 스테이지마다 달라져야 하는것, 가져와야 하는 것
-// 라이트, 에너미(스포너), 에너미의  설정값, 보스, 엘리트몬스터
-// 맵데이터, 플레이어 데이터(자동), <= SceneChange
-// 
