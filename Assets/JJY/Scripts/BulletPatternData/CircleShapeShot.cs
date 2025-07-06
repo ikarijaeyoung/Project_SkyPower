@@ -15,23 +15,27 @@ public class CircleShapeShot : BulletPatternData
     {
         for (int i = 0; i < shotCount; i++)
         {
-            BulletPrefabController bullet = pool.ObjectOut() as BulletPrefabController;
-            bullet.objectPool = pool;
+            BulletPrefabController bulletPrefab = pool.ObjectOut() as BulletPrefabController;
 
-            if (bullet != null)
+            //bulletPrefab.transform.position = gameObject.transform.position; 에너미 위치로 가져와야 함. 필요없을 수도 잇음
+
+            if (bulletPrefab != null)
             {
                 // firePoints 인덱스가 배열 크기를 넘지 않도록 순환시킵니다.
                 // shotCount > firePoints == firePoints[i]에서 배열 범위 벗어남. => IndexOutOfRangeException Error.
                 Transform curFirePoint = firePoints[i % firePoints.Length];
 
-                bullet.ReturnToPool(returnToPoolTimer);
+                bulletPrefab.objectPool = pool;
+                bulletPrefab.ReturnToPool(returnToPoolTimer);
 
-                foreach (BulletInfo info in bullet.bulletInfo)
+                foreach (BulletInfo info in bulletPrefab.bulletInfo)
                 {
                     if (info.rig != null)
                     {
                         info.trans.gameObject.SetActive(true);
-                        info.trans.position = firePoints[0].position;
+                        info.trans.localPosition = info.originPos;
+                        info.trans.position = firePoints[i].position;
+                        info.trans.rotation = Quaternion.LookRotation(curFirePoint.forward);
                         info.rig.velocity = Vector3.zero;
                         info.rig.AddForce(curFirePoint.forward * bulletSpeed, ForceMode.Impulse);
                     }

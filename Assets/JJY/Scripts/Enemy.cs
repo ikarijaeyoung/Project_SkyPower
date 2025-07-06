@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Enemy State")]
     public EnemyData enemyData;
-    [SerializeField] private int currentHP; // TODO : Player의 공격력 * 1.5배
+    [SerializeField] private int currentHP;
     public bool autoFire;
 
     [Header("Enemy Shot Info")]
@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
     private Coroutine flashCoroutine;
     [SerializeField] private Color flashColor = Color.white; // 피격 시 변경될 색상
     [SerializeField] private float flashDuration = 0.1f;
-    
+
     [Header("Animator")]
     private Animator animator;
 
@@ -43,13 +43,10 @@ public class Enemy : MonoBehaviour
     public void Init(ObjectPool objectPool)
     {
         curObjectPool = objectPool;
+        curObjectPool.CreatePool();
         currentHP = enemyData.maxHP;
-        //autoFire = true;
-        // StartCoroutine(ChangeFireMode());
-    }
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("PlayerBullet")) TakeDamage(1);
+        // autoFire = true;
+        // if (autoFire) StartCoroutine(ChangeFireMode());
     }
     public void TakeDamage(int damage)
     {
@@ -60,6 +57,7 @@ public class Enemy : MonoBehaviour
         flashCoroutine = StartCoroutine(FlashEffectCoroutine());
 
         currentHP -= damage;
+        Debug.Log($"{gameObject.name} took {damage} damage. Current HP: {currentHP}");
         if (currentHP <= 0) Die();
     }
     private void Update()
@@ -68,7 +66,7 @@ public class Enemy : MonoBehaviour
         {
             TakeDamage(1);
         }
-        if(Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D))
         {
             AnimationFire();
         }
@@ -79,7 +77,11 @@ public class Enemy : MonoBehaviour
 
         OnEnemyDied?.Invoke(transform.position);
 
-        StopCoroutine(curFireCoroutine);
+        if (curFireCoroutine != null)
+        {
+            StopCoroutine(curFireCoroutine);
+            curFireCoroutine = null;
+        }
         // TODO : 죽는 애니메이션 실행.
         // animator.SetBool("IsDead", true);
         Destroy(gameObject);
@@ -110,5 +112,34 @@ public class Enemy : MonoBehaviour
         Debug.Log("지금 공격함");
         int ranNum = UnityEngine.Random.Range(0, BulletPattern.Length);
         curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, bulletSpeed, curObjectPool));
+
+        // Debug.Log("AnimationFire 호출됨. 현재 autoFire: " + autoFire);
+        // if (!autoFire) // 현재 발사 중이 아니라면 (자동 발사 시작)
+        // {
+        //     autoFire = true;
+        //     StartAutoFire();
+        // }
+        // else // 현재 발사 중이라면 (자동 발사 중지)
+        // {
+        //     autoFire = false; 
+        //     StopAutoFire();
+        // }
     }
+    // private void StartAutoFire()
+    // {
+    //     if (curFireCoroutine == null) // 이미 실행 중이 아니라면 시작
+    //     {
+    //         curFireCoroutine = StartCoroutine(ChangeFireMode());
+    //     }
+    // }
+
+    // // 자동 발사 중지
+    // private void StopAutoFire()
+    // {
+    //     if (curFireCoroutine != null) // 실행 중이라면 중지
+    //     {
+    //         StopCoroutine(curFireCoroutine);
+    //         curFireCoroutine = null;
+    //     }
+    // }
 }

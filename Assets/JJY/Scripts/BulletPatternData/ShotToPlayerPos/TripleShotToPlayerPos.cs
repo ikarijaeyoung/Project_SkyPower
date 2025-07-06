@@ -21,21 +21,22 @@ public class TripleShotToPlayerPos : BulletPatternData
 
         for (int i = 0; i < shotCount; i++)
         {
-            BulletPrefabController bullet = pool.ObjectOut() as BulletPrefabController;
+            BulletPrefabController bulletPrefab = pool.ObjectOut() as BulletPrefabController;
 
-            bullet.objectPool = pool;
-
-            if (bullet != null)
+            if (bulletPrefab != null)
             {
-                bullet.ReturnToPool(returnToPoolTimer);
+                bulletPrefab.objectPool = pool;
+                bulletPrefab.ReturnToPool(returnToPoolTimer);
 
-                foreach (BulletInfo info in bullet.bulletInfo)
+                foreach (BulletInfo info in bulletPrefab.bulletInfo)
                 {
                     if (info.rig != null)
                     {
                         info.trans.gameObject.SetActive(true);
                         info.trans.localPosition = info.originPos;
                         info.trans.position = firePoints[0].position;
+                        // ÃÑ¾ËÀÇ forward¸¦ MuzzlepointÀÇ forward·Î ¸ÂÃã
+                        info.trans.rotation = firePoints[0].rotation;
                         info.rig.velocity = Vector3.zero;
                         info.rig.AddForce(firePoints[0].forward * bulletSpeed, ForceMode.Impulse);
                     }

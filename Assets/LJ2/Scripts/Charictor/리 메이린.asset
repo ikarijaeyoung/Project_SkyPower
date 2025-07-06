@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5043dd61d89d6e247ada5222321b7ca1, type: 3}
+  m_Name: "\uB9AC \uBA54\uC774\uB9B0"
+  m_EditorClassIdentifier: 
+  id: 10017
+  grade: 1
+  characterName: "\uB9AC \uBA54\uC774\uB9B0"
+  characterModel: {fileID: 2820146250287503073, guid: 5a058fb64551ddc4dac06caca1a9a9f3,
+    type: 3}
+  elemental: 2
+  maxLevel: 30
+  hp: 100
+  hpPlus: 5
+  bulletPrefab: {fileID: 2680888267476311631, guid: 0696a3bb04fa20147b153582bd4c2e6d,
+    type: 3}
+  attackDamage: 10
+  damagePlus: 5
+  attackSpeed: 1
+  moveSpeed: 100
+  defense: 1
+  ultCoolDefault: 100
+  ultCoolReduce: 10
+  ultVisual: {fileID: 0}
+  parry: 0
+  parryCool: 0
+  icon: {fileID: 21300000, guid: f53a71c13bb9e0a46bcf21aad8d7e0fd, type: 3}
+  image: {fileID: 21300000, guid: 92552fe64761abb44a20616c179365c5, type: 3}
+  upgradeUnitDefault: 2500
+  upgradeUnitPlus: 2500

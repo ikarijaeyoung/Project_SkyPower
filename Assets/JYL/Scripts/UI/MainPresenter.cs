@@ -6,32 +6,32 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using LJ2;
+using TMPro;
+using KYG_skyPower;
 
 namespace JYL
 {
     public class MainPresenter : BaseUI
     {
-        private GameObject mainScreen;
         private Image charImg1;
         private Image charImg2;
         private Image charImg3;
         private event Action onEnterMain;
         private CharacterSaveLoader characterLoader;
+        private TMP_Text unitText;
         void Start()
         {
             characterLoader = GetComponent<CharacterSaveLoader>();
             characterLoader.GetCharPrefab();
-
-            mainScreen = GetUI("MainScreen");
+            unitText = GetUI<TMP_Text>("UnitText");
             charImg1 = GetUI<Image>("CharImage1");
             charImg2 = GetUI<Image>("CharImage2");
             charImg3 = GetUI<Image>("CharImage3");
             SetPartyImage();
-
             GetEvent("ShopBtn").Click += OpenShop;
             GetEvent("PartySetBtn").Click += OpenPartySetting;
             GetEvent("PlayBtn").Click += OpenGameMode;
-
+            unitText.text = $"{Manager.Game.CurrentSave.gold} UNIT";
             // GetEvent("InfoBtn").Click += OpenGameInfo;
         }
         private void LateUpdate()
@@ -58,21 +58,9 @@ namespace JYL
         //}
         private void SetPartyImage()
         {
-            foreach (CharactorController character in characterLoader.charactorController)
-            {
-                switch (character.partySet)
-                {
-                    case PartySet.Main:
-                        charImg1.sprite = character.image;
-                        break;
-                    case PartySet.Sub1:
-                        charImg2.sprite = character.image;
-                        break;
-                    case PartySet.Sub2:
-                        charImg3.sprite = character.image;
-                        break;
-                }
-            }
+            charImg1.sprite = characterLoader.mainController.image;
+            charImg2.sprite = characterLoader.sub1Controller.image;
+            charImg3.sprite = characterLoader.sub2Controller.image;
         }
         private void CheckPopUp()
         {
@@ -90,6 +78,10 @@ namespace JYL
                     onEnterMain -= SetPartyImage;
                 }
             }
+        }
+        private void UpdateUnitText()
+        {
+            unitText.text = $"{Manager.Game.CurrentSave.gold} UNIT";
         }
     }
 }

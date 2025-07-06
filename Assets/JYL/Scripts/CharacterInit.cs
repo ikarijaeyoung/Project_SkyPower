@@ -8,7 +8,7 @@ namespace JYL
 {
     public class CharacterInit : MonoBehaviour
     {
-        [SerializeField] CsvTable table;
+        [SerializeField] public CsvTable table;
         void Start()
         {
             CsvReader.Read(table);
@@ -22,10 +22,10 @@ namespace JYL
 
         public void InitCharacterInfo()
         {
-            for(int i =2;i<table.Table.GetLength(0);i++)
+            for(int i =2;i<=table.Table.GetLength(0);i++)
             {
                 int id = int.Parse(table.GetData(i, 0));
-                Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.AddCharacter(id);
+                Manager.Game.CurrentSave.characterInventory.AddCharacter(id);
             }
         }
 

@@ -11,18 +11,16 @@ namespace JYL
 {
     public class PartySetPopUp : BaseUI
     {
-        private event Action OnPartySetEnter;
         private string iconPrefabPath = "JYL/UI/CharacterIconPrefab";
         private CharacterSaveLoader characterLoader;
         private Image mainIllustImg;
         private Image sub1IllustImg;
         private Image sub2IllustImg;
-        private Image iconPrefab;
+        private GameObject iconPrefab;
         private RectTransform parent;
-        private List<Image> iconList;
+        private List<GameObject> iconList;
         private Dictionary<string, CharactorController> charDict;
         private List<CharacterSave> charDataList;
-        private RectTransform dragIconTransform;
         public static bool isPartySetting = false;
         private bool isMainSet = false;
         private bool isSub1Set = false;
@@ -38,8 +36,7 @@ namespace JYL
         void Start()
         {
              // TODO : 상점 연결
-            characterLoader = GetComponent<CharacterSaveLoader>();
-            //GetEvent("PSCharImg1").Click += OpenInvenPopUp;
+            GetEvent("PSCharImg1").Click += OpenInvenPopUp;
             //GetEvent("PSCharImg2").Click += OpenInvenPopUp;
             //GetEvent("PSCharImg3").Click += OpenInvenPopUp;
             CreateIcons();
@@ -79,10 +76,10 @@ namespace JYL
         // 초기화
         private void Init()
         {
-            charDict = new Dictionary<string, CharactorController>();
-            charDataList = Manager.Game.saveFiles[Manager.Game.currentSaveIndex].characterInventory.characters;
-            iconList = new List<Image>();
             characterLoader = GetComponent<CharacterSaveLoader>();
+            charDict = new Dictionary<string, CharactorController>();
+            charDataList = Manager.Game.CurrentSave.characterInventory.characters;
+            iconList = new List<GameObject>();
             //canvasGroup = GetComponent<CanvasGroup>();
             mainIllustImg = GetUI<Image>("PSCharImg1");
             sub1IllustImg = GetUI<Image>("PSCharImg2");
@@ -90,7 +87,7 @@ namespace JYL
             parent = GetUI<RectTransform>("Content");
             warningText = GetUI<TMP_Text>("PartySetWarningText");
             //popUpPanel = GetUI<RectTransform>("PartySetPopUp");
-            iconPrefab = Resources.Load<Image>(iconPrefabPath);
+            iconPrefab = Resources.Load<GameObject>(iconPrefabPath);
             characterLoader.GetCharPrefab();
         }
 
@@ -102,7 +99,18 @@ namespace JYL
             // GameManager.Instance.selectSave.party[index] -> 캐릭터 ID
             // 캐릭터 컨트롤러 (캐릭터 ID)
             UIManager.Instance.selectIndexUI = index;
-            UIManager.Instance.ShowPopUp<InvenPopUp>();
+            if(index == 1)
+            {
+                int mainCharIndex = charDataList.FindIndex(c => c.partySet == PartySet.Main);
+                if (mainCharIndex == -1)
+                {
+                    Debug.Log($"메인 캐릭터는 현재 비어있음");
+                }
+                else if(!isPartySetting)
+                {
+                    UIManager.Instance.ShowPopUp<InvenPopUp>();
+                }
+            }
         }
 
         // 아이콘 및 일러스트들을 생성
@@ -110,7 +118,7 @@ namespace JYL
         {
             if (iconList.Count > 0)
             {
-                foreach (Image icon in iconList)
+                foreach (GameObject icon in iconList)
                 {
                     GameObject outIcon = DeleteFromDictionary(icon.gameObject.name, icon.gameObject);
                     Destroy(outIcon);
@@ -128,13 +136,13 @@ namespace JYL
                 // 레벨 1 이상인 경우에만 이벤트 등록. 소유중인 캐릭터들임
                 if (character.level > 0)
                 {
-                    Image go;
+                    GameObject go;
                     go = Instantiate(iconPrefab, parent);
                     go.name = $"StayCharImg{imgIndex + 1}";
                     // TODO Add Test
                     AddUIToDictionary(go.gameObject);
                     imgIndex++;
-                    go.sprite = character.image;
+                    go.GetComponentInChildren<Image>().sprite = character.icon;
                     GetEvent($"{go.name}").Drag += BeginIconDrag;
                     GetEvent($"{go.name}").Drag += IconDrag;
                     GetEvent($"{go.name}").EndDrag += OnIconDragEnd;
@@ -162,9 +170,53 @@ namespace JYL
                         break;
                 }
             }
-            if (!isMainSet) mainIllustImg.sprite = null;
-            if (!isSub1Set) sub1IllustImg.sprite = null;
-            if (!isSub2Set) sub2IllustImg.sprite = null;
+            CheckPartySlotNull();
+ 
+        }
+        private void CheckPartySlotNull()
+        {
+            // 메인
+            if (!isMainSet)
+            {
+                mainIllustImg.sprite = null;
+                Color c = mainIllustImg.color;
+                c.a = 0f;
+                mainIllustImg.color = c;
+            }
+            else
+            {
+                Color c = mainIllustImg.color;
+                c.a = 1f;
+                mainIllustImg.color = c;
+            }
+            // 서브1
+            if (!isSub1Set)
+            {
+                sub1IllustImg.sprite = null;
+                Color c = sub1IllustImg.color;
+                c.a = 0f;
+                sub1IllustImg.color = c;
+            }
+            else
+            {
+                Color c = sub1IllustImg.color;
+                c.a = 1f;
+                sub1IllustImg.color = c;
+            }
+            // 서브2
+            if (!isSub2Set)
+            {
+                sub2IllustImg.sprite = null;
+                Color c = sub2IllustImg.color;
+                c.a = 0f;
+                sub2IllustImg.color = c;
+            }
+            else
+            {
+                Color c = sub2IllustImg.color;
+                c.a = 1f;
+                sub2IllustImg.color = c;
+            }
         }
         // 아이콘 드래그 시작
         private void BeginIconDrag(PointerEventData eventData)
@@ -213,7 +265,6 @@ namespace JYL
                     // UI 오브젝트의 이름을 통해 메인, 서브를 판별
                     Util.ExtractTrailNumber($"{targetSlot.name}", out int slotNum);
                     // 만약, 드래그 중인것과 내려놓는곳이 같다면 작업을 하지 않는다
-                    Debug.Log($"{(int)dragCharData.partySet+1} {slotNum}");
                     if ((int)dragCharData.partySet+1 != slotNum)
                     {
                         switch (slotNum)
@@ -224,7 +275,7 @@ namespace JYL
                                 int mainCharIndex = charDataList.FindIndex(c => c.partySet == PartySet.Main);
                                 if (mainCharIndex == -1)
                                 {
-                                    Debug.Log($"메인 캐릭터는 현재 비어있음");
+                                    Debug.Log($"메인 캐릭터는 비어있었음");
                                 }
                                 else
                                 {
@@ -241,7 +292,7 @@ namespace JYL
                                 int sub1CharIndex = charDataList.FindIndex(c => c.partySet == PartySet.Sub1);
                                 if (sub1CharIndex == -1)
                                 {
-                                    Debug.Log($"서브1 캐릭터는 현재 비어있음");
+                                    Debug.Log($"서브1 캐릭터는 비어있었음");
                                 }
                                 else
                                 {
@@ -257,7 +308,7 @@ namespace JYL
                                 int sub2CharIndex = charDataList.FindIndex(c => c.partySet == PartySet.Sub2);
                                 if (sub2CharIndex == -1)
                                 {
-                                    Debug.Log($"서브2 캐릭터는 현재 비어있음");
+                                    Debug.Log($"서브2 캐릭터는 비어있었음");
                                 }
                                 else
                                 {
