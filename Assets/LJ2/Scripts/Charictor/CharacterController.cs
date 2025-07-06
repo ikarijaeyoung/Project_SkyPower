@@ -253,14 +253,14 @@ namespace LJ2
             }
         }
 
-        public void UseParry(Parry subParry)
+        public void UseParry(Parry subParry) // Parry subParry
         {
             // Parry 기능을 사용할 때마다 쿨타임을 체크하고 실행
-            switch (parry)
+            switch (subParry)
             {
                 case Parry.방어막:
                     parrying.Parry();
-                    defense += parrying.Shield();
+                    parrying.Invicible();
                     break;
                 case Parry.반사B:
                     parrying.Parry();

@@ -37,6 +37,8 @@ namespace JYL
         public CharactorController sub2CharController;
         private CharacterSaveLoader charDataLoader;
 
+        public CharactorController inGameController;
+
         private int hp;
         public int Hp
         {
@@ -122,8 +124,9 @@ namespace JYL
             {
                 sub2CharController = charDataLoader.sub2Controller;
             }
-            Instantiate(mainCharController.gameObject, transform);
-            CharactorController character = gameObject.AddComponent<CharactorController>();
+            inGameController = Instantiate(mainCharController.gameObject, transform).GetComponent<CharactorController>();
+            // CharactorController character = gameObject.AddComponent<CharactorController>();
+
             // 오브젝트 풀 설정
             bulletPools[0].poolObject = mainCharController.bulletPrefab;
             bulletPools[0].CreatePool();
@@ -313,7 +316,7 @@ namespace JYL
         {
             if (ultGage >= 100)
             {
-                mainCharController.UseUlt();
+                inGameController.UseUlt();
                 ultGage = 0;
             }
         }
@@ -321,7 +324,7 @@ namespace JYL
         {
             if (sub1CharController!= null && parryTimer <= 0)
             {
-                sub1CharController.UseParry();
+                inGameController.UseParry(sub1CharController.parry);
                 parryTimer = sub1CharController.parryCool;
             }
         }
@@ -329,7 +332,7 @@ namespace JYL
         {
             if (sub2CharController != null && parryTimer <= 0)
             {
-                sub2CharController.UseParry();
+                inGameController.UseParry(sub2CharController.parry);
                 parryTimer = sub2CharController.parryCool;
             }
         }
