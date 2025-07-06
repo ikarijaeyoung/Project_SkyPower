@@ -12,14 +12,12 @@ namespace JYL
     public class PlayerController : MonoBehaviour
     {
         [Header("Set Scriptable Object")]
-        [SerializeField] PlayerModel playerModel; // -> 캐릭터 컨트롤러로 대체 예정
         [SerializeField] HUDPresenter hud;
         [Header("Set References")]
         [SerializeField] List<ObjectPool> bulletPools;
-        [SerializeField] public Transform muzzlePoint { get; set; }
+        [field:SerializeField] public Transform muzzlePoint { get; set; }
         [SerializeField] RectTransform leftUI;
         [SerializeField] RectTransform rightUI;
-        [SerializeField] Animator animator;
 
 
         [Header("Set Value")]
@@ -109,7 +107,6 @@ namespace JYL
         }
         private void Init()
         {
-            animator = GetComponent<Animator>();
             playerInput = GetComponent<PlayerInput>();
             charDataLoader = GetComponent<CharacterSaveLoader>();
             charDataLoader.GetCharPrefab();
@@ -123,14 +120,14 @@ namespace JYL
             {
                 sub2CharController = charDataLoader.sub2Controller;
             }
-            
+            Instantiate(mainCharController.gameObject, transform);
+            CharactorController character = gameObject.AddComponent<CharactorController>();
             // 오브젝트 풀 설정
             bulletPools[0].poolObject = mainCharController.bulletPrefab;
-            bulletPools[0].ClearPool();
             bulletPools[0].CreatePool();
-            bulletPools[1].poolObject = mainCharController.ultBulletPrefab;
-            bulletPools[1].ClearPool();
-            bulletPools[1].CreatePool();
+            //bulletPools[1].poolObject = mainCharController.ultBulletPrefab;
+            //bulletPools[1].ClearPool();
+            //bulletPools[1].CreatePool();
 
             // Input System 설정
             attackAction = playerInput.actions["Attack"];
@@ -252,6 +249,7 @@ namespace JYL
                     info.rig.velocity = Vector3.zero;
                     if(poolIndex == 0)
                     {
+                        if (info.bulletController == null) Debug.Log($"불렛컨트롤러 Null");
                         info.bulletController.attackPower = this.attackPower;
                     }
                     else if(poolIndex == 1)
@@ -259,7 +257,7 @@ namespace JYL
                         info.bulletController.attackPower = (int)mainCharController.ultDamage;
                         // info.bulletController.canDeactive = false; 다단히트일 때 활성화
                     }
-                    info.rig.AddForce(playerModel.fireSpeed * info.trans.forward, ForceMode.Impulse); // 이 부분을 커스텀하면 됨
+                    info.rig.AddForce(mainCharController.attackSpeed * info.trans.forward, ForceMode.Impulse); // 이 부분을 커스텀하면 됨
                 }
                 yield return new WaitForSeconds(attackSpeed);
             }

@@ -11,7 +11,7 @@ namespace JYL
         public Rigidbody rig;
         private Collider col;
         private ParticleSystem ps;
-        public int attackPower;
+        public int attackPower = 0;
         public bool canDeactive = true;
         private float timer;
         void Awake()

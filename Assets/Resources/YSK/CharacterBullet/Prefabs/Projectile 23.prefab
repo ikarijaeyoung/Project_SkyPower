@@ -10,12 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4379234586591618}
   - component: {fileID: 198312651631224828}
-  - component: {fileID: 114787081750847330}
   - component: {fileID: 199865254318283598}
   - component: {fileID: 108204780233298718}
   - component: {fileID: 54953225180484114}
   - component: {fileID: 135567518640564876}
-  - component: {fileID: 114065039287725156}
   - component: {fileID: -8999714592767087420}
   - component: {fileID: -8749456689674904964}
   m_Layer: 0
@@ -4855,26 +4853,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &114787081750847330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1047741547062842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 605a456cfc02f6b499a64717539a27e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 14
-  hitOffset: 0.1
-  UseFirePointRotation: 0
-  rotationOffset: {x: 0, y: 0, z: 0}
-  hit: {fileID: 1924400220764400, guid: b44a4dd7ccb8bc24fb1e8e941eee8eac, type: 3}
-  flash: {fileID: 1829338749492330, guid: ab6eff13475032b47b279510d5301eed, type: 3}
-  Detached:
-  - {fileID: 1385617868753870}
 --- !u!199 &199865254318283598
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -5060,18 +5038,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.05
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114065039287725156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1047741547062842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 199e3c49ebcb3fe46997b10cf6a8eb52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-8999714592767087420
 MonoBehaviour:
   m_ObjectHideFlags: 0

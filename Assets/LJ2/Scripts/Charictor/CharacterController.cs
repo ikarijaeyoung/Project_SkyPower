@@ -35,7 +35,7 @@ namespace LJ2
         public float ultDamage;
         public int ultCool;
 
-        public PooledObject bulletPrefab; // TODO : 경로지정
+        [SerializeField]public PooledObject bulletPrefab; // TODO : 경로지정
         public PooledObject ultBulletPrefab;
         public GameObject ultPrefab; // 리소스
 
@@ -102,7 +102,6 @@ namespace LJ2
         public void SetParameter()
         {
             // Data의 값을 그대로 가져옴
-            // bulletPrefab = characterData.bulletPrefab;
             // ultPrefab = characterData.ultVisual;
             // image = charictorData.image;
             
@@ -150,6 +149,7 @@ namespace LJ2
             //Debug.Log($"Character ID: {characterSave.id}, Step: {characterSave.step}, Level : {characterSave.level}");
             level = characterSave.level;
             step = characterSave.step;
+            bulletPrefab = characterData.bulletPrefab.GetComponent<PooledObject>(); //TODO : 돌파 상황에 따라 다른 총알 적용 해야 함.
             //bulletPrefab = Resources.Load<PooledObject>($"Prefabs/bullet/{id}_{step}");
             partySet = characterSave.partySet;
 

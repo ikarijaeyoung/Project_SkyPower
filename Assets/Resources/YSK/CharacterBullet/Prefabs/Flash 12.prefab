@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4704949347083294}
   - component: {fileID: 198695349770165314}
   - component: {fileID: 199424741198008092}
-  - component: {fileID: -7175517340229997328}
   m_Layer: 0
   m_Name: Flash 12
   m_TagString: Untagged
@@ -4911,17 +4910,3 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &-7175517340229997328
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1061512257540118}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53148eec02051804e9b4b94e48bac886, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  returnPool: {fileID: 0}
-  objectPool: {fileID: 0}

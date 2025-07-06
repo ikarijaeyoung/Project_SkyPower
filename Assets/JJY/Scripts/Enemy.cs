@@ -43,6 +43,7 @@ public class Enemy : MonoBehaviour
     public void Init(ObjectPool objectPool)
     {
         curObjectPool = objectPool;
+        curObjectPool.CreatePool();
         currentHP = enemyData.maxHP;
         // autoFire = true;
         // if (autoFire) StartCoroutine(ChangeFireMode());
