@@ -149,7 +149,7 @@ namespace LJ2
             //Debug.Log($"Character ID: {characterSave.id}, Step: {characterSave.step}, Level : {characterSave.level}");
             level = characterSave.level;
             step = characterSave.step;
-            bulletPrefab = characterData.bulletPrefab.GetComponent<PooledObject>(); //TODO : 돌파 상황에 따라 다른 총알 적용 해야 함.
+            bulletPrefab = characterData.bulletPrefabs[step].GetComponent<PooledObject>(); //TODO : 돌파 상황에 따라 다른 총알 적용 해야 함.
             //bulletPrefab = Resources.Load<PooledObject>($"Prefabs/bullet/{id}_{step}");
             partySet = characterSave.partySet;
 

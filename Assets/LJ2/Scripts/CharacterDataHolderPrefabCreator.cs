@@ -39,7 +39,7 @@ public class CharacterDataHolderPrefabCreator
             holder.parrying = parry;  // CharactorController에 Parrying 컴포넌트 연결
             var ultimate = go.AddComponent<Ultimate>();  // Ultimate 컴포넌트 추가
             holder.ultimate = ultimate;  // CharactorController에 Ultimate 컴포넌트 연결
-            holder.bulletPrefab = data.bulletPrefab.GetComponent<BulletPrefabController>(); // Bullet 프리팹 연결
+            // holder.bulletPrefab = data.bulletPrefab.GetComponent<BulletPrefabController>(); // Bullet 프리팹 연결
             if (data.ultVisual.GetComponent<BulletPrefabController>() != null)
             {
                 holder.ultBulletPrefab = data.ultVisual.GetComponent<BulletPrefabController>(); // UltVisual 프리팹 연결

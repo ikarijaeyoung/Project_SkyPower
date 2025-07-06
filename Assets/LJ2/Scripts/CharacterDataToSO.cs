@@ -48,7 +48,10 @@ public class CharacterDataToSO : MonoBehaviour
             characterData.ultCoolDefault = int.Parse(table.GetData(i, 18));
             characterData.ultCoolReduce = int.Parse(table.GetData(i, 19));
             //characterData.ultLore = table.GetData(i, 21);
-            characterData.bulletPrefab = (GameObject)AssetDatabase.LoadAssetAtPath($"Assets/Resources/YSK/CharacterBullet/{table.GetData(i, 29)}.prefab", typeof(GameObject));
+            for(int j = 0; j < 5; j++)
+            {
+                characterData.bulletPrefabs[j] = (GameObject)AssetDatabase.LoadAssetAtPath($"Assets/Resources/YSK/CharacterBullet/{table.GetData(i, 29)}_{j+1}.prefab", typeof(GameObject));
+            }
             characterData.ultVisual = (GameObject)AssetDatabase.LoadAssetAtPath($"Assets/LJ2/Prefabs/Bullets/Ult/{table.GetData(i, 30)}.prefab", typeof(GameObject));
 
             Enum.TryParse<Parry>(table.GetData(i, 23), out characterData.parry);
