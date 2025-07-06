@@ -51,16 +51,34 @@ namespace LJ2
 
         private GameData SaveStageInfo(GameData target)
         {
-            target.stageInfo = new StageInfo[Manager.SDM.runtimeData.Count * subStage];
-            for (int i = 0; i < Manager.SDM.runtimeData.Count * subStage; i++)
+            if (target.stageInfo == null)
             {
-                target.stageInfo[i] = new StageInfo
+                target.stageInfo = new StageInfo[Manager.SDM.runtimeData.Count * subStage];
+                for (int i = 0; i < Manager.SDM.runtimeData.Count * subStage; i++)
                 {
-                    world = 1 + i / subStage,
-                    stage = 1 + i % subStage,
-                    unlock = Manager.SDM.runtimeData[i / subStage].subStages[i % subStage].isUnlocked,
-                    isClear = Manager.SDM.runtimeData[i / subStage].subStages[i % subStage].isCompleted
-                };
+                    target.stageInfo[i] = new StageInfo
+                    {
+                        world = 1 + i / subStage,
+                        stage = 1 + i % subStage,
+                        unlock = Manager.SDM.runtimeData[i / subStage].subStages[i % subStage].isUnlocked,
+                        isClear = Manager.SDM.runtimeData[i / subStage].subStages[i % subStage].isCompleted
+                    };
+                }
+            }
+            else if (target.stageInfo != null)
+            {
+                StageInfo[] tmp = new StageInfo[Manager.SDM.runtimeData.Count * subStage];
+                for (int i = 0; i < Manager.SDM.runtimeData.Count * subStage; i++)
+                {
+                    tmp[i] = new StageInfo
+                    {
+                        world = 1 + i / subStage,
+                        stage = 1 + i % subStage,
+                        unlock = Manager.SDM.runtimeData[i / subStage].subStages[i % subStage].isUnlocked,
+                        isClear = Manager.SDM.runtimeData[i / subStage].subStages[i % subStage].isCompleted
+                    };
+                    target.stageInfo[i] = tmp[i];
+                }
             }
             return target;
         }

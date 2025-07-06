@@ -132,7 +132,8 @@ namespace KYG_skyPower
 
         public void SaveGameProgress()
         {
-            Manager.Save.GameSave(CurrentSave, currentSaveIndex);
+            Manager.Save.GameSave(CurrentSave, currentSaveIndex+1);
+            Manager.Game.ResetSaveRef();
         }
         /*private void Update()
         {

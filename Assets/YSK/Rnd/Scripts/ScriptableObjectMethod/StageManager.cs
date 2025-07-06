@@ -467,8 +467,8 @@ namespace YSK
 
         public void OnStageCompleted()
         {
-            int currentMainStage = PlayerPrefs.GetInt("SelectedMainStage", 1);
-            int currentSubStage = PlayerPrefs.GetInt("SelectedSubStage", 1);
+            int currentMainStage = Manager.Game.selectWorldIndex;
+            int currentSubStage = Manager.Game.selectStageIndex;
             
             Debug.Log($"=== 스테이지 완료 처리 시작: {currentMainStage}-{currentSubStage} ===");
 

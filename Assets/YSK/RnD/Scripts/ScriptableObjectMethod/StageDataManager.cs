@@ -33,7 +33,7 @@ namespace YSK
         [SerializeField] private List<StageData> stageDataList = new List<StageData>();
         
         [Header("Runtime Data")]
-        [SerializeField] private List<StageRuntimeData> runtimeData = new List<StageRuntimeData>();
+        [SerializeField] public List<StageRuntimeData> runtimeData = new List<StageRuntimeData>();
         
         // JSON 저장 키 제거
         // private const string STAGE_DATA_KEY = "StageRuntimeData"; // 삭제
@@ -42,7 +42,7 @@ namespace YSK
         
         protected override void Awake() => base.Awake();
         
-        private void Start() { }
+        private void Start() { Init(); }
         
         public override void Init()
         {
@@ -102,7 +102,7 @@ namespace YSK
 
         private void InitializeRuntimeData()
         {
-            runtimeData.Clear();
+            //runtimeData.Clear();
 
             if (stageDataList == null || stageDataList.Count == 0)
             {
@@ -417,7 +417,7 @@ namespace YSK
                 Manager.Game.currentSaveIndex >= 0 && 
                 Manager.Game.currentSaveIndex < Manager.Game.saveFiles.Length)
             {
-                GameData saveData = Manager.Game.saveFiles[Manager.Game.currentSaveIndex];
+                GameData saveData = Manager.Game.CurrentSave;
                 
                 // RuntimeData를 세이브 파일과 동기화
                 SyncRuntimeDataWithStageInfo();
@@ -452,10 +452,7 @@ namespace YSK
                 UnlockSubStage(nextStage.mainStage, nextStage.subStage);
             }
             
-            // 4. 세이브 파일과 동기화 (JSON 저장 제거)
-            SyncAndSaveRuntimeData();
-            
-            // 5. UI 업데이트
+            // 4. UI 업데이트
             OnStageDataChanged?.Invoke();
             
             Debug.Log($"스테이지 {stageID}-{subStageID} 완료 처리 완료 (JSON 저장 제거)");

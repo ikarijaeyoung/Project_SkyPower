@@ -498,6 +498,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageDataList:
   - {fileID: 11400000, guid: 2ba523f15aa21e64c95bc39345306ac8, type: 2}
+  - {fileID: 11400000, guid: d9a0caef053decd4fa9c07aebcd4c90f, type: 2}
+  - {fileID: 11400000, guid: 1915c6c5d1e6e2540b2438d1cfc292b3, type: 2}
+  - {fileID: 11400000, guid: b2b23ed275b151945b3a2ea132927ddc, type: 2}
   runtimeData: []
 --- !u!4 &996621279
 Transform:
