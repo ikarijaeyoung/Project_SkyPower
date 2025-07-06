@@ -25,7 +25,7 @@ namespace KYG_skyPower
         //public static EnemyManager Enemy => EnemyManager.Instance;
         //public static UIManager UI => UIManager.Instance;
         public static ScoreManager Score => ScoreManager.Instance;
-        public static DialogueManager Dialogue => DialogueManager.Instance;
+        // public static DialogueManager Dialogue => DialogueManager.Instance;
 
         public static AudioManagerSO Audio => AudioManagerSO.Instance;
 
