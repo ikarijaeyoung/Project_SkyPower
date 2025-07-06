@@ -24,13 +24,16 @@ public class Parrying : MonoBehaviour
 
     public void Parry()
     {
-        Collider[] canParry = Physics.OverlapSphere(transform.position, parryRadius, enemyBullet);
+        // enemyBullet 레이어만 검출하도록 수정
+        Collider[] canParry = Physics.OverlapSphere(transform.position, parryRadius*10f, 1<<9);
+        Debug.Log($"패리해서 얻은 결과값들 길이{canParry.Length}");
         if (canParry.Length > 0)
         {
             isParrying = true;
-            
+
             foreach (Collider c in canParry)
             {
+                Debug.Log($"{c.gameObject.name} 패리 충돌체 이름");
                 c.gameObject.SetActive(false); // Deactivate enemy bullets
             }
         }
@@ -74,4 +77,9 @@ public class Parrying : MonoBehaviour
     }
 
     // 반사된 총알을 적에게 발사하는 기능은 현재 구현되어 있지 않습니다.    
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, parryRadius);
+    }
 }

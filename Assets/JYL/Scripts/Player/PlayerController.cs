@@ -314,7 +314,7 @@ namespace JYL
         {
             if (sub1CharController!= null && parryTimer <= 0)
             {
-                sub1CharController.UseParry();
+                mainCharController.UseParry(sub1CharController.parry);
                 parryTimer = sub1CharController.parryCool;
             }
         }
@@ -322,7 +322,7 @@ namespace JYL
         {
             if (sub2CharController != null && parryTimer <= 0)
             {
-                sub2CharController.UseParry();
+                mainCharController.UseParry(sub2CharController.parry);
                 parryTimer = sub2CharController.parryCool;
             }
         }

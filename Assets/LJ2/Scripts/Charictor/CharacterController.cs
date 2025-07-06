@@ -256,7 +256,7 @@ namespace LJ2
         public void UseParry(Parry subParry)
         {
             // Parry 기능을 사용할 때마다 쿨타임을 체크하고 실행
-            switch (parry)
+            switch (subParry)
             {
                 case Parry.방어막:
                     parrying.Parry();

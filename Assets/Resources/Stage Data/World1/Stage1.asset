@@ -13,19 +13,17 @@ MonoBehaviour:
   m_Name: Stage1
   m_EditorClassIdentifier: 
   stageID: 1
-  stageName: Stage1
-  sceneName: RnDBaseStageScene
-  duration: 300
+  stageName: 
+  sceneName: 
+  duration: 0
   mainStageLock: 0
-  mapPrefabs:
-  - {fileID: 8807305219614094375, guid: 043932ae6cb043e44bf8cd309c24dca9, type: 3}
-  - {fileID: 6930328749638797919, guid: 73cbea1d0149319439bdbadd9e4fcdcc, type: 3}
+  mapPrefabs: []
   subStages:
   - subStageID: 1
     subStageName: 
     subStageLock: 0
     subStageScore: 0
-    stageEnemyData: {fileID: 11400000, guid: 4ba5f9d4beb59164185c4adf3149e85b, type: 2}
+    stageEnemyData: {fileID: 11400000, guid: 289d6de6df578c545875879c5b40f0dc, type: 2}
     customMapPrefabs:
     - {fileID: 8807305219614094375, guid: 043932ae6cb043e44bf8cd309c24dca9, type: 3}
     - {fileID: 6930328749638797919, guid: 73cbea1d0149319439bdbadd9e4fcdcc, type: 3}
@@ -33,28 +31,7 @@ MonoBehaviour:
     subStageName: 
     subStageLock: 0
     subStageScore: 0
-    stageEnemyData: {fileID: 11400000, guid: 4ba5f9d4beb59164185c4adf3149e85b, type: 2}
+    stageEnemyData: {fileID: 11400000, guid: 289d6de6df578c545875879c5b40f0dc, type: 2}
     customMapPrefabs:
     - {fileID: 8138977365724899154, guid: 5902eddcb119ad24e85c131483ece74a, type: 3}
     - {fileID: 7027037902925385015, guid: cf144c2d1a6c9704da6bd8c1f643ae93, type: 3}
-  - subStageID: 3
-    subStageName: 
-    subStageLock: 0
-    subStageScore: 0
-    stageEnemyData: {fileID: 0}
-    customMapPrefabs:
-    - {fileID: 255603948662158416, guid: a5195e74c05235f4897aa802bfb6a25d, type: 3}
-    - {fileID: 7668984884236379141, guid: 94bbef344085d844d84ba30e59f4fabe, type: 3}
-    - {fileID: 8380167807526418686, guid: f58e5c46a8da8a74e899d311c0684644, type: 3}
-  - subStageID: 4
-    subStageName: 
-    subStageLock: 0
-    subStageScore: 0
-    stageEnemyData: {fileID: 0}
-    customMapPrefabs: []
-  - subStageID: 5
-    subStageName: 
-    subStageLock: 0
-    subStageScore: 0
-    stageEnemyData: {fileID: 0}
-    customMapPrefabs: []
