@@ -36,7 +36,7 @@ Transform:
   - {fileID: 7713859182990269281}
   - {fileID: 218001149786226258}
   - {fileID: 7677433444659529638}
-  - {fileID: 3103809978697996144}
+  - {fileID: 5810769256314444437}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1194356514296232246
@@ -140,7 +140,7 @@ PrefabInstance:
     - target: {fileID: 2455596578737599570, guid: 9a8965262ae861b4ead53351321299a8,
         type: 3}
       propertyPath: m_Name
-      value: Shield
+      value: Effect_07
       objectReference: {fileID: 0}
     - target: {fileID: 8025910177887852343, guid: 9a8965262ae861b4ead53351321299a8,
         type: 3}
@@ -203,7 +203,7 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 426289188557557905}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3103809978697996143
+--- !u!1001 &1795041096493602380
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -214,7 +214,7 @@ PrefabInstance:
     - target: {fileID: 1245939337628991872, guid: b591ebff4c96a8248858bbf7a07fd176,
         type: 3}
       propertyPath: m_Name
-      value: Fire
+      value: Effect_19
       objectReference: {fileID: 0}
     - target: {fileID: 5209182111593434329, guid: b591ebff4c96a8248858bbf7a07fd176,
         type: 3}
@@ -271,11 +271,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b591ebff4c96a8248858bbf7a07fd176, type: 3}
---- !u!4 &3103809978697996144 stripped
+--- !u!4 &5810769256314444437 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5209182111593434329, guid: b591ebff4c96a8248858bbf7a07fd176,
     type: 3}
-  m_PrefabInstance: {fileID: 3103809978697996143}
+  m_PrefabInstance: {fileID: 1795041096493602380}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5425928684202291851
 PrefabInstance:
@@ -288,7 +288,7 @@ PrefabInstance:
     - target: {fileID: 1245939337628991872, guid: 9f306954192d7074d9988a9d41e2f2de,
         type: 3}
       propertyPath: m_Name
-      value: Laser
+      value: Effect_28
       objectReference: {fileID: 0}
     - target: {fileID: 5209182111593434329, guid: 9f306954192d7074d9988a9d41e2f2de,
         type: 3}
@@ -377,12 +377,12 @@ PrefabInstance:
     - target: {fileID: 4616760838688173093, guid: 563109e4de51a8c4e9b6f1161063e122,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9659258
       objectReference: {fileID: 0}
     - target: {fileID: 4616760838688173093, guid: 563109e4de51a8c4e9b6f1161063e122,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0.2588191
       objectReference: {fileID: 0}
     - target: {fileID: 4616760838688173093, guid: 563109e4de51a8c4e9b6f1161063e122,
         type: 3}
@@ -397,7 +397,7 @@ PrefabInstance:
     - target: {fileID: 4616760838688173093, guid: 563109e4de51a8c4e9b6f1161063e122,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4616760838688173093, guid: 563109e4de51a8c4e9b6f1161063e122,
         type: 3}
@@ -486,7 +486,7 @@ PrefabInstance:
     - target: {fileID: 4856827749028106880, guid: e90ac312efb039242bc3fbe9269974a5,
         type: 3}
       propertyPath: m_Name
-      value: Erase
+      value: Effect_31
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

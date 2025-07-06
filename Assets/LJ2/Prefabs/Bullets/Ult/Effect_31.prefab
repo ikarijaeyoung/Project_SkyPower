@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3979092488178022403}
   - component: {fileID: 9152327766629295660}
   m_Layer: 0
-  m_Name: Erase
+  m_Name: Effect_31
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8025910177887852343}
   m_Layer: 0
-  m_Name: Shield
+  m_Name: Effect_07
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
