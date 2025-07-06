@@ -39,6 +39,7 @@ namespace KYG_skyPower
         {
             if (GameManager.Instance != null && GameManager.Instance.isGameOver) return;
             Score += value;
+            Debug.Log($"Score : {Score}");
         }
 
         public void RecordBestScore()

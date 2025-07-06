@@ -14,9 +14,9 @@ public class SingleShot : BulletPatternData
         BulletPrefabController bulletPrefab = pool.ObjectOut() as BulletPrefabController;
         if (bulletPrefab != null)
         {
+            bulletPrefab.transform.position = firePoints[0].position;
             bulletPrefab.objectPool = pool;
             bulletPrefab.ReturnToPool(returnToPoolTimer);
-            bulletPrefab.transform.position = firePoints[0].position;
 
             foreach (BulletInfo info in bulletPrefab.bulletInfo)
             {
@@ -24,7 +24,6 @@ public class SingleShot : BulletPatternData
                 {
                     info.trans.gameObject.SetActive(true);
                     info.trans.localPosition = info.originPos;
-                    info.trans.position = firePoints[0].position;
                     info.trans.rotation = firePoints[0].rotation;
                     info.rig.velocity = Vector3.zero;
                     info.rig.AddForce(firePoints[0].forward * bulletSpeed, ForceMode.Impulse);

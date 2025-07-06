@@ -18,9 +18,10 @@ namespace JYL
         [field:SerializeField] public Transform muzzlePoint { get; set; }
         [SerializeField] RectTransform leftUI;
         [SerializeField] RectTransform rightUI;
+        public static bool canAttack = true; // 궁극기 사용 시, 외부에서 공격 권한 제어
 
-
-        [Header("Set Value")]
+        [field:Header("Set Value")]
+        [field:Range(10f,50f)][field:SerializeField] private float attackSpeed { get; set; } = 35f;
         [Range(0.1f, 5)][SerializeField] float bulletReturnTimer = 2f;
 
         public UnityEvent<int> onHpChanged;
@@ -49,7 +50,6 @@ namespace JYL
         }
 
         private int attackPower { get; set; }
-        private float attackSpeed { get; set; }
         private float moveSpeed { get; set; }
 
 
@@ -127,9 +127,12 @@ namespace JYL
             // 오브젝트 풀 설정
             bulletPools[0].poolObject = mainCharController.bulletPrefab;
             bulletPools[0].CreatePool();
-            //bulletPools[1].poolObject = mainCharController.ultBulletPrefab;
-            //bulletPools[1].ClearPool();
-            //bulletPools[1].CreatePool();
+            // 궁극기 탄막 오브젝트 풀
+            if(mainCharController.ultBulletPrefab != null)
+            {
+                bulletPools[1].poolObject = mainCharController.bulletPrefab;
+                bulletPools[1].CreatePool();
+            }
 
             // Input System 설정
             attackAction = playerInput.actions["Attack"];
@@ -214,27 +217,25 @@ namespace JYL
 
         private void Fire(InputAction.CallbackContext ctx)
         {
-            if (fireCounter <= fireAtOnce && fireCounter > 0 && 0.5f * canAttackTime > attackInputTimer && attackInputTimer > 0)
+            if (canAttack)
             {
-                fireCounter += fireAtOnce;
-                isAttack = true;
-                attackInputTimer = canAttackTime;
+                if (fireCounter <= fireAtOnce && fireCounter > 0 && 1f * canAttackTime > attackInputTimer && attackInputTimer > 0)
+                {
+                    fireCounter += fireAtOnce;
+                    isAttack = true;
+                    attackInputTimer = canAttackTime;
+                }
+                else if (fireCounter <= 0 && fireRoutine == null)
+                {
+                    fireCounter = fireAtOnce;
+                    attackInputTimer = canAttackTime;
+                    fireRoutine = StartCoroutine(FireRoutine());
+                }
             }
-            else if (fireCounter <= 0)
-            {
-                fireCounter = fireAtOnce;
-                attackInputTimer = canAttackTime;
-            }
-
-            if (fireCounter > 0 && fireRoutine == null)
-            {
-                fireRoutine = StartCoroutine(FireRoutine());
-            }
-
         }
         IEnumerator FireRoutine()
         {
-            while (fireCounter > 1)
+            while (fireCounter>0)
             {
                 fireCounter--;
                 BulletPrefabController bulletPrefab = curBulletPool.ObjectOut() as BulletPrefabController;
@@ -259,9 +260,9 @@ namespace JYL
                         info.bulletController.attackPower = (int)mainCharController.ultDamage;
                         // info.bulletController.canDeactive = false; 다단히트일 때 활성화
                     }
-                    info.rig.AddForce(mainCharController.attackSpeed * info.trans.forward, ForceMode.Impulse); // 이 부분을 커스텀하면 됨
+                    info.rig.AddForce(attackSpeed * info.trans.forward, ForceMode.Impulse); // 이 부분을 커스텀하면 됨
                 }
-                yield return new WaitForSeconds(attackSpeed);
+                yield return new WaitForSeconds(mainCharController.attackSpeed*0.1f);
             }
             if (isAttack)
             {
@@ -300,6 +301,10 @@ namespace JYL
             else
             {
                 ultGage += amount;
+                if(hud == null)
+                {
+                    Debug.Log("hud가 널");
+                }
                 hud.UltGage = (float)ultGage / 100;
             }
             

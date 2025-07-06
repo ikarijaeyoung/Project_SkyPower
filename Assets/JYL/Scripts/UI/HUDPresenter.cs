@@ -26,7 +26,7 @@ namespace JYL
             }
 
         } // 플레이어 컨트롤러에서 현재 체력 가져옴
-        private float ultGage; // 캐릭터 컨트롤러에서 정보 가져옴
+        private float ultGage = 0f; // 캐릭터 컨트롤러에서 정보 가져옴
         public float UltGage
         {
             get { return ultGage; }

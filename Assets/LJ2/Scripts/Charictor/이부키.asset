@@ -33,7 +33,7 @@ MonoBehaviour:
   ultVisual: {fileID: 0}
   parry: 0
   parryCool: 0
-  icon: {fileID: 21300000, guid: 1d989ee0fd149cc4a8dd91f496cb5659, type: 3}
-  image: {fileID: 21300000, guid: 7e2656591f9d7c24984c33443253ccd9, type: 3}
+  icon: {fileID: 21300000, guid: 4d61d307a79290b4da9c7f5731b3881f, type: 3}
+  image: {fileID: 21300000, guid: d919c015d7db09744a06c7d2ada8a688, type: 3}
   upgradeUnitDefault: 2500
   upgradeUnitPlus: 2500

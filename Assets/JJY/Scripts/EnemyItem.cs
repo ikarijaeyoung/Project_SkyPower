@@ -11,6 +11,7 @@ public class EnemyItem : MonoBehaviour
     private Transform player;
     public float magneticRange = 3f;
     public float magneticSpeed = 5f;
+    [SerializeField] private int addScore = 1;
 
     void Start()
     {
@@ -43,7 +44,7 @@ public class EnemyItem : MonoBehaviour
     }
     void Collect()
     {
-        // ScoreManager.Instance.AddScore(1);
+        ScoreManager.Instance.AddScore(addScore);
         Debug.Log($"{ScoreManager.Instance.Score}");
         Destroy(gameObject);
     }
