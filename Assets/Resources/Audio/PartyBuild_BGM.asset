@@ -9,6 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 981847e57c4471e48bd929e272cef290, type: 3}
-  m_Name: SceneChangerManagerSO
+  m_Script: {fileID: 11500000, guid: 562ebb71a19e3d0469fd49c6602ee5d5, type: 3}
+  m_Name: PartyBuild_BGM
   m_EditorClassIdentifier: 
+  clipName: PartyBuild_BGM
+  clipSource: {fileID: 8300000, guid: a1466d4c9d9efa243a27259f22909e2e, type: 3}
+  volume: 1
+  loop: 0

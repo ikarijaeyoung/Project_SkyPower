@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 562ebb71a19e3d0469fd49c6602ee5d5, type: 3}
-  m_Name: BGMAdioData
+  m_Name: StarMenu_BGM
   m_EditorClassIdentifier: 
-  clipName: BGM
-  clipSource: {fileID: 8300000, guid: e6b94205cad66d1459565a9eaf986a47, type: 3}
+  clipName: StarMenu_BGM
+  clipSource: {fileID: 8300000, guid: cea3eafa9b2fc174ba6d72d9f4fff545, type: 3}
   volume: 1
-  loop: 1
+  loop: 0

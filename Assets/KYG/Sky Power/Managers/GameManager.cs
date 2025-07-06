@@ -29,7 +29,7 @@ namespace KYG_skyPower
     
     public class GameManager : Singleton<GameManager>
     {
-        public UnityEvent onGameOver, onPause, onResume, onGameClear;
+        public UnityEvent onGameOver, onPause, onResume, onGameClear, onClickButton;
 
         public GameData[] saveFiles = new GameData[3]; // 세이브 파일 3개
 
@@ -81,6 +81,7 @@ namespace KYG_skyPower
         }*/
 
 
+        
 
         public void SetGameOver()
         {

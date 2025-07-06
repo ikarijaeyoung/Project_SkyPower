@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3447b8e436eb997478dc6550ebda6e8e, type: 3}
-  m_Name: AudioManagerSO
+  m_Script: {fileID: 11500000, guid: 562ebb71a19e3d0469fd49c6602ee5d5, type: 3}
+  m_Name: StageSelect_BGM
   m_EditorClassIdentifier: 
-  audioDB: {fileID: 11400000, guid: f74174f7f9f517d488a90cf11805ace0, type: 2}
-  defaultBGM: {fileID: 11400000, guid: d0943fd6c8986ab4f8531467c01a2bd7, type: 2}
+  clipName: StageSelect_BGM
+  clipSource: {fileID: 8300000, guid: 5e33c4bb7af9c994fbcbfc27386706d7, type: 3}
+  volume: 1
+  loop: 0

@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6eb75357eb6908f45b7e9578e72d48d4, type: 3}
-  m_Name: Inventory Manager SO
+  m_Script: {fileID: 11500000, guid: 562ebb71a19e3d0469fd49c6602ee5d5, type: 3}
+  m_Name: Stage1_BGM
   m_EditorClassIdentifier: 
-  inventory: []
+  clipName: Stage1_BGM
+  clipSource: {fileID: 8300000, guid: c1adcc079438aad4c8d8628fe299b709, type: 3}
+  volume: 1
+  loop: 0
