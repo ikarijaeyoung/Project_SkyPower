@@ -56,6 +56,7 @@ public class Enemy : MonoBehaviour
         flashCoroutine = StartCoroutine(FlashEffectCoroutine());
 
         currentHP -= damage;
+        Debug.Log($"{gameObject.name} took {damage} damage. Current HP: {currentHP}");
         if (currentHP <= 0) Die();
     }
     private void Update()
