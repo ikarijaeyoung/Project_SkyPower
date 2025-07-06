@@ -127,7 +127,7 @@ public class Enemy : MonoBehaviour
         while (autoFire)
         {
             int ranNum = UnityEngine.Random.Range(0, BulletPattern.Length);
-            curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, bulletSpeed, curObjectPool));
+            curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, bulletSpeed, curObjectPool, enemyData.attackPower));
             yield return new WaitForSeconds(fireDelay);
             StopCoroutine(curFireCoroutine);
             curFireCoroutine = null;
@@ -147,6 +147,6 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("지금 공격함");
         int ranNum = UnityEngine.Random.Range(0, BulletPattern.Length);
-        curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, bulletSpeed, curObjectPool));
+        curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, bulletSpeed, curObjectPool, enemyData.attackPower));
     }
 }
