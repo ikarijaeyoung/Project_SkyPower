@@ -12,8 +12,8 @@ public class Ultimate : MonoBehaviour
 
     public PlayerController playerController;
     [Range(0.1f, 5)][SerializeField] float bulletReturnTimer = 5f;
-    [Range(0.1f, 3)][SerializeField] float bulletSpeed = 10f;
-    [Range(0.1f, 3)][SerializeField] float ultBulletTime = 3f;
+    [Range(0.1f, 30)][SerializeField] float bulletSpeed = 15f;
+    [Range(0.1f, 3)][SerializeField] float ultBulletTime = 5f;
 
     [SerializeField] float bulletUpgradeTime = 5f;
 
@@ -59,10 +59,12 @@ public class Ultimate : MonoBehaviour
     private IEnumerator LaserCoroutine()
     {
         ultLaser.SetActive(true);
+        //PlayerController.canAttack = false; // 공격 불가 상태로 변경
         Debug.Log("Laser Active");
         yield return ultDelay;
 
         ultLaser.SetActive(false);
+        //PlayerController.canAttack = true; // 공격 가능 상태로 변경
         Debug.Log("Laser Off");
         ultRoutine = null;
         yield break;
@@ -83,10 +85,12 @@ public class Ultimate : MonoBehaviour
     private IEnumerator FireCoroutine()
     {
         ultFire.SetActive(true);
+        //PlayerController.canAttack = false; // 공격 불가 상태로 변경
         Debug.Log("Laser Active");
         yield return ultDelay;
 
         ultFire.SetActive(false);
+        //PlayerController.canAttack = true; // 공격 가능 상태로 변경
         Debug.Log("Laser Off");
         ultRoutine = null;
         yield break;
