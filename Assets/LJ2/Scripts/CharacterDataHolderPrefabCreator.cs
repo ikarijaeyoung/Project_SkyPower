@@ -23,6 +23,7 @@ public class CharacterDataHolderPrefabCreator
         var laserPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/LJ2/Prefabs/Bullets/Ult/Effect_28.prefab");
         var shieldPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/LJ2/Prefabs/Bullets/Ult/Effect_07.prefab");
         var firePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/LJ2/Prefabs/Bullets/Ult/Effect_19.prefab");
+        var invinciblePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/LJ2/Prefabs/Bullets/Parry/InvincibleShield.prefab");
 
         foreach (var guid in guids)
         {
@@ -50,17 +51,21 @@ public class CharacterDataHolderPrefabCreator
             ultimate.ultFire = firePrefab; // Fire 프리팹 연결
             ultimate.shield = shieldPrefab; // Shield 프리팹 연결
 
+            parry.invinciblePrefab = invinciblePrefab; // Invincible Shield 프리팹 연결
+
             var characterModel = (GameObject)PrefabUtility.InstantiatePrefab(data.characterModel);
             var eraseObject = (GameObject)PrefabUtility.InstantiatePrefab(erasePrefab);
             var laserObject = (GameObject)PrefabUtility.InstantiatePrefab(laserPrefab);
             var shieldObject = (GameObject)PrefabUtility.InstantiatePrefab(shieldPrefab);
             var fireObject = (GameObject)PrefabUtility.InstantiatePrefab(firePrefab);
+            var invincibleObject = (GameObject)PrefabUtility.InstantiatePrefab(invinciblePrefab);
 
             characterModel.transform.SetParent(go.transform); // CharacterModel 프리팹을 생성된 GameObject의 자식으로 설정
             eraseObject.transform.SetParent(go.transform); // Erase 프리팹을 생성된 GameObject의 자식으로 설정
             laserObject.transform.SetParent(go.transform); // Laser 프리팹을 생성된 GameObject의 자식으로 설정
             shieldObject.transform.SetParent(go.transform); // Shield 프리팹을 생성된 GameObject의 자식으로 설정
             fireObject.transform.SetParent(go.transform); // Fire 프리팹을 생성된 GameObject의 자식으로 설정
+            invincibleObject.transform.SetParent(go.transform); // Invincible Shield 프리팹을 생성된 GameObject의 자식으로 설정
 
             string prefabPath = $"{saveDir}/{data.characterName}.prefab";
             PrefabUtility.SaveAsPrefabAsset(go, prefabPath);

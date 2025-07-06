@@ -38,7 +38,7 @@ public class Ultimate : MonoBehaviour
 
     public void Awake()
     {
-        playerController = GetComponent<PlayerController>();
+        playerController = GetComponentInParent<PlayerController>();
         ultDelay = new WaitForSeconds(setUltDelay);
         enemyBullet = LayerMask.GetMask("EnemyBullet");
         ultLaserController = ultLaser.GetComponentInChildren<UltLaserController>();
@@ -49,6 +49,7 @@ public class Ultimate : MonoBehaviour
 
     public void Laser(float damage)
     {
+        Debug.Log($"Laser Damage: {damage}");
         if (ultRoutine == null)
         {
             ultLaserController.AttackDamage(damage);
