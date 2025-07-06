@@ -7,7 +7,7 @@ namespace KYG_skyPower
 
 
     [System.Serializable]
-    [CreateAssetMenu(fileName = "NewAdioData", menuName = "Audio/Data")] // 사운드 정보 ScriptableObject로
+    [CreateAssetMenu(fileName = "AudioData", menuName = "Audio/Data")] // 사운드 정보 ScriptableObject로
     public class AudioData : ScriptableObject
     {
         public string clipName; // 사운드 이름
