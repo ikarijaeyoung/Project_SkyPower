@@ -5,5 +5,5 @@ using UnityEngine;
 
 public abstract class BulletPatternData : ScriptableObject
 {
-    public abstract IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool);
+    public abstract IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool,int attackPower);
 }

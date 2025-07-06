@@ -11,7 +11,7 @@ namespace JYL
         public Rigidbody rig;
         private Collider col;
         private ParticleSystem ps;
-        public int attackPower;
+        public int attackPower = 0;
         public bool canDeactive = true;
         private float timer;
         void Awake()
@@ -93,9 +93,10 @@ namespace JYL
         {
             if (gameObject.layer == 7) // 플레이어의 총알일 경우
             {
-                Enemy enemy = other.GetComponent<Enemy>();
+                Enemy enemy = other.GetComponentInParent<Enemy>();
                 if (enemy == null)
                 {
+                    Debug.Log("에너미 컴포넌트를 찾지 못함");
                     SpawnHitEffect(other.transform);
                     gameObject.SetActive(false);
                     return;
@@ -125,12 +126,12 @@ namespace JYL
                 }
                 if (!canDeactive && timer <= 0)
                 {
-                    //player.TakeDamage(attackPower); // TODO:플레이어 구현필요
+                    player.TakeDamage(attackPower); 
                     SpawnHitEffect(other.transform);
                 }
                 else if (canDeactive)
                 {
-                    //player.TakeDamage(attackPower); // TODO:플레이어 구현필요
+                    player.TakeDamage(attackPower); 
                     SpawnHitEffect(other.transform);
                     gameObject.SetActive(false);
                 }
@@ -143,7 +144,7 @@ namespace JYL
             ps.Play();
             if (flash != null)
             {
-                GameObject flashInstance = Instantiate(flash, transform.position, Quaternion.identity,transform);
+                GameObject flashInstance = Instantiate(flash, transform.position, Quaternion.identity, null);
                 flashInstance.transform.forward = gameObject.transform.forward;
                 if(flashInstance == null)
                 {

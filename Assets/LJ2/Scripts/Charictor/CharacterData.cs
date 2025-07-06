@@ -1,3 +1,4 @@
+using JYL;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,7 +18,7 @@ namespace LJ2
         public int maxLevel;
         public int hp;
         public int hpPlus;
-        public GameObject bulletPrefab;
+        public GameObject[] bulletPrefabs = new GameObject[5];
         public float attackDamage;
         public float damagePlus;
         public float attackSpeed;
@@ -27,7 +28,6 @@ namespace LJ2
 
         public int ultCoolDefault;
         public int ultCoolReduce;
-        public Skill[] ultLore;
         public GameObject ultVisual;
 
         public Parry parry;
@@ -52,22 +52,6 @@ namespace LJ2
         물,
         불,
         바람
-    }
-
-    public enum Skill
-    {
-        A,
-        B,
-        D,
-        E,
-        H,
-        I,
-        J,
-        K,
-        L,
-        M,
-        N,
-        O
     }
 
     public enum Parry

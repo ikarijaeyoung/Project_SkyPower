@@ -12,8 +12,9 @@ public class Ultimate : MonoBehaviour
 
     public PlayerController playerController;
     [Range(0.1f, 5)][SerializeField] float bulletReturnTimer = 5f;
-    [Range(0.1f, 3)][SerializeField] float bulletSpeed = 10f;
-    [Range(0.1f, 3)][SerializeField] float ultBulletTime = 3f;
+    [Range(0.1f, 30)][SerializeField] float bigBulletSpeed = 15f;
+    [Range(0.1f, 30)][SerializeField] float manyBulletSpeed = 30f;
+    [Range(0.1f, 3)][SerializeField] float ultBulletTime = 50f;
 
     [SerializeField] float bulletUpgradeTime = 5f;
 
@@ -28,19 +29,27 @@ public class Ultimate : MonoBehaviour
     public GameObject ultAll;
     public UltMapAttack ultAllController;
 
+    public GameObject ultFire; // Fire 프리팹 연결 (추가된 부분)
+    public UltLaserController ultFireController; // Fire 컨트롤러 (추가된 부분)
+
     public int defense = 1;
+
+    private int fireCounter;
 
     public void Awake()
     {
+        playerController = GetComponentInParent<PlayerController>();
         ultDelay = new WaitForSeconds(setUltDelay);
         enemyBullet = LayerMask.GetMask("EnemyBullet");
         ultLaserController = ultLaser.GetComponentInChildren<UltLaserController>();
         ultShieldController = shield.GetComponentInChildren<UltShieldController>();
         ultAllController = ultAll.GetComponent<UltMapAttack>();
+        ultFireController = ultFire.GetComponentInChildren<UltLaserController>(); // Fire 컨트롤러 초기화 (추가된 부분) 
     }
 
     public void Laser(float damage)
     {
+        Debug.Log($"Laser Damage: {damage}");
         if (ultRoutine == null)
         {
             ultLaserController.AttackDamage(damage);
@@ -54,10 +63,38 @@ public class Ultimate : MonoBehaviour
     private IEnumerator LaserCoroutine()
     {
         ultLaser.SetActive(true);
+        PlayerController.canAttack = false; // 공격 불가 상태로 변경
         Debug.Log("Laser Active");
         yield return ultDelay;
 
         ultLaser.SetActive(false);
+        PlayerController.canAttack = true; // 공격 가능 상태로 변경
+        Debug.Log("Laser Off");
+        ultRoutine = null;
+        yield break;
+    }
+
+    public void Fire(float damage)
+    {
+        if (ultRoutine == null)
+        {
+            ultFireController.AttackDamage(damage);
+            ultRoutine = StartCoroutine(FireCoroutine());
+        }
+        else
+        {
+            return;
+        }
+    }
+    private IEnumerator FireCoroutine()
+    {
+        ultFire.SetActive(true);
+        PlayerController.canAttack = false; // 공격 불가 상태로 변경
+        Debug.Log("Laser Active");
+        yield return ultDelay;
+
+        ultFire.SetActive(false);
+        PlayerController.canAttack = true; // 공격 가능 상태로 변경
         Debug.Log("Laser Off");
         ultRoutine = null;
         yield break;
@@ -86,7 +123,19 @@ public class Ultimate : MonoBehaviour
 
     public void AllAttack(float damage)
     {
-        ultAllController.AttackDamage(damage);
+        if (ultRoutine == null)
+        {
+            ultAllController.AttackDamage(damage);
+            ultRoutine = StartCoroutine(EraseCoroutine());
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    private IEnumerator EraseCoroutine()
+    {
         Collider[] hits = Physics.OverlapBox(ultAll.transform.position, ultAll.transform.localScale / 2f, Quaternion.identity, enemyBullet);
 
         foreach (Collider c in hits)
@@ -94,29 +143,80 @@ public class Ultimate : MonoBehaviour
             c.gameObject.SetActive(false);
         }
         ultAll.SetActive(true);
-        hits = null;
+
+        yield return ultDelay;
         ultAll.SetActive(false);
+        hits = null;
+        ultRoutine = null;
+        Debug.Log("코루틴 종료");
+
+        yield break;
     }
 
     // 궁극기 탄막 1회 + 다단히트
-    //public void BigBullet(float damage)
-    //{
-    //    playerController.poolIndex = 1;
-    //    BulletPrefabController bulletPrefab = playerController.curBulletPool.ObjectOut() as BulletPrefabController;
-    //    bulletPrefab.transform.position = playerController.muzzlePoint.position;
-    //    bulletPrefab.ReturnToPool(bulletReturnTimer);
+    public void BigBullet(float damage)
+    {
+        playerController.poolIndex = 1;
+        if (ultRoutine != null)
+        {
+            fireCounter = 1;
+            ultRoutine = StartCoroutine(UltFireCoroutine(damage, bigBulletSpeed));
+        }
+        else
+        {
+            return;
+        }
+        playerController.poolIndex = 0; // 다시 기본 총알로 변경
+    }
 
-    //    if (bulletPrefab.bulletInfo[0].rig != null)
-    //    {
-    //        bulletPrefab.bulletInfo[0].trans.gameObject.SetActive(true);
-    //        bulletPrefab.bulletInfo[0].trans.localPosition = bulletPrefab.bulletInfo[0].originPos;
-    //        bulletPrefab.bulletInfo[0].rig.velocity = Vector3.zero;
-    //        bulletPrefab.bulletInfo[0].bulletController.attackPower = (int)damage;
-    //        bulletPrefab.bulletInfo[0].rig.AddForce(bulletSpeed * bulletPrefab.bulletInfo[0].trans.forward, ForceMode.Impulse); // 이 부분을 커스텀하면 됨
-    //        bulletPrefab.bulletInfo[0].canDeactive = false; // 다단히트이므로 false로 설정
-    //    }
+    public void ManyBullets(float damage)
+    {
+        playerController.poolIndex = 1;
+        if (ultRoutine != null)
+        {
+            fireCounter = 5;
+            ultRoutine = StartCoroutine(UltFireCoroutine(damage, manyBulletSpeed));
+        }
+        else
+        {
+            return;
+        }
+        playerController.poolIndex = 0;
+    }
+
+
+    public IEnumerator UltFireCoroutine(float damage, float bulletSpeed)
+    {
+        PlayerController.canAttack = false; // 공격 불가 상태로 변경
+        while (fireCounter > 0)
+        {
+            fireCounter--;
+            BulletPrefabController bulletPrefab = playerController.curBulletPool.ObjectOut() as BulletPrefabController;
+            bulletPrefab.transform.position = playerController.muzzlePoint.position;
+            bulletPrefab.ReturnToPool(bulletReturnTimer);
+            foreach (BulletInfo info in bulletPrefab.bulletInfo)
+            {
+                if (info.rig == null)
+                {
+                    continue;
+                }
+                info.trans.gameObject.SetActive(true);
+                info.trans.localPosition = info.originPos;
+                info.trans.rotation = Quaternion.Euler(0, 3 * fireCounter , 0);
+                info.rig.velocity = Vector3.zero;
+                
+                info.bulletController.attackPower = (int)damage;
+                info.bulletController.canDeactive = false;
+                
+                info.rig.AddForce(bulletSpeed * info.trans.forward, ForceMode.Impulse); // 이 부분을 커스텀하면 됨
+            }
+            yield return new WaitForSeconds(ultBulletTime * 0.1f);
+        }
         
-    //}
+        StopCoroutine(ultRoutine);
+        PlayerController.canAttack = true; // 공격 가능 상태로 변경
+        ultRoutine = null;
+    }
 
     // 탄막 변경 + 데미지 증가
     public void BulletUpgrade()
@@ -129,7 +229,6 @@ public class Ultimate : MonoBehaviour
         {
             return;
         }
-
     }
 
     public IEnumerator UpgradeRoutine()

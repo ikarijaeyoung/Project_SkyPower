@@ -18,9 +18,7 @@ namespace JYL
         private Coroutine returnRoutine;
 
         private void Awake()
-        {
-            CreatePool();
-        }
+        { }
         public void CreatePool()
         {
             pool = new Stack<PooledObject>();

@@ -48,6 +48,7 @@ MonoBehaviour:
   spawnSequenceEnemy: {fileID: 588954578109089177}
   objectPools:
   - {fileID: 0}
+  hud: {fileID: 0}
 --- !u!114 &588954578109089177
 MonoBehaviour:
   m_ObjectHideFlags: 0

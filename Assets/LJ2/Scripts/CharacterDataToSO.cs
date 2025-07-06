@@ -21,7 +21,7 @@ public class CharacterDataToSO : MonoBehaviour
 
     private void MakeCharictor()
     {
-        
+
         for (int i = 2; i < table.Table.GetLength(0); i++)
         {
             characterData = ScriptableObject.CreateInstance<CharacterData>();
@@ -34,7 +34,7 @@ public class CharacterDataToSO : MonoBehaviour
             Enum.TryParse<Grade>(table.GetData(i, 1), out characterData.grade);
             characterData.characterName = table.GetData(i, 2);
             Enum.TryParse<Elemental>(table.GetData(i, 5), out characterData.elemental);
-            
+
             characterData.maxLevel = int.Parse(table.GetData(i, 7));
             characterData.hp = int.Parse(table.GetData(i, 8));
             characterData.hpPlus = int.Parse(table.GetData(i, 9));
@@ -48,8 +48,11 @@ public class CharacterDataToSO : MonoBehaviour
             characterData.ultCoolDefault = int.Parse(table.GetData(i, 18));
             characterData.ultCoolReduce = int.Parse(table.GetData(i, 19));
             //characterData.ultLore = table.GetData(i, 21);
-            //characterData.ultVisual = (GameObject)AssetDatabase.LoadAssetAtPath($"정해진 경로/{character.id}.Prefab", typeof(GameObject));
-            //characterData.bulletPrefab = (GameObject)AssetDatabase.LoadAssetAtPath($"정해진 경로/{character.id}.Prefab", typeof(GameObject));
+            for(int j = 0; j < 5; j++)
+            {
+                characterData.bulletPrefabs[j] = (GameObject)AssetDatabase.LoadAssetAtPath($"Assets/Resources/YSK/CharacterBullet/{table.GetData(i, 29)}_{j+1}.prefab", typeof(GameObject));
+            }
+            characterData.ultVisual = (GameObject)AssetDatabase.LoadAssetAtPath($"Assets/LJ2/Prefabs/Bullets/Ult/{table.GetData(i, 30)}.prefab", typeof(GameObject));
 
             Enum.TryParse<Parry>(table.GetData(i, 23), out characterData.parry);
             // Debug.Log(characterData.parry);
@@ -67,9 +70,9 @@ public class CharacterDataToSO : MonoBehaviour
             }
             */
             int.TryParse(table.GetData(i, 24), out characterData.parryCool);
-            
 
-            
+
+
 
             characterData.upgradeUnitDefault = int.Parse(table.GetData(i, 27));
             characterData.upgradeUnitPlus = int.Parse(table.GetData(i, 28));
@@ -80,5 +83,5 @@ public class CharacterDataToSO : MonoBehaviour
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
-    #endif
+#endif
 }

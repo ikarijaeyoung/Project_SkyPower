@@ -52,6 +52,7 @@ namespace KYG_skyPower
             //Audio.Init();
             //SceneChanger.Init();
 
+            //SDM.Init();
             //Save.Init();
             Game.Init();
             //Input.Init();
@@ -61,7 +62,6 @@ namespace KYG_skyPower
             //UI.Init();
             Score.Init();
             //Dialogue.Init();
-            SDM.Init();
             GSM.Init();
         }
     }

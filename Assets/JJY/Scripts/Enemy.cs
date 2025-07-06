@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     public EnemyData enemyData;
     [SerializeField] private int currentHP;
     public bool autoFire;
+    private bool isDead =false;
 
     [Header("Enemy Shot Info")]
     public Transform[] firePoints;
@@ -31,6 +32,9 @@ public class Enemy : MonoBehaviour
     [Header("Animator")]
     private Animator animator;
 
+    [Header("Death Effect")]
+    public GameObject deathEffectPrefab;
+    public float destroyDelay;
     void Awake()
     {
         modelRenderer = GetComponentInChildren<Renderer>();
@@ -43,6 +47,7 @@ public class Enemy : MonoBehaviour
     public void Init(ObjectPool objectPool)
     {
         curObjectPool = objectPool;
+        curObjectPool.CreatePool();
         currentHP = enemyData.maxHP;
         // autoFire = true;
         // if (autoFire) StartCoroutine(ChangeFireMode());
@@ -56,7 +61,12 @@ public class Enemy : MonoBehaviour
         flashCoroutine = StartCoroutine(FlashEffectCoroutine());
 
         currentHP -= damage;
-        if (currentHP <= 0) Die();
+        Debug.Log($"{gameObject.name} took {damage} damage. Current HP: {currentHP}");
+        if (currentHP <= 0&&!isDead)
+        {
+            isDead = true;
+            Die();
+        }
     }
     private void Update()
     {
@@ -80,8 +90,47 @@ public class Enemy : MonoBehaviour
             StopCoroutine(curFireCoroutine);
             curFireCoroutine = null;
         }
-        // TODO : 죽는 애니메이션 실행.
-        // animator.SetBool("IsDead", true);
+        if (deathEffectPrefab != null)
+        {
+            // deathEffectPrefab은 프리팹이므로, Instantiate할 때 위치와 회전을 명시적으로 지정해야 함
+            GameObject instance = Instantiate(
+                deathEffectPrefab,
+                transform.position,
+                Quaternion.identity
+            );
+            instance.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            //// instance가 null이 아니고 자식에 파티클 시스템이 있을 경우
+            //if (instance == null && instance.transform.childCount > 0)
+            //{
+            //    instance = instance.transform.GetComponent<ParticleSystem>();
+            //}
+            if (instance != null)
+            {
+                Destroy(instance.gameObject, 1.5f);
+                //destroyDelay = instance.main.duration;
+            }
+        }
+        Destroy(gameObject);
+        //if (modelRenderer != null)
+        //{
+        //    modelRenderer.enabled = false;
+        //}
+        //Collider enemyCollider = GetComponentInChildren<Collider>();
+        //if (enemyCollider != null)
+        //{
+        //    enemyCollider.enabled = false;
+        //}
+        //Rigidbody enemyRb = GetComponent<Rigidbody>();
+        //if (enemyRb != null)
+        //{
+        //    enemyRb.velocity = Vector3.zero;
+        //    enemyRb.isKinematic = true;
+        //}
+        //StartCoroutine(DestroyAfterDelay(destroyDelay));
+    }
+    private IEnumerator DestroyAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         Destroy(gameObject);
     }
     IEnumerator ChangeFireMode()
@@ -89,7 +138,7 @@ public class Enemy : MonoBehaviour
         while (autoFire)
         {
             int ranNum = UnityEngine.Random.Range(0, BulletPattern.Length);
-            curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, bulletSpeed, curObjectPool));
+            curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, bulletSpeed, curObjectPool, enemyData.attackPower));
             yield return new WaitForSeconds(fireDelay);
             StopCoroutine(curFireCoroutine);
             curFireCoroutine = null;
@@ -107,37 +156,8 @@ public class Enemy : MonoBehaviour
     }
     public void AnimationFire()
     {
-        // Debug.Log("지금 공격함");
-        // int ranNum = UnityEngine.Random.Range(0, BulletPattern.Length);
-        // curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, bulletSpeed, curObjectPool));
-
-        Debug.Log("AnimationFire 호출됨. 현재 autoFire: " + autoFire);
-        if (!autoFire) // 현재 발사 중이 아니라면 (자동 발사 시작)
-        {
-            autoFire = true;
-            StartAutoFire();
-        }
-        else // 현재 발사 중이라면 (자동 발사 중지)
-        {
-            autoFire = false; 
-            StopAutoFire();
-        }
-    }
-    private void StartAutoFire()
-    {
-        if (curFireCoroutine == null) // 이미 실행 중이 아니라면 시작
-        {
-            curFireCoroutine = StartCoroutine(ChangeFireMode());
-        }
-    }
-
-    // 자동 발사 중지
-    private void StopAutoFire()
-    {
-        if (curFireCoroutine != null) // 실행 중이라면 중지
-        {
-            StopCoroutine(curFireCoroutine);
-            curFireCoroutine = null;
-        }
+        Debug.Log("지금 공격함");
+        int ranNum = UnityEngine.Random.Range(0, BulletPattern.Length);
+        curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, bulletSpeed, curObjectPool, enemyData.attackPower));
     }
 }

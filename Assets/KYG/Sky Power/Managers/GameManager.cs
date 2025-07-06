@@ -1,12 +1,11 @@
-using IO;
-using JYL;
-using KYG;
-using LJ2;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
+using LJ2;
+using IO;
+using JYL;
 
 namespace KYG_skyPower
 {
@@ -30,7 +29,7 @@ namespace KYG_skyPower
     
     public class GameManager : Singleton<GameManager>
     {
-        public UnityEvent onGameOver, onPause, onResume, onGameClear, onClickButton;
+        public UnityEvent onGameOver, onPause, onResume, onGameClear;
 
         public GameData[] saveFiles = new GameData[3]; // 세이브 파일 3개
 
@@ -43,7 +42,7 @@ namespace KYG_skyPower
 
         public bool isGameCleared { get; private set; } // 게임 클리어
 
-        public int selectWorldIndex=0;
+        public int selectWorldIndex=0; // 인덱스는 0부터 시작함. => 월드 1
         public int selectStageIndex=0;
 
         //[SerializeField] private int defaultPlayerHP = 5;
@@ -52,7 +51,6 @@ namespace KYG_skyPower
         public override void Init() // 게임 시작시 세이브 데이터 로드
         {
             ResetSaveRef();
-            KYG_skyPower.AudioManagerSO.Instance.Init();
         }
         public void ResetSaveRef()
         {
@@ -62,7 +60,6 @@ namespace KYG_skyPower
                 SaveManager.Instance.GameLoad(ref saveFiles[i], i + 1); // 인덱스 1부터
             }
         }
-
         public void SelectSaveFile(int index)
         {
             if (index >= 0 && index < saveFiles.Length)
@@ -81,18 +78,13 @@ namespace KYG_skyPower
             DontDestroyOnLoad(gameObject); // 게임 오브젝트 파괴되지 않게 제한
 
         }*/
-        void Start()
-        {
-            var data = AudioManagerSO.Instance.GetAudioData("Click");
-            Debug.Log(data == null ? "AudioData Click not found" : "AudioData Click found: " + data.clipSource?.name);
-            AudioManagerSO.Sound.PlaySFXOneShot("Click");
 
-        }
 
-        public void OnClickButton()
+        public void ResetState()
         {
-            Debug.Log("OnClickButton 호출됨");
-            AudioManagerSO.Sound.PlaySFXOneShot("Click");
+            isGameOver = false;
+            isGameCleared = false;
+            isPaused = false;
         }
 
         public void SetGameOver()
@@ -101,6 +93,7 @@ namespace KYG_skyPower
             isGameOver = true; // 게임 오버가 true면
             Time.timeScale = 0f; // 시간 정지 기능
             onGameOver?.Invoke();
+            UIManager.Instance.ShowPopUp<StageClearPopUp>();
             Debug.Log("게임 오버");
         }
 
@@ -108,10 +101,8 @@ namespace KYG_skyPower
         {
             if (isGameCleared || isGameOver) return;
             isGameCleared = true;
-            Time.timeScale = 1f;
             onGameClear?.Invoke();
             UIManager.Instance.ShowPopUp<StageClearPopUp>();
-            
             Debug.Log("게임 클리어");
         }
 
@@ -141,7 +132,8 @@ namespace KYG_skyPower
 
         public void SaveGameProgress()
         {
-            Manager.Save.GameSave(CurrentSave, currentSaveIndex);
+            Manager.Save.GameSave(CurrentSave, currentSaveIndex+1);
+            Manager.Game.ResetSaveRef();
         }
         /*private void Update()
         {

@@ -29,11 +29,13 @@ namespace JYL
         {
             for (int i = 0; i < bulletInfo.Length; i++)
             {
-                bulletInfo[i].rig = transforms[i].GetComponent<Rigidbody>();
-                bulletInfo[i].bulletController = GetComponent<BulletController>();
-                bulletInfo[i].trans = transforms[i];
-                bulletInfo[i].originPos = transforms[i].localPosition;
-                bulletInfo[i].canDeactive = true; // 기본값은 true로 설정
+                BulletInfo temp = new BulletInfo();
+                temp.rig = transforms[i].GetComponent<Rigidbody>();
+                temp.bulletController = transforms[i].GetComponent<BulletController>();
+                temp.trans = transforms[i]; 
+                temp.originPos = transforms[i].localPosition;
+                temp.canDeactive = true;
+                bulletInfo[i] = temp;
             }
         }
     }

@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 2
-  poolObject: {fileID: 4283938317084407979, guid: 8a1fcdd1f5dc54a4d9451051893eea3c,
+  poolObject: {fileID: 5271498017529273048, guid: 544c5dbeca23bdd4484a8d897d35b43e,
     type: 3}
   poolSize: 10
 --- !u!1 &2038275542211488970
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 1
-  poolObject: {fileID: 4283938317084407979, guid: 6f46c2edf4799e84796a38fda9997bd4,
+  poolObject: {fileID: 1309054148182630881, guid: 710480f473dd20b4bbd7cf08e3de81b8,
     type: 3}
   poolSize: 10
 --- !u!1 &4642137954365113743
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 0
-  poolObject: {fileID: 4283938317084407979, guid: e3a51ed57acaf764bb7c2381eeb11c32,
+  poolObject: {fileID: 1362817124269357375, guid: f429559291c0ff6498cb43b25a7da020,
     type: 3}
   poolSize: 10
 --- !u!1 &5900288745975583809
