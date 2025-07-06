@@ -21,7 +21,7 @@ namespace JYL
         public static bool canAttack = true; // 궁극기 사용 시, 외부에서 공격 권한 제어
 
         [field:Header("Set Value")]
-        [field:Range(10f,50f)][field:SerializeField] private float bulletSpeed { get; set; } = 35f;
+        [field:Range(10f,50f)][field:SerializeField] private float bulletSpeed { get; set; } = 20f;
         [Range(0.1f, 5)][SerializeField] float bulletReturnTimer = 2f;
 
         public UnityEvent<int> onHpChanged;
@@ -252,6 +252,7 @@ namespace JYL
                         // info.bulletController.canDeactive = false; 다단히트일 때 활성화
                     }
                     info.rig.AddForce(bulletSpeed * info.trans.forward, ForceMode.Impulse); // 이 부분을 커스텀하면 됨
+                    info.bulletController.OnFire(); // 발사와 동시에 플래시생성
                 }
                 yield return new WaitForSeconds(mainCharController.attackSpeed*0.1f);
             }

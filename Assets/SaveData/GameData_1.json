@@ -1,13 +1,13 @@
 {
     "playerName": "gggd",
-    "gold": 2120,
+    "gold": 2503,
     "characterInventory": {
         "characters": [
             {
                 "id": 10001,
                 "level": 2,
                 "step": 0,
-                "partySet": 0
+                "partySet": 3
             },
             {
                 "id": 10002,
@@ -25,7 +25,7 @@
                 "id": 10004,
                 "level": 10,
                 "step": 3,
-                "partySet": 3
+                "partySet": 0
             },
             {
                 "id": 10005,
