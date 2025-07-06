@@ -30,7 +30,8 @@ MonoBehaviour:
   defense: 2
   ultCoolDefault: 80
   ultCoolReduce: 10
-  ultVisual: {fileID: 0}
+  ultVisual: {fileID: 7685714459729166014, guid: 16db9ae716268db42b69994aed5f8b3e,
+    type: 3}
   parry: 1
   parryCool: 3
   icon: {fileID: 21300000, guid: 324d674cf58c42e4aa50420c47e701d2, type: 3}

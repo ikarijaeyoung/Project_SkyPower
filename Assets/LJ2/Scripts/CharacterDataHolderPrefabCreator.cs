@@ -19,10 +19,10 @@ public class CharacterDataHolderPrefabCreator
         if (!AssetDatabase.IsValidFolder(saveDir))
             AssetDatabase.CreateFolder("Assets/LJ2/Prefabs", "CharacterDataHolders");
 
-        var erasePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/LJ2/Prefabs/Erase.Prefab");
-        var laserPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/LJ2/Prefabs/Laser.Prefab");
-        var shieldPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/LJ2/Prefabs/Shield.Prefab");
-        var firePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/LJ2/Prefabs/Fire.Prefab");
+        var erasePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/LJ2/Prefabs/Bullets/Ult/Effect_31.prefab");
+        var laserPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/LJ2/Prefabs/Bullets/Ult/Effect_28.prefab");
+        var shieldPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/LJ2/Prefabs/Bullets/Ult/Effect_07.prefab");
+        var firePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/LJ2/Prefabs/Bullets/Ult/Effect_19.prefab");
 
         foreach (var guid in guids)
         {
@@ -40,6 +40,10 @@ public class CharacterDataHolderPrefabCreator
             var ultimate = go.AddComponent<Ultimate>();  // Ultimate 컴포넌트 추가
             holder.ultimate = ultimate;  // CharactorController에 Ultimate 컴포넌트 연결
             holder.bulletPrefab = data.bulletPrefab.GetComponent<BulletPrefabController>(); // Bullet 프리팹 연결
+            if (data.ultVisual.GetComponent<BulletPrefabController>() != null)
+            {
+                holder.ultBulletPrefab = data.ultVisual.GetComponent<BulletPrefabController>(); // UltVisual 프리팹 연결
+            }
 
             ultimate.ultAll = erasePrefab; // Erase 프리팹 연결
             ultimate.ultLaser = laserPrefab; // Laser 프리팹 연결
