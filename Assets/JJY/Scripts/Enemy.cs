@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     public EnemyData enemyData;
     [SerializeField] private int currentHP;
     public bool autoFire;
+    private bool isDead =false;
 
     [Header("Enemy Shot Info")]
     public Transform[] firePoints;
@@ -61,7 +62,11 @@ public class Enemy : MonoBehaviour
 
         currentHP -= damage;
         Debug.Log($"{gameObject.name} took {damage} damage. Current HP: {currentHP}");
-        if (currentHP <= 0) Die();
+        if (currentHP <= 0&&!isDead)
+        {
+            isDead = true;
+            Die();
+        }
     }
     private void Update()
     {
@@ -87,35 +92,41 @@ public class Enemy : MonoBehaviour
         }
         if (deathEffectPrefab != null)
         {
-            GameObject instance = Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
-
-            ParticleSystem ps = instance.GetComponent<ParticleSystem>();
-            if (ps == null && instance.transform.childCount > 0) // 자식 GameObject에 파티클 시스템이 있을 경우
+            // deathEffectPrefab은 프리팹이므로, Instantiate할 때 위치와 회전을 명시적으로 지정해야 함
+            GameObject instance = Instantiate(
+                deathEffectPrefab,
+                transform.position,
+                Quaternion.identity
+            );
+            instance.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            //// instance가 null이 아니고 자식에 파티클 시스템이 있을 경우
+            //if (instance == null && instance.transform.childCount > 0)
+            //{
+            //    instance = instance.transform.GetComponent<ParticleSystem>();
+            //}
+            if (instance != null)
             {
-                ps = instance.transform.GetChild(0)?.GetComponent<ParticleSystem>();
-            }
-            if (ps != null)
-            {
-                Destroy(instance, ps.main.duration);
-                destroyDelay = ps.main.duration;
+                Destroy(instance.gameObject, 1.5f);
+                //destroyDelay = instance.main.duration;
             }
         }
-        if (modelRenderer != null)
-        {
-            modelRenderer.enabled = false;
-        }
-        Collider enemyCollider = GetComponent<Collider>();
-        if (enemyCollider != null)
-        {
-            enemyCollider.enabled = false;
-        }
-        Rigidbody enemyRb = GetComponent<Rigidbody>();
-        if (enemyRb != null)
-        {
-            enemyRb.velocity = Vector3.zero;
-            enemyRb.isKinematic = true;
-        }
-        StartCoroutine(DestroyAfterDelay(destroyDelay));
+        Destroy(gameObject);
+        //if (modelRenderer != null)
+        //{
+        //    modelRenderer.enabled = false;
+        //}
+        //Collider enemyCollider = GetComponentInChildren<Collider>();
+        //if (enemyCollider != null)
+        //{
+        //    enemyCollider.enabled = false;
+        //}
+        //Rigidbody enemyRb = GetComponent<Rigidbody>();
+        //if (enemyRb != null)
+        //{
+        //    enemyRb.velocity = Vector3.zero;
+        //    enemyRb.isKinematic = true;
+        //}
+        //StartCoroutine(DestroyAfterDelay(destroyDelay));
     }
     private IEnumerator DestroyAfterDelay(float delay)
     {

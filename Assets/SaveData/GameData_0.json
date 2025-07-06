@@ -1,42 +1,42 @@
 {
     "playerName": "gggd",
-    "gold": 1280,
+    "gold": 1240,
     "characterInventory": {
         "characters": [
             {
                 "id": 10001,
-                "level": -1,
+                "level": 2,
                 "step": 0,
                 "partySet": 3
             },
             {
                 "id": 10002,
-                "level": -1,
+                "level": 1,
                 "step": 1,
                 "partySet": 3
             },
             {
                 "id": 10003,
-                "level": -1,
-                "step": 0,
-                "partySet": 3
+                "level": 10,
+                "step": 4,
+                "partySet": 0
             },
             {
                 "id": 10004,
                 "level": 10,
-                "step": 0,
-                "partySet": 0
+                "step": 3,
+                "partySet": 3
             },
             {
                 "id": 10005,
-                "level": -1,
-                "step": 0,
+                "level": 20,
+                "step": 2,
                 "partySet": 3
             },
             {
                 "id": 10006,
-                "level": 1,
-                "step": 0,
+                "level": 30,
+                "step": 1,
                 "partySet": 3
             },
             {
@@ -53,13 +53,13 @@
             },
             {
                 "id": 10009,
-                "level": 5,
+                "level": -1,
                 "step": 0,
                 "partySet": 3
             },
             {
                 "id": 10010,
-                "level": 6,
+                "level": -1,
                 "step": 0,
                 "partySet": 3
             },
@@ -89,7 +89,7 @@
             },
             {
                 "id": 10015,
-                "level": 1,
+                "level": -1,
                 "step": 0,
                 "partySet": 1
             },
