@@ -4,32 +4,34 @@ using UnityEngine;
 
 namespace KYG_skyPower
 {
-    [CreateAssetMenu(fileName = "AudioManagerSO", menuName = "Manager/AudioManager")] 
-    public class AudioManagerSO : SOSingleton<AudioManagerSO> 
+    [CreateAssetMenu(fileName = "AudioManagerSO", menuName = "Manager/AudioManager")]
+    public class AudioManagerSO : SOSingleton<AudioManagerSO>
     {
-        [Header("사운드 데이터베이스")] 
-        public AudioDataBase audioDB;      // 오디오 데이터베이스
+        [Header("사운드 데이터베이스")]
+        public AudioDataBase audioDB;
 
         [Header("디폴트 BGM / SFX")]
-        public AudioData defaultBGM;     // 게임 시작시 기본 BGM
+        public AudioData defaultBGM;
 
         [Header("풀 크기")]
-        public int sfxPoolSize = 10; // SFX 풀 크기 (미사용, 추후 구현 예정)
+        public int sfxPoolSize = 35;
 
-        private Dictionary<string, AudioData> audioDict; // 이름으로 오디오 데이터 찾기 위한 딕셔너리
-        private AudioSource bgmSource;
-        private List<AudioSource> sfxPool = new List<AudioSource>(); // SFX 재생용 오디오 소스 풀 (미사용, 추후 구현 예정)
+        private Dictionary<string, AudioData> audioDict;
+
+        [System.NonSerialized] private AudioSource bgmSource;
+        [System.NonSerialized] private List<AudioSource> sfxPool;
 
         public static class Sound
         {
-            public static void PlayBGM(string name) => Instance.PlayBGM(name); 
-            public static void PlaySFX(string name) => Instance.PlaySFX(name); 
-            public static void FadeBGM(string name, float time = 1f) => Instance.FadeBGM(name, time); 
-            public static void StopBGM() => Instance.StopBGM(); 
+            public static void PlayBGM(string name) => Instance.PlayBGM(name);
+            public static void PlaySFXOneShot(string name) => Instance.PlaySFX(name, true); // forceOneShot 기본값 true
+            public static void FadeBGM(string name, float time = 1f) => Instance.FadeBGM(name, time);
+            public static void StopBGM() => Instance.StopBGM();
         }
 
         public override void Init()
         {
+            // 오디오 데이터 딕셔너리 초기화
             if (audioDict == null)
             {
                 audioDict = new Dictionary<string, AudioData>();
@@ -44,19 +46,41 @@ namespace KYG_skyPower
                         audioDict.Add(data.clipName, data);
                 }
             }
-            if (bgmSource == null)
+
+            // BGMSource 오브젝트/컴포넌트 준비
+            if (bgmSource == null || bgmSource.gameObject == null)
             {
-                var go = new GameObject("BGMSource");
-                GameObject.DontDestroyOnLoad(go);
-                bgmSource = go.AddComponent<AudioSource>();
+                var go = GameObject.Find("BGMSource");
+                if (go == null)
+                {
+                    go = new GameObject("BGMSource");
+                    GameObject.DontDestroyOnLoad(go);
+                }
+                bgmSource = go.GetComponent<AudioSource>();
+                if (bgmSource == null)
+                    bgmSource = go.AddComponent<AudioSource>();
                 bgmSource.loop = true;
             }
-            if (sfxPool.Count == 0)
+
+            // SFX 풀 재초기화
+            if (sfxPool == null)
+                sfxPool = new List<AudioSource>();
+            else
+                sfxPool.Clear();
+
+            // SFXPool 오브젝트 준비
+            GameObject sfxGo = GameObject.Find("SFXPool");
+            if (sfxGo == null)
             {
-                var go = new GameObject("SFXPool");
-                GameObject.DontDestroyOnLoad(go);
-                for (int i = 0; i < sfxPoolSize; i++)
-                    sfxPool.Add(go.AddComponent<AudioSource>());
+                sfxGo = new GameObject("SFXPool");
+                GameObject.DontDestroyOnLoad(sfxGo);
+            }
+
+            var audioSources = sfxGo.GetComponents<AudioSource>();
+            for (int i = 0; i < sfxPoolSize; i++)
+            {
+                AudioSource src = (i < audioSources.Length) ? audioSources[i] : sfxGo.AddComponent<AudioSource>();
+                sfxPool.Add(src);
             }
         }
 
@@ -71,34 +95,49 @@ namespace KYG_skyPower
             return data;
         }
 
-        private AudioSource GetAvailableSFXSource()
+        /// <summary>
+        /// 항상 PlayOneShot으로 효과음 재생 (중첩, 반복 재생 완벽 지원)
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="forceOneShot"></param>
+        public void PlaySFX(string name, bool forceOneShot = true)
         {
-            foreach (var src in sfxPool)
-                if (!src.isPlaying) return src;
-
-            // 모든 소스 사용중이면 동적으로 추가
-            var sfxGo = sfxPool[0].gameObject;
-            var extra = sfxGo.AddComponent<AudioSource>(); 
-            sfxPool.Add(extra); // 새 오디오 소스 생성
-            return extra;
-        }
-
-        public void PlaySFX(string name) 
-        {
-            var data = GetAudioData(name); 
+            var data = GetAudioData(name);
             if (data == null || data.clipSource == null) return;
             var src = GetAvailableSFXSource();
-            src.clip = data.clipSource;
-            src.volume = data.volume;
-            src.loop = data.loop;
-            src.Play();
+            if (forceOneShot)
+            {
+                src.PlayOneShot(data.clipSource, data.volume);
+            }
+            else
+            {
+                src.clip = data.clipSource;
+                src.volume = data.volume;
+                src.loop = data.loop;
+                src.Play();
+            }
         }
 
-        public void PlaySFX_OneShot(string name)
+        /// <summary>
+        /// PlayOneShot만 강제로 사용 (UI/클릭/일회성 효과음용)
+        /// </summary>
+        public void PlaySFXOneShot(string name)
         {
-            var data = GetAudioData(name); 
-            if (data == null || data.clipSource == null) return;
-            GetAvailableSFXSource().PlayOneShot(data.clipSource, data.volume);
+            Instance.PlaySFX(name, true);
+        }
+
+        private AudioSource GetAvailableSFXSource()
+        {
+            if (sfxPool == null || sfxPool.Count == 0) Init();
+            foreach (var src in sfxPool)
+                if (src != null && !src.isPlaying)
+                    return src;
+
+            // 모두 사용중이면 동적으로 추가 (풀 오버플로)
+            var sfxGo = sfxPool[0].gameObject;
+            var extra = sfxGo.AddComponent<AudioSource>();
+            sfxPool.Add(extra);
+            return extra;
         }
 
         public void FadeBGM(string name, float fadeTime = 1f)
@@ -144,6 +183,6 @@ namespace KYG_skyPower
             bgmSource.Play();
         }
 
-        public void StopBGM() => bgmSource.Stop();
+        public void StopBGM() => bgmSource?.Stop();
     }
 }
