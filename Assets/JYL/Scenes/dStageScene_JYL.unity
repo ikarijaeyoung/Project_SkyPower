@@ -281,6 +281,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8205956720404344412, guid: 382515b078d5ae443abc4aee0c779e5d,
         type: 3}
+      propertyPath: hud
+      value: 
+      objectReference: {fileID: 2031295608}
+    - target: {fileID: 8205956720404344412, guid: 382515b078d5ae443abc4aee0c779e5d,
+        type: 3}
       propertyPath: leftUI
       value: 
       objectReference: {fileID: 1392048859}
