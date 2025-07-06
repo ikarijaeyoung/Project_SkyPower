@@ -18,7 +18,7 @@ namespace LJ2
         public int maxLevel;
         public int hp;
         public int hpPlus;
-        public GameObject bulletPrefab;
+        public GameObject[] bulletPrefabs = new GameObject[5];
         public float attackDamage;
         public float damagePlus;
         public float attackSpeed;

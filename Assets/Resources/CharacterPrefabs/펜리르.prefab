@@ -69,8 +69,7 @@ MonoBehaviour:
   ultLevel: 0
   ultDamage: 0
   ultCool: 0
-  bulletPrefab: {fileID: -8446469945137773935, guid: 3da0ab05755977e43bd363f39812aff0,
-    type: 3}
+  bulletPrefab: {fileID: 0}
   ultBulletPrefab: {fileID: 8842857238294067881, guid: 16db9ae716268db42b69994aed5f8b3e,
     type: 3}
   ultPrefab: {fileID: 0}

@@ -21,8 +21,12 @@ MonoBehaviour:
   maxLevel: 30
   hp: 201
   hpPlus: 10
-  bulletPrefab: {fileID: 2680888267476311631, guid: 3da0ab05755977e43bd363f39812aff0,
-    type: 3}
+  bulletPrefabs:
+  - {fileID: 1568989616923983831, guid: fa898b2f5baf45c47bbd37205bc3fde1, type: 3}
+  - {fileID: 3584122659407725160, guid: 5c5c5cda1b507ee489065a7637647890, type: 3}
+  - {fileID: 6697289176992358689, guid: 6d65b58f83603e1428ef2f86e8817b50, type: 3}
+  - {fileID: 1841814288944449646, guid: 8fcbc1b41a6c1124bb9e24d7fbdce70d, type: 3}
+  - {fileID: 6569376690468195875, guid: 6d324a8674f722b4d9116b7e97c62f22, type: 3}
   attackDamage: 30
   damagePlus: 10
   attackSpeed: 0.75
