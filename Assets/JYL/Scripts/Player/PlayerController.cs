@@ -51,6 +51,7 @@ namespace JYL
 
         private int attackPower { get; set; }
         private float moveSpeed { get; set; }
+        private bool isDead { get; set; } = false;
 
 
         private int fireAtOnce { get; set; } = 3;
@@ -73,10 +74,7 @@ namespace JYL
         public ObjectPool curBulletPool => bulletPools[poolIndex];
         private Coroutine fireRoutine;
 
-        private void Awake()
-        {
-            Init();
-        }
+        private void Awake()=> Init();
         private void OnEnable()
         {
             rig = GetComponent<Rigidbody>();
@@ -84,7 +82,7 @@ namespace JYL
         }
         private void Update()
         {
-            PlayerHandler();
+            SetMove();
             if (attackInputTimer > 0)
             {
                 attackInputTimer -= Time.deltaTime;
@@ -97,14 +95,9 @@ namespace JYL
 
         private void FixedUpdate() { }
 
-        private void LateUpdate() 
-        {
-        }
+        private void LateUpdate() { }
 
-        private void OnDisable()
-        {
-            UnSubscribeEvents();
-        }
+        private void OnDisable() => UnSubscribeEvents();
         private void Init()
         {
             playerInput = GetComponent<PlayerInput>();
@@ -172,11 +165,7 @@ namespace JYL
             attackPower = mainCharController.attackDamage;
             moveSpeed = mainCharController.moveSpeed;
         }
-
-        private void PlayerHandler()
-        {
-            SetMove();
-        }
+               
 
         private void SetMove()
         {
@@ -273,6 +262,7 @@ namespace JYL
 
         public void TakeDamage(int damage)
         {
+            Debug.Log($"체력 이만큼 닳음 : {damage}");
             if(mainCharController.defense>0)
             {
                 mainCharController.defense -= 1;
@@ -281,8 +271,10 @@ namespace JYL
             if(mainCharController.defense <=0)
             {
                 Hp-=damage;
-                if(Hp <= 0)
+                Debug.Log($"현재 체력 : {Hp}");
+                if(Hp <= 0&&!isDead)
                 {
+                    isDead = true;
                     Hp = 0;
                     Manager.Game.SetGameOver();
                 }
@@ -314,6 +306,7 @@ namespace JYL
             if (ultGage >= 100)
             {
                 mainCharController.UseUlt();
+                hud.UseUltimate();
                 ultGage = 0;
             }
         }

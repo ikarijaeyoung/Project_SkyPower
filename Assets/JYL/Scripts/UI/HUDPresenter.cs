@@ -37,6 +37,8 @@ namespace JYL
             }
         }
         private float parryCooltime = 2f;
+
+        // 현재 스테이지의 시퀀스 정보를 가져옴
         private int maxSeq { get; set; }
         public int curSeq { get; set; }
 
@@ -60,49 +62,12 @@ namespace JYL
         private Coroutine parry1CooldownRoutine;
         private Coroutine parry2CooldownRoutine;
 
-        void Start()
-        {
-            // TODO: 여기서 이미지들 채워넣음.
-
-        }
-        private void OnEnable()
-        {
-            Init();
-        }
-        private void OnDisable()
-        {
-            onSeqChanged.RemoveListener(SetProgressBar);
-        }
+        void Start() { }
+        private void OnEnable() => Init();
+        private void OnDisable() => onSeqChanged.RemoveListener(SetProgressBar);
 
         void Update()
         {
-            // TODO :  체력바 테스트. 플레이어 피격시 amount만큼 깎임. 플레이어 컨트롤러에서 이벤트 걸수도 있음.
-            // 이후, 플레이어 컨트롤러에서 이벤트로 해당 기능들을 연결한다
-            //if (Input.GetKey(KeyCode.Space))
-            //{
-            //    UltGage += Time.deltaTime;
-            //    if (UltGage > 1)
-            //    {
-            //        UseUltimate();
-            //    }
-            //}
-            //if (Input.GetKeyDown(KeyCode.Alpha3))
-            //{
-            //    if (parry1CooldownRoutine == null && player.sub1CharController != null)
-            //    {
-
-            //        parry1CooldownRoutine = StartCoroutine(Parry1Routine());
-            //    }
-            //}
-            //if (Input.GetKeyDown(KeyCode.Alpha4))
-            //{
-            //    if (parry2CooldownRoutine == null && player.sub1CharController != null)
-            //    {
-
-            //        parry2CooldownRoutine = StartCoroutine(Parry2Routine());
-            //    }
-            //}
-
             // ESC 누를 시, 게임 정지 팝업
             if (Input.GetKeyDown(KeyCode.Escape) && !PopUpUI.IsPopUpActive && !Util.escPressed)
             {
@@ -116,17 +81,14 @@ namespace JYL
                 Time.timeScale = 1;
             }
         }
-        private void LateUpdate()
-        {
-        }
+        private void LateUpdate() { }
         private void Init()
         {
-
             maxHp = player.Hp;
             CurHp = player.Hp;
             ultGage = 0;
 
-            hpBar.value = (float)curHp / maxHp;
+            hpBar.value = (float)CurHp / maxHp;
 
             ultIllust.sprite = player.mainCharController.image;
             ultGageImg.sprite = player.mainCharController.icon;
@@ -174,14 +136,9 @@ namespace JYL
                 parry2BackImg.color = color;
             }
         }
-        public void OnHpChanged()
-        {
-            hpBar.value = (float)curHp / maxHp;
-        }
-        private void OnGageChanged()
-        {
-            ultGageImg.fillAmount = UltGage;
-        }
+        public void OnHpChanged() { hpBar.value = (float)CurHp / maxHp; }
+        private void OnGageChanged()=> ultGageImg.fillAmount = UltGage;
+
         //private void OnHpBarChanged(float value)
         //{
         //    // Handle HP change logic here
@@ -196,13 +153,10 @@ namespace JYL
         //    hpBar.onValueChanged.RemoveListener(OnHpBarChanged);
         //}
 
-        private void SetProgressBar(int seq)
-        {
-            pgBar.value = (float)seq / maxSeq;
-        }
+        private void SetProgressBar(int seq) { pgBar.value = (float)seq / maxSeq; }
 
         //TODO : 궁극기 사용 시 연결
-        private void UseUltimate()
+        public void UseUltimate()
         {
             UltGage = 0;
             ultIllust.gameObject.SetActive(true);

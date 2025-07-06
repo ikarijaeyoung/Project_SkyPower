@@ -85,6 +85,5 @@ public class SpawnManager : MonoBehaviour
     {
         Manager.Game.SetGameClear();
         Debug.Log($"스폰매니저의 컴플릿스테이지 수행");
-
     }
 }

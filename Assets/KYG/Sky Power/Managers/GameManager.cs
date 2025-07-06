@@ -93,6 +93,7 @@ namespace KYG_skyPower
             isGameOver = true; // 게임 오버가 true면
             Time.timeScale = 0f; // 시간 정지 기능
             onGameOver?.Invoke();
+            UIManager.Instance.ShowPopUp<StageClearPopUp>();
             Debug.Log("게임 오버");
         }
 
