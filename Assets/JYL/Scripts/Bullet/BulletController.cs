@@ -93,9 +93,10 @@ namespace JYL
         {
             if (gameObject.layer == 7) // 플레이어의 총알일 경우
             {
-                Enemy enemy = other.GetComponent<Enemy>();
+                Enemy enemy = other.GetComponentInParent<Enemy>();
                 if (enemy == null)
                 {
+                    Debug.Log("에너미 컴포넌트를 찾지 못함");
                     SpawnHitEffect(other.transform);
                     gameObject.SetActive(false);
                     return;

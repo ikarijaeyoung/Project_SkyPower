@@ -439,7 +439,7 @@ namespace YSK
         public void CompleteStageWithSave(int stageID, int subStageID, int score, float completionTime)
         {
             // 1. 점수 업데이트
-            UpdateStageScore(stageID, subStageID, score);
+            //UpdateStageScore(stageID, subStageID, score);
             
             // 2. 스테이지 완료 처리
             CompleteStage(stageID, subStageID, completionTime);

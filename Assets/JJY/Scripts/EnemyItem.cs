@@ -45,7 +45,6 @@ public class EnemyItem : MonoBehaviour
     void Collect()
     {
         ScoreManager.Instance.AddScore(addScore);
-        Debug.Log($"{ScoreManager.Instance.Score}");
         Destroy(gameObject);
     }
 }

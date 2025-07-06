@@ -13,7 +13,7 @@ public class TripleShot : BulletPatternData
     public int shotCount = 3;
     public float delayBetweenshots = 0.1f;
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool)
+    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool,int attackPower)
     {
         for (int i = 0; i < shotCount; i++)
         {
@@ -33,6 +33,7 @@ public class TripleShot : BulletPatternData
                         info.trans.position = firePoints[0].position;
                         info.trans.rotation = firePoints[0].rotation;
                         info.rig.velocity = Vector3.zero;
+                        info.bulletController.attackPower = attackPower;
                         info.rig.AddForce(firePoints[0].forward * bulletSpeed, ForceMode.Impulse);
                     }
                 }

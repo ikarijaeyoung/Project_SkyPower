@@ -36,6 +36,8 @@ namespace JYL
 
         // ¼±ÅÃ UI ÀÎµ¦½º
         public int selectIndexUI = 0;
+        public static bool canClosePopUp = true;
+        bool canClose => PopUpUI.IsPopUpActive && !Util.escPressed && !PartySetPopUp.isPartySetting & canClosePopUp;
 
         protected override void Awake() => base.Awake();
         private void Update()
@@ -43,7 +45,7 @@ namespace JYL
         }
         private void LateUpdate()
         {
-            if (Input.GetKeyDown(KeyCode.Escape) && PopUpUI.IsPopUpActive && !Util.escPressed &&!PartySetPopUp.isPartySetting)
+            if (Input.GetKeyDown(KeyCode.Escape) && canClose)
             {
                 Instance.ClosePopUp();
                 Util.ConsumeESC();

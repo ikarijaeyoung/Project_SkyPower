@@ -45,7 +45,7 @@ namespace YSK
         {
             Debug.Log("=== StageManager Start 시작 ===");
             InitializeComponents();
-            //Manager.Game.onGameClear.AddListener(OnStageCompleted);
+            Manager.Game.onGameClear.AddListener(OnStageCompleted);
             Debug.Log("=== StageManager Start 완료 ===");
         }
 
@@ -56,7 +56,7 @@ namespace YSK
 
         private void OnDestroy()
         {
-            //Manager.Game.onGameClear.RemoveListener(OnStageCompleted);
+            Manager.Game.onGameClear.RemoveListener(OnStageCompleted);
         }
 
 
@@ -485,13 +485,6 @@ namespace YSK
             else
             {
                 Debug.LogError("StageDataManager가 null입니다!");
-            }
-
-            // 게임 클리어 처리
-            if (Manager.Game != null)
-            {
-                Manager.Game.SetGameClear();
-                Debug.Log("게임 클리어 처리 완료");
             }
 
             Debug.Log($"=== 스테이지 완료 처리 완료: {currentMainStage}-{currentSubStage} ===");

@@ -42,7 +42,7 @@ namespace KYG_skyPower
 
         public bool isGameCleared { get; private set; } // 게임 클리어
 
-        public int selectWorldIndex=0;
+        public int selectWorldIndex=0; // 인덱스는 0부터 시작함. => 월드 1
         public int selectStageIndex=0;
 
         //[SerializeField] private int defaultPlayerHP = 5;
@@ -80,6 +80,12 @@ namespace KYG_skyPower
         }*/
 
 
+        public void ResetState()
+        {
+            isGameOver = false;
+            isGameCleared = false;
+            isPaused = false;
+        }
 
         public void SetGameOver()
         {
@@ -94,10 +100,8 @@ namespace KYG_skyPower
         {
             if (isGameCleared || isGameOver) return;
             isGameCleared = true;
-            Time.timeScale = 1f;
             onGameClear?.Invoke();
             UIManager.Instance.ShowPopUp<StageClearPopUp>();
-            
             Debug.Log("게임 클리어");
         }
 
