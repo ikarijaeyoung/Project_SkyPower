@@ -35,7 +35,7 @@ namespace LJ2
         public float ultDamage;
         public int ultCool;
 
-        public PooledObject bulletPrefab; // TODO : 경로지정
+        [SerializeField]public PooledObject bulletPrefab; // TODO : 경로지정
         public PooledObject ultBulletPrefab;
         public GameObject ultPrefab; // 리소스
 
@@ -73,10 +73,35 @@ namespace LJ2
             //    SetParameter();
             //}
         }
-        public void SetParameter() // TODO 이큅로더 완성되면 여기에 매개변수로 넣음 EquipSaveLoader equips
+
+        //public void ApplyEquipmentStat()
+        //{
+        //    var equips = EquipmentInvenManager.Instance.GetEquippedItems(id);
+
+        //    // 기본값 세팅
+        //    attackDamage = (int)characterData.attackDamage;
+        //    defense = characterData.defense;
+        //    Hp = characterData.hp;
+
+        //    // 무기
+        //    if (equips.weapon != null)
+        //        attackDamage += equips.weapon.Base_Value;
+
+        //    // 방어구
+        //    if (equips.armor != null)
+        //        defense += equips.armor.Base_Value;
+
+        //    // 악세서리
+        //    if (equips.accessory != null)
+        //    {
+        //        // 예시: 체력 증가
+        //        Hp += equips.accessory.Base_Value;
+        //        // 효과 타입별로 추가 구현 (Effect_Type 등)
+        //    }
+        //}
+        public void SetParameter()
         {
             // Data의 값을 그대로 가져옴
-            // bulletPrefab = characterData.bulletPrefab;
             // ultPrefab = characterData.ultVisual;
             // image = charictorData.image;
             
@@ -124,15 +149,16 @@ namespace LJ2
             //Debug.Log($"Character ID: {characterSave.id}, Step: {characterSave.step}, Level : {characterSave.level}");
             level = characterSave.level;
             step = characterSave.step;
-            bulletPrefab = Resources.Load<PooledObject>($"Prefabs/bullet/{id}_{step}");
+            bulletPrefab = characterData.bulletPrefab.GetComponent<PooledObject>(); //TODO : 돌파 상황에 따라 다른 총알 적용 해야 함.
+            //bulletPrefab = Resources.Load<PooledObject>($"Prefabs/bullet/{id}_{step}");
             partySet = characterSave.partySet;
 
             // Save의 값에 따라 Data의 값을 변경
             if(partySet == PartySet.Main)
             {
                 // TODO : 장비 스탯 추가 적용
-                //Hp = characterData.hp + (characterData.hpPlus * (level - 1)) + armor.hp;
-                //attackDamage = (int)(characterData.attackDamage + (characterData.damagePlus * (level - 1)))+weapon.attackPower; 
+                Hp = characterData.hp + (characterData.hpPlus * (level - 1));// + armor.hp;
+                attackDamage = (int)(characterData.attackDamage + (characterData.damagePlus * (level - 1)));//+weapon.attackPower; 
             }
             else
             {
@@ -238,7 +264,8 @@ namespace LJ2
                     break;
                 case Parry.반사B:
                     parrying.Parry();
-                    // 반사 기능 미구현
+                    // 반사 기능 미구현으로 인해 무적으로 처리
+                    parrying.Invicible();
                     break;
                 case Parry.무적:
                     parrying.Parry();
@@ -259,15 +286,14 @@ namespace LJ2
                     break;
                 case 10003:
                     // 탄막 변경 데미지 증가
-                    // ultimate.BulletUpgrade();
+                    ultimate.BulletUpgrade();
                     break;
                 case 10004:
                     // 궁극기 탄막 1회 - 다단히트
-                    // ultimate.BigBullet(ultDamage);
+                    ultimate.BigBullet(ultDamage);
                     break;
                 case 10005:
-                    // 궁극기 탄막 1회 - 다단히트
-                    // ultimate.BigBullet(ultDamage);
+                    ultimate.Fire(ultDamage);
                     break;
                 case 10006:
                     defense += ultimate.Shield(ultDamage);

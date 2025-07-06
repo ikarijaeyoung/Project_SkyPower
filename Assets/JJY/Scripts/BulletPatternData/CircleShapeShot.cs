@@ -11,7 +11,7 @@ public class CircleShapeShot : BulletPatternData
     public int shotCount = 8;
     public float fireDelayBetweenShots = 0f;
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool)
+    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool,int attackPower)
     {
         for (int i = 0; i < shotCount; i++)
         {
@@ -37,6 +37,7 @@ public class CircleShapeShot : BulletPatternData
                         info.trans.position = firePoints[i].position;
                         info.trans.rotation = Quaternion.LookRotation(curFirePoint.forward);
                         info.rig.velocity = Vector3.zero;
+                        info.bulletController.attackPower = attackPower;
                         info.rig.AddForce(curFirePoint.forward * bulletSpeed, ForceMode.Impulse);
                     }
                 }

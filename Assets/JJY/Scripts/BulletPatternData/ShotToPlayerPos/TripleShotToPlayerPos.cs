@@ -14,7 +14,7 @@ public class TripleShotToPlayerPos : BulletPatternData
     public float delayBetweenshots = 0.1f;
     Vector3 playerPos;
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool)
+    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool,int attackPower)
     {
         playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
         firePoints[0].LookAt(playerPos);
@@ -38,6 +38,7 @@ public class TripleShotToPlayerPos : BulletPatternData
                         // √—æÀ¿« forward∏¶ Muzzlepoint¿« forward∑Œ ∏¬√„
                         info.trans.rotation = firePoints[0].rotation;
                         info.rig.velocity = Vector3.zero;
+                        info.bulletController.attackPower = attackPower;
                         info.rig.AddForce(firePoints[0].forward * bulletSpeed, ForceMode.Impulse);
                     }
                 }

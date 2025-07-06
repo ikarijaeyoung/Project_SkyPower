@@ -48,8 +48,9 @@ namespace JYL
         private void SetStageIndex(PointerEventData eventData)
         {
             Util.ExtractTrailNumber(eventData.pointerClick.gameObject.name, out selectStageNum);
-            Manager.Game.selectWorldIndex = worldNum + 1;
+            Manager.Game.selectWorldIndex = worldNum+1;
             Manager.Game.selectStageIndex = selectStageNum;
+            Debug.Log($"{worldNum + 1}_{selectStageNum}");
         }
         private void ChangeSceneToStage(PointerEventData eventData)
         {

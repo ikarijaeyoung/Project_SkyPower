@@ -11,7 +11,7 @@ namespace JYL
         public Rigidbody rig;
         private Collider col;
         private ParticleSystem ps;
-        public int attackPower;
+        public int attackPower = 0;
         public bool canDeactive = true;
         private float timer;
         void Awake()
@@ -91,27 +91,28 @@ namespace JYL
 
         private void OnTriggerStay(Collider other)
         {
-            //if (gameObject.layer == 7) // 플레이어의 총알일 경우
-            //{
-            //    Enemy enemy = other.GetComponent<Enemy>();
-            //    if (enemy == null)
-            //    {
-            //        SpawnHitEffect(other.transform);
-            //        gameObject.SetActive(false);
-            //        return;
-            //    }
-            //    if (!canDeactive && timer <= 0)
-            //    {
-            //        enemy.TakeDamage(attackPower);
-            //        SpawnHitEffect(other.transform);
-            //    }
-            //    else if (canDeactive)
-            //    {
-            //        enemy.TakeDamage(attackPower);
-            //        SpawnHitEffect(other.transform);
-            //        gameObject.SetActive(false);
-            //    }
-            //}
+            if (gameObject.layer == 7) // 플레이어의 총알일 경우
+            {
+                Enemy enemy = other.GetComponentInParent<Enemy>();
+                if (enemy == null)
+                {
+                    Debug.Log("에너미 컴포넌트를 찾지 못함");
+                    SpawnHitEffect(other.transform);
+                    gameObject.SetActive(false);
+                    return;
+                }
+                if (!canDeactive && timer <= 0)
+                {
+                    enemy.TakeDamage(attackPower);
+                    SpawnHitEffect(other.transform);
+                }
+                else if (canDeactive)
+                {
+                    enemy.TakeDamage(attackPower);
+                    SpawnHitEffect(other.transform);
+                    gameObject.SetActive(false);
+                }
+            }
             Debug.Log("트리거 인식");
             if (gameObject.layer == 9) // 에너미의 총알일 경우
             {

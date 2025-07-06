@@ -12,18 +12,16 @@ namespace JYL
     public class PlayerController : MonoBehaviour
     {
         [Header("Set Scriptable Object")]
-        [SerializeField] PlayerModel playerModel; // -> 캐릭터 컨트롤러로 대체 예정
         [SerializeField] HUDPresenter hud;
         [Header("Set References")]
         [SerializeField] List<ObjectPool> bulletPools;
-        [SerializeField] public Transform muzzlePoint { get; set; }
+        [field:SerializeField] public Transform muzzlePoint { get; set; }
         [SerializeField] RectTransform leftUI;
         [SerializeField] RectTransform rightUI;
-        [SerializeField] Animator animator;
-        // TODO : UI 시스템 구축 후, 시스템에서 불러오는 식으로 참조 시킨다
+        public static bool canAttack = true; // 궁극기 사용 시, 외부에서 공격 권한 제어
 
-
-        [Header("Set Value")]
+        [field:Header("Set Value")]
+        [field:Range(10f,50f)][field:SerializeField] private float bulletSpeed { get; set; } = 35f;
         [Range(0.1f, 5)][SerializeField] float bulletReturnTimer = 2f;
 
         public UnityEvent<int> onHpChanged;
@@ -52,7 +50,6 @@ namespace JYL
         }
 
         private int attackPower { get; set; }
-        private float attackSpeed { get; set; }
         private float moveSpeed { get; set; }
 
 
@@ -110,38 +107,32 @@ namespace JYL
         }
         private void Init()
         {
-            animator = GetComponent<Animator>();
             playerInput = GetComponent<PlayerInput>();
             charDataLoader = GetComponent<CharacterSaveLoader>();
             charDataLoader.GetCharPrefab();
-            foreach (var charData in charDataLoader.charactorController)
+           
+            mainCharController = charDataLoader.mainController;
+            
+            if(charDataLoader.sub1Controller.grade != Grade.R)
             {
-                switch (charData.partySet)
-                {
-                    case PartySet.Main:
-                        mainCharController = charData;
-                        break;
-                    case PartySet.Sub1:
-                        if(charData.grade != Grade.R)
-                        {
-                            sub1CharController = charData;
-                        }
-                        break;
-                    case PartySet.Sub2:
-                        if(charData.grade != Grade.R)
-                        {
-                            sub2CharController = charData;
-                        }
-                        break;
-                }
+                sub1CharController = charDataLoader.sub1Controller;
             }
+
+            if(charDataLoader.sub1Controller.grade != Grade.R)
+            {
+                sub2CharController = charDataLoader.sub2Controller;
+            }
+            Instantiate(mainCharController.gameObject, transform);
+            CharactorController character = gameObject.AddComponent<CharactorController>();
             // 오브젝트 풀 설정
             bulletPools[0].poolObject = mainCharController.bulletPrefab;
-            bulletPools[0].ClearPool();
             bulletPools[0].CreatePool();
-            bulletPools[1].poolObject = mainCharController.ultBulletPrefab;
-            bulletPools[1].ClearPool();
-            bulletPools[1].CreatePool();
+            // 궁극기 탄막 오브젝트 풀
+            if(mainCharController.ultBulletPrefab != null)
+            {
+                bulletPools[1].poolObject = mainCharController.bulletPrefab;
+                bulletPools[1].CreatePool();
+            }
 
             // Input System 설정
             attackAction = playerInput.actions["Attack"];
@@ -179,7 +170,6 @@ namespace JYL
             //mainCharController.model 생성
             hp = mainCharController.Hp;
             attackPower = mainCharController.attackDamage;
-            attackSpeed = mainCharController.attackSpeed;
             moveSpeed = mainCharController.moveSpeed;
         }
 
@@ -197,7 +187,7 @@ namespace JYL
                 return;
             }
             Vector3 moveDir = new Vector3(clampInput.x, 0f, clampInput.y);
-            rig.velocity = moveDir * moveSpeed;
+            rig.velocity = moveDir * moveSpeed*0.05f;
         }
 
         private Vector2 ClampMoveInput(Vector2 inputDirection)
@@ -210,11 +200,11 @@ namespace JYL
             Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
             if (viewportPos.z <= 0) return Vector2.zero;
 
-            if (viewportPos.x <= leftMargin && inputDirection.x < 0) inputDirection.x = 0;
-            if (viewportPos.x >= rightMargin && inputDirection.x > 0) inputDirection.x = 0;
+            if (viewportPos.x <= leftMargin+0.01f && inputDirection.x < 0) inputDirection.x = 0;
+            if (viewportPos.x >= rightMargin-0.01f && inputDirection.x > 0) inputDirection.x = 0;
 
-            if (viewportPos.y <= 0 && inputDirection.y < 0) inputDirection.y = 0;
-            if (viewportPos.y >= 1 && inputDirection.y > 0) inputDirection.y = 0;
+            if (viewportPos.y-0.01f <= 0 && inputDirection.y < 0) inputDirection.y = 0;
+            if (viewportPos.y+0.01f >= 1 && inputDirection.y > 0) inputDirection.y = 0;
 
             return inputDirection;
         }
@@ -226,27 +216,25 @@ namespace JYL
 
         private void Fire(InputAction.CallbackContext ctx)
         {
-            if (fireCounter <= fireAtOnce && fireCounter > 0 && 0.5f * canAttackTime > attackInputTimer && attackInputTimer > 0)
+            if (canAttack)
             {
-                fireCounter += fireAtOnce;
-                isAttack = true;
-                attackInputTimer = canAttackTime;
+                if (fireCounter <= fireAtOnce && fireCounter > 0 && 1f * canAttackTime > attackInputTimer && attackInputTimer > 0)
+                {
+                    fireCounter += fireAtOnce;
+                    isAttack = true;
+                    attackInputTimer = canAttackTime;
+                }
+                else if (fireCounter <= 0 && fireRoutine == null)
+                {
+                    fireCounter = fireAtOnce;
+                    attackInputTimer = canAttackTime;
+                    fireRoutine = StartCoroutine(FireRoutine());
+                }
             }
-            else if (fireCounter <= 0)
-            {
-                fireCounter = fireAtOnce;
-                attackInputTimer = canAttackTime;
-            }
-
-            if (fireCounter > 0 && fireRoutine == null)
-            {
-                fireRoutine = StartCoroutine(FireRoutine());
-            }
-
         }
         IEnumerator FireRoutine()
         {
-            while (fireCounter > 1)
+            while (fireCounter>0)
             {
                 fireCounter--;
                 BulletPrefabController bulletPrefab = curBulletPool.ObjectOut() as BulletPrefabController;
@@ -263,6 +251,7 @@ namespace JYL
                     info.rig.velocity = Vector3.zero;
                     if(poolIndex == 0)
                     {
+                        if (info.bulletController == null) Debug.Log($"불렛컨트롤러 Null");
                         info.bulletController.attackPower = this.attackPower;
                     }
                     else if(poolIndex == 1)
@@ -270,9 +259,9 @@ namespace JYL
                         info.bulletController.attackPower = (int)mainCharController.ultDamage;
                         // info.bulletController.canDeactive = false; 다단히트일 때 활성화
                     }
-                    info.rig.AddForce(playerModel.fireSpeed * info.trans.forward, ForceMode.Impulse); // 이 부분을 커스텀하면 됨
+                    info.rig.AddForce(bulletSpeed * info.trans.forward, ForceMode.Impulse); // 이 부분을 커스텀하면 됨
                 }
-                yield return new WaitForSeconds(attackSpeed);
+                yield return new WaitForSeconds(mainCharController.attackSpeed*0.1f);
             }
             if (isAttack)
             {
@@ -311,6 +300,10 @@ namespace JYL
             else
             {
                 ultGage += amount;
+                if(hud == null)
+                {
+                    Debug.Log("hud가 널");
+                }
                 hud.UltGage = (float)ultGage / 100;
             }
             
@@ -359,33 +352,3 @@ namespace JYL
     }
 
 }
-
-// 버튼 순서에 맞게 알아서 배치되게
-
-// Dictionary<string,Scene> sceneList;
-// sceneList  시작할 때, 빌드에 포함 된 씬 전부 저장
-// public int curScene  = sceneList[0]; // sceneList[scene.Title];
-
-// 
-// void SceneChange(string sceneName)
-// {
-//      씬 전환 적업이 일어남
-//      들어오는게 스테이지 = 
-//      -> 데이터 여기서 들어옴
-//      스테이지의 스크립터블 오브젝트가 필요함
-//      스테이지 저장
-//      stage_1,1
-//      string.split('_',',') -> string[] s = "stage","1","1" 
-//      s[0] => curScene
-//      int 
-//      s[1],[2] => int.parse
-//      curscene = 
-//      1-1 => 월드 변수, 스테이지 변수
-//      string 숫자 받아ㅏ오면됨
-//      curScene = sceneName
-// }
-// 
-// 스테이지마다 달라져야 하는것, 가져와야 하는 것
-// 라이트, 에너미(스포너), 에너미의  설정값, 보스, 엘리트몬스터
-// 맵데이터, 플레이어 데이터(자동), <= SceneChange
-// 

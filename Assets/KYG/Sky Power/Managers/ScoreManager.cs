@@ -49,7 +49,9 @@ namespace KYG_skyPower
                 // TODO 신기록 달성
                 Manager.SDM.runtimeData[Manager.Game.selectWorldIndex].subStages[Manager.Game.selectStageIndex].bestScore = bestScore;
             }
+            Manager.Game.CurrentSave.gold += Score; // TODO: 스코어만큼 유닛 추가 
             ResetScore();
+            Manager.Game.SaveGameProgress();
         }
     }
 }
