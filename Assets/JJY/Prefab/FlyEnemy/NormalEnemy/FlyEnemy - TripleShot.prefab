@@ -152,7 +152,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4398885731801022728
 Transform:
   m_ObjectHideFlags: 0
@@ -184,12 +184,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 98d03020df3db694e87872fae7de0202, type: 2}
   currentHP: 0
-  isFiring: 0
+  autoFire: 1
   firePoints:
   - {fileID: 7715130198389869489}
   BulletPattern:
   - {fileID: 11400000, guid: 60f7d14098b8a3f409a18472fd39202c, type: 2}
-  objectPool: {fileID: 0}
+  curObjectPool: {fileID: 0}
   bulletSpeed: 2
   fireDelay: 1.5
   flashColor: {r: 1, g: 1, b: 1, a: 1}
