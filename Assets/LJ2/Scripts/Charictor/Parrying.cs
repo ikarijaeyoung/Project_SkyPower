@@ -17,7 +17,7 @@ public class Parrying : MonoBehaviour
 
     public void Awake()
     {
-        characterCollider = GetComponent<SphereCollider>();
+        characterCollider = GetComponent<Collider>();
         coroutineDelay = new WaitForSeconds(invincibleTime);
         enemyBullet = LayerMask.GetMask("EnemyBullet");
     }
