@@ -31,7 +31,6 @@ public class UltShieldController : MonoBehaviour
         {
             Debug.Log($"{c.gameObject.name} 제거 시도");
             c.gameObject.SetActive(false);
-            Debug.Log($"{c.gameObject.name} 제거 성공");
         }
         hits = null;
     }
