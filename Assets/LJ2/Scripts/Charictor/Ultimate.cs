@@ -170,6 +170,7 @@ public class Ultimate : MonoBehaviour
     // 궁극기 탄막 1회 + 다단히트
     public void BigBullet(float damage)
     {
+        Debug.Log($"BigBullet Damage: {damage}");
         playerController.poolIndex = 1;
         if (ultRoutine != null)
         {
@@ -185,6 +186,7 @@ public class Ultimate : MonoBehaviour
 
     public void ManyBullets(float damage)
     {
+        Debug.Log($"ManyBullets Damage: {damage}");
         playerController.poolIndex = 1;
         if (ultRoutine != null)
         {
@@ -201,6 +203,7 @@ public class Ultimate : MonoBehaviour
 
     public IEnumerator UltFireCoroutine(float damage, float bulletSpeed)
     {
+        Debug.Log($"UltFireCoroutine Damage: {damage}, Speed: {bulletSpeed}");
         PlayerController.canAttack = false; // 공격 불가 상태로 변경
         while (fireCounter > 0)
         {
@@ -235,7 +238,8 @@ public class Ultimate : MonoBehaviour
     // 탄막 변경 + 데미지 증가
     public void BulletUpgrade()
     {
-        if(ultRoutine == null)
+        Debug.Log("Bullet Upgrade Called");
+        if (ultRoutine == null)
         {
             ultRoutine = StartCoroutine(UpgradeRoutine());
         }
@@ -247,9 +251,10 @@ public class Ultimate : MonoBehaviour
 
     public IEnumerator UpgradeRoutine()
     {
+        Debug.Log("Upgrade Routine Started");
         playerController.poolIndex = 1;
         Debug.Log("Upgrade Bullet Shot");
-        yield return ultDelay;
+        yield return new WaitForSeconds(setUltDelay);
 
         playerController.poolIndex = 0;
         Debug.Log("Normal Bullet Shot");
