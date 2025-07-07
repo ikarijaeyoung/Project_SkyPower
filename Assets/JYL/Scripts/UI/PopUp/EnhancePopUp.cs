@@ -22,7 +22,7 @@ namespace JYL
 
         void Start()
         {
-            switch(UIManager.Instance.selectIndexUI)
+            switch(UIManager.selectIndexUI)
             {
                 case 0:
                     enhanceTypeImg.sprite = charEnhanceImg;

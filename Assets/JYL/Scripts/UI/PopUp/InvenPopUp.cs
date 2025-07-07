@@ -17,13 +17,16 @@ namespace JYL
         private TMP_Text level => GetUI<TMP_Text>("InvenCharLevelText");
         private TMP_Text hp => GetUI<TMP_Text>("InvenCharHPText");
         private TMP_Text ap => GetUI<TMP_Text>("InvenCharAPText");
+        private TMP_Text gold => GetUI<TMP_Text>("InvenUnitText");
         private Image charImage;
         private CharacterSaveLoader characterLoader;
         private CharactorController mainController=>characterLoader.mainController;
-
+        private EquipController equipController;
+        public static bool isInvenOpened = false;
         private new void Awake()
         {
             base.Awake();
+            equipController = GetComponent<EquipController>();
             characterLoader = GetComponent<CharacterSaveLoader>();
             Init();
             
@@ -50,6 +53,14 @@ namespace JYL
             // GameManager.Instance.character[index]
 
         }
+        private void LateUpdate()
+        {
+            if(isInvenOpened)
+            {
+                Init();
+                isInvenOpened = false;
+            }
+        }
         private void Init()
         {
             characterLoader.GetCharPrefab();
@@ -66,6 +77,8 @@ namespace JYL
             level.text = $"{mainController.level}";
             hp.text = $"{mainController.Hp}";
             ap.text = $"{mainController.attackDamage}";
+            gold.text = $"{Manager.Game.CurrentSave.gold}";
+
         }
 
         private void OpenCharEnhance(PointerEventData eventData)
@@ -73,7 +86,7 @@ namespace JYL
             // 캐릭터 정보를 가지고 강화창 구현
             // UIManager에서 선택된 캐릭터의 인덱스 가지고 GameManager의 파티 구성원의 정보에 대한 캐릭터 컨트롤러 정보 불러옴
             // 해당 정보는 강화창에서 불러옴 여기서 안불러옴
-            UIManager.Instance.selectIndexUI = 1;
+            UIManager.selectIndexUI = 1;
             UIManager.Instance.ShowPopUp<EnhancePopUp>();
             // UI 생성할 때, UI에다가 이벤트 다세요.
             // Image img = Instantiate();
@@ -82,7 +95,7 @@ namespace JYL
 
         private void OpenWPEnhance(PointerEventData eventData)
         {
-            UIManager.Instance.selectIndexUI = 2;
+            UIManager.selectIndexUI = 2;
             // 현재 무기의 정보를 가져가야함
             // 선택하는 UI 정보들은 UIManager를 통해 접근한다.
             // GameManager.Instance.Party[0].
@@ -92,7 +105,7 @@ namespace JYL
 
         private void OpenAMEnhance(PointerEventData eventData)
         {
-            UIManager.Instance.selectIndexUI = 3;
+            UIManager.selectIndexUI = 3;
             UIManager.Instance.ShowPopUp<EnhancePopUp>();
         }
 

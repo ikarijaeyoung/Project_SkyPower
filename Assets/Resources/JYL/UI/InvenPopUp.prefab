@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7578144734778603170}
   - component: {fileID: 6833833689225566282}
   - component: {fileID: 4802232073994180336}
+  - component: {fileID: 462794032143523963}
   m_Layer: 5
   m_Name: InvenPopUp
   m_TagString: Untagged
@@ -114,6 +115,18 @@ MonoBehaviour:
   mainController: {fileID: 0}
   sub1Controller: {fileID: 0}
   sub2Controller: {fileID: 0}
+--- !u!114 &462794032143523963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61796188098220177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bae655c24121cb84ba941665d418409d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &210429457299083124
 GameObject:
   m_ObjectHideFlags: 0

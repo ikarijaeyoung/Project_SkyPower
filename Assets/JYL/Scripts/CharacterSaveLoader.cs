@@ -10,15 +10,7 @@ namespace JYL
         public CharactorController mainController;
         public CharactorController sub1Controller;
         public CharactorController sub2Controller;
-        // public EquipSaveLoader equipLoader;
         private string charPrefabPath = "CharacterPrefabs";
-
-        // TODO : 없어도 되는지 테스트
-        //void OnEnable()
-        //{
-        //    GetCharPrefab();
-        //}
-
         void Update() { }
         public void GetCharPrefab()
         {

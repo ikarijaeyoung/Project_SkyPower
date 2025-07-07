@@ -98,7 +98,7 @@ namespace JYL
             Util.ExtractTrailNumber(eventData.pointerClick.name, out int index);
             // GameManager.Instance.selectSave.party[index] -> 캐릭터 ID
             // 캐릭터 컨트롤러 (캐릭터 ID)
-            UIManager.Instance.selectIndexUI = index;
+            UIManager.selectIndexUI = index;
             if(index == 1)
             {
                 int mainCharIndex = charDataList.FindIndex(c => c.partySet == PartySet.Main);

@@ -1,10 +1,8 @@
 using KYG_skyPower;
-using LJ2;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Unity.Burst.Intrinsics.X86.Avx;
 
+// 장비창, 인게임 스테이지 씬에서 사용하는 스크립트
 public class EquipController : MonoBehaviour
 {
     private EquipmentTableSO equipTable;
@@ -16,12 +14,12 @@ public class EquipController : MonoBehaviour
     }
     void Start()
     {
-        
+
     }
 
     void Update()
     {
-        
+
     }
     private void Init()
     {
@@ -32,7 +30,7 @@ public class EquipController : MonoBehaviour
     public void CreateEquipInfo() // 동적으로 관리할 장비 데이터배열을 생성함. SO로 초기데이터만 가져옴
     {
         int index = 0;
-        foreach(EquipmentDataSO equip in equipTable.equipmentList)
+        foreach (EquipmentDataSO equip in equipTable.equipmentList)
         {
             EquipInfo equipInfo = new EquipInfo();
             equipInfo.id = equip.id;
@@ -50,20 +48,25 @@ public class EquipController : MonoBehaviour
             equipInfo.originValue = equip.equipValue;
             equipInfo.equipValuePlus = equip.equipValuePlus;
             equipInfo.Effect_Desc = equip.Effect_Desc;
+            
             equipData[index] = equipInfo;
-            index ++;
+            
+            index++;
         }
     }
     public void SaveFileInit() //세이브파일 최초 생성 시 작업 SaveCreatePanel에서 관리.
     {
         int index = 0;
+
         Manager.Game.CurrentSave.equipInfo = new EquipSave[equipData.Length];
-        foreach(EquipInfo data in equipData)
+        foreach (EquipInfo data in equipData)
         {
-            EquipSave tmp = Manager.Game.CurrentSave.equipInfo[index];
+            EquipSave tmp = new();
             tmp.id = data.id;
             tmp.level = -1;
+
             Manager.Game.CurrentSave.equipInfo[index] = tmp;
+
             index++;
         }
     }
@@ -74,11 +77,12 @@ public class EquipController : MonoBehaviour
             if (equipData[i].id == Manager.Game.CurrentSave.equipInfo[i].id)
             {
                 EquipInfo tmpInfo = equipData[i];
-                EquipSave tmp = Manager.Game.CurrentSave.equipInfo[i];
-                tmp.level = tmpInfo.level;
+                EquipSave tmpSave = Manager.Game.CurrentSave.equipInfo[i];
+                tmpSave.level = equipData[i].level;
                 tmpInfo.upgradeGold = equipData[i].level * equipData[i].upgradeGoldPlus;
                 tmpInfo.equipValue = equipData[i].originValue + (equipData[i].level - 1) * equipData[i].equipValuePlus;
                 equipData[i] = tmpInfo;
+                Manager.Game.CurrentSave.equipInfo[i] = tmpSave;
             }
             else
             {
@@ -86,20 +90,21 @@ public class EquipController : MonoBehaviour
             }
         }
     }
-    public void UpdateEquipInfo(int id,bool Upgrade =false) // 장비 업그레이드 가능
+    public void UpdateEquipInfo(int id, bool Upgrade = false) // 장비 업그레이드 가능
     {
-        for(int i =0;i<equipData.Length;i++)
+        for (int i = 0; i < equipData.Length; i++)
         {
             if (equipData[i].id == id)
             {
-                EquipSave tmp = Manager.Game.CurrentSave.equipInfo[i];
+                EquipSave tmpSave = Manager.Game.CurrentSave.equipInfo[i];
                 EquipInfo tmpInfo = equipData[i];
                 if (Upgrade) tmpInfo.level++; // maxLevel을 찍으면, UI상에서 기능 막아야 함;
-                tmp.level = tmpInfo.level;
+                tmpSave.level = tmpInfo.level;
                 tmpInfo.upgradeGold = equipData[i].level * equipData[i].upgradeGoldPlus;
                 tmpInfo.equipValue = equipData[i].originValue + (equipData[i].level - 1) * equipData[i].equipValuePlus;
-                Manager.Game.CurrentSave.equipInfo[i] = tmp;
+                Manager.Game.CurrentSave.equipInfo[i] = tmpSave;
                 equipData[i] = tmpInfo;
+                return;
             }
         }
     }
@@ -109,10 +114,11 @@ public class EquipController : MonoBehaviour
         {
             if (equipData[i].id == id)
             {
-                if(equipData[i].level>0)
+                if (equipData[i].level > 0)
                 {
-                    // TODO : 재화추가
+                    Manager.Game.CurrentSave.gold += 10;
                 }
+
                 else
                 {
                     EquipInfo tmpInfo = equipData[i];
@@ -120,19 +126,22 @@ public class EquipController : MonoBehaviour
                     EquipSave tmp = Manager.Game.CurrentSave.equipInfo[i];
                     tmp.level = 1;
                     Manager.Game.CurrentSave.equipInfo[i] = tmp;
-                    equipData[i]= tmpInfo;
+                    equipData[i] = tmpInfo;
                 }
+
+                return;
             }
         }
     }
-    private List<EquipInfo> PickEquipByType(EquipType type)
+    public List<EquipInfo> GetEquipListByType(EquipType type)
     {
         List<EquipInfo> result = new List<EquipInfo>();
-        foreach(EquipInfo info in equipData)
+        foreach (EquipInfo info in equipData)
         {
-            if(info.type == type)
+            if (info.type == type)
             {
-                result.Add(info);
+                EquipInfo temp = info;
+                result.Add(temp);
             }
         }
         return result;

@@ -25,7 +25,7 @@ namespace JYL
         void Update() { }
         private void SetStageButtons()
         {
-            worldNum = UIManager.Instance.selectIndexUI;
+            worldNum = UIManager.selectIndexUI;
             for (int i = 0; i < stageNum; i++)
             {
                 stageBtn[i] = GetUI<Button>($"StageBtn_{i + 1}");
