@@ -99,7 +99,7 @@ namespace LJ2
         //        // 효과 타입별로 추가 구현 (Effect_Type 등)
         //    }
         //}
-        public void SetParameter()
+        public void SetParameter(int weapon ,int armor)
         {
             // Data의 값을 그대로 가져옴
             // ultPrefab = characterData.ultVisual;
@@ -156,9 +156,9 @@ namespace LJ2
             // Save의 값에 따라 Data의 값을 변경
             if(partySet == PartySet.Main)
             {
-                // TODO : 장비 스탯 추가 적용
-                Hp = characterData.hp + (characterData.hpPlus * (level - 1));// + armor.hp;
-                attackDamage = (int)(characterData.attackDamage + (characterData.damagePlus * (level - 1)));//+weapon.attackPower; 
+                Debug.Log($"{characterData.name}무기 공격력: {weapon}, 방어력:{armor}");
+                    attackDamage = (int)(characterData.attackDamage + (characterData.damagePlus * (level - 1)))+weapon; 
+                    Hp = characterData.hp + (characterData.hpPlus * (level - 1))+ armor;
             }
             else
             {

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 30021
   equipName: "\uCDA9\uC804\uC758 \uD074\uB7ED \uD504\uB808\uC2A4\uD1A0"
-  type: 0
+  type: 2
   grade: 1
   setType: 0
   icon: {fileID: 21300000, guid: bffc3cfe7386e0b43968bc8fdf477b58, type: 3}

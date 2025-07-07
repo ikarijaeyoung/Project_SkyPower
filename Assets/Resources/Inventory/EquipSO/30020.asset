@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 30020
   equipName: "\uAD11\uC18D\uC758 Dual-core"
-  type: 0
+  type: 1
   grade: 0
   setType: 4
   icon: {fileID: 21300000, guid: 3bba73f551bb9fb419d68897e32b7523, type: 3}

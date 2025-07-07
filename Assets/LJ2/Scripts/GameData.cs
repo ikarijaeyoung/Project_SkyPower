@@ -11,7 +11,7 @@ public partial class GameData : SaveData
 
     public CharacterInventory characterInventory;
     public StageInfo[] stageInfo;
-    public EquipSave[] equipInfo;
+    public EquipSave[] equipSave;
     public int[] wearingId;
     public bool isEmpty => string.IsNullOrEmpty(playerName);
 

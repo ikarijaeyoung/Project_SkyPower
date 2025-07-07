@@ -139,11 +139,10 @@ namespace JYL
                     GameObject go;
                     go = Instantiate(iconPrefab, parent);
                     go.name = $"StayCharImg{imgIndex + 1}";
-                    // TODO Add Test
                     AddUIToDictionary(go.gameObject);
                     imgIndex++;
                     go.GetComponentInChildren<Image>().sprite = character.icon;
-                    GetEvent($"{go.name}").Drag += BeginIconDrag;
+                    GetEvent($"{go.name}").BeginDrag += BeginIconDrag;
                     GetEvent($"{go.name}").Drag += IconDrag;
                     GetEvent($"{go.name}").EndDrag += OnIconDragEnd;
                     iconList.Add(go);

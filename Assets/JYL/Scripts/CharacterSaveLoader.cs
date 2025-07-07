@@ -1,6 +1,7 @@
 using LJ2;
 using System;
 using UnityEngine;
+using KYG_skyPower;
 
 namespace JYL
 {
@@ -10,15 +11,19 @@ namespace JYL
         public CharactorController mainController;
         public CharactorController sub1Controller;
         public CharactorController sub2Controller;
+        public EquipController equipController;
         private string charPrefabPath = "CharacterPrefabs";
         void Update() { }
         public void GetCharPrefab()
         {
+            equipController = gameObject.GetOrAddComponent<EquipController>();
+            equipController.Init();
+            equipController.UpdateEquipInfoBySave();
             //캐릭터 프리팹 전부 가져오기
             charactorController = Resources.LoadAll<CharactorController>(charPrefabPath);
             foreach (CharactorController cont in charactorController)
             {
-                cont.SetParameter(); // TODO : 이큅로더 완성되면 여기에 넣음 equipLoader
+                cont.SetParameter(equipController.weapon.equipValue,equipController.armor.equipValue);
                 switch(cont.partySet)
                 {
                     case PartySet.Main:
