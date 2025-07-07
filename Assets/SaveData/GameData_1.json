@@ -1,6 +1,6 @@
 {
     "playerName": "gggd",
-    "gold": 1240,
+    "gold": 1629,
     "characterInventory": {
         "characters": [
             {
@@ -214,20 +214,20 @@
             "stage": 1,
             "score": 0,
             "unlock": true,
-            "isClear": false
+            "isClear": true
         },
         {
             "world": 2,
             "stage": 2,
             "score": 0,
-            "unlock": false,
-            "isClear": false
+            "unlock": true,
+            "isClear": true
         },
         {
             "world": 2,
             "stage": 3,
             "score": 0,
-            "unlock": false,
+            "unlock": true,
             "isClear": false
         },
         {
