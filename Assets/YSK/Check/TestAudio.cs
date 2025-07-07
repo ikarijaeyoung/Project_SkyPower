@@ -17,7 +17,7 @@ public class TestAudio : MonoBehaviour
     {
         
 
-        KYG_skyPower.AudioManagerSO.Instance.PlayBGM("StartMenu_BGM");
+        KYG_skyPower.AudioManager.Instance.PlayBGM("StartMenu_BGM");
 
 
         string currentSceneName = SceneManager.GetActiveScene().name;
@@ -28,7 +28,7 @@ public class TestAudio : MonoBehaviour
             {
             Debug.Log("Title Scene Detected, Playing BGM");
             check = true;
-            KYG_skyPower.AudioManagerSO.Instance.PlayBGM("StartMenu_BGM");
+            KYG_skyPower.AudioManager.Instance.PlayBGM("StartMenu_BGM");
 
         }
         
