@@ -38,7 +38,7 @@ namespace JJY_Test
                 }
 
                 TestSpawneManager.enemyCount++;
-                Debug.Log($"Total Enemies: {SpawnManager.enemyCount}");
+                Debug.Log($"Total Enemies: {TestSpawneManager.enemyCount}");
 
                 yield return new WaitForSeconds(info.spawnDelay);
             }
