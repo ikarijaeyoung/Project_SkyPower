@@ -937,6 +937,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2037976034}
   - component: {fileID: 2037976035}
+  - component: {fileID: 2037976036}
   m_Layer: 0
   m_Name: SimepleAudioTest
   m_TagString: Untagged
@@ -971,7 +972,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71d7b69e238d7c84fad0be0cb0ca7200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioManagerRunner: {fileID: 0}
   audioManagerSO: {fileID: 11400000, guid: 383a0c8fd6224584fab165f5c92d967c, type: 2}
   testBGMKey: 98
   testSFXKey: 115
@@ -981,6 +981,22 @@ MonoBehaviour:
   muteKey: 109
   CheckKey: 122
   showDebugInfo: 1
+--- !u!114 &2037976036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2037976032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3447b8e436eb997478dc6550ebda6e8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioDB: {fileID: 0}
+  bgmSource: {fileID: 0}
+  SFXSource: {fileID: 0}
+  defaultBGM: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
