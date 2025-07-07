@@ -14,32 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sequence:
   - enemyPrefab:
-    - {fileID: 4344951356574126065, guid: 4484801bba230f7468d100febd2b0ab6, type: 3}
-    - {fileID: 354629375635999333, guid: 3fcf11ec11324844498e52e36abdd46f, type: 3}
-    - {fileID: 4344951356574126065, guid: 61868cd4578d3844cb8a027272aea103, type: 3}
-    - {fileID: 4344951356574126065, guid: 3dcf5e860b0438d4ba44683ddbc9b22b, type: 3}
-    - {fileID: 4344951356574126065, guid: 6e47ae2c913028445bb95ef7a071d46b, type: 3}
-    - {fileID: 4344951356574126065, guid: 713971f6d5ddf52478b9d48b6fe58562, type: 3}
-    - {fileID: 4344951356574126065, guid: 5588e9950bbdbaa41813a060ca15633f, type: 3}
-    - {fileID: 4344951356574126065, guid: 0837b6c93ed4a2f49a3cdb7d0863110f, type: 3}
-    - {fileID: 4344951356574126065, guid: bbf0b807ca85dce44b1d253779c4ee63, type: 3}
-    - {fileID: 4344951356574126065, guid: 3e1215a5d89fe58498b6aa78578ef49e, type: 3}
     - {fileID: 4344951356574126065, guid: 9ea5cf3a98cfd524799258cba7ec057d, type: 3}
-    - {fileID: 4344951356574126065, guid: 42add00fbfa0668479733fa809237ebb, type: 3}
-    - {fileID: 4344951356574126065, guid: 2987428ab06b2854a9fcec3e99aeb754, type: 3}
     spawnPos:
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     spawnDelay: 2
   bossPrefab: {fileID: 354629375635999333, guid: 3fcf11ec11324844498e52e36abdd46f,
