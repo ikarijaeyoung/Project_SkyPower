@@ -12,6 +12,11 @@ public class SingleShotToPlayerPos : BulletPatternData
     public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool,int attackPower)
     {
         playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
+        Quaternion[] originRots = new Quaternion[firePoints.Length];
+        for (int i = 0; i < firePoints.Length; i++)
+        {
+            originRots[i] = firePoints[i].rotation;
+        }
         firePoints[0].LookAt(playerPos);
 
         BulletPrefabController bulletPrefab = pool.ObjectOut() as BulletPrefabController;
@@ -34,6 +39,10 @@ public class SingleShotToPlayerPos : BulletPatternData
                     info.rig.AddForce(firePoints[0].forward * bulletSpeed, ForceMode.Impulse);
                 }
             }
+        }
+        for (int i = 0; i < firePoints.Length; i++)
+        {
+            firePoints[i].rotation = originRots[i];
         }
         yield return null;
     }
