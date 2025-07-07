@@ -123,7 +123,7 @@ MonoBehaviour:
   bulletReturnTimer: 5
   bigBulletSpeed: 15
   manyBulletSpeed: 30
-  ultBulletTime: 50
+  ultBulletTime: 3
   bulletUpgradeTime: 5
   enemyBullet:
     serializedVersion: 2

@@ -304,7 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb39e66d9d10d045b169252a651b63d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyData: {fileID: 0}
+  enemyData: {fileID: 11400000, guid: 80736f76e13aeb54681ed4a9a003b5d2, type: 2}
   currentHP: 0
   autoFire: 1
   firePoints:
@@ -317,12 +317,15 @@ MonoBehaviour:
   - {fileID: 1553710220627433303}
   - {fileID: 5238349240391332431}
   BulletPattern:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 0ba79530155922a4a8a899ae198109eb, type: 2}
   curObjectPool: {fileID: 0}
   bulletSpeed: 2
   fireDelay: 1.5
   flashColor: {r: 1, g: 1, b: 1, a: 1}
   flashDuration: 0.1
+  deathEffectPrefab: {fileID: 1991596720237968674, guid: 18cd71152053a034ea2ee7f606de38ec,
+    type: 3}
+  destroyDelay: 0
 --- !u!95 &672123457678934721
 Animator:
   serializedVersion: 5
@@ -333,7 +336,7 @@ Animator:
   m_GameObject: {fileID: 8515178040553279289}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 482e9f1d8f74d3d4ba7243588640c7c7, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
