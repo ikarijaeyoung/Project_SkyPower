@@ -483,6 +483,12 @@ PrefabInstance:
       propertyPath: curObjectPool
       value: 
       objectReference: {fileID: 48460399}
+    - target: {fileID: 7518130175419284199, guid: c06ad6fcbcd720e4bb3a4180ff934914,
+        type: 3}
+      propertyPath: BulletPattern.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0ba79530155922a4a8a899ae198109eb,
+        type: 2}
     - target: {fileID: 7887763656334246655, guid: c06ad6fcbcd720e4bb3a4180ff934914,
         type: 3}
       propertyPath: m_LocalPosition.x

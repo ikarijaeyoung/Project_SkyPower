@@ -3,16 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using JYL;
 
-[CreateAssetMenu(fileName = "SnailShot", menuName = "ScriptableObject/BulletPattern/SnailShot")]
-public class SnailShot : BulletPatternData
+[CreateAssetMenu(fileName = "TwistCircleShot", menuName = "ScriptableObject/BulletPattern/TwistCircleShot")]
+public class TwistCircleShot : BulletPatternData
 {
-    [Header("Snail Shot Settings")]
+    [Header("Twist Circle Shot Settings")]
     public int shotCount = 8;
-    public float fireDelayBetweenShots = 0.5f;
+    public int CircleCount = 5;
+    public float fireDelayBetweenShots = 0f;
+    public float fireDelayBetweenCircle = 0.5f;
+    public float twistAnglePerCircle = 10f;
     public float returnToPoolTimer = 5f;
     public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool,int attackPower)
     {
-        for (int i = 0; i < shotCount; i++)
+        Quaternion[] originalRotations = new Quaternion[firePoints.Length];
+        for (int i = 0; i < firePoints.Length; i++)
+        {
+            originalRotations[i] = firePoints[i].rotation;
+        }
+
+        for (int j = 0; j < CircleCount; j++)
+        {
+            bool twistThisCircle = (j % 2 == 1);
+
+            for (int i = 0; i < shotCount; i++)
             {
                 BulletPrefabController bulletPrefab = pool.ObjectOut() as BulletPrefabController;
 
@@ -20,9 +33,16 @@ public class SnailShot : BulletPatternData
 
                 if (bulletPrefab != null)
                 {
-                    // firePoints 인덱스가 배열 크기를 넘지 않도록 순환시킵니다.
-                    // shotCount > firePoints == firePoints[i]에서 배열 범위 벗어남. => IndexOutOfRangeException Error.
-                    Transform curFirePoint = firePoints[i % firePoints.Length];
+                    int idx = i % firePoints.Length;
+
+                    firePoints[idx].rotation = originalRotations[idx];
+
+                    if (twistThisCircle)
+                    {
+                        firePoints[idx].Rotate(0f, twistAnglePerCircle, 0f);
+                    }
+
+                    Transform curFirePoint = firePoints[idx];
 
                     bulletPrefab.objectPool = pool;
                     bulletPrefab.ReturnToPool(returnToPoolTimer);
@@ -43,5 +63,7 @@ public class SnailShot : BulletPatternData
                 }
                 yield return new WaitForSeconds(fireDelayBetweenShots);
             }
+            yield return new WaitForSeconds(fireDelayBetweenCircle);
+        }
     }
 }
