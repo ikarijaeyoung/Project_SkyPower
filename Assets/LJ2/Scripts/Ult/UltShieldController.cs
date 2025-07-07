@@ -25,6 +25,15 @@ public class UltShieldController : MonoBehaviour
     private void FixedUpdate()
     {
         currentTime += Time.fixedDeltaTime;
+
+        Collider[] hits = Physics.OverlapSphere(transform.position, size, LayerMask.GetMask("EnemyBullet"));
+        foreach (Collider c in hits)
+        {
+            Debug.Log($"{c.gameObject.name} 제거 시도");
+            c.gameObject.SetActive(false);
+            Debug.Log($"{c.gameObject.name} 제거 성공");
+        }
+        hits = null;
     }
     public void AttackDamage(float damage)
     {
@@ -45,14 +54,6 @@ public class UltShieldController : MonoBehaviour
             
 
         }
-        Collider[] hits = Physics.OverlapSphere(transform.position, size, LayerMask.GetMask("EnemyBullet"));
-        foreach (Collider c in hits)
-        {
-            Debug.Log($"{c.gameObject.name} 제거 시도");
-            c.gameObject.SetActive(false);
-            Debug.Log($"{c.gameObject.name} 제거 성공");
-        }
-        hits = null;
     }
 
     private void OnEnable()
