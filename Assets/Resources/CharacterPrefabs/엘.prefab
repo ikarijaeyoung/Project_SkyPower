@@ -113,11 +113,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   setUltDelay: 4
+  laserDelay: 4
+  fireDelay: 4
+  shieldDelay: 4
+  allDelay: 1
+  bigBulletDelay: 1
+  manyBulletDelay: 3
   playerController: {fileID: 0}
   bulletReturnTimer: 5
   bigBulletSpeed: 15
   manyBulletSpeed: 30
-  ultBulletTime: 50
+  ultBulletTime: 3
   bulletUpgradeTime: 5
   enemyBullet:
     serializedVersion: 2
