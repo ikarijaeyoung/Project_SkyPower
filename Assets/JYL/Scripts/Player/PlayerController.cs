@@ -126,7 +126,7 @@ namespace JYL
             // ±√±ÿ±‚ ≈∫∏∑ ø¿∫Í¡ß∆Æ «Æ
             if(mainCharController.ultBulletPrefab != null)
             {
-                bulletPools[1].poolObject = mainCharController.bulletPrefab;
+                bulletPools[1].poolObject = mainCharController.ultBulletPrefab;
                 bulletPools[1].CreatePool();
             }
 

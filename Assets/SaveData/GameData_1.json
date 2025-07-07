@@ -1,6 +1,6 @@
 {
     "playerName": "gggd",
-    "gold": 2503,
+    "gold": 3572,
     "characterInventory": {
         "characters": [
             {
@@ -13,19 +13,19 @@
                 "id": 10002,
                 "level": 1,
                 "step": 1,
-                "partySet": 3
+                "partySet": 1
             },
             {
                 "id": 10003,
                 "level": 10,
                 "step": 4,
-                "partySet": 1
+                "partySet": 0
             },
             {
                 "id": 10004,
                 "level": 10,
                 "step": 3,
-                "partySet": 0
+                "partySet": 3
             },
             {
                 "id": 10005,
@@ -214,20 +214,20 @@
             "stage": 1,
             "score": 0,
             "unlock": true,
-            "isClear": false
+            "isClear": true
         },
         {
             "world": 2,
             "stage": 2,
             "score": 0,
-            "unlock": false,
-            "isClear": false
+            "unlock": true,
+            "isClear": true
         },
         {
             "world": 2,
             "stage": 3,
             "score": 0,
-            "unlock": false,
+            "unlock": true,
             "isClear": false
         },
         {
