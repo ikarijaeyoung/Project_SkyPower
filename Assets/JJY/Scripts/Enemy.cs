@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour
     private Animator animator;
 
     [Header("Death Effect")]
-    public GameObject deathEffectPrefab;
+    public GameObject deathEffectPrefab; //이거 게임 오브젝트 맞음?
     public float destroyDelay;
     void Awake()
     {
