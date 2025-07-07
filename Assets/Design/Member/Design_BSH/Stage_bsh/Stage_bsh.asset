@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dea4c279c15f030438294df52bb78cf9, type: 3}
+  m_Name: Stage_bsh
+  m_EditorClassIdentifier: 
+  sequence:
+  - enemyPrefab:
+    - {fileID: 5532545821888678440, guid: 8b0a7ea145fd6b54d8629dfb290696b8, type: 3}
+    - {fileID: 5532545821888678440, guid: c9293a25ff4a80c479dd7bc6a53171ff, type: 3}
+    - {fileID: 5532545821888678440, guid: 374fe49f208d18543b978dfcbdc6e530, type: 3}
+    - {fileID: 5532545821888678440, guid: 6fdb315524507144da26201fe5cf324c, type: 3}
+    - {fileID: 8351887547980912979, guid: 259d0f889a03b954cb9ebae1ce3c09a7, type: 3}
+    - {fileID: 5532545821888678440, guid: 8b3bcd309d52b644485d068967cced74, type: 3}
+    - {fileID: 8140211205730494619, guid: 7de5d926b768f6e4990cc885d50054de, type: 3}
+    - {fileID: 8140211205730494619, guid: c3e5a00e3a898de469cf39ed4fe4e860, type: 3}
+    - {fileID: 8351887547980912979, guid: dc8031c487cbf8e45bdd10a7f1d5de05, type: 3}
+    - {fileID: 5532545821888678440, guid: 07953f30c094f97479e27e196bc3f405, type: 3}
+    - {fileID: 8140211205730494619, guid: c3e5a00e3a898de469cf39ed4fe4e860, type: 3}
+    - {fileID: 8351887547980912979, guid: 87189a96d009cda40ad86571366c1efe, type: 3}
+    - {fileID: 5532545821888678440, guid: 30380b4a458de8f46a4d759ba2f0eac8, type: 3}
+    - {fileID: 8351887547980912979, guid: 87189a96d009cda40ad86571366c1efe, type: 3}
+    - {fileID: 6907872983839026229, guid: 9163903403ac54548bc05338db1fdf35, type: 3}
+    spawnPos:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    spawnDelay: 1
+  - enemyPrefab:
+    - {fileID: 6907872983839026229, guid: 9163903403ac54548bc05338db1fdf35, type: 3}
+    - {fileID: 6907872983839026229, guid: ea9ca7144b9ee20409d7c114835f012f, type: 3}
+    - {fileID: 5532545821888678440, guid: 8b0a7ea145fd6b54d8629dfb290696b8, type: 3}
+    - {fileID: 5532545821888678440, guid: 6fdb315524507144da26201fe5cf324c, type: 3}
+    - {fileID: 8351887547980912979, guid: 259d0f889a03b954cb9ebae1ce3c09a7, type: 3}
+    - {fileID: 4165575709432290385, guid: 17b1a8d966ca8f84ab3b6abb82f1b9c8, type: 3}
+    - {fileID: 5532545821888678440, guid: f0bdeca7318831c47ab2e0b1b8995da4, type: 3}
+    - {fileID: 5532545821888678440, guid: 65908f02e73bd924eb0958a3b438ab17, type: 3}
+    - {fileID: 8351887547980912979, guid: 87189a96d009cda40ad86571366c1efe, type: 3}
+    - {fileID: 5532545821888678440, guid: 3ffae15c077826c4690d1547f4d97d4c, type: 3}
+    - {fileID: 5532545821888678440, guid: f0bdeca7318831c47ab2e0b1b8995da4, type: 3}
+    - {fileID: 5532545821888678440, guid: 59f0a2afd7b80ec4c96bdc4d7966e2b1, type: 3}
+    - {fileID: 5532545821888678440, guid: 30380b4a458de8f46a4d759ba2f0eac8, type: 3}
+    - {fileID: 8140211205730494619, guid: c3e5a00e3a898de469cf39ed4fe4e860, type: 3}
+    - {fileID: 4165575709432290385, guid: 27387e9eafd9fd94abb6acf1466e7ff1, type: 3}
+    spawnPos:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    spawnDelay: 1.5
+  bossPrefabs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  bossSpawnPos:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
