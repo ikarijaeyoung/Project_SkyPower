@@ -31,7 +31,6 @@ namespace JYL
         private void OnEnable()
         {
             timer = ticTime;
-            OnFire();
         }
         private void Update()
         {
@@ -91,25 +90,27 @@ namespace JYL
 
         private void OnTriggerStay(Collider other)
         {
+            Vector3 contactPoint = other.ClosestPoint(transform.position);
+            Vector3 hitNormal = -transform.forward;
             if (gameObject.layer == 7) // 플레이어의 총알일 경우
             {
                 Enemy enemy = other.GetComponentInParent<Enemy>();
                 if (enemy == null)
                 {
                     Debug.Log("에너미 컴포넌트를 찾지 못함");
-                    SpawnHitEffect(other.transform);
+                    SpawnHitEffect(contactPoint,hitNormal);
                     gameObject.SetActive(false);
                     return;
                 }
                 if (!canDeactive && timer <= 0)
                 {
                     enemy.TakeDamage(attackPower);
-                    SpawnHitEffect(other.transform);
+                    SpawnHitEffect(contactPoint,hitNormal);
                 }
                 else if (canDeactive)
                 {
                     enemy.TakeDamage(attackPower);
-                    SpawnHitEffect(other.transform);
+                    SpawnHitEffect(contactPoint,hitNormal);
                     gameObject.SetActive(false);
                 }
             }
@@ -120,32 +121,31 @@ namespace JYL
                 PlayerController player = other.GetComponent<PlayerController>();
                 if (player == null)
                 {
-                    SpawnHitEffect(other.transform);
+                    SpawnHitEffect(contactPoint,hitNormal);
                     gameObject.SetActive(false);
                     return;
                 }
                 if (!canDeactive && timer <= 0)
                 {
                     player.TakeDamage(attackPower); 
-                    SpawnHitEffect(other.transform);
+                    SpawnHitEffect(contactPoint,hitNormal);
                 }
                 else if (canDeactive)
                 {
                     player.TakeDamage(attackPower); 
-                    SpawnHitEffect(other.transform);
+                    SpawnHitEffect(contactPoint,hitNormal);
                     gameObject.SetActive(false);
                 }
             }
         }
         private void OnDisable(){ }
-        private void OnFire()
+        public void OnFire()
         {
             ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            ps.Play();
+            ps.Play(true);
             if (flash != null)
             {
-                GameObject flashInstance = Instantiate(flash, transform.position, Quaternion.identity, null);
-                flashInstance.transform.forward = gameObject.transform.forward;
+                GameObject flashInstance = Instantiate(flash, transform.position, Quaternion.LookRotation(transform.forward));
                 if(flashInstance == null)
                 {
                     Debug.Log("플래시 게임오브젝트 생성 실패 NUll");
@@ -153,13 +153,14 @@ namespace JYL
                 ParticleSystem flashPs = flashInstance.GetComponent<ParticleSystem>();
                 if (flashPs != null)
                 {
-                    Destroy(flashInstance, flashPs.main.duration);
+                    flashPs.Play(true);
+                    Destroy(flashInstance, flashPs.main.startLifetime.constant);
                 }
                 else if(flashPs == null)
                 {
                     Debug.Log("플래시 파티클 시스템 컴포넌트가 NUll");
                     ParticleSystem flashPsParts = flashInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
-                    Destroy(flashInstance, flashPsParts.main.duration);
+                    Destroy(flashInstance, flashPsParts.main.startLifetime.constant);
                     if(flashPsParts == null)
                     {
                         Debug.Log("플래시의 자식도 파티클 시스템 컴포넌트가 Null");
@@ -174,33 +175,23 @@ namespace JYL
             }
         }
 
-        private void SpawnHitEffect(Transform parent)
+        private void SpawnHitEffect(Vector3 hitPos, Vector3 hitNor)
         {
             if (hit != null)
             {
-                // 충돌 위치와 방향 계산
-                Vector3 hitPos = transform.position;
-                Quaternion hitRot = Quaternion.identity;
-                if (parent != null)
-                {
-                    hitRot = Quaternion.LookRotation(parent.position - transform.position);
-                }
-                else if(parent == null)
-                {
-                    Debug.Log("충돌체가 null임");
-                }
-                GameObject hitInstance = Instantiate(hit, hitPos, hitRot, parent);
-                if(hitInstance == null)
+                GameObject hitInstance = Instantiate(hit, hitPos+0.5f*hitNor, Quaternion.LookRotation(hitNor));
+                if (hitInstance == null)
                 {
                     Debug.Log("히트 게임 오브젝트 생성 실패");
                 }
+                hitInstance.transform.SetParent(null);
                 ParticleSystem hitPs = hitInstance.GetComponent<ParticleSystem>();
                 if (hitPs != null)
                 {
-                    hitPs.Play();
-                    Destroy(hitInstance, hitPs.main.duration);
+                    hitPs.Play(true);
+                    Destroy(hitInstance, hitPs.main.startLifetime.constant); // 수정된 부분: MinMaxCurve에서 constant 값을 사용
                 }
-                else if(hitPs == null)
+                else if (hitPs == null)
                 {
                     Debug.Log("히트 파티클 시스템이 Null임");
                     if (hitInstance.transform.childCount > 0)
@@ -210,11 +201,10 @@ namespace JYL
                         {
                             Debug.Log("히트 : 자식에게서도 파티클 시스템을 찾을 수 없음");
                         }
-                        hitPsParts.Play();
-                        Destroy(hitInstance, hitPsParts.main.duration);
+                        hitPsParts.Play(true);
+                        Destroy(hitInstance, hitPsParts.main.startLifetime.constant); // 수정된 부분: MinMaxCurve에서 constant 값을 사용
                     }
                 }
-
             }
             else
             {

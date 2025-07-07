@@ -39,6 +39,16 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        if(playRoutine != null)
+        {
+            enemyCount = 0;
+            CurSeqLevel = 0;
+            StopCoroutine(playRoutine);
+            playRoutine = null;
+        }
+    }
     private void Start()
     {
         playRoutine = StartCoroutine(PlayStage());
