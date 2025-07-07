@@ -20,7 +20,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: -5.142857, y: 0.6857143, z: 3.4285715}
+        value: {x: -7.71, y: 0.6857143, z: 3.4285715}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -30,8 +30,8 @@ AnimationClip:
       - serializedVersion: 3
         time: 0.45
         value: {x: -4.114286, y: 0.6857143, z: 0.030570112}
-        inSlope: {x: 5.1428566, y: 0, z: -8.571429}
-        outSlope: {x: 5.1428566, y: 0, z: -8.571429}
+        inSlope: {x: 9.421428, y: 0, z: -8.571429}
+        outSlope: {x: 9.421428, y: 0, z: -8.571429}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
@@ -132,7 +132,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -5.142857
+        value: -7.71
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -142,8 +142,8 @@ AnimationClip:
       - serializedVersion: 3
         time: 0.45
         value: -4.114286
-        inSlope: 5.1428566
-        outSlope: 5.1428566
+        inSlope: 9.421428
+        outSlope: 9.421428
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
@@ -354,4 +354,11 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 1.5
+    functionName: DestoryAfterPathing
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
