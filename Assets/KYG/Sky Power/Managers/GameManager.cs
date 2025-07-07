@@ -1,12 +1,11 @@
-using IO;
-using JYL;
-using KYG;
-using LJ2;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
+using LJ2;
+using IO;
+using JYL;
 
 namespace KYG_skyPower
 {
@@ -30,7 +29,7 @@ namespace KYG_skyPower
     
     public class GameManager : Singleton<GameManager>
     {
-        public UnityEvent onGameOver, onPause, onResume, onGameClear, onClickButton;
+        public UnityEvent onGameOver, onPause, onResume, onGameClear;
 
         public GameData[] saveFiles = new GameData[3]; // 세이브 파일 3개
 
@@ -52,7 +51,6 @@ namespace KYG_skyPower
         public override void Init() // 게임 시작시 세이브 데이터 로드
         {
             ResetSaveRef();
-            KYG_skyPower.AudioManagerSO.Instance.Init();
         }
         public void ResetSaveRef()
         {
@@ -81,18 +79,13 @@ namespace KYG_skyPower
             DontDestroyOnLoad(gameObject); // 게임 오브젝트 파괴되지 않게 제한
 
         }*/
-        void Start()
-        {
-            var data = AudioManagerSO.Instance.GetAudioData("Click");
-            Debug.Log(data == null ? "AudioData Click not found" : "AudioData Click found: " + data.clipSource?.name);
-            AudioManagerSO.Sound.PlaySFXOneShot("Click");
 
-        }
-
-        public void OnClickButton()
+        
+        public void ResetState()
         {
-            Debug.Log("OnClickButton 호출됨");
-            AudioManagerSO.Sound.PlaySFXOneShot("Click");
+            isGameOver = false;
+            isGameCleared = false;
+            isPaused = false;
         }
 
         public void SetGameOver()

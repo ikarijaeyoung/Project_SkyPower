@@ -27,7 +27,7 @@ namespace KYG_skyPower
         public static ScoreManager Score => ScoreManager.Instance;
         // public static DialogueManager Dialogue => DialogueManager.Instance;
 
-        public static AudioManagerSO Audio => AudioManagerSO.Instance;
+        //public static AudioManagerSO Audio => AudioManagerSO.Instance;
 
         public static SceneChangerManagerSO SceneChanger => SceneChangerManagerSO.Instance;
 
