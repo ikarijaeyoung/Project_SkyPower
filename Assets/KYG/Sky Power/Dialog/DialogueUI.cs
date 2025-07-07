@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace KYG.SkyPower.Dialogue
+namespace KYG.SkyPower
 {
     public class DialogueUI : MonoBehaviour
     {

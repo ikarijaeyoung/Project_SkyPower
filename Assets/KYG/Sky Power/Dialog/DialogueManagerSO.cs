@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
 
-namespace KYG.SkyPower.Dialogue
+namespace KYG.SkyPower
 {
     public class DialogueManager : MonoBehaviour
     {
