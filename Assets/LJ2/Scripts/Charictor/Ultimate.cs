@@ -174,7 +174,6 @@ public class Ultimate : MonoBehaviour
     public void BigBullet(float damage)
     {
         Debug.Log($"BigBullet Damage: {damage}");
-        playerController.poolIndex = 1;
         if (ultRoutine == null)
         {
             fireCounter = 1;
@@ -184,7 +183,6 @@ public class Ultimate : MonoBehaviour
         {
             return;
         }
-        playerController.poolIndex = 0; // 다시 기본 총알로 변경
     }
 
     public void ManyBullets(float damage)

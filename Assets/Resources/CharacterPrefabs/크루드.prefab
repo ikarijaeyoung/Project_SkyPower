@@ -36,7 +36,7 @@ Transform:
   - {fileID: 6587173300058908280}
   - {fileID: 8775692350858014928}
   - {fileID: 5230707033844528278}
-  - {fileID: 2759761866388918023}
+  - {fileID: 7928058606872642527}
   - {fileID: 6657459200492716928}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -112,13 +112,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0792cdc2784b3de4cad1e8ee9282678d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setUltDelay: 4
   laserDelay: 4
   fireDelay: 4
   shieldDelay: 4
   allDelay: 1
-  bigBulletDelay: 1
-  manyBulletDelay: 3
+  bigBulletDelay: 0.5
+  manyBulletDelay: 0.3
   playerController: {fileID: 0}
   bulletReturnTimer: 5
   bigBulletSpeed: 15
@@ -206,7 +205,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b591ebff4c96a8248858bbf7a07fd176, type: 3}
---- !u!4 &2759761866388918023 stripped
+--- !u!4 &7928058606872642527 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5209182111593434329, guid: b591ebff4c96a8248858bbf7a07fd176,
     type: 3}

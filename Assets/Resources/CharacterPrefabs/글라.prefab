@@ -116,13 +116,13 @@ MonoBehaviour:
   fireDelay: 4
   shieldDelay: 4
   allDelay: 1
-  bigBulletDelay: 1
-  manyBulletDelay: 1
+  bigBulletDelay: 0.5
+  manyBulletDelay: 0.3
   playerController: {fileID: 0}
   bulletReturnTimer: 5
   bigBulletSpeed: 15
   manyBulletSpeed: 30
-  ultBulletTime: 3
+  ultBulletTime: 50
   bulletUpgradeTime: 5
   enemyBullet:
     serializedVersion: 2
