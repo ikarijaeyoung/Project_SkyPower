@@ -12,7 +12,6 @@ namespace YSK
     public class AudioTestManager : MonoBehaviour
     {
         [Header("Audio Manager")]
-        [SerializeField] private AudioManagerRunner audioManagerRunner;
         [SerializeField] private AudioManagerSO audioManagerSO;
         
         [Header("UI Settings")]
@@ -74,29 +73,25 @@ namespace YSK
         
         private void InitializeComponents()
         {
-            // AudioManagerRunner 찾기
-            if (audioManagerRunner == null)
-            {
-                audioManagerRunner = FindObjectOfType<AudioManagerRunner>();
-                if (audioManagerRunner == null)
-                {
-                    Debug.LogWarning("AudioManagerRunner를 찾을 수 없습니다!");
-                }
-            }
-            
-            // AudioManagerSO 찾기
+            // AudioManagerRunner 제거
+            // AudioManagerSO만 찾기
             if (audioManagerSO == null)
             {
                 audioManagerSO = FindObjectOfType<AudioManagerSO>();
                 if (audioManagerSO == null)
                 {
-                    // Resources에서 찾기
                     audioManagerSO = Resources.Load<AudioManagerSO>("AudioManagerSO");
                     if (audioManagerSO == null)
                     {
                         Debug.LogWarning("AudioManagerSO를 찾을 수 없습니다!");
                     }
                 }
+            }
+            
+            // AudioManagerSO 초기화
+            if (audioManagerSO != null)
+            {
+                audioManagerSO.Init();
             }
             
             // UI 컴포넌트 자동 생성
@@ -437,29 +432,54 @@ namespace YSK
         
         private void OnMasterVolumeChanged(float volume)
         {
-            if (audioManagerRunner != null && audioManagerRunner.bgmSource != null)
+            // BGMSource 직접 접근
+            GameObject bgmSource = GameObject.Find("BGMSource");
+            if (bgmSource != null)
             {
-                audioManagerRunner.bgmSource.volume = volume * (isMuted ? 0f : 1f);
+                AudioSource bgmAudioSource = bgmSource.GetComponent<AudioSource>();
+                if (bgmAudioSource != null)
+                {
+                    bgmAudioSource.volume = volume * (isMuted ? 0f : 1f);
+                }
             }
-            if (audioManagerRunner != null && audioManagerRunner.sfxSource != null)
+            
+            // SFXPool 직접 접근
+            GameObject sfxPool = GameObject.Find("SFXPool");
+            if (sfxPool != null)
             {
-                audioManagerRunner.sfxSource.volume = volume * (isMuted ? 0f : 1f);
+                AudioSource[] sfxSources = sfxPool.GetComponents<AudioSource>();
+                foreach (var source in sfxSources)
+                {
+                    source.volume = volume * (isMuted ? 0f : 1f);
+                }
             }
         }
         
         private void OnBGMVolumeChanged(float volume)
         {
-            if (audioManagerRunner != null && audioManagerRunner.bgmSource != null)
+            // BGMSource 직접 접근
+            GameObject bgmSource = GameObject.Find("BGMSource");
+            if (bgmSource != null)
             {
-                audioManagerRunner.bgmSource.volume = volume * (isMuted ? 0f : 1f);
+                AudioSource bgmAudioSource = bgmSource.GetComponent<AudioSource>();
+                if (bgmAudioSource != null)
+                {
+                    bgmAudioSource.volume = volume * (isMuted ? 0f : 1f);
+                }
             }
         }
         
         private void OnSFXVolumeChanged(float volume)
         {
-            if (audioManagerRunner != null && audioManagerRunner.sfxSource != null)
+            // SFXPool 직접 접근
+            GameObject sfxPool = GameObject.Find("SFXPool");
+            if (sfxPool != null)
             {
-                audioManagerRunner.sfxSource.volume = volume * (isMuted ? 0f : 1f);
+                AudioSource[] sfxSources = sfxPool.GetComponents<AudioSource>();
+                foreach (var source in sfxSources)
+                {
+                    source.volume = volume * (isMuted ? 0f : 1f);
+                }
             }
         }
         
@@ -467,15 +487,25 @@ namespace YSK
         {
             this.isMuted = isMuted;
             
-            if (audioManagerRunner != null)
+            // BGMSource 직접 접근
+            GameObject bgmSource = GameObject.Find("BGMSource");
+            if (bgmSource != null)
             {
-                if (audioManagerRunner.bgmSource != null)
+                AudioSource bgmAudioSource = bgmSource.GetComponent<AudioSource>();
+                if (bgmAudioSource != null)
                 {
-                    audioManagerRunner.bgmSource.mute = isMuted;
+                    bgmAudioSource.mute = isMuted;
                 }
-                if (audioManagerRunner.sfxSource != null)
+            }
+            
+            // SFXPool 직접 접근
+            GameObject sfxPool = GameObject.Find("SFXPool");
+            if (sfxPool != null)
+            {
+                AudioSource[] sfxSources = sfxPool.GetComponents<AudioSource>();
+                foreach (var source in sfxSources)
                 {
-                    audioManagerRunner.sfxSource.mute = isMuted;
+                    source.mute = isMuted;
                 }
             }
             
@@ -570,9 +600,10 @@ namespace YSK
         
         private void StopBGM()
         {
-            if (audioManagerRunner != null && audioManagerRunner.bgmSource != null)
+            // AudioManagerSO를 통한 정지
+            if (KYG_skyPower.AudioManagerSO.Instance != null)
             {
-                audioManagerRunner.bgmSource.Stop();
+                KYG_skyPower.AudioManagerSO.Sound.StopBGM();
                 Debug.Log("BGM 정지");
             }
         }
@@ -605,27 +636,41 @@ namespace YSK
         
         private void PlayBGM(AudioData bgmData)
         {
-            if (audioManagerRunner != null && audioManagerRunner.bgmSource != null)
+            if (bgmData?.clipSource == null)
             {
-                audioManagerRunner.bgmSource.clip = bgmData.clipSource;
-                audioManagerRunner.bgmSource.volume = bgmData.volume * (isMuted ? 0f : 1f);
-                audioManagerRunner.bgmSource.loop = bgmData.loop;
-                audioManagerRunner.bgmSource.Play();
-                
+                Debug.LogWarning("BGM 데이터가 없습니다!");
+                return;
+            }
+            
+            // KYG 시스템 사용
+            if (KYG_skyPower.AudioManagerSO.Instance != null)
+            {
+                KYG_skyPower.AudioManagerSO.Sound.PlayBGM(bgmData.clipName);
                 Debug.Log($"BGM 재생: {bgmData.clipName}");
+            }
+            else
+            {
+                Debug.LogError("AudioManagerSO.Instance가 null입니다!");
             }
         }
         
         private void PlaySFX(AudioData sfxData)
         {
-            if (audioManagerRunner != null && audioManagerRunner.sfxSource != null)
+            if (sfxData?.clipSource == null)
             {
-                audioManagerRunner.sfxSource.clip = sfxData.clipSource;
-                audioManagerRunner.sfxSource.volume = sfxData.volume * (isMuted ? 0f : 1f);
-                audioManagerRunner.sfxSource.loop = sfxData.loop;
-                audioManagerRunner.sfxSource.Play();
-                
+                Debug.LogWarning("SFX 데이터가 없습니다!");
+                return;
+            }
+            
+            // KYG 시스템 사용
+            if (KYG_skyPower.AudioManagerSO.Instance != null)
+            {
+                KYG_skyPower.AudioManagerSO.Sound.PlaySFXOneShot(sfxData.clipName);
                 Debug.Log($"SFX 재생: {sfxData.clipName}");
+            }
+            else
+            {
+                Debug.LogError("AudioManagerSO.Instance가 null입니다!");
             }
         }
         
@@ -676,19 +721,12 @@ namespace YSK
         
         private void StopAllAudio()
         {
-            if (audioManagerRunner != null)
+            // AudioManagerSO를 통한 정지
+            if (KYG_skyPower.AudioManagerSO.Instance != null)
             {
-                if (audioManagerRunner.bgmSource != null)
-                {
-                    audioManagerRunner.bgmSource.Stop();
-                }
-                if (audioManagerRunner.sfxSource != null)
-                {
-                    audioManagerRunner.sfxSource.Stop();
-                }
+                KYG_skyPower.AudioManagerSO.Sound.StopBGM();
+                Debug.Log("모든 오디오 정지");
             }
-            
-            Debug.Log("모든 오디오 정지");
         }
         
         #endregion
@@ -703,22 +741,31 @@ namespace YSK
             debugInfo += $"총 오디오 수: {allAudioData.Count}\n";
             debugInfo += $"뮤트 상태: {(isMuted ? "켜짐" : "꺼짐")}\n";
             
-            if (audioManagerRunner != null)
+            // BGMSource 상태 확인
+            GameObject bgmSource = GameObject.Find("BGMSource");
+            if (bgmSource != null)
             {
-                if (audioManagerRunner.bgmSource != null)
+                AudioSource bgmAudioSource = bgmSource.GetComponent<AudioSource>();
+                if (bgmAudioSource != null)
                 {
-                    debugInfo += $"BGM 재생 중: {audioManagerRunner.bgmSource.isPlaying}\n";
-                    debugInfo += $"BGM 볼륨: {audioManagerRunner.bgmSource.volume:F2}\n";
-                    if (audioManagerRunner.bgmSource.clip != null)
+                    debugInfo += $"BGM 재생 중: {bgmAudioSource.isPlaying}\n";
+                    debugInfo += $"BGM 볼륨: {bgmAudioSource.volume:F2}\n";
+                    if (bgmAudioSource.clip != null)
                     {
-                        debugInfo += $"현재 BGM: {audioManagerRunner.bgmSource.clip.name}\n";
+                        debugInfo += $"현재 BGM: {bgmAudioSource.clip.name}\n";
                     }
                 }
-                
-                if (audioManagerRunner.sfxSource != null)
+            }
+            
+            // SFXPool 상태 확인
+            GameObject sfxPool = GameObject.Find("SFXPool");
+            if (sfxPool != null)
+            {
+                AudioSource[] sfxSources = sfxPool.GetComponents<AudioSource>();
+                foreach (var source in sfxSources)
                 {
-                    debugInfo += $"SFX 재생 중: {audioManagerRunner.sfxSource.isPlaying}\n";
-                    debugInfo += $"SFX 볼륨: {audioManagerRunner.sfxSource.volume:F2}\n";
+                    debugInfo += $"SFX 재생 중: {source.isPlaying}\n";
+                    debugInfo += $"SFX 볼륨: {source.volume:F2}\n";
                 }
             }
             

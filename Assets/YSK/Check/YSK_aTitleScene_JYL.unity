@@ -927,74 +927,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927118278}
   m_CullTransparentMesh: 1
---- !u!1001 &2127842507
-PrefabInstance:
+--- !u!1 &2037976032
+GameObject:
   m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2037976034}
+  - component: {fileID: 2037976035}
+  m_Layer: 0
+  m_Name: SimepleAudioTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2037976034
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2037976032}
   serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4030347697978594236, guid: e87e82fd7b9c8334f84cf9491747b80b,
-        type: 3}
-      propertyPath: m_Name
-      value: AudioManagerRunner
-      objectReference: {fileID: 0}
-    - target: {fileID: 8340682635938638907, guid: e87e82fd7b9c8334f84cf9491747b80b,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 373
-      objectReference: {fileID: 0}
-    - target: {fileID: 8340682635938638907, guid: e87e82fd7b9c8334f84cf9491747b80b,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 264
-      objectReference: {fileID: 0}
-    - target: {fileID: 8340682635938638907, guid: e87e82fd7b9c8334f84cf9491747b80b,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8340682635938638907, guid: e87e82fd7b9c8334f84cf9491747b80b,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8340682635938638907, guid: e87e82fd7b9c8334f84cf9491747b80b,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8340682635938638907, guid: e87e82fd7b9c8334f84cf9491747b80b,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8340682635938638907, guid: e87e82fd7b9c8334f84cf9491747b80b,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8340682635938638907, guid: e87e82fd7b9c8334f84cf9491747b80b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8340682635938638907, guid: e87e82fd7b9c8334f84cf9491747b80b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8340682635938638907, guid: e87e82fd7b9c8334f84cf9491747b80b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e87e82fd7b9c8334f84cf9491747b80b, type: 3}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -100, y: 50, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2037976035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2037976032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71d7b69e238d7c84fad0be0cb0ca7200, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioManagerRunner: {fileID: 0}
+  audioManagerSO: {fileID: 11400000, guid: 383a0c8fd6224584fab165f5c92d967c, type: 2}
+  testBGMKey: 98
+  testSFXKey: 115
+  randomBGMKey: 114
+  nextBGMKey: 110
+  stopAllKey: 120
+  muteKey: 109
+  CheckKey: 122
+  showDebugInfo: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1005,4 +991,4 @@ SceneRoots:
   - {fileID: 964726344}
   - {fileID: 208207814}
   - {fileID: 257510709}
-  - {fileID: 2127842507}
+  - {fileID: 2037976034}

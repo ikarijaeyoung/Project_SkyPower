@@ -20,6 +20,8 @@ namespace YSK
         [SerializeField] private KeyCode nextBGMKey = KeyCode.N;
         [SerializeField] private KeyCode stopAllKey = KeyCode.X;
         [SerializeField] private KeyCode muteKey = KeyCode.M;
+        [SerializeField] private KeyCode CheckKey = KeyCode.Z;
+   
         
         [Header("Debug")]
         [SerializeField] private bool showDebugInfo = true;
@@ -31,7 +33,7 @@ namespace YSK
         void Start()
         {
             FindAudioComponents();
-            LoadBGMList();
+            LoadSoundList();
             Debug.Log("=== 간단한 오디오 테스트 시작 ===");
             Debug.Log("B: 기본 BGM 테스트");
             Debug.Log("R: 랜덤 BGM 재생");
@@ -50,11 +52,11 @@ namespace YSK
         
         private void FindAudioComponents()
         {
-            // AudioManagerRunner 찾기
-            if (audioManagerRunner == null)
-            {
-                audioManagerRunner = FindObjectOfType<AudioManagerRunner>();
-            }
+            // AudioManagerRunner 제거 (KYG 시스템만 사용)
+            // if (audioManagerRunner == null)
+            // {
+            //     audioManagerRunner = FindObjectOfType<AudioManagerRunner>();
+            // }
             
             // AudioManagerSO 찾기
             if (audioManagerSO == null)
@@ -66,30 +68,57 @@ namespace YSK
                 }
             }
             
-            if (audioManagerRunner == null)
+            // KYG 시스템 초기화 확인
+            if (KYG_skyPower.AudioManagerSO.Instance == null)
             {
-                Debug.LogWarning("AudioManagerRunner를 찾을 수 없습니다!");
+                Debug.LogError("KYG AudioManagerSO.Instance가 null입니다!");
             }
-            
-            if (audioManagerSO == null)
+            else
             {
-                Debug.LogWarning("AudioManagerSO를 찾을 수 없습니다!");
+                Debug.Log($"KYG AudioManagerSO 초기화 완료: {KYG_skyPower.AudioManagerSO.Instance.name}");
+                
+                // AudioManagerSO 초기화
+                KYG_skyPower.AudioManagerSO.Instance.Init();
+                
+                // BGMSource 확인
+                GameObject bgmSource = GameObject.Find("BGMSource");
+                if (bgmSource != null)
+                {
+                    Debug.Log($"BGMSource 찾음: {bgmSource.name}");
+                }
+                else
+                {
+                    Debug.LogWarning("BGMSource를 찾을 수 없습니다!");
+                }
             }
         }
         
-        private void LoadBGMList()
+        private void LoadSoundList()
         {
             if (audioManagerSO?.audioDB?.audioList != null)
             {
-                bgmList = audioManagerSO.audioDB.audioList.FindAll(a => a != null && a.loop);
+                bgmList = audioManagerSO.audioDB.audioList.FindAll(a => a != null);
                 Debug.Log($"총 {bgmList.Count}개의 BGM을 찾았습니다.");
+                
+                // 각 BGM 데이터 상세 확인
+                for (int i = 0; i < bgmList.Count; i++)
+                {
+                    var bgm = bgmList[i];
+                    Debug.Log($"BGM {i + 1}: {bgm.clipName} - 클립: {bgm.clipSource?.name ?? "없음"} - 볼륨: {bgm.volume}");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("audioManagerSO 또는 audioDB가 null입니다!");
             }
         }
-        
+
+
+
         #endregion
-        
+
         #region Input Handling
-        
+
         private void HandleInput()
         {
             if (Input.GetKeyDown(testBGMKey))
@@ -121,6 +150,11 @@ namespace YSK
             {
                 ToggleMute();
             }
+
+            if (Input.GetKeyDown(CheckKey))
+            {
+                LoadSoundList();
+            }
         }
         
         #endregion
@@ -129,81 +163,95 @@ namespace YSK
         
         private void TestBGM()
         {
-            if (audioManagerSO?.defaultBGM != null)
+            Debug.Log("=== BGM 테스트 시작 ===");
+            
+            // KYG 시스템 확인
+            if (KYG_skyPower.AudioManagerSO.Instance == null)
             {
-                PlayBGM(audioManagerSO.defaultBGM);
+                Debug.LogError("AudioManagerSO.Instance가 null입니다!");
+                return;
             }
+            
+            Debug.Log($"AudioManagerSO 찾음: {KYG_skyPower.AudioManagerSO.Instance.name}");
+            
+            // BGM 리스트 확인
+            if (bgmList.Count == 0)
+            {
+                Debug.LogWarning("재생 가능한 BGM이 없습니다!");
+                return;
+            }
+            
+            // 첫 번째 BGM 재생
+            var firstBGM = bgmList[0];
+            if (firstBGM?.clipSource == null)
+            {
+                Debug.LogError("첫 번째 BGM의 clipSource가 null입니다!");
+                return;
+            }
+            
+            Debug.Log($"BGM 재생 시도: {firstBGM.clipName}");
+            KYG_skyPower.AudioManagerSO.Sound.PlayBGM(firstBGM.clipName);
+            
+            Debug.Log("=== BGM 테스트 완료 ===");
         }
         
         private void TestSFX()
         {
             Debug.Log("=== SFX 테스트 시작 ===");
             
-            if (audioManagerSO == null || audioManagerSO.audioDB == null || audioManagerSO.audioDB.audioList == null)
+            if (KYG_skyPower.AudioManagerSO.Instance != null)
             {
-                Debug.LogWarning("SFX를 찾을 수 없습니다!");
-                return;
-            }
-            
-            // 첫 번째 SFX 찾기 (루프가 아닌 것)
-            AudioData sfxData = audioManagerSO.audioDB.audioList.Find(a => a != null && !a.loop);
-            
-            if (sfxData == null)
-            {
-                Debug.LogWarning("재생 가능한 SFX를 찾을 수 없습니다!");
-                return;
-            }
-            
-            if (audioManagerRunner != null && audioManagerRunner.sfxSource != null)
-            {
-                // 기존 재생 중단
-                audioManagerRunner.sfxSource.Stop();
-                
-                // 새로 재생
-                audioManagerRunner.sfxSource.clip = sfxData.clipSource;
-                audioManagerRunner.sfxSource.volume = sfxData.volume;
-                audioManagerRunner.sfxSource.loop = sfxData.loop;
-                audioManagerRunner.sfxSource.mute = isMuted;
-                audioManagerRunner.sfxSource.Play();
-                
-                Debug.Log($"SFX 재생: {sfxData.clipName}");
+                // SFX 재생
+                KYG_skyPower.AudioManagerSO.Sound.PlaySFXOneShot("Click");
+                Debug.Log("SFX 재생: Click");
             }
             else
             {
-                Debug.LogWarning("SFX AudioSource를 찾을 수 없습니다!");
+                Debug.LogError("AudioManagerSO.Instance가 null입니다!");
             }
         }
         
         private void StopAllAudio()
         {
-            if (audioManagerRunner != null)
+            // KYG 시스템 사용
+            if (KYG_skyPower.AudioManagerSO.Instance != null)
             {
-                if (audioManagerRunner.bgmSource != null)
-                {
-                    audioManagerRunner.bgmSource.Stop();
-                }
-                if (audioManagerRunner.sfxSource != null)
-                {
-                    audioManagerRunner.sfxSource.Stop();
-                }
+                KYG_skyPower.AudioManagerSO.Sound.StopBGM();
+                Debug.Log("모든 오디오 정지");
             }
-            
-            Debug.Log("모든 오디오 정지");
+            else
+            {
+                Debug.LogError("AudioManagerSO.Instance가 null입니다!");
+            }
         }
         
         private void ToggleMute()
         {
             isMuted = !isMuted;
             
-            if (audioManagerRunner != null)
+            // KYG 시스템의 BGMSource에 직접 접근하여 뮤트 설정
+            if (KYG_skyPower.AudioManagerSO.Instance != null)
             {
-                if (audioManagerRunner.bgmSource != null)
+                // BGMSource 찾기
+                GameObject bgmSource = GameObject.Find("BGMSource");
+                if (bgmSource != null)
                 {
-                    audioManagerRunner.bgmSource.mute = isMuted;
+                    AudioSource bgmAudioSource = bgmSource.GetComponent<AudioSource>();
+                    if (bgmAudioSource != null)
+                    {
+                        bgmAudioSource.mute = isMuted;
+                    }
                 }
-                if (audioManagerRunner.sfxSource != null)
+                
+                // SFXPool 찾기
+                GameObject sfxPool = GameObject.Find("SFXPool");
+                if (sfxPool != null)
                 {
-                    audioManagerRunner.sfxSource.mute = isMuted;
+                    AudioSource[] sfxSources = sfxPool.GetComponents<AudioSource>();
+                    foreach (var source in sfxSources)
+                    {
+                        source.mute = isMuted;
+                    }
                 }
             }
             
@@ -237,29 +285,22 @@ namespace YSK
 
         private void PlayBGM(AudioData bgmData)
         {
-            if (audioManagerRunner?.bgmSource == null)
-            {
-                Debug.LogWarning("BGM AudioSource를 찾을 수 없습니다!");
-                return;
-            }
-            
             if (bgmData?.clipSource == null)
             {
                 Debug.LogWarning("BGM 데이터가 없습니다!");
                 return;
             }
             
-            // 기존 재생 중단
-            audioManagerRunner.bgmSource.Stop();
-            
-            // 새 BGM 재생
-            audioManagerRunner.bgmSource.clip = bgmData.clipSource;
-            audioManagerRunner.bgmSource.volume = bgmData.volume;
-            audioManagerRunner.bgmSource.loop = bgmData.loop;
-            audioManagerRunner.bgmSource.mute = isMuted;
-            audioManagerRunner.bgmSource.Play();
-            
-            Debug.Log($"BGM 재생: {bgmData.clipName} (인덱스: {currentBGMIndex + 1}/{bgmList.Count})");
+            // KYG 시스템 사용 (AudioManagerRunner 제거)
+            if (KYG_skyPower.AudioManagerSO.Instance != null)
+            {
+                KYG_skyPower.AudioManagerSO.Sound.PlayBGM(bgmData.clipName);
+                Debug.Log($"BGM 재생: {bgmData.clipName} (인덱스: {currentBGMIndex + 1}/{bgmList.Count})");
+            }
+            else
+            {
+                Debug.LogError("AudioManagerSO.Instance가 null입니다!");
+            }
         }
         
         #endregion
@@ -271,15 +312,26 @@ namespace YSK
             if (!showDebugInfo) return;
             
             GUILayout.BeginArea(new Rect(10, 10, 400, 250));
-            GUILayout.Label("=== 간단한 오디오 테스트 ===");
+            GUILayout.Label("=== 간단한 오디오 테스트 (KYG 시스템) ===");
             GUILayout.Label($"BGM 개수: {bgmList.Count}");
             GUILayout.Label($"현재 BGM: {currentBGMIndex + 1}/{bgmList.Count}");
             
-            if (audioManagerRunner?.bgmSource != null)
+            // KYG 시스템의 BGMSource 상태 확인
+            GameObject bgmSource = GameObject.Find("BGMSource");
+            if (bgmSource != null)
             {
-                GUILayout.Label($"BGM 재생 중: {audioManagerRunner.bgmSource.isPlaying}");
-                GUILayout.Label($"BGM 클립: {audioManagerRunner.bgmSource.clip?.name ?? "없음"}");
-                GUILayout.Label($"BGM 볼륨: {audioManagerRunner.bgmSource.volume:F2}");
+                AudioSource bgmAudioSource = bgmSource.GetComponent<AudioSource>();
+                if (bgmAudioSource != null)
+                {
+                    GUILayout.Label($"BGM 재생 중: {bgmAudioSource.isPlaying}");
+                    GUILayout.Label($"BGM 클립: {bgmAudioSource.clip?.name ?? "없음"}");
+                    GUILayout.Label($"BGM 볼륨: {bgmAudioSource.volume:F2}");
+                    GUILayout.Label($"BGM 뮤트: {bgmAudioSource.mute}");
+                }
+            }
+            else
+            {
+                GUILayout.Label("BGMSource를 찾을 수 없습니다!");
             }
             
             GUILayout.Space(10);

@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3447b8e436eb997478dc6550ebda6e8e, type: 3}
   m_Name: GameAudioManagerSO
   m_EditorClassIdentifier: 
-  audioDB: {fileID: 11400000, guid: f74174f7f9f517d488a90cf11805ace0, type: 2}
+  audioDB: {fileID: 11400000, guid: 39c4db242d9f3994eb202cc1b3c90636, type: 2}
   defaultBGM: {fileID: 11400000, guid: 5c11a8387f744434fbefffaad878e2d6, type: 2}
+  sfxPoolSize: 35
