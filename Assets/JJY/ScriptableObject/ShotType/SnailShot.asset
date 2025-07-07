@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6e22353556ad464f9818ccbdc7f602e, type: 3}
-  m_Name: FanShapeShot
+  m_Script: {fileID: 11500000, guid: 61c1ec61f3357dc4da1ab189e9fd73e9, type: 3}
+  m_Name: SnailShot
   m_EditorClassIdentifier: 
-  shotCount: 7
-  fireDelayBetweenShots: 0
-  fanShapeangle: 45
+  shotCount: 8
+  fireDelayBetweenShots: 0.5
   returnToPoolTimer: 5
