@@ -24,6 +24,8 @@ namespace JYL
         private RawImage amIcon => GetUI<RawImage>("ArmorBtn");
         private RawImage acIcon => GetUI<RawImage>("AccessoryBtn");
         private RectTransform parent => GetUI<RectTransform>("Content");
+        private Button wpEnhBtn => GetUI<Button>("WPEnhanceBtn1");
+        private Button amEnhBtn => GetUI<Button>("AMEnhanceBtn2");
         private Image charImage;
         private CharacterSaveLoader characterLoader;
         private CharactorController mainController => characterLoader.mainController;
@@ -53,10 +55,11 @@ namespace JYL
             invenScroll.SetActive(false);
             GetEvent("CharEnhanceBtn").Click += OpenCharEnhance;
             GetEvent("WeaponBtn").Click += OpenWPInven;
-            GetEvent("WPEnhanceBtn1").Click += OpenWPEnhance;
             GetEvent("ArmorBtn").Click += OpenAMInven;
-            GetEvent("AMEnhanceBtn2").Click += OpenAMEnhance;
             GetEvent("AccessoryBtn").Click += OpenACInven;
+            GetEvent("WPEnhanceBtn1").Click += OpenWPEnhance;
+            GetEvent("AMEnhanceBtn2").Click += OpenAMEnhance;
+
             // 현재 캐릭터의 정보가 표시된다
             // index는 UIManager가 관리
             // GameManager.Instance.character[index]
@@ -73,8 +76,27 @@ namespace JYL
                 isInvenOpened = false;
             }
         }
+        private void OnDisable()
+        {
+            Manager.Game.SaveGameProgress();
+        }
         private void Init()
         {
+            invenScroll.SetActive(false);
+            if (iconList != null && iconList.Count > 0)
+            {
+                // 기존 리스트 클리어 및 다시 담기
+                if (iconList.Count > 0)
+                {
+                    foreach (GameObject icon in iconList)
+                    {
+                        GameObject outIcon = DeleteFromDictionary(icon.gameObject.name, icon.gameObject);
+                        Destroy(icon);
+                        Debug.Log("아이콘 파괴중");
+                    }
+                    iconList.Clear();
+                }
+            }
             iconList = new List<GameObject>();
             equipIdDict = new Dictionary<GameObject, int>();
             equipController.Init();
@@ -91,6 +113,7 @@ namespace JYL
             }
             UpdateCharacterInfo();
             CreateEquipedIcons();
+            CheckBtnEvent();
         }
         private void UpdateCharacterInfo()
         {
@@ -99,7 +122,7 @@ namespace JYL
             ap.text = $"{mainController.attackDamage}";
             gold.text = $"{Manager.Game.CurrentSave.gold}";
         }
-        private void CreateIcons(EquipType type)
+        private void CreateInvenIcons(EquipType type)
         {
 
             // 기존 리스트 클리어 및 다시 담기
@@ -113,6 +136,8 @@ namespace JYL
                 }
                 iconList.Clear();
             }
+            // 기존 딕셔너리 삭제 및 다시 만듦
+            if (equipIdDict.Count > 0) { equipIdDict.Clear(); }
 
             List<EquipInfo> equipList = new List<EquipInfo>();
             equipList = equipController.GetEquipListByType(type);
@@ -126,8 +151,8 @@ namespace JYL
                     AddUIToDictionary(iconObj.gameObject);
                     Image iconImg = iconObj.GetComponentInChildren<Image>();
                     iconImg.sprite = tmp.icon;
-                    
-                    if(tmp.id == Manager.Game.CurrentSave.wearingId[(int)type]&&tmp.id != 0) // 현재 이 장비는 장착중!
+
+                    if (tmp.id == Manager.Game.CurrentSave.wearingId[(int)type] && tmp.id != 0) // 현재 이 장비는 장착중!
                     {
                         Color color = iconImg.color;
                         color = Color.Lerp(color, Color.black, 0.3f);
@@ -164,12 +189,10 @@ namespace JYL
             tmpColor.a = 0f;
             if (equipController.weapon.id == 0) // 무기 장착 안되어 있음
             {
-                Debug.Log($"장착중이지 않음. 이미지 제거{equipController.weapon.id}");
                 apIcon.gameObject.GetComponentInChildren<Image>().color = tmpColor;
             }
             else
             {
-                Debug.Log($"장착중! 이미지 추가{equipController.weapon.id}");
                 Image tmpImg = apIcon.gameObject.GetComponentInChildren<Image>();
                 tmpImg.color = tmpColorOrigin;
                 tmpImg.sprite = equipController.weapon.icon;
@@ -200,18 +223,21 @@ namespace JYL
         }
         private void OpenWPInven(PointerEventData eventData)
         {
+            if (invenScroll.activeSelf) invenScroll.SetActive(false);
             invenScroll.SetActive(true);
-            CreateIcons(EquipType.Weapon);
+            CreateInvenIcons(EquipType.Weapon);
         }
         private void OpenAMInven(PointerEventData eventData)
         {
+            if (invenScroll.activeSelf) invenScroll.SetActive(false);
             invenScroll.SetActive(true);
-            CreateIcons(EquipType.Armor);
+            CreateInvenIcons(EquipType.Armor);
         }
         private void OpenACInven(PointerEventData eventData)
         {
+            if (invenScroll.activeSelf) invenScroll.SetActive(false);
             invenScroll.SetActive(true);
-            CreateIcons(EquipType.Accessory);
+            CreateInvenIcons(EquipType.Accessory);
         }
 
         private void CloseInvenScroll(PointerEventData eventData)
@@ -235,36 +261,57 @@ namespace JYL
 
         private void ClickEquipIcon(PointerEventData eventData) // 장비 변경
         {
-            if(!equipIdDict.TryGetValue(eventData.pointerClick, out int equipId))
+            if (!equipIdDict.TryGetValue(eventData.pointerClick, out int equipId))
             {
                 Debug.LogWarning($"장비 딕셔너리에 해당 아이콘이 없음{eventData.pointerClick.name}");
             }
             Debug.Log("클릭됨");
             EquipInfo equipInfoTemp = equipController.FindEquip(equipId);
             ReplaceEquipment(equipInfoTemp.type, equipInfoTemp);
+            Debug.Log($"지금 장착중인 장비{equipInfoTemp.type}_{equipController.armor.id}level{equipController.armor.level}");
             equipController.UpdateWearing();
             characterLoader.GetCharPrefab();
             CreateEquipedIcons();
-            CreateIcons(equipInfoTemp.type);
+            CreateInvenIcons(equipInfoTemp.type);
             UpdateCharacterInfo();
+            CheckBtnEvent();
+        }
+        private void CheckBtnEvent()
+        {
+            if (equipController.weapon.level <= 0)
+            {
+                wpEnhBtn.gameObject.SetActive(false);
+            }
+            else
+            {
+                wpEnhBtn.gameObject.SetActive(true);
+            }
+
+            if (equipController.armor.level <= 0)
+            {
+                amEnhBtn.gameObject.SetActive(false);
+            }
+            else
+            {
+                amEnhBtn.gameObject.SetActive(true);
+            }
         }
         private void ReplaceEquipment(EquipType type, EquipInfo equipInfo)
         {
-            
-            switch (type) // 1.무기 2.방어구 3.악세사리
+            switch (type)
             {
                 case EquipType.Weapon:
-                    if(Manager.Game.CurrentSave.wearingId[0] != equipInfo.id)
+                    if (Manager.Game.CurrentSave.wearingId[0] != equipInfo.id)
                     {
-                        Manager.Game.CurrentSave.wearingId[0] = equipInfo.id; //들어온 장비로 교체
+                        Manager.Game.CurrentSave.wearingId[0] = equipInfo.id;
                     }
                     else
                     {
-                        Manager.Game.CurrentSave.wearingId[0] = 0; // 장비 해제
+                        Manager.Game.CurrentSave.wearingId[0] = 0;
                     }
                     break;
                 case EquipType.Armor:
-                    if(Manager.Game.CurrentSave.wearingId[1] != equipInfo.id)
+                    if (Manager.Game.CurrentSave.wearingId[1] != equipInfo.id)
                     {
                         Manager.Game.CurrentSave.wearingId[1] = equipInfo.id;
                     }
@@ -274,7 +321,7 @@ namespace JYL
                     }
                     break;
                 case EquipType.Accessory:
-                    if(Manager.Game.CurrentSave.wearingId[2] != equipInfo.id)
+                    if (Manager.Game.CurrentSave.wearingId[2] != equipInfo.id)
                     {
                         Manager.Game.CurrentSave.wearingId[2] = equipInfo.id;
                     }
@@ -288,23 +335,13 @@ namespace JYL
 
         private void OpenCharEnhance(PointerEventData eventData)
         {
-            // 캐릭터 정보를 가지고 강화창 구현
-            // UIManager에서 선택된 캐릭터의 인덱스 가지고 GameManager의 파티 구성원의 정보에 대한 캐릭터 컨트롤러 정보 불러옴
-            // 해당 정보는 강화창에서 불러옴 여기서 안불러옴
             UIManager.selectIndexUI = 1;
             UIManager.Instance.ShowPopUp<EnhancePopUp>();
-            // UI 생성할 때, UI에다가 이벤트 다세요.
-            // Image img = Instantiate();
-            // GetEvent($"img.gameObject.name").Click += 이벤트함수;
         }
 
         private void OpenWPEnhance(PointerEventData eventData)
         {
             UIManager.selectIndexUI = 2;
-            // 현재 무기의 정보를 가져가야함
-            // 선택하는 UI 정보들은 UIManager를 통해 접근한다.
-            // GameManager.Instance.Party[0].
-            // UIManager.Instance. 현재 선택한 캐릭의정보 + 무기 -> Enhance 팝업이 불러와야 함
             UIManager.Instance.ShowPopUp<EnhancePopUp>();
         }
 

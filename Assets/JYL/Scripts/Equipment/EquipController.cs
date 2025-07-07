@@ -123,8 +123,8 @@ public class EquipController : MonoBehaviour
                 EquipInfo tmpInfo = equipData[i];
                 if (Upgrade) tmpInfo.level++; // maxLevel을 찍으면, UI상에서 강화 기능 막아야 함;
                 tmpSave.level = tmpInfo.level;
-                tmpInfo.upgradeGold = equipData[i].level * equipData[i].upgradeGoldPlus;
-                tmpInfo.equipValue = equipData[i].originValue + (equipData[i].level - 1) * equipData[i].equipValuePlus;
+                tmpInfo.upgradeGold = tmpInfo.level * tmpInfo.upgradeGoldPlus;
+                tmpInfo.equipValue = tmpInfo.originValue + (tmpInfo.level - 1) * tmpInfo.equipValuePlus;
                 Manager.Game.CurrentSave.equipSave[i] = tmpSave;
                 equipData[i] = tmpInfo;
                 return;

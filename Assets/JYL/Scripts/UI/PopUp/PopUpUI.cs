@@ -14,7 +14,10 @@ namespace JYL
         public static bool IsPopUpActive { get; private set; } = false;
 
         [SerializeField] GameObject blocker;
-
+        public void OnApplicationQuit()
+        {
+            DestroyImmediate(gameObject);
+        }
         public void PushUIStack(BaseUI ui)
         {
             IsPopUpActive = true;

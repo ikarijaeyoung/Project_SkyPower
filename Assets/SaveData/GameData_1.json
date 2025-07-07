@@ -1,6 +1,6 @@
 {
     "playerName": "eqipT",
-    "gold": 1000,
+    "gold": 995500,
     "characterInventory": {
         "characters": [
             {
@@ -55,7 +55,7 @@
                 "id": 10009,
                 "level": 1,
                 "step": 0,
-                "partySet": 0
+                "partySet": 2
             },
             {
                 "id": 10010,
@@ -161,9 +161,9 @@
             },
             {
                 "id": 10027,
-                "level": 1,
+                "level": 2,
                 "step": 0,
-                "partySet": 2
+                "partySet": 0
             },
             {
                 "id": 10028,
@@ -330,7 +330,7 @@
         },
         {
             "id": 30004,
-            "level": 2
+            "level": 3
         },
         {
             "id": 30005,
@@ -438,8 +438,8 @@
         }
     ],
     "wearingId": [
-        30001,
-        0,
-        0
+        30004,
+        30012,
+        30012
     ]
 }
