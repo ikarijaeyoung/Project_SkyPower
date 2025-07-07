@@ -34,9 +34,9 @@ Transform:
   m_Children:
   - {fileID: 7767382250857249098}
   - {fileID: 4036429336694906405}
-  - {fileID: 3510683487041959572}
-  - {fileID: 5390211714765339259}
   - {fileID: 4196848732560769025}
+  - {fileID: 5390211714765339259}
+  - {fileID: 7858743878793987252}
   - {fileID: 6070965202230578747}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -114,11 +114,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   setUltDelay: 4
+  laserDelay: 4
+  fireDelay: 4
+  shieldDelay: 4
+  allDelay: 1
+  bigBulletDelay: 1
+  manyBulletDelay: 3
   playerController: {fileID: 0}
   bulletReturnTimer: 5
   bigBulletSpeed: 15
   manyBulletSpeed: 30
-  ultBulletTime: 3
+  ultBulletTime: 50
   bulletUpgradeTime: 5
   enemyBullet:
     serializedVersion: 2
@@ -233,7 +239,7 @@ PrefabInstance:
     - target: {fileID: 8025910177887852343, guid: 9a8965262ae861b4ead53351321299a8,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8025910177887852343, guid: 9a8965262ae861b4ead53351321299a8,
         type: 3}
@@ -429,7 +435,7 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6159789015558648291}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &8247366524269874392
+--- !u!1001 &7858743878793987251
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -497,13 +503,13 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b591ebff4c96a8248858bbf7a07fd176, type: 3}
---- !u!4 &4196848732560769025 stripped
+--- !u!4 &7858743878793987252 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5209182111593434329, guid: b591ebff4c96a8248858bbf7a07fd176,
     type: 3}
-  m_PrefabInstance: {fileID: 8247366524269874392}
+  m_PrefabInstance: {fileID: 7858743878793987251}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &8715256377581222477
+--- !u!1001 &8247366524269874392
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -571,9 +577,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f306954192d7074d9988a9d41e2f2de, type: 3}
---- !u!4 &3510683487041959572 stripped
+--- !u!4 &4196848732560769025 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5209182111593434329, guid: 9f306954192d7074d9988a9d41e2f2de,
     type: 3}
-  m_PrefabInstance: {fileID: 8715256377581222477}
+  m_PrefabInstance: {fileID: 8247366524269874392}
   m_PrefabAsset: {fileID: 0}
