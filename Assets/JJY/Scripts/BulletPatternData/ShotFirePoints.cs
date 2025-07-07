@@ -3,20 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using JYL;
 
-[CreateAssetMenu(fileName = "CircleShapeShot", menuName = "ScriptableObject/BulletPattern/CircleShapeShot")]
-public class CircleShapeShot : BulletPatternData
+[CreateAssetMenu(fileName = "ShotFirePoints", menuName = "ScriptableObject/BulletPattern/ShotFirePoints")]
+
+public class ShotFirePoints : BulletPatternData
 {
-    [Header("Circle Shape Shot Settings")]
+    [Header("ShotFirePoints Shot Settings")]
     public int shotCount = 8;
-    public int CircleCount = 3;
-    public float fireDelayBetweenShots = 0f;
-    public float fireDelayBetweenCircle = 0.2f;
+    public float fireDelayBetweenShots = 0.5f;
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool,int attackPower)
+    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool, int attackPower)
     {
-        for (int j = 0; j < CircleCount; j++)
+        for (int j = 0; j < shotCount; j++)
         {
-            for (int i = 0; i < shotCount; i++)
+            for (int i = 0; i < firePoints.Length; i++)
             {
                 BulletPrefabController bulletPrefab = pool.ObjectOut() as BulletPrefabController;
 
@@ -24,10 +23,6 @@ public class CircleShapeShot : BulletPatternData
 
                 if (bulletPrefab != null)
                 {
-                    // firePoints 인덱스가 배열 크기를 넘지 않도록 순환시킵니다.
-                    // shotCount > firePoints == firePoints[i]에서 배열 범위 벗어남. => IndexOutOfRangeException Error.
-                    Transform curFirePoint = firePoints[i % firePoints.Length];
-
                     bulletPrefab.objectPool = pool;
                     bulletPrefab.ReturnToPool(returnToPoolTimer);
 
@@ -38,16 +33,15 @@ public class CircleShapeShot : BulletPatternData
                             info.trans.gameObject.SetActive(true);
                             info.trans.localPosition = info.originPos;
                             info.trans.position = firePoints[i].position;
-                            info.trans.rotation = Quaternion.LookRotation(curFirePoint.forward);
+                            info.trans.rotation = Quaternion.LookRotation(firePoints[i].forward);
                             info.rig.velocity = Vector3.zero;
                             info.bulletController.attackPower = attackPower;
-                            info.rig.AddForce(curFirePoint.forward * bulletSpeed, ForceMode.Impulse);
+                            info.rig.AddForce(firePoints[i].forward * bulletSpeed, ForceMode.Impulse);
                         }
                     }
                 }
-                yield return new WaitForSeconds(fireDelayBetweenShots);
             }
-            yield return new WaitForSeconds(fireDelayBetweenCircle);
+            yield return new WaitForSeconds(fireDelayBetweenShots);
         }
     }
 }

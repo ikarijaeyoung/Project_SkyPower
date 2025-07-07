@@ -3,24 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using JYL;
 
-[CreateAssetMenu(fileName = "CircleShapeShot", menuName = "ScriptableObject/BulletPattern/CircleShapeShot")]
-public class CircleShapeShot : BulletPatternData
+[CreateAssetMenu(fileName = "DrillShot", menuName = "ScriptableObject/BulletPattern/DrillShot")]
+
+public class DrillShot : BulletPatternData
 {
-    [Header("Circle Shape Shot Settings")]
+    [Header("Drill Shot Settings")]
     public int shotCount = 8;
-    public int CircleCount = 3;
-    public float fireDelayBetweenShots = 0f;
-    public float fireDelayBetweenCircle = 0.2f;
+    public int drillCount = 3;
+    public float fireDelayBetweenBullets = 0.1f;
+    public float fireDelayCycle = 0.2f;
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool,int attackPower)
+    private Vector3 playerPos;
+    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool, int attackPower)
     {
-        for (int j = 0; j < CircleCount; j++)
+        playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
+
+        for (int j = 0; j < drillCount; j++)
         {
             for (int i = 0; i < shotCount; i++)
             {
                 BulletPrefabController bulletPrefab = pool.ObjectOut() as BulletPrefabController;
-
-                //bulletPrefab.transform.position = gameObject.transform.position; 에너미 위치로 가져와야 함. 필요없을 수도 잇음
 
                 if (bulletPrefab != null)
                 {
@@ -30,6 +32,8 @@ public class CircleShapeShot : BulletPatternData
 
                     bulletPrefab.objectPool = pool;
                     bulletPrefab.ReturnToPool(returnToPoolTimer);
+
+                    firePoints[i].LookAt(playerPos);
 
                     foreach (BulletInfo info in bulletPrefab.bulletInfo)
                     {
@@ -45,9 +49,9 @@ public class CircleShapeShot : BulletPatternData
                         }
                     }
                 }
-                yield return new WaitForSeconds(fireDelayBetweenShots);
+                yield return new WaitForSeconds(fireDelayBetweenBullets);
             }
-            yield return new WaitForSeconds(fireDelayBetweenCircle);
+            yield return new WaitForSeconds(fireDelayCycle);
         }
     }
 }
