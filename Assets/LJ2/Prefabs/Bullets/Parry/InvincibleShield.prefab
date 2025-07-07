@@ -142,6 +142,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5833179567486969634, guid: 45abcd14bf52c25409f194459da0801d,
+        type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5833179568055906469, guid: 45abcd14bf52c25409f194459da0801d,
         type: 3}
       propertyPath: m_IsActive

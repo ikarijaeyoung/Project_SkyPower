@@ -282,7 +282,8 @@ namespace LJ2
                     ultimate.Laser(ultDamage);
                     break;
                 case 10002:
-                    // 유도탄 미구현
+                    // 유도탄 미구현 전탄 발사로 대체
+                    ultimate.ManyBullets(ultDamage);
                     break;
                 case 10003:
                     // 탄막 변경 데미지 증가

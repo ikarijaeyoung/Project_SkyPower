@@ -15,6 +15,7 @@ public class Parrying : MonoBehaviour
 
     [SerializeField] int shield = 3;
 
+    private Transform invincibleTransform;
     [SerializeField] public GameObject invinciblePrefab;
 
     public void Awake()
@@ -22,6 +23,7 @@ public class Parrying : MonoBehaviour
         characterCollider = GetComponent<Collider>();
         coroutineDelay = new WaitForSeconds(invincibleTime);
         enemyBullet = LayerMask.GetMask("EnemyBullet");
+        invinciblePrefab = transform.Find("InvincibleShield").gameObject;
     }
 
     public void Parry()

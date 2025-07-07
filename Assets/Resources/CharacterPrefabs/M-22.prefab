@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0792cdc2784b3de4cad1e8ee9282678d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setUltDelay: 0
+  setUltDelay: 4
   playerController: {fileID: 0}
   bulletReturnTimer: 5
   bigBulletSpeed: 15
@@ -144,11 +144,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: InvincibleShield
-      objectReference: {fileID: 0}
-    - target: {fileID: 853345416150849933, guid: ffe91006e126db94fbf36c78a0cfa313,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7414216209414829235, guid: ffe91006e126db94fbf36c78a0cfa313,
         type: 3}
@@ -454,7 +449,7 @@ PrefabInstance:
     - target: {fileID: 1752552779580424380, guid: e90ac312efb039242bc3fbe9269974a5,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1752552779580424380, guid: e90ac312efb039242bc3fbe9269974a5,
         type: 3}

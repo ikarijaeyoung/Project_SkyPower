@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4856827749028106880}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalPosition: {x: 0, y: 0, z: 5}
   m_LocalScale: {x: 30, y: 5, z: 30}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -137,6 +137,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Effect_31_LumenJudgement
+      objectReference: {fileID: 0}
+    - target: {fileID: 1339483653523732529, guid: 9242026cc2467d145a89ef577cc9e8b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1339483653523732534, guid: 9242026cc2467d145a89ef577cc9e8b0,
         type: 3}
