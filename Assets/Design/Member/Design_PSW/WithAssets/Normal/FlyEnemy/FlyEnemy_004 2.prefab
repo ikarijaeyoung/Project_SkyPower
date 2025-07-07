@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 906867807058597152}
   - component: {fileID: 5120318936030198053}
   m_Layer: 8
-  m_Name: FlyEnemy_004
+  m_Name: FlyEnemy_004 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -242,7 +242,7 @@ Animator:
   m_GameObject: {fileID: 4165575709432290385}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ba4d270fb28c8914e966fd323c4e0871, type: 2}
+  m_Controller: {fileID: 9100000, guid: 150406e0711448745bf07662b8f3a3ba, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

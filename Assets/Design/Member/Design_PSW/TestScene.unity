@@ -138,6 +138,11 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 304415726963608880, guid: 77684f1b98e02724a9a639da33fab9ef,
         type: 3}
+      propertyPath: spawnSequenceEnemy
+      value: 
+      objectReference: {fileID: 474311129}
+    - target: {fileID: 304415726963608880, guid: 77684f1b98e02724a9a639da33fab9ef,
+        type: 3}
       propertyPath: objectPools.Array.data[0]
       value: 
       objectReference: {fileID: 1927773788}
@@ -211,6 +216,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77684f1b98e02724a9a639da33fab9ef, type: 3}
+--- !u!114 &474311129 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8380794652023868828, guid: 77684f1b98e02724a9a639da33fab9ef,
+    type: 3}
+  m_PrefabInstance: {fileID: 163254393}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a6da813fc1c2ba49974b98108310956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &922325170
 GameObject:
   m_ObjectHideFlags: 0
