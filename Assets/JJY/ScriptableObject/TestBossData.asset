@@ -10,10 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed4526d1dc70ea042b1f8bbc61d6ae14, type: 3}
-  m_Name: TestEnemy
+  m_Name: TestBossData
   m_EditorClassIdentifier: 
-  maxHP: 2
+  maxHP: 2000
   enemyIcon: {fileID: 0}
-  bulletPrefab: {fileID: 1228652472414832, guid: d936cd0d40fea1e408981221726e7e02,
-    type: 3}
-  enemyType: 0
+  enemyType: 2
+  attackPower: 90

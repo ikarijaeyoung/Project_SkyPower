@@ -323,7 +323,7 @@ GameObject:
   - component: {fileID: 8285139127202256558}
   - component: {fileID: 6294923089618730757}
   m_Layer: 8
-  m_Name: FlyEnemy_005
+  m_Name: FlyEnemy_005 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -366,7 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb39e66d9d10d045b169252a651b63d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyData: {fileID: 11400000, guid: 98d03020df3db694e87872fae7de0202, type: 2}
+  enemyData: {fileID: 11400000, guid: ce9ad344a493f0448baa6c1152b83147, type: 2}
   currentHP: 0
   autoFire: 1
   firePoints:
