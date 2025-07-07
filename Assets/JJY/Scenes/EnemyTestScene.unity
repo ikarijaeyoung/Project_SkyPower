@@ -1634,11 +1634,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlyEnemy_003
       objectReference: {fileID: 0}
-    - target: {fileID: 6907872983839026229, guid: b46ea5bd70a675a47a13545cda18772e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7800983058062224057, guid: b46ea5bd70a675a47a13545cda18772e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1894,11 +1889,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FlyEnemy_001
-      objectReference: {fileID: 0}
-    - target: {fileID: 5532545821888678440, guid: 52f8ad2cde60745459727b5011250b43,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7887763656334246655, guid: 52f8ad2cde60745459727b5011250b43,
         type: 3}
@@ -2389,11 +2379,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BossEnemy
       objectReference: {fileID: 0}
-    - target: {fileID: 2805938320730954864, guid: fc9a7f436dd0d0f47962a32477464126,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2634,11 +2619,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlyEnemy_002
       objectReference: {fileID: 0}
-    - target: {fileID: 8140211205730494619, guid: 7ffeef2bd24811449a13e1e820d0c745,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2737,11 +2717,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: EliteEnemy
       objectReference: {fileID: 0}
-    - target: {fileID: 8515178040553279289, guid: d97f678c271179441b89f1dbe9ace5ea,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2774,11 +2749,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FlyEnemy_004
-      objectReference: {fileID: 0}
-    - target: {fileID: 4165575709432290385, guid: ec1de822014c4e149970d7469b5cef09,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8201612364396861573, guid: ec1de822014c4e149970d7469b5cef09,
         type: 3}
@@ -2913,11 +2883,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FlyEnemy_005
-      objectReference: {fileID: 0}
-    - target: {fileID: 8351887547980912979, guid: 1d1ebdd9b131d2b45ba677bc6d805877,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
