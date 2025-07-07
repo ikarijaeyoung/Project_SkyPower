@@ -348,10 +348,9 @@ MonoBehaviour:
   - {fileID: 8351155634875059923}
   - {fileID: 2878539099358117492}
   BulletPattern:
-  - {fileID: 11400000, guid: 06f49becdc91ccb4abd4456595b08045, type: 2}
+  - {fileID: 11400000, guid: b7f2488b3259e7f46acf24999e61c5c1, type: 2}
   curObjectPool: {fileID: 0}
   bulletSpeed: 5
-  fireDelay: 1.5
   flashColor: {r: 1, g: 1, b: 1, a: 1}
   flashDuration: 0.1
   deathEffectPrefab: {fileID: 1991596720237968674, guid: 18cd71152053a034ea2ee7f606de38ec,

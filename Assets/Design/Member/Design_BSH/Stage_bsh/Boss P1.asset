@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 5000
   enemyIcon: {fileID: 0}
-  enemyType: 2
+  enemyType: 1
   attackPower: 10
