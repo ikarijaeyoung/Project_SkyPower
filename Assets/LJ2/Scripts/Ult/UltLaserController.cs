@@ -9,6 +9,11 @@ public class UltLaserController : MonoBehaviour
     private float currentTime;
     private int attackDamage = 2;
 
+    private void OnEnable()
+    {
+        Debug.Log("UltLaserController OnEnable 호출");
+    }
+
     private void Update()
     {
         if (currentTime >= attackDelay)
@@ -38,6 +43,7 @@ public class UltLaserController : MonoBehaviour
     private void OnDisable()
     {
         currentTime = 0;
+        Debug.Log("UltLaserController OnDisable 호출");
     }
 
     public void AttackDamage(float damage)

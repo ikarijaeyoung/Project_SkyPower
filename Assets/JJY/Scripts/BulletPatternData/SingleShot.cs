@@ -9,14 +9,14 @@ public class SingleShot : BulletPatternData
 {
     [Header("Single Shot Settings")]
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool)
+    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool, int attackPower)
     {
         BulletPrefabController bulletPrefab = pool.ObjectOut() as BulletPrefabController;
         if (bulletPrefab != null)
         {
+            bulletPrefab.transform.position = firePoints[0].position;
             bulletPrefab.objectPool = pool;
             bulletPrefab.ReturnToPool(returnToPoolTimer);
-            bulletPrefab.transform.position = firePoints[0].position;
 
             foreach (BulletInfo info in bulletPrefab.bulletInfo)
             {
@@ -24,9 +24,9 @@ public class SingleShot : BulletPatternData
                 {
                     info.trans.gameObject.SetActive(true);
                     info.trans.localPosition = info.originPos;
-                    info.trans.position = firePoints[0].position;
                     info.trans.rotation = firePoints[0].rotation;
                     info.rig.velocity = Vector3.zero;
+                    info.bulletController.attackPower = attackPower;
                     info.rig.AddForce(firePoints[0].forward * bulletSpeed, ForceMode.Impulse);
                 }
                 yield return null;

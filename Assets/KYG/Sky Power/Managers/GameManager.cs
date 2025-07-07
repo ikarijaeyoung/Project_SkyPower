@@ -60,6 +60,7 @@ namespace KYG_skyPower
                 SaveManager.Instance.GameLoad(ref saveFiles[i], i + 1); // ÀÎµ¦½º 1ºÎÅÍ
             }
         }
+
         public void SelectSaveFile(int index)
         {
             if (index >= 0 && index < saveFiles.Length)
@@ -79,7 +80,13 @@ namespace KYG_skyPower
 
         }*/
 
-
+        
+        public void ResetState()
+        {
+            isGameOver = false;
+            isGameCleared = false;
+            isPaused = false;
+        }
 
         public void SetGameOver()
         {

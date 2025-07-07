@@ -5,29 +5,28 @@ using JYL;
 using Unity.VisualScripting;
 
 [CreateAssetMenu(fileName = "ExplosionShot", menuName = "ScriptableObject/BulletPattern/ExplosionShot")]
-
 public class ExplosionShot : BulletPatternData
 {
     [Header("Explosion Shot Settings")]
     public float returnToPoolTimer = 5f;
     public float explosionDelay = 1f;
     public int explosionBullets = 4;
-    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool)
+    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool, int attackPower)
     {
-        BulletPrefabController bullet = pool.ObjectOut() as BulletPrefabController;
+        BulletPrefabController bulletPrefab = pool.ObjectOut() as BulletPrefabController;
 
-        if (bullet != null)
+        if (bulletPrefab != null)
         {
-            bullet.objectPool = pool;
-            bullet.transform.position = firePoints[0].position;
-            bullet.transform.rotation = firePoints[0].rotation;
+            bulletPrefab.objectPool = pool;
+            bulletPrefab.transform.position = firePoints[0].position;
+            bulletPrefab.transform.rotation = firePoints[0].rotation;
 
-            foreach (BulletInfo info in bullet.bulletInfo)
+            foreach (BulletInfo info in bulletPrefab.bulletInfo)
             {
                 if (info.rig != null)
                 {
-                    info.trans.gameObject.SetActive(true);
                     info.trans.localPosition = info.originPos;
+                    info.trans.gameObject.SetActive(true);
                     // info.trans.position = firePoints[0].position;
                     // info.trans.rotation = firePoints[0].rotation;
                     info.rig.velocity = Vector3.zero;
@@ -35,10 +34,8 @@ public class ExplosionShot : BulletPatternData
                 }
             }
             yield return new WaitForSeconds(explosionDelay);
-
-            Debug.Log("ExplosionSHot : 펑, 마저 구현해야함.");
-            Vector3 explosionPos = bullet.transform.position;
-            bullet.ReturnToPool();
+            Vector3 explosionPos = bulletPrefab.bulletInfo[0].trans.position;
+            bulletPrefab.ReturnToPool();
 
             for (int i = 0; i < explosionBullets; i++)
             {
@@ -59,8 +56,9 @@ public class ExplosionShot : BulletPatternData
                     {
                         if (info.rig != null)
                         {
+                            // info.trans.localPosition = info.originPos;
                             info.trans.gameObject.SetActive(true);
-                            // info.trans.position = explosionPos;
+                            info.trans.position = explosionPos;
                             info.rig.velocity = Vector3.zero;
                             info.rig.AddForce(dir * bulletSpeed, ForceMode.Impulse);
                         }

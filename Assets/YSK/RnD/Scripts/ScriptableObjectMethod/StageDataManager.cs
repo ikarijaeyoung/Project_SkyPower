@@ -30,30 +30,32 @@ namespace YSK
     public class StageDataManager : Singleton<StageDataManager>
     {
         [Header("Stage Data")]
-        [SerializeField] private List<StageData> stageDataList;
-
+        [SerializeField] private List<StageData> stageDataList = new List<StageData>();
+        
         [Header("Runtime Data")]
         [SerializeField] public List<StageRuntimeData> runtimeData = new List<StageRuntimeData>();
-
-        // 저장 키
-        private const string STAGE_DATA_KEY = "StageRuntimeData";
-
-        // 이벤트 - 데이터 변경 시 UI 업데이트용
+        
+        // JSON 저장 키 제거
+        // private const string STAGE_DATA_KEY = "StageRuntimeData"; // 삭제
+        
         public static System.Action OnStageDataChanged;
+        
         protected override void Awake() => base.Awake();
-
-        private void Start() { }
-
+        
+        private void Start() { Init(); }
+        
         public override void Init()
         {
             InitializeStageDataList();
             InitializeRuntimeData();
-            LoadRuntimeData();
-
+            
+            // JSON 로드 제거 - 런타임에서만 관리
+            // LoadRuntimeData(); // 삭제
+            
             // 초기화 완료 후 이벤트 발생
             OnStageDataChanged?.Invoke();
-       
         }
+        
         /// <summary>
         /// StageData 스크립터블 오브젝트들을 자동으로 찾아서 설정
         /// </summary>
@@ -100,7 +102,7 @@ namespace YSK
 
         private void InitializeRuntimeData()
         {
-            runtimeData.Clear();
+            //runtimeData.Clear();
 
             if (stageDataList == null || stageDataList.Count == 0)
             {
@@ -144,35 +146,32 @@ namespace YSK
         }
 
         /// <summary>
-        /// 런타임 데이터를 PlayerPrefs에 저장
+        /// 런타임 데이터를 PlayerPrefs에 저장 (JSON 제거)
         /// </summary>
         public void SaveRuntimeData()
         {
-            string json = JsonUtility.ToJson(new StageDataWrapper { stages = runtimeData });
-            PlayerPrefs.SetString(STAGE_DATA_KEY, json);
-            PlayerPrefs.Save();
-            Debug.Log("스테이지 런타임 데이터 저장 완료");
+            // JSON 저장 제거 - 런타임에서만 관리하므로 저장 불필요
+            // string json = JsonUtility.ToJson(new StageDataWrapper { stages = runtimeData });
+            // PlayerPrefs.SetString(STAGE_DATA_KEY, json);
+            // PlayerPrefs.Save();
+            
+            Debug.Log("런타임 데이터는 메모리에서만 관리됩니다 (JSON 저장 제거)");
         }
-
+        
         /// <summary>
-        /// PlayerPrefs에서 런타임 데이터 로드
+        /// PlayerPrefs에서 런타임 데이터 로드 (JSON 제거)
         /// </summary>
         public void LoadRuntimeData()
         {
-            if (PlayerPrefs.HasKey(STAGE_DATA_KEY))
-            {
-                string json = PlayerPrefs.GetString(STAGE_DATA_KEY);
-                var wrapper = JsonUtility.FromJson<StageDataWrapper>(json);
-
-                // 저장된 데이터와 현재 StageDataList를 비교하여 동기화
-                SyncRuntimeDataWithStageData(wrapper.stages);
-
-                Debug.Log("스테이지 런타임 데이터 로드 완료");
-            }
-            else
-            {
-                Debug.Log("저장된 스테이지 데이터가 없어서 초기값 사용");
-            }
+            // JSON 로드 제거 - 항상 초기값 사용
+            // if (PlayerPrefs.HasKey(STAGE_DATA_KEY))
+            // {
+            //     string json = PlayerPrefs.GetString(STAGE_DATA_KEY);
+            //     var wrapper = JsonUtility.FromJson<StageDataWrapper>(json);
+            //     SyncRuntimeDataWithStageData(wrapper.stages);
+            // }
+            
+            Debug.Log("런타임 데이터는 메모리에서만 관리됩니다 (JSON 로드 제거)");
         }
 
         /// <summary>
@@ -273,7 +272,7 @@ namespace YSK
             if (stage != null && !stage.isUnlocked)
             {
                 stage.isUnlocked = true;
-                SaveRuntimeData();
+                // SaveRuntimeData(); // 제거
                 OnStageDataChanged?.Invoke(); // UI 업데이트 이벤트 발생
                 Debug.Log($"스테이지 {stageID} 해금 완료");
             }
@@ -291,7 +290,7 @@ namespace YSK
                 if (subStage != null && !subStage.isUnlocked)
                 {
                     subStage.isUnlocked = true;
-                    SaveRuntimeData();
+                    // SaveRuntimeData(); // 제거
                     OnStageDataChanged?.Invoke(); // UI 업데이트 이벤트 발생
                     Debug.Log($"서브 스테이지 {stageID}-{subStageID} 해금 완료");
                 }
@@ -310,7 +309,7 @@ namespace YSK
                 if (subStage != null && score > subStage.bestScore)
                 {
                     subStage.bestScore = score;
-                    SaveRuntimeData();
+                    // SaveRuntimeData(); // 제거
                     OnStageDataChanged?.Invoke(); // UI 업데이트 이벤트 발생
                     Debug.Log($"스테이지 {stageID}-{subStageID} 최고 점수 업데이트: {score}");
                 }
@@ -338,7 +337,7 @@ namespace YSK
                         stage.isCompleted = true;
                     }
 
-                    SaveRuntimeData();
+                    // SaveRuntimeData(); // 제거
                     OnStageDataChanged?.Invoke(); // UI 업데이트 이벤트 발생
                     Debug.Log($"스테이지 {stageID}-{subStageID} 완료 처리");
                 }
@@ -403,13 +402,14 @@ namespace YSK
         /// </summary>
         public void ResetAllProgress()
         {
-            PlayerPrefs.DeleteKey(STAGE_DATA_KEY);
+            // PlayerPrefs.DeleteKey(STAGE_DATA_KEY); // 삭제
             InitializeRuntimeData();
+            OnStageDataChanged?.Invoke();
             Debug.Log("모든 스테이지 진행도가 초기화되었습니다.");
         }
 
         /// <summary>
-        /// RuntimeData를 세이브 파일과 완전히 동기화하고 저장
+        /// RuntimeData를 세이브 파일과 완전히 동기화하고 저장 (JSON 제거)
         /// </summary>
         public void SyncAndSaveRuntimeData()
         {
@@ -417,15 +417,15 @@ namespace YSK
                 Manager.Game.currentSaveIndex >= 0 && 
                 Manager.Game.currentSaveIndex < Manager.Game.saveFiles.Length)
             {
-                GameData saveData = Manager.Game.saveFiles[Manager.Game.currentSaveIndex];
+                GameData saveData = Manager.Game.CurrentSave;
                 
                 // RuntimeData를 세이브 파일과 동기화
                 SyncRuntimeDataWithStageInfo();
                 
-                // 세이브 파일 저장
-                SaveRuntimeData();
+                // JSON 저장 제거 - 런타임에서만 관리
+                // SaveRuntimeData();
                 
-                Debug.Log("RuntimeData 동기화 및 세이브 파일 저장 완료");
+                Debug.Log("RuntimeData 동기화 완료 (JSON 저장 제거)");
             }
             else
             {
@@ -434,12 +434,12 @@ namespace YSK
         }
 
         /// <summary>
-        /// 스테이지 완료 시 모든 데이터를 동기화하고 저장
+        /// 스테이지 완료 시 모든 데이터를 동기화하고 저장 (JSON 제거)
         /// </summary>
         public void CompleteStageWithSave(int stageID, int subStageID, int score, float completionTime)
         {
             // 1. 점수 업데이트
-            UpdateStageScore(stageID, subStageID, score);
+            //UpdateStageScore(stageID, subStageID, score);
             
             // 2. 스테이지 완료 처리
             CompleteStage(stageID, subStageID, completionTime);
@@ -452,13 +452,10 @@ namespace YSK
                 UnlockSubStage(nextStage.mainStage, nextStage.subStage);
             }
             
-            // 4. 세이브 파일과 동기화
-            SyncAndSaveRuntimeData();
-            
-            // 5. UI 업데이트
+            // 4. UI 업데이트
             OnStageDataChanged?.Invoke();
             
-            Debug.Log($"스테이지 {stageID}-{subStageID} 완료 처리 및 저장 완료");
+            Debug.Log($"스테이지 {stageID}-{subStageID} 완료 처리 완료 (JSON 저장 제거)");
         }
 
         /// <summary>
@@ -522,10 +519,10 @@ namespace YSK
 #endif
     }
 
-    // JSON 직렬화를 위한 래퍼 클래스
-    [System.Serializable]
-    public class StageDataWrapper
-    {
-        public List<StageRuntimeData> stages;
-    }
+    // JSON 직렬화 래퍼 클래스 제거
+    // [System.Serializable]
+    // public class StageDataWrapper
+    // {
+    //     public List<StageRuntimeData> stages;
+    // }
 }

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3447b8e436eb997478dc6550ebda6e8e, type: 3}
+  m_Name: GameAudioManagerSO
+  m_EditorClassIdentifier: 
+  audioDB: {fileID: 11400000, guid: 39c4db242d9f3994eb202cc1b3c90636, type: 2}
+  defaultBGM: {fileID: 11400000, guid: 5c11a8387f744434fbefffaad878e2d6, type: 2}
+  sfxPoolSize: 35

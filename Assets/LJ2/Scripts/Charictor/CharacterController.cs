@@ -149,7 +149,7 @@ namespace LJ2
             //Debug.Log($"Character ID: {characterSave.id}, Step: {characterSave.step}, Level : {characterSave.level}");
             level = characterSave.level;
             step = characterSave.step;
-            bulletPrefab = characterData.bulletPrefab.GetComponent<PooledObject>(); //TODO : 돌파 상황에 따라 다른 총알 적용 해야 함.
+            bulletPrefab = characterData.bulletPrefabs[step].GetComponent<PooledObject>(); //TODO : 돌파 상황에 따라 다른 총알 적용 해야 함.
             //bulletPrefab = Resources.Load<PooledObject>($"Prefabs/bullet/{id}_{step}");
             partySet = characterSave.partySet;
 
@@ -253,14 +253,14 @@ namespace LJ2
             }
         }
 
-        public void UseParry()
+        public void UseParry(Parry subParry) // Parry subParry
         {
             // Parry 기능을 사용할 때마다 쿨타임을 체크하고 실행
-            switch (parry)
+            switch (subParry)
             {
                 case Parry.방어막:
                     parrying.Parry();
-                    defense += parrying.Shield();
+                    parrying.Invicible();
                     break;
                 case Parry.반사B:
                     parrying.Parry();
@@ -282,7 +282,8 @@ namespace LJ2
                     ultimate.Laser(ultDamage);
                     break;
                 case 10002:
-                    // 유도탄 미구현
+                    // 유도탄 미구현 전탄 발사로 대체
+                    ultimate.ManyBullets(ultDamage);
                     break;
                 case 10003:
                     // 탄막 변경 데미지 증가

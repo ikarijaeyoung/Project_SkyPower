@@ -43,13 +43,15 @@ namespace KYG_skyPower
 
         public void RecordBestScore()
         {
-            int bestScore = Manager.SDM.runtimeData[Manager.Game.selectWorldIndex].subStages[Manager.Game.selectStageIndex].bestScore;
+            int bestScore = Manager.SDM.runtimeData[Manager.Game.selectWorldIndex-1].subStages[Manager.Game.selectStageIndex-1].bestScore;
             if (Score > bestScore)
             {
                 // TODO 신기록 달성
-                Manager.SDM.runtimeData[Manager.Game.selectWorldIndex].subStages[Manager.Game.selectStageIndex].bestScore = bestScore;
+                Manager.SDM.runtimeData[Manager.Game.selectWorldIndex-1].subStages[Manager.Game.selectStageIndex-1].bestScore = bestScore;
             }
+            Manager.Game.CurrentSave.gold += Score; // TODO: 스코어만큼 유닛 추가 
             ResetScore();
+            Manager.Game.SaveGameProgress();
         }
     }
 }

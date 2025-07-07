@@ -55,14 +55,19 @@ namespace JYL
             characterLoader.GetCharPrefab();
             charImage = GetUI<Image>("InvenCharImage");
             charImage.sprite = mainController.image;
-            Debug.Log($"{invenCharName}_{invenCharName.GetType()}_{invenCharName.GetType().Name}");
-            Debug.Log($"{mainController.charName}");
-            Debug.Log($"{invenCharName.text} : {mainController.charName}");
-            invenCharName.text = $"{mainController.charName}";
+            if(mainController.step == 0)
+            {
+                invenCharName.text = $"{mainController.charName}";
+            }
+            else
+            {
+                invenCharName.text = $"{mainController.charName} + {mainController.step}";
+            }
             level.text = $"{mainController.level}";
             hp.text = $"{mainController.Hp}";
             ap.text = $"{mainController.attackDamage}";
         }
+
         private void OpenCharEnhance(PointerEventData eventData)
         {
             // 캐릭터 정보를 가지고 강화창 구현

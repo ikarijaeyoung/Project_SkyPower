@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   returnToPoolTimer: 5
   explosionDelay: 1
-  explosionBullets: 4
+  explosionBullets: 5

@@ -9,6 +9,7 @@ public class EnemyData : ScriptableObject
     public int maxHP;
     public Sprite enemyIcon;
     public EnemyType enemyType; // 각 타입마다 ObjectPool다름
+    public int attackPower;
 }
 public enum EnemyType
 {

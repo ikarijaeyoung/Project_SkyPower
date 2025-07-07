@@ -21,8 +21,12 @@ MonoBehaviour:
   maxLevel: 30
   hp: 100
   hpPlus: 5
-  bulletPrefab: {fileID: 2680888267476311631, guid: 0696a3bb04fa20147b153582bd4c2e6d,
-    type: 3}
+  bulletPrefabs:
+  - {fileID: 183857747704877373, guid: 23e8a1be402574b40a2df4c525015f03, type: 3}
+  - {fileID: 2744130776811362667, guid: a0a5a6a8fddea8d4584ae78bce567704, type: 3}
+  - {fileID: 3988187906572094000, guid: 95c3eaeae275f094e9a6f2a2c77dec50, type: 3}
+  - {fileID: 6107887084493347849, guid: 672bb21242544844b81309ae3030ef62, type: 3}
+  - {fileID: 5898227351003812159, guid: 08f69565ebe9a5547bcc1682e54a0aef, type: 3}
   attackDamage: 10
   damagePlus: 5
   attackSpeed: 1
@@ -30,10 +34,11 @@ MonoBehaviour:
   defense: 1
   ultCoolDefault: 100
   ultCoolReduce: 10
-  ultVisual: {fileID: 0}
+  ultVisual: {fileID: 4856827749028106880, guid: e90ac312efb039242bc3fbe9269974a5,
+    type: 3}
   parry: 0
   parryCool: 0
-  icon: {fileID: 21300000, guid: 3618eda1d912fcc4582e920f29bb938f, type: 3}
-  image: {fileID: 21300000, guid: d93be3913bd54cd46bf3fde775b68623, type: 3}
+  icon: {fileID: 21300000, guid: 5e854cfcc78d4ce4ebc36f73199ada30, type: 3}
+  image: {fileID: 21300000, guid: 3bff6cb5aa38f6c46a66929762c1e68d, type: 3}
   upgradeUnitDefault: 2500
   upgradeUnitPlus: 2500
