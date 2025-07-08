@@ -135,14 +135,17 @@ public class EquipController : MonoBehaviour
     {
         for (int i = 0; i < equipData.Length; i++)
         {
-            if (equipData[i].id == id)
+            if (equipData[i].id == id) // id가 일치 할 시
             {
-                if (equipData[i].level > 0)
+                Debug.Log($"아이디 일치해서 들어옴 {id}   {equipData[i].id}");
+                if (equipData[i].level > 0) // 이미 보유 중.
                 {
                     Manager.Game.CurrentSave.gold += 10;
+                    return;
                 }
 
-                else
+                // 보유중이지 않음
+                else if (equipData[i].level <=0)
                 {
                     EquipInfo tmpInfo = equipData[i];
                     tmpInfo.level = 1;
@@ -151,9 +154,8 @@ public class EquipController : MonoBehaviour
 
                     equipData[i] = tmpInfo;
                     Manager.Game.CurrentSave.equipSave[i] = tmp;
+                    return;
                 }
-
-                return;
             }
         }
     }

@@ -1,12 +1,13 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.EventSystems;
 using KYG_skyPower;
-using TMPro;
 using LJ2;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 
 namespace JYL
@@ -19,14 +20,22 @@ namespace JYL
         private EquipController equipController;
         private List<GachaData> charGachaList;
         private List<GachaData> equipGachaList;
+        public List<int> gachaResult;
+        public static bool isStoreReturn = false;
 
         [Header("Set CSV")]
         [SerializeField]private string charGachaCsvPath = "CSV/Char_GachaTable";
         [SerializeField]private string equipGachaCsvPath = "CSV/Equipt_GachaTable";
         [SerializeField]private char splitSymbol = ',';
-        private float totalRate = 0f;
+        
+        private float charTotalRate = 0f;
+        private float equipTotalRate = 0f;
+
         void Start()
         {
+            gachaResult = new List<int>();
+            charGachaList = new List<GachaData>();
+            equipGachaList = new List<GachaData>();
             GetEvent("GachaChrBtn1").Click += CharGachaClick;
             GetEvent("GachaChrBtn5").Click += CharGachaClick;
             GetEvent("GachaEquipBtn1").Click += EquipGachaClick;
@@ -35,6 +44,7 @@ namespace JYL
             characterLoader = gameObject.GetOrAddComponent<CharacterSaveLoader>();
             equipController = gameObject.GetOrAddComponent<EquipController>();
             characterLoader.GetCharPrefab(); // 이큅컨트롤러가 먼저 초기화 된다.
+            GetCSVTable();
         }
         private void Update()
         {
@@ -44,12 +54,26 @@ namespace JYL
                 SceneManager.LoadSceneAsync("bMainScene_JYL");
                 Util.ConsumeESC();
             }
+            if(isStoreReturn)
+            {
+                ResetState();
+                isStoreReturn = false;
+            }
         }
+        
         private void ResetState()
         {
-            charGachaList = new List<GachaData>();
-            equipGachaList = new List<GachaData>();
-
+            if(gachaResult.Count>0)
+            {
+                gachaResult.Clear();
+            }
+            else if(gachaResult == null)
+            {
+                gachaResult = new List<int>();
+            }
+            characterLoader.GetCharPrefab();
+            if (isStoreReturn) isStoreReturn = false;
+            unitText.text = $"{Manager.Game.CurrentSave.gold}";
         }
         private void GetCSVTable()
         {
@@ -64,8 +88,77 @@ namespace JYL
                 Debug.LogError($"CSV파일을 못찾음{equipGachaCsvPath}");
             }
 
-            string[] lines = charCsvFile.text.Split('\n');
+            string[] charLines = charCsvFile.text.Split('\n');
+            for(int i =2;i<charLines.Length;i++)
+            {
+                if (string.IsNullOrWhiteSpace(charLines[i])) continue; //널이거나 빈칸이면(엑셀) 넘어감
+
+                string[] tokens = charLines[i].Split(splitSymbol);
+                int id = int.Parse(tokens[0]);
+                float rate = float.Parse(tokens[2]);
+
+                charGachaList.Add(new GachaData(id,rate));
+                charTotalRate += rate;
+            }
+
+            string[] equipLines = equipCsvFile.text.Split("\n");
+            for(int i  = 2;i<equipLines.Length;i++)
+            {
+                if (string.IsNullOrWhiteSpace(equipLines[i])) continue;
+
+                string[] tokens = equipLines[i].Split(splitSymbol);
+                int id = int.Parse(tokens[0]);
+                float rate = float.Parse(tokens[1]);
+
+                equipGachaList.Add(new GachaData(id, rate));
+                equipTotalRate += rate;
+            }
         }
+
+
+        private void CharRollGacha(int num)
+        {
+            while(gachaResult.Count< num)
+            {
+                float roll = UnityEngine.Random.Range(0f, charTotalRate);
+                float sum = 0f;
+                foreach (var data in charGachaList)
+                {
+                    sum += data.rate;
+                    if (roll <= sum && gachaResult.Count < num)
+                    {
+                        gachaResult.Add(data.id);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void EquipRollGacha(int num)
+        {
+            int counter = num;
+            for(int i = 0; i<counter;i++)
+            {
+                SingleEquipGacha();
+            }
+        }
+
+        private void SingleEquipGacha()
+        {
+            float rateSum = 0f;
+            float roll = UnityEngine.Random.Range(0f, equipTotalRate);
+
+            for (int i = 0; i < equipGachaList.Count; i++)
+            {
+                rateSum += equipGachaList[i].rate;
+                if (roll <= rateSum)
+                {
+                    gachaResult.Add(equipGachaList[i].id);
+                    return;
+                }
+            }
+        }
+
         private void CharGachaClick(PointerEventData eventData)
         {
             // TODO : 가챠 수행과 동시에, 인벤토리(캐릭터 목록)에 추가. 게임매니저에서 세이브함
@@ -77,8 +170,11 @@ namespace JYL
                     if (Manager.Game.CurrentSave.gold >= 100)
                     {
                         Manager.Game.CurrentSave.gold -= 100;
-                        
-                        
+                        CharRollGacha(1);
+                        foreach(int id in gachaResult)
+                        {
+                            Manager.Game.CurrentSave.characterInventory.GachaAdd(id);
+                        }
                         Manager.Game.SaveGameProgress();
                         UIManager.Instance.ShowPopUp<GachaPopUp>();
                     }
@@ -87,8 +183,11 @@ namespace JYL
                     if(Manager.Game.CurrentSave.gold >= 500)
                     {
                         Manager.Game.CurrentSave.gold -= 500;
-                        
-                        
+                        CharRollGacha(5);
+                        foreach (int id in gachaResult)
+                        {
+                            Manager.Game.CurrentSave.characterInventory.GachaAdd(id);
+                        }
                         Manager.Game.SaveGameProgress();
                         UIManager.Instance.ShowPopUp<Gacha5PopUp>();
                     }
@@ -104,8 +203,11 @@ namespace JYL
                     if (Manager.Game.CurrentSave.gold >= 100)
                     {
                         Manager.Game.CurrentSave.gold -= 100;
-
-
+                        EquipRollGacha(1);
+                        foreach (int id in gachaResult)
+                        {
+                            equipController.AddEquipment(id);
+                        }
                         Manager.Game.SaveGameProgress();
                         UIManager.Instance.ShowPopUp<GachaPopUp>();
                     }
@@ -114,33 +216,17 @@ namespace JYL
                     if (Manager.Game.CurrentSave.gold >= 500)
                     {
                         Manager.Game.CurrentSave.gold -= 500;
-
-
+                        EquipRollGacha(5);
+                        foreach (int id in gachaResult)
+                        {
+                            equipController.AddEquipment(id);
+                        }
                         Manager.Game.SaveGameProgress();
                         UIManager.Instance.ShowPopUp<Gacha5PopUp>();
                     }
                     break;
             }
         }
-        private List<CharactorController> CharGachaRoll(int num)
-        {
-            List<CharactorController> results = new List<CharactorController>(num);
-            // 리설트를 가챠로 채움
-
-            return null;
-        }
-        private List<EquipInfo> EquipGachaRoll(int num)
-        {
-            List<EquipInfo> results = new List<EquipInfo>(num);
-            // 리설트를 가챠로 채움
-            return null;
-
-        }
-        //// TODO : 아이템 추가 시 작업
-        //private void ItemStore(PointerEventData eventData)
-        //{
-
-        //}
     }
 
     [System.Serializable]
