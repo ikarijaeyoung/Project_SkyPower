@@ -220,8 +220,8 @@ namespace JYL
             Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
             if (viewportPos.z <= 0) return Vector2.zero;
 
-            if (viewportPos.x <= leftMargin+0.15f && inputDirection.x < 0) inputDirection.x = 0;
-            if (viewportPos.x >= rightMargin-0.15f && inputDirection.x > 0) inputDirection.x = 0;
+            if (viewportPos.x <= leftMargin+0.01f && inputDirection.x < 0) inputDirection.x = 0;
+            if (viewportPos.x >= rightMargin-0.01f && inputDirection.x > 0) inputDirection.x = 0;
 
             if (viewportPos.y-0.01f <= 0 && inputDirection.y < 0) inputDirection.y = 0;
             if (viewportPos.y+0.01f >= 1 && inputDirection.y > 0) inputDirection.y = 0;
