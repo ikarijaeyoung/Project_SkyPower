@@ -1,11 +1,12 @@
+using IO;
+using JYL;
+
+using LJ2;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
-using LJ2;
-using IO;
-using JYL;
 
 namespace KYG_skyPower
 {
@@ -30,6 +31,7 @@ namespace KYG_skyPower
     public class GameManager : Singleton<GameManager>
     {
         public UnityEvent onGameOver, onPause, onResume, onGameClear;
+        
 
         public GameData[] saveFiles = new GameData[3]; // 세이브 파일 3개
 
@@ -83,6 +85,7 @@ namespace KYG_skyPower
         void Start()
         {
             AudioManager.Instance.PlayBGM("StarMenu_BGM");
+            DialogueManager.Instance.StartDialogue();
         }
 
         public void ResetState()

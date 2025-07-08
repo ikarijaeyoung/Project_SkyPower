@@ -126,8 +126,24 @@ namespace YSK
                 return;
 
             currentStage = stageDataList.Find(data => data.stageID == mainStageID);
+            if (currentStage != null)
+                Debug.Log($"현재 스테이지 이름: {currentStage.stageName} / ID: {currentStage.stageID}");
             SpawnMaps();
-            
+
+            if (currentStage != null)
+            {
+                Debug.Log($"현재 스테이지 이름: {currentStage.stageName} / ID: {currentStage.stageID}");
+            }
+            else
+            {
+                Debug.LogWarning($"스테이지 ID {mainStageID}에 해당하는 StageData가 없습니다!");
+            }
+
+            Debug.Log($"=== LoadStage 완료: {mainStageID}-{subStageID} ===");
+
+            DialogueManager.Instance.LoadDialogDBByStageID(currentStage.stageID, subStageID);
+            DialogueManager.Instance.StartDialogue();
+
             Debug.Log($"=== LoadStage 완료: {mainStageID}-{subStageID} ===");
         }
 

@@ -1,24 +1,23 @@
-using KYG.SkyPower;
-
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace KYG.SkyPower
+namespace KYG_skyPower
 {
-    [System.Serializable]
-    public class DialogLine
-    {
-        public int id;                      // ??? ???????
-        public string speaker;              // ????
-        public Sprite portrait;             // ????
-        [TextArea] public string text;      // ??? ????
-        public AudioClip sound;             // ????(????)
-        public int nextID;                  // ???? ??? id (0 ??? -1?? ????)
+
+
+[System.Serializable] 
+public class DialogLine 
+{
+        public int id; // 대사 ID, 이름, 설명
+        public string speaker; // "Player", "Boss", "Supporter" 등
+        public string content; // 대사 내용
+        public Sprite speakerSprite; // 스피커의 이미지 (예: Player, Boss 등)
     }
-}
-[CreateAssetMenu(fileName = "DialogDB", menuName = "Dialog/DialogDB")]
-public class DialogDB : ScriptableObject
-{
-    public List<DialogLine> lines;
+
+    [CreateAssetMenu(menuName = "Dialog/DialogDB")]
+    public class DialogDB : ScriptableObject
+    {
+        public string stageName;   // 예: "Stage_1"
+        public List<DialogLine> lines = new List<DialogLine>(); 
+    }
 }
