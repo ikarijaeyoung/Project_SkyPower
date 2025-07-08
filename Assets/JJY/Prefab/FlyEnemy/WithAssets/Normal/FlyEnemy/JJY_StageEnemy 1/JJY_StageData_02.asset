@@ -14,57 +14,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sequence:
   - enemyPrefab:
-    - {fileID: 8351887547980912979, guid: 4a978c4b530e163449a3d6cb2faf22bb, type: 3}
-    - {fileID: 8351887547980912979, guid: 4a978c4b530e163449a3d6cb2faf22bb, type: 3}
-    - {fileID: 8351887547980912979, guid: 4a978c4b530e163449a3d6cb2faf22bb, type: 3}
-    spawnPos:
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    spawnDelay: 3
-  - enemyPrefab:
-    - {fileID: 5532545821888678440, guid: 4237dd5ab6e94514f9d1f7e376929820, type: 3}
-    - {fileID: 5532545821888678440, guid: 76cd24f4a4d039d47a351bc665f303a1, type: 3}
-    - {fileID: 5532545821888678440, guid: d74d788cd0f5a394c801e83389581a28, type: 3}
+    - {fileID: 5532545821888678440, guid: 5d7b4746eaf16f94ab708bd4b8236e9b, type: 3}
+    - {fileID: 5532545821888678440, guid: ababb74fe956f5c4791357f78d117fab, type: 3}
+    - {fileID: 5532545821888678440, guid: 61a8b79995804554dbcb80f3fa94aa40, type: 3}
     spawnPos:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     spawnDelay: 2
   - enemyPrefab:
-    - {fileID: 5532545821888678440, guid: 4237dd5ab6e94514f9d1f7e376929820, type: 3}
-    - {fileID: 5532545821888678440, guid: 76cd24f4a4d039d47a351bc665f303a1, type: 3}
-    - {fileID: 5532545821888678440, guid: d74d788cd0f5a394c801e83389581a28, type: 3}
-    - {fileID: 5532545821888678440, guid: 4237dd5ab6e94514f9d1f7e376929820, type: 3}
-    - {fileID: 5532545821888678440, guid: 76cd24f4a4d039d47a351bc665f303a1, type: 3}
+    - {fileID: 5532545821888678440, guid: 5d7b4746eaf16f94ab708bd4b8236e9b, type: 3}
+    - {fileID: 5532545821888678440, guid: ababb74fe956f5c4791357f78d117fab, type: 3}
+    - {fileID: 5532545821888678440, guid: 61a8b79995804554dbcb80f3fa94aa40, type: 3}
     spawnPos:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    spawnDelay: 1
+    spawnDelay: 2
   - enemyPrefab:
-    - {fileID: 5532545821888678440, guid: a82e6e25d39536e4084e5d05b67eea57, type: 3}
-    - {fileID: 5532545821888678440, guid: a82e6e25d39536e4084e5d05b67eea57, type: 3}
-    - {fileID: 5532545821888678440, guid: a82e6e25d39536e4084e5d05b67eea57, type: 3}
-    - {fileID: 5532545821888678440, guid: a82e6e25d39536e4084e5d05b67eea57, type: 3}
-    - {fileID: 5532545821888678440, guid: a82e6e25d39536e4084e5d05b67eea57, type: 3}
-    - {fileID: 8351887547980912979, guid: 9861a3e7046190e4c8a89af19b32450d, type: 3}
+    - {fileID: 8351887547980912979, guid: 6f5ded54ce23529419c3abd00537e096, type: 3}
+    - {fileID: 5532545821888678440, guid: 91e9689b81004244b98c302748e60430, type: 3}
+    - {fileID: 5532545821888678440, guid: 91e9689b81004244b98c302748e60430, type: 3}
     spawnPos:
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     spawnDelay: 0.5
   - enemyPrefab:
-    - {fileID: 5532545821888678440, guid: 4237dd5ab6e94514f9d1f7e376929820, type: 3}
-    - {fileID: 5532545821888678440, guid: 76cd24f4a4d039d47a351bc665f303a1, type: 3}
-    - {fileID: 5532545821888678440, guid: d74d788cd0f5a394c801e83389581a28, type: 3}
-    - {fileID: 8351887547980912979, guid: 29b79c03cb4ed0749b2289aebb1adb5a, type: 3}
-    - {fileID: 8351887547980912979, guid: f3efa83d16bce774da2c7576216cf80c, type: 3}
+    - {fileID: 5532545821888678440, guid: 5d7b4746eaf16f94ab708bd4b8236e9b, type: 3}
+    - {fileID: 5532545821888678440, guid: ababb74fe956f5c4791357f78d117fab, type: 3}
+    - {fileID: 5532545821888678440, guid: 61a8b79995804554dbcb80f3fa94aa40, type: 3}
+    - {fileID: 8351887547980912979, guid: 3a1872601c9a2a0488caef89a97d5773, type: 3}
+    - {fileID: 8351887547980912979, guid: 6f5ded54ce23529419c3abd00537e096, type: 3}
     spawnPos:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
@@ -73,8 +54,8 @@ MonoBehaviour:
     - {x: 0, y: 0, z: 0}
     spawnDelay: 1
   bossPrefabs:
-  - {fileID: 6907872983839026229, guid: 46747b25a9243eb46b480ebcf97db0c9, type: 3}
-  - {fileID: 6907872983839026229, guid: 52353d2504fb53a4f915290f1d0d12ee, type: 3}
+  - {fileID: 6907872983839026229, guid: b1b38b2ceeb75174b990d90dd2788de1, type: 3}
+  - {fileID: 6907872983839026229, guid: 765362669f64328488fca587d472baad, type: 3}
   bossSpawnPos:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
