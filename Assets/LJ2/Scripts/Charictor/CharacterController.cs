@@ -44,6 +44,8 @@ namespace LJ2
 
         public int upgradeUnit;
 
+        public string attackSound;
+
         private void Awake()
         {
             parrying = GetComponent<Parrying>();
@@ -132,6 +134,15 @@ namespace LJ2
             icon = characterData.icon;
             image = characterData.image;
 
+            switch (grade)
+            {
+                case Grade.SSR:
+                    attackSound = "Atk_Normal_SSR";
+                    break;
+                case Grade.R:
+                    attackSound = "Atk_Normal_R";
+                    break;
+            }
 
             // Save의 값을 그대로 가져옴  
 
@@ -162,6 +173,7 @@ namespace LJ2
                 Hp = characterData.hp + (characterData.hpPlus * (level - 1));
                 attackDamage = (int)(characterData.attackDamage + (characterData.damagePlus * (level - 1)));
             }
+
 
             ultLevel = step + 1;
             ultCool = characterData.ultCoolDefault - (characterData.ultCoolReduce * step);
@@ -256,6 +268,7 @@ namespace LJ2
 
         public void UseUlt()
         {
+            AudioManager.Instance.PlaySFX("Atk_Ultimate");
             switch (id)
             {
                 case 10001:
