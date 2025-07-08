@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
     private Coroutine curFireCoroutine;
     public ObjectPool curObjectPool;
     public float bulletSpeed = 1f;
-    public float fireDelay = 1.5f;
+    // public float fireDelay = 1.5f;
 
     [Header("Hit Animation")]
     private Renderer modelRenderer;

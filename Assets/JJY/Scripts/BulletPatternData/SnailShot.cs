@@ -33,7 +33,7 @@ public class SnailShot : BulletPatternData
                         {
                             info.trans.gameObject.SetActive(true);
                             info.trans.localPosition = info.originPos;
-                            info.trans.position = firePoints[i].position;
+                            info.trans.position = curFirePoint.position;
                             info.trans.rotation = Quaternion.LookRotation(curFirePoint.forward);
                             info.rig.velocity = Vector3.zero;
                             info.bulletController.attackPower = attackPower;

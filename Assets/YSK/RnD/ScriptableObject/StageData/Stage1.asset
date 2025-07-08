@@ -25,7 +25,7 @@ MonoBehaviour:
     subStageName: 
     subStageLock: 0
     subStageScore: 0
-    stageEnemyData: {fileID: 11400000, guid: 4ba5f9d4beb59164185c4adf3149e85b, type: 2}
+    stageEnemyData: {fileID: 11400000, guid: 565d96a1d3ef64846a9b380dda6b9d63, type: 2}
     customMapPrefabs:
     - {fileID: 8807305219614094375, guid: 043932ae6cb043e44bf8cd309c24dca9, type: 3}
     - {fileID: 6930328749638797919, guid: 73cbea1d0149319439bdbadd9e4fcdcc, type: 3}
