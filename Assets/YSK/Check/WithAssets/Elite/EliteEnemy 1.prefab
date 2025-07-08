@@ -324,10 +324,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e4d3954196535214c880bf2e14c22479, type: 2}
   curObjectPool: {fileID: 0}
   bulletSpeed: 2
-  fireDelay: 1.5
   flashColor: {r: 1, g: 1, b: 1, a: 1}
   flashDuration: 0.1
-  deathEffectPrefab: {fileID: 0}
+  deathEffectPrefab: {fileID: 1991596720237968674, guid: c93377537c33e0e4bb71e7ad2a4cfa41,
+    type: 3}
   destroyDelay: 0
 --- !u!95 &672123457678934721
 Animator:
