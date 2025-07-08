@@ -72,6 +72,9 @@ namespace JYL
                     case "cStoreScene_JYL":
                         sceneBGM = "Shop_BGM";
                         break;
+                    case "dStageScene_JYL":
+                        sceneBGM = "Stage1_BGM";
+                    break;
                     default:
                         sceneBGM = "";
                         break;

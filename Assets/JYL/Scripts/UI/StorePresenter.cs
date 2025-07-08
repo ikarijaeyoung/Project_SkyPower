@@ -17,9 +17,16 @@ namespace JYL
         private TMP_Text unitText => GetUI<TMP_Text>("StoreUnitText");
         private CharacterSaveLoader characterLoader;
         private EquipController equipController;
+        private List<GachaData> charGachaList;
+        private List<GachaData> equipGachaList;
+
+        [Header("Set CSV")]
+        [SerializeField]private string charGachaCsvPath = "CSV/Char_GachaTable";
+        [SerializeField]private string equipGachaCsvPath = "CSV/Equipt_GachaTable";
+        [SerializeField]private char splitSymbol = ',';
+        private float totalRate = 0f;
         void Start()
         {
-
             GetEvent("GachaChrBtn1").Click += CharGachaClick;
             GetEvent("GachaChrBtn5").Click += CharGachaClick;
             GetEvent("GachaEquipBtn1").Click += EquipGachaClick;
@@ -38,7 +45,27 @@ namespace JYL
                 Util.ConsumeESC();
             }
         }
+        private void ResetState()
+        {
+            charGachaList = new List<GachaData>();
+            equipGachaList = new List<GachaData>();
 
+        }
+        private void GetCSVTable()
+        {
+            TextAsset charCsvFile = Resources.Load<TextAsset>(charGachaCsvPath);
+            TextAsset equipCsvFile = Resources.Load<TextAsset>(equipGachaCsvPath);
+            if (charCsvFile == null)
+            {
+                Debug.LogError($"CSV파일을 못찾음{charGachaCsvPath}");
+            }
+            if (equipCsvFile == null)
+            {
+                Debug.LogError($"CSV파일을 못찾음{equipGachaCsvPath}");
+            }
+
+            string[] lines = charCsvFile.text.Split('\n');
+        }
         private void CharGachaClick(PointerEventData eventData)
         {
             // TODO : 가챠 수행과 동시에, 인벤토리(캐릭터 목록)에 추가. 게임매니저에서 세이브함
@@ -98,11 +125,14 @@ namespace JYL
         private List<CharactorController> CharGachaRoll(int num)
         {
             List<CharactorController> results = new List<CharactorController>(num);
+            // 리설트를 가챠로 채움
+
             return null;
         }
         private List<EquipInfo> EquipGachaRoll(int num)
         {
             List<EquipInfo> results = new List<EquipInfo>(num);
+            // 리설트를 가챠로 채움
             return null;
 
         }
@@ -111,6 +141,19 @@ namespace JYL
         //{
 
         //}
+    }
+
+    [System.Serializable]
+    public class GachaData
+    {
+        public int id;
+        public float rate;
+
+        public GachaData(int id, float rate )
+        {
+            this.id = id;
+            this.rate = rate;
+        }
     }
 }
 

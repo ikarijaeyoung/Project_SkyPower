@@ -5,12 +5,15 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using KYG_skyPower;
+using TMPro;
 
 namespace JYL
 {
     public class StageClearPopUp : BaseUI
     {
         private Button nextButton;
+        private TMP_Text stageClearText => GetUI<TMP_Text>("StageClearFailText");
+        private TMP_Text stageNumText => GetUI<TMP_Text>("StageNumberText");
         // TODO : 해당 팝업은 게임 클리어 시점에서 팝업된다
         private void Start()
         {
@@ -25,9 +28,11 @@ namespace JYL
         // TODO : 테스트 필요
         private void SetNextStageBtn() // 버튼 활성화 여부.  다음 스테이지 정보가 없을 경우, 비활성화
         {
+            stageNumText.text = $"STAGE {Manager.Game.selectWorldIndex} - {Manager.Game.selectStageIndex}";
             nextButton = GetUI<Button>("SCNextStageBtn");
-            if(Manager.Game.isGameCleared)
-            {
+            if (Manager.Game.isGameCleared)
+            { 
+                stageClearText.text = "스테이지 클리어";
                 int worldIndex = Manager.Game.selectWorldIndex;
                 int stageIndex = Manager.Game.selectStageIndex;
                 if (stageIndex > 5)
@@ -46,6 +51,8 @@ namespace JYL
             }
             else
             {
+
+                stageClearText.text = "클리어 실패";
                 nextButton.interactable = false;
             }
             
