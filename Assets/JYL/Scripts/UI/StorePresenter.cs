@@ -34,6 +34,7 @@ namespace JYL
 
         void Start()
         {
+            unitText.text = $"{Manager.Game.CurrentSave.gold}";
             gachaResult = new List<int>();
             charGachaList = new List<GachaData>();
             equipGachaList = new List<GachaData>();
@@ -129,12 +130,9 @@ namespace JYL
         {
             float roll = UnityEngine.Random.Range(0f, charTotalRate);
             float sum = 0f;
-            Debug.Log($"·Ñ{roll} __ ½æ{sum}");
-            Debug.Log($"°¡Ã­¸®½ºÆ® Ä«¿îÆ®{charGachaList.Count}");
             for(int i = 0; i< charGachaList.Count;i++)
             {
                 sum += charGachaList[i].rate;
-                Debug.Log($"°è»êÈÄ ½æ {sum}");
                 if (roll <= sum )
                 {
                     gachaResult.Add(charGachaList[i].id);
@@ -191,7 +189,7 @@ namespace JYL
                     }
                     break;
                 case 5:
-                    isCharGacha = false;
+                    isCharGacha = true;
                     if(Manager.Game.CurrentSave.gold >= 1000)
                     {
                         Manager.Game.CurrentSave.gold -= 1000;

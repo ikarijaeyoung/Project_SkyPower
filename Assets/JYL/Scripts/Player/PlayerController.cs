@@ -48,8 +48,6 @@ namespace JYL
             {
                 hp = value;
                 onHpChanged?.Invoke(hp);
-                curBulletPool.ObjectOut();
-
             }
         }
         private int attackPower { get; set; }
@@ -107,6 +105,8 @@ namespace JYL
         private void LateUpdate() { }
 
         private void OnDisable() => UnSubscribeEvents();
+
+        // 적과 충돌 시, 데미지 입음
         private void OnTriggerEnter(Collider other)
         {
             if(other.gameObject.layer == 8)
@@ -140,7 +140,12 @@ namespace JYL
                 sub2CharController = charDataLoader.sub2Controller;
             }
             inGameController = Instantiate(mainCharController.gameObject, transform).GetComponent<CharactorController>();
-            hud.Init();
+            
+            CharacterParameterSetting();
+            hud.Init(); // HUD Init
+
+            if (leftUI == null) leftUI = hud.leftUI;
+            if (rightUI == null) rightUI = hud.rightUI;
 
             // CharactorController character = gameObject.AddComponent<CharactorController>();
 
@@ -181,14 +186,13 @@ namespace JYL
                 Debug.LogWarning("오른쪽 UI 참조 안됐음");
             }
 
-            CharacterParameterSetting();
 
         }
         // 캐릭터 필드 세팅
         private void CharacterParameterSetting()
         {
             //mainCharController.model 생성
-            hp = mainCharController.Hp;
+            Hp = mainCharController.Hp;
             attackPower = mainCharController.attackDamage;
             moveSpeed = mainCharController.moveSpeed;
         }
@@ -216,11 +220,11 @@ namespace JYL
             Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
             if (viewportPos.z <= 0) return Vector2.zero;
 
-            if (viewportPos.x <= leftMargin+0.03f && inputDirection.x < 0) inputDirection.x = 0;
-            if (viewportPos.x >= rightMargin-0.03f && inputDirection.x > 0) inputDirection.x = 0;
+            if (viewportPos.x <= leftMargin+0.01f && inputDirection.x < 0) inputDirection.x = 0;
+            if (viewportPos.x >= rightMargin-0.01f && inputDirection.x > 0) inputDirection.x = 0;
 
-            if (viewportPos.y-0.03f <= 0 && inputDirection.y < 0) inputDirection.y = 0;
-            if (viewportPos.y+0.03f >= 1 && inputDirection.y > 0) inputDirection.y = 0;
+            if (viewportPos.y-0.01f <= 0 && inputDirection.y < 0) inputDirection.y = 0;
+            if (viewportPos.y+0.01f >= 1 && inputDirection.y > 0) inputDirection.y = 0;
 
             return inputDirection;
         }
