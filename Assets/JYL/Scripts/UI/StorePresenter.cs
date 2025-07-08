@@ -20,8 +20,9 @@ namespace JYL
         private EquipController equipController;
         private List<GachaData> charGachaList;
         private List<GachaData> equipGachaList;
-        public List<int> gachaResult;
+        public static List<int> gachaResult;
         public static bool isStoreReturn = false;
+        public static bool isCharGacha = false;
 
         [Header("Set CSV")]
         [SerializeField]private string charGachaCsvPath = "CSV/Char_GachaTable";
@@ -60,7 +61,7 @@ namespace JYL
                 isStoreReturn = false;
             }
         }
-        
+
         private void ResetState()
         {
             if(gachaResult.Count>0)
@@ -118,18 +119,27 @@ namespace JYL
 
         private void CharRollGacha(int num)
         {
-            while(gachaResult.Count< num)
+            int counter = num;
+            for(int i = 0;i<counter;i++)
             {
-                float roll = UnityEngine.Random.Range(0f, charTotalRate);
-                float sum = 0f;
-                foreach (var data in charGachaList)
+                SingleCharGacha();
+            }
+        }
+        private void SingleCharGacha()
+        {
+            float roll = UnityEngine.Random.Range(0f, charTotalRate);
+            float sum = 0f;
+            Debug.Log($"롤{roll} __ 썸{sum}");
+            Debug.Log($"가챠리스트 카운트{charGachaList.Count}");
+            for(int i = 0; i< charGachaList.Count;i++)
+            {
+                sum += charGachaList[i].rate;
+                Debug.Log($"계산후 썸 {sum}");
+                if (roll <= sum )
                 {
-                    sum += data.rate;
-                    if (roll <= sum && gachaResult.Count < num)
-                    {
-                        gachaResult.Add(data.id);
-                        break;
-                    }
+                    gachaResult.Add(charGachaList[i].id);
+                    Debug.Log($"현재 들어가는 캐릭 ID{charGachaList[i].id}");
+                    break;
                 }
             }
         }
@@ -167,9 +177,10 @@ namespace JYL
             switch (num)
             {
                 case 1:
-                    if (Manager.Game.CurrentSave.gold >= 100)
+                    isCharGacha = true;
+                    if (Manager.Game.CurrentSave.gold >= 200)
                     {
-                        Manager.Game.CurrentSave.gold -= 100;
+                        Manager.Game.CurrentSave.gold -= 200;
                         CharRollGacha(1);
                         foreach(int id in gachaResult)
                         {
@@ -180,9 +191,10 @@ namespace JYL
                     }
                     break;
                 case 5:
-                    if(Manager.Game.CurrentSave.gold >= 500)
+                    isCharGacha = false;
+                    if(Manager.Game.CurrentSave.gold >= 1000)
                     {
-                        Manager.Game.CurrentSave.gold -= 500;
+                        Manager.Game.CurrentSave.gold -= 1000;
                         CharRollGacha(5);
                         foreach (int id in gachaResult)
                         {
@@ -200,9 +212,9 @@ namespace JYL
             switch (num)
             {
                 case 1:
-                    if (Manager.Game.CurrentSave.gold >= 100)
+                    if (Manager.Game.CurrentSave.gold >= 200)
                     {
-                        Manager.Game.CurrentSave.gold -= 100;
+                        Manager.Game.CurrentSave.gold -= 200;
                         EquipRollGacha(1);
                         foreach (int id in gachaResult)
                         {
@@ -213,9 +225,9 @@ namespace JYL
                     }
                     break;
                 case 5:
-                    if (Manager.Game.CurrentSave.gold >= 500)
+                    if (Manager.Game.CurrentSave.gold >= 1000)
                     {
-                        Manager.Game.CurrentSave.gold -= 500;
+                        Manager.Game.CurrentSave.gold -= 1000;
                         EquipRollGacha(5);
                         foreach (int id in gachaResult)
                         {

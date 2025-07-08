@@ -1,6 +1,6 @@
 {
-    "playerName": "fff",
-    "gold": 20,
+    "playerName": "22111",
+    "gold": 700,
     "characterInventory": {
         "characters": [
             {
@@ -47,7 +47,7 @@
             },
             {
                 "id": 10008,
-                "level": -1,
+                "level": 1,
                 "step": 0,
                 "partySet": 3
             },
@@ -101,7 +101,7 @@
             },
             {
                 "id": 10017,
-                "level": -1,
+                "level": 1,
                 "step": 0,
                 "partySet": 3
             },
@@ -113,7 +113,7 @@
             },
             {
                 "id": 10019,
-                "level": -1,
+                "level": 1,
                 "step": 0,
                 "partySet": 3
             },
@@ -328,7 +328,7 @@
         },
         {
             "id": 30002,
-            "level": 1
+            "level": -1
         },
         {
             "id": 30003,
@@ -344,7 +344,7 @@
         },
         {
             "id": 30006,
-            "level": 1
+            "level": -1
         },
         {
             "id": 30007,
@@ -352,11 +352,11 @@
         },
         {
             "id": 30008,
-            "level": 1
+            "level": -1
         },
         {
             "id": 30009,
-            "level": 1
+            "level": -1
         },
         {
             "id": 30010,
@@ -384,15 +384,15 @@
         },
         {
             "id": 30016,
-            "level": 1
+            "level": -1
         },
         {
             "id": 30017,
-            "level": 1
+            "level": -1
         },
         {
             "id": 30018,
-            "level": 1
+            "level": -1
         },
         {
             "id": 30019,
@@ -400,7 +400,7 @@
         },
         {
             "id": 30020,
-            "level": 1
+            "level": -1
         },
         {
             "id": 30021,
