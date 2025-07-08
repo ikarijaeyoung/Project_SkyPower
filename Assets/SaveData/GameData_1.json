@@ -1,6 +1,6 @@
 {
-    "playerName": "eqipT",
-    "gold": 1010917,
+    "playerName": "fff",
+    "gold": 20,
     "characterInventory": {
         "characters": [
             {
@@ -55,7 +55,7 @@
                 "id": 10009,
                 "level": 1,
                 "step": 0,
-                "partySet": 1
+                "partySet": 0
             },
             {
                 "id": 10010,
@@ -91,7 +91,7 @@
                 "id": 10015,
                 "level": 1,
                 "step": 0,
-                "partySet": 2
+                "partySet": 1
             },
             {
                 "id": 10016,
@@ -161,14 +161,20 @@
             },
             {
                 "id": 10027,
-                "level": 2,
+                "level": 1,
                 "step": 0,
-                "partySet": 0
+                "partySet": 2
             },
             {
                 "id": 10028,
                 "level": -1,
-                "step": 1,
+                "step": 0,
+                "partySet": 3
+            },
+            {
+                "id": 10028,
+                "level": -1,
+                "step": 0,
                 "partySet": 3
             }
         ]
@@ -179,48 +185,48 @@
             "stage": 1,
             "score": 0,
             "unlock": true,
-            "isClear": true
+            "isClear": false
         },
         {
             "world": 1,
             "stage": 2,
             "score": 0,
-            "unlock": true,
-            "isClear": true
+            "unlock": false,
+            "isClear": false
         },
         {
             "world": 1,
             "stage": 3,
             "score": 0,
-            "unlock": true,
-            "isClear": true
+            "unlock": false,
+            "isClear": false
         },
         {
             "world": 1,
             "stage": 4,
             "score": 0,
-            "unlock": true,
-            "isClear": true
+            "unlock": false,
+            "isClear": false
         },
         {
             "world": 1,
             "stage": 5,
             "score": 0,
-            "unlock": true,
-            "isClear": true
+            "unlock": false,
+            "isClear": false
         },
         {
             "world": 2,
             "stage": 1,
             "score": 0,
-            "unlock": true,
-            "isClear": true
+            "unlock": false,
+            "isClear": false
         },
         {
             "world": 2,
             "stage": 2,
             "score": 0,
-            "unlock": true,
+            "unlock": false,
             "isClear": false
         },
         {
@@ -318,11 +324,11 @@
     "equipSave": [
         {
             "id": 30001,
-            "level": 10
+            "level": -1
         },
         {
             "id": 30002,
-            "level": -1
+            "level": 1
         },
         {
             "id": 30003,
@@ -330,7 +336,7 @@
         },
         {
             "id": 30004,
-            "level": 3
+            "level": -1
         },
         {
             "id": 30005,
@@ -338,7 +344,7 @@
         },
         {
             "id": 30006,
-            "level": 3
+            "level": 1
         },
         {
             "id": 30007,
@@ -346,15 +352,15 @@
         },
         {
             "id": 30008,
-            "level": -1
+            "level": 1
         },
         {
             "id": 30009,
-            "level": -1
+            "level": 1
         },
         {
             "id": 30010,
-            "level": 4
+            "level": -1
         },
         {
             "id": 30011,
@@ -362,7 +368,7 @@
         },
         {
             "id": 30012,
-            "level": 7
+            "level": -1
         },
         {
             "id": 30013,
@@ -378,15 +384,15 @@
         },
         {
             "id": 30016,
-            "level": -1
+            "level": 1
         },
         {
             "id": 30017,
-            "level": -1
+            "level": 1
         },
         {
             "id": 30018,
-            "level": -1
+            "level": 1
         },
         {
             "id": 30019,
@@ -394,7 +400,7 @@
         },
         {
             "id": 30020,
-            "level": -1
+            "level": 1
         },
         {
             "id": 30021,
@@ -438,8 +444,8 @@
         }
     ],
     "wearingId": [
-        30001,
-        30012,
-        30012
+        0,
+        0,
+        0
     ]
 }
