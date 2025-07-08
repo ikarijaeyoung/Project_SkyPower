@@ -1,6 +1,6 @@
 {
     "playerName": "eqipT",
-    "gold": 995500,
+    "gold": 995631,
     "characterInventory": {
         "characters": [
             {
@@ -179,13 +179,13 @@
             "stage": 1,
             "score": 0,
             "unlock": true,
-            "isClear": false
+            "isClear": true
         },
         {
             "world": 1,
             "stage": 2,
             "score": 0,
-            "unlock": false,
+            "unlock": true,
             "isClear": false
         },
         {
