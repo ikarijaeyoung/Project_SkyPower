@@ -188,10 +188,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageDataList:
-  - {fileID: 11400000, guid: 42cfb91afb7928e44ad33bcd26b088f2, type: 2}
-  - {fileID: 11400000, guid: 1c49c343c7c1d7f4fa92f3b191963113, type: 2}
-  - {fileID: 11400000, guid: 75b7ec7daad056941a8609cd4e71d747, type: 2}
-  - {fileID: 11400000, guid: 0c563732c7779bd48a0d43bee27514ec, type: 2}
+  - {fileID: 11400000, guid: 5e15428839f0da842be961e90b50a269, type: 2}
+  - {fileID: 11400000, guid: 617c90efe8f46ae47a536ffebde8fb71, type: 2}
+  - {fileID: 11400000, guid: ea1e744c3561cf142bd9e8011c1a26a1, type: 2}
+  - {fileID: 11400000, guid: 3cc4bc690a609864b83308ec46390020, type: 2}
   maxMainStages: 4
   maxSubStages: 5
   dataManager: {fileID: 0}
@@ -299,11 +299,52 @@ PrefabInstance:
       propertyPath: poolSize
       value: 10
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8851782413218566099, guid: 382515b078d5ae443abc4aee0c779e5d,
+        type: 3}
+      propertyPath: m_Height
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851782413218566099, guid: 382515b078d5ae443abc4aee0c779e5d,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851782413218566099, guid: 382515b078d5ae443abc4aee0c779e5d,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851782413218566099, guid: 382515b078d5ae443abc4aee0c779e5d,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851782413218566099, guid: 382515b078d5ae443abc4aee0c779e5d,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851782413218566099, guid: 382515b078d5ae443abc4aee0c779e5d,
+        type: 3}
+      propertyPath: m_Direction
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8851782413218566099, guid: 382515b078d5ae443abc4aee0c779e5d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3958047286832142781, guid: 382515b078d5ae443abc4aee0c779e5d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1833558783}
   m_SourcePrefab: {fileID: 100100000, guid: 382515b078d5ae443abc4aee0c779e5d, type: 3}
+--- !u!1 &138147441 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3958047286832142781, guid: 382515b078d5ae443abc4aee0c779e5d,
+    type: 3}
+  m_PrefabInstance: {fileID: 138147440}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &148028576
 GameObject:
   m_ObjectHideFlags: 0
@@ -1129,6 +1170,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2294839737990601478, guid: 38b8d033e320dea499d413e950cffb52,
+        type: 3}
+      propertyPath: itemStopTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2294839737990601478, guid: 38b8d033e320dea499d413e950cffb52,
+        type: 3}
+      propertyPath: dropItemSpeed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3324079151178303910, guid: 38b8d033e320dea499d413e950cffb52,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1933,12 +1984,33 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 138147440}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 138147441}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 28a4090e04380b34cacc5ff91ac53be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &1833558783
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138147441}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5605071, y: 1, z: 0.6639598}
+  m_Center: {x: 0, y: 0, z: 0.21}
 --- !u!1 &1840720138
 GameObject:
   m_ObjectHideFlags: 0
