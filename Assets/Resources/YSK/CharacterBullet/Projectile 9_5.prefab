@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4576070807115522587}
   - component: {fileID: 7572904410544124273}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Projectile 9_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,9 +59,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4576070807115522587}
     m_Modifications:
+    - target: {fileID: 1113143600131104, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1569979447995748, guid: a3a05cba640514e479651ef865acddba, type: 3}
       propertyPath: m_Name
       value: Projectile 9 (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1569979447995748, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679846206416546, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4909937937562004, guid: a3a05cba640514e479651ef865acddba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -132,9 +144,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4576070807115522587}
     m_Modifications:
+    - target: {fileID: 1113143600131104, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1569979447995748, guid: a3a05cba640514e479651ef865acddba, type: 3}
       propertyPath: m_Name
       value: Projectile 9 (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1569979447995748, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679846206416546, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4909937937562004, guid: a3a05cba640514e479651ef865acddba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -205,9 +229,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4576070807115522587}
     m_Modifications:
+    - target: {fileID: 1113143600131104, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1569979447995748, guid: a3a05cba640514e479651ef865acddba, type: 3}
       propertyPath: m_Name
       value: Projectile 9 (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1569979447995748, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679846206416546, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4909937937562004, guid: a3a05cba640514e479651ef865acddba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -278,9 +314,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4576070807115522587}
     m_Modifications:
+    - target: {fileID: 1113143600131104, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1569979447995748, guid: a3a05cba640514e479651ef865acddba, type: 3}
       propertyPath: m_Name
       value: Projectile 9 (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1569979447995748, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679846206416546, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4909937937562004, guid: a3a05cba640514e479651ef865acddba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -351,9 +399,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4576070807115522587}
     m_Modifications:
+    - target: {fileID: 1113143600131104, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1569979447995748, guid: a3a05cba640514e479651ef865acddba, type: 3}
       propertyPath: m_Name
       value: Projectile 9 (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1569979447995748, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679846206416546, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4909937937562004, guid: a3a05cba640514e479651ef865acddba, type: 3}
       propertyPath: m_LocalPosition.x

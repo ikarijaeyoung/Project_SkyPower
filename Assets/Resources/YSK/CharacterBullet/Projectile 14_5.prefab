@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2150061879324760867}
   - component: {fileID: 6994785199591616692}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Projectile 14_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,6 +66,14 @@ PrefabInstance:
     - target: {fileID: 1228652472414832, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
       propertyPath: m_Name
       value: Projectile 14 (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715675216902642, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993799643894748, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4778643779538310, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
       propertyPath: m_LocalPosition.x
@@ -140,6 +148,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Projectile 14 (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 1715675216902642, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993799643894748, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4778643779538310, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -212,6 +228,14 @@ PrefabInstance:
     - target: {fileID: 1228652472414832, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
       propertyPath: m_Name
       value: Projectile 14 (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715675216902642, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993799643894748, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4778643779538310, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
       propertyPath: m_LocalPosition.x
@@ -286,6 +310,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Projectile 14 (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 1715675216902642, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993799643894748, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4778643779538310, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.8
@@ -358,6 +390,14 @@ PrefabInstance:
     - target: {fileID: 1228652472414832, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
       propertyPath: m_Name
       value: Projectile 14 (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715675216902642, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993799643894748, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4778643779538310, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
       propertyPath: m_LocalPosition.x

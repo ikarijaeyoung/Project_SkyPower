@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3320668754405335960}
   - component: {fileID: 5577489888290678887}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Projectile 8_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,6 +62,26 @@ PrefabInstance:
     - target: {fileID: 1128728136785006, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
       propertyPath: m_Name
       value: Projectile 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1197552173361330, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285807358923296, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1304047369468018, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1674370358475276, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723235782634220, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4558485301086254, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
       propertyPath: m_LocalPosition.x
@@ -141,6 +161,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Projectile 8 (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 1197552173361330, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285807358923296, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1304047369468018, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1674370358475276, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723235782634220, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4558485301086254, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.6
@@ -218,6 +258,26 @@ PrefabInstance:
     - target: {fileID: 1128728136785006, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
       propertyPath: m_Name
       value: Projectile 8 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1197552173361330, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285807358923296, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1304047369468018, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1674370358475276, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723235782634220, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4558485301086254, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
       propertyPath: m_LocalPosition.x
@@ -297,6 +357,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Projectile 8 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1197552173361330, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285807358923296, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1304047369468018, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1674370358475276, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723235782634220, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4558485301086254, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.3
@@ -374,6 +454,26 @@ PrefabInstance:
     - target: {fileID: 1128728136785006, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
       propertyPath: m_Name
       value: Projectile 8 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1197552173361330, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285807358923296, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1304047369468018, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1674370358475276, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723235782634220, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4558485301086254, guid: 8b47ac5c7b2b3b54ba4a2e7afc07e034, type: 3}
       propertyPath: m_LocalPosition.x
