@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 30012
   equipName: "\uC751\uAE09\uC758 Octa-core"
-  type: 0
+  type: 1
   grade: 1
   setType: 1
-  icon: {fileID: 21300000, guid: 111344936df32d245a30fb1290c60f78, type: 3}
+  icon: {fileID: 21300000, guid: 8fce8eeff2cf62f4d95c26d0c48d1644, type: 3}
   level: 1
   maxLevel: 5
   upgradeGold: 1000

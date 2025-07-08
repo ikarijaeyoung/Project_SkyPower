@@ -54,7 +54,7 @@ namespace JYL
         private void OnStageClick(PointerEventData eventData)
         {
             Util.ExtractTrailNumber(eventData.pointerClick.gameObject.name, out int index);
-            UIManager.Instance.selectIndexUI = index-1;
+            UIManager.selectIndexUI = index-1;
             UIManager.Instance.ShowPopUp<StageInerSelectPopUp>();
 
         }

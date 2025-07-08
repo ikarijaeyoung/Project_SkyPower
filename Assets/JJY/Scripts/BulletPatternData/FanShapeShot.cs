@@ -14,6 +14,12 @@ public class FanShapeShot : BulletPatternData
     public float returnToPoolTimer = 5f;
     public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool, int attackPower)
     {
+        Quaternion[] originRots = new Quaternion[firePoints.Length];
+        for (int i = 0; i < firePoints.Length; i++)
+        {
+            originRots[i] = firePoints[i].rotation;
+        }
+
         for (int i = 0; i < shotCount; i++)
         {
             BulletPrefabController bulletPrefab = pool.ObjectOut() as BulletPrefabController;
@@ -42,6 +48,10 @@ public class FanShapeShot : BulletPatternData
                 }
             }
             yield return new WaitForSeconds(fireDelayBetweenShots); // 여기서 간격을 두어 다른 모양으로 변경 가능.
+        }
+        for (int i = 0; i < firePoints.Length; i++)
+        {
+            firePoints[i].rotation = originRots[i];
         }
     }
 }

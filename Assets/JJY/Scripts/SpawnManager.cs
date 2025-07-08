@@ -71,21 +71,24 @@ public class SpawnManager : MonoBehaviour
             Debug.Log($"Sequence {CurSeqLevel} cleared!");
         }
 
-        // 시퀀스 모두 클리어 시, 보스 1마리 스폰
-        Debug.Log("Boss appears!");
-        GameObject bossObj = Instantiate(currentStage.bossPrefab, currentStage.bossSpawnPos, Quaternion.Euler(0, 180f, 0));
-        Enemy enemy = bossObj.GetComponent<Enemy>();
-        EnemyType type = enemy.enemyData.enemyType;
-
-        if (poolDic.TryGetValue(type, out ObjectPool pool))
+        // 시퀀스 모두 클리어 시, 보스 n마리 스폰 (페이즈 수에 따라 다름.)
+        for (int i = 0; i < currentStage.bossPrefabs.Length; i++)
         {
-            enemy.Init(pool);
-        }
-        enemyCount++;
-        Debug.Log($"Total Enemies: {enemyCount}");
+            GameObject bossObj = Instantiate(currentStage.bossPrefabs[i], currentStage.bossSpawnPos[i], Quaternion.Euler(0, 180f, 0));
+            Enemy enemy = bossObj.GetComponent<Enemy>();
+            EnemyType type = enemy.enemyData.enemyType;
 
-        // 보스 소환 후, 보스가 처치될 때까지 안벗어남
-        while (enemyCount > 0) yield return null;
+            if (poolDic.TryGetValue(type, out ObjectPool pool))
+            {
+                enemy.Init(pool);
+            }
+            Debug.Log("Boss appears!");
+            enemyCount++;
+            Debug.Log($"Total Enemies: {enemyCount}");
+
+            // 보스 소환 후, 보스가 처치될 때까지 안벗어남
+            while (enemyCount > 0) yield return null;
+        }
 
         CompleteStage();
         StopCoroutine(playRoutine);

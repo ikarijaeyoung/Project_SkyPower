@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,6 @@ namespace JYL
     {
         [SerializeField] string popUpPath = "JYL/UI/Canvas_PopUp";
         [SerializeField] string prefabPath = "JYL/UI";
-
         private PopUpUI popUp;
         public PopUpUI PopUp
         {
@@ -35,7 +35,7 @@ namespace JYL
         }
 
         // ¼±ÅÃ UI ÀÎµ¦½º
-        public int selectIndexUI = 0;
+        public static int selectIndexUI { get; set; } = 0;
         public static bool canClosePopUp = true;
         bool canClose => PopUpUI.IsPopUpActive && !Util.escPressed && !PartySetPopUp.isPartySetting & canClosePopUp;
 

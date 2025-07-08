@@ -8,7 +8,13 @@ using UnityEngine.InputSystem;
 public class Ultimate : MonoBehaviour
 {
     public Coroutine ultRoutine;
-    [Range(0.5f, 5f)] public float setUltDelay = 4f;
+    [Range(0.1f, 5f)] public float laserDelay = 4f; // 최소 딜레이 시간
+    [Range(0.1f, 5f)] public float fireDelay = 4f; // 최소 딜레이 시간
+    [Range(0.1f, 5f)] public float shieldDelay = 4f; // 최소 딜레이 시간
+    [Range(0.1f, 5f)] public float allDelay = 1f; // 최소 딜레이 시간
+    [Range(0.1f, 1f)] public float bigBulletDelay = 0.5f; // 최소 딜레이 시간
+    [Range(0.1f, 1f)] public float manyBulletDelay = 0.3f; // 최소 딜레이 시간
+
     public YieldInstruction ultDelay;
 
     public PlayerController playerController;
@@ -56,7 +62,6 @@ public class Ultimate : MonoBehaviour
 
     private void OnEnable()
     {
-        ultDelay = new WaitForSeconds(setUltDelay);
     }
 
     public void Laser(float damage)
@@ -74,12 +79,10 @@ public class Ultimate : MonoBehaviour
     }
     private IEnumerator LaserCoroutine()
     {
-        Debug.Log($"{ultLaser.name}");
         ultLaser.SetActive(true);
         PlayerController.canAttack = false; // 공격 불가 상태로 변경
         Debug.Log("Laser Active");
-        Debug.Log($"{setUltDelay}");
-        yield return ultDelay;
+        yield return new WaitForSeconds(laserDelay);
 
         ultLaser.SetActive(false);
         PlayerController.canAttack = true; // 공격 가능 상태로 변경
@@ -105,7 +108,7 @@ public class Ultimate : MonoBehaviour
         ultFire.SetActive(true);
         PlayerController.canAttack = false; // 공격 불가 상태로 변경
         Debug.Log("Laser Active");
-        yield return ultDelay;
+        yield return new WaitForSeconds(laserDelay);
 
         ultFire.SetActive(false);
         PlayerController.canAttack = true; // 공격 가능 상태로 변경
@@ -127,7 +130,7 @@ public class Ultimate : MonoBehaviour
     {
         shield.SetActive(true);
         Debug.Log("Shield Active");
-        yield return ultDelay;
+        yield return new WaitForSeconds(shieldDelay);
 
         shield.SetActive(false);
         Debug.Log("Shield Off");
@@ -158,7 +161,7 @@ public class Ultimate : MonoBehaviour
         }
         ultAll.SetActive(true);
 
-        yield return ultDelay;
+        yield return new WaitForSeconds(allDelay);
         ultAll.SetActive(false);
         hits = null;
         ultRoutine = null;
@@ -171,42 +174,38 @@ public class Ultimate : MonoBehaviour
     public void BigBullet(float damage)
     {
         Debug.Log($"BigBullet Damage: {damage}");
-        playerController.poolIndex = 1;
-        if (ultRoutine != null)
+        if (ultRoutine == null)
         {
             fireCounter = 1;
-            ultRoutine = StartCoroutine(UltFireCoroutine(damage, bigBulletSpeed));
+            ultRoutine = StartCoroutine(UltFireCoroutine(damage, bigBulletSpeed, bigBulletDelay));
         }
         else
         {
             return;
         }
-        playerController.poolIndex = 0; // 다시 기본 총알로 변경
     }
 
     public void ManyBullets(float damage)
     {
         Debug.Log($"ManyBullets Damage: {damage}");
-        playerController.poolIndex = 1;
-        if (ultRoutine != null)
+        
+        if (ultRoutine == null && fireCounter <= 0)
         {
+            Debug.Log("ManyBullets Start Coroutine");
             fireCounter = 5;
-            ultRoutine = StartCoroutine(UltFireCoroutine(damage, manyBulletSpeed));
+            ultRoutine = StartCoroutine(UltFireCoroutine(damage, manyBulletSpeed, manyBulletDelay));
         }
-        else
-        {
-            return;
-        }
-        playerController.poolIndex = 0;
+        Debug.Log($"{playerController.poolIndex}");
     }
 
 
-    public IEnumerator UltFireCoroutine(float damage, float bulletSpeed)
+    public IEnumerator UltFireCoroutine(float damage, float bulletSpeed, float delay)
     {
         Debug.Log($"UltFireCoroutine Damage: {damage}, Speed: {bulletSpeed}");
         PlayerController.canAttack = false; // 공격 불가 상태로 변경
         while (fireCounter > 0)
         {
+            playerController.poolIndex = 1;
             fireCounter--;
             BulletPrefabController bulletPrefab = playerController.curBulletPool.ObjectOut() as BulletPrefabController;
             bulletPrefab.transform.position = playerController.muzzlePoint.position;
@@ -219,7 +218,7 @@ public class Ultimate : MonoBehaviour
                 }
                 info.trans.gameObject.SetActive(true);
                 info.trans.localPosition = info.originPos;
-                info.trans.rotation = Quaternion.Euler(0, 3 * fireCounter , 0);
+                info.trans.rotation = info.trans.rotation * Quaternion.Euler(0, 3 * fireCounter , 0);
                 info.rig.velocity = Vector3.zero;
                 
                 info.bulletController.attackPower = (int)damage;
@@ -227,10 +226,12 @@ public class Ultimate : MonoBehaviour
                 
                 info.rig.AddForce(bulletSpeed * info.trans.forward, ForceMode.Impulse); // 이 부분을 커스텀하면 됨
             }
-            yield return new WaitForSeconds(ultBulletTime * 0.1f);
+            Debug.Log($"남은 발사 수: {fireCounter} remaining");
+            yield return new WaitForSeconds(delay);
         }
-        
+        playerController.poolIndex = 0;
         StopCoroutine(ultRoutine);
+        Debug.Log("UltFireCoroutine Ended");
         PlayerController.canAttack = true; // 공격 가능 상태로 변경
         ultRoutine = null;
     }
@@ -251,10 +252,11 @@ public class Ultimate : MonoBehaviour
 
     public IEnumerator UpgradeRoutine()
     {
+        Debug.Log($"{PlayerController.canAttack}");
         Debug.Log("Upgrade Routine Started");
         playerController.poolIndex = 1;
         Debug.Log("Upgrade Bullet Shot");
-        yield return new WaitForSeconds(setUltDelay);
+        yield return new WaitForSeconds(bulletUpgradeTime);
 
         playerController.poolIndex = 0;
         Debug.Log("Normal Bullet Shot");

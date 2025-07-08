@@ -6,8 +6,8 @@ using UnityEngine;
 public class StageEnemyData : ScriptableObject
 {
     public List<EnemySpawnInfo> sequence;
-    public GameObject bossPrefab;
-    public Vector3 bossSpawnPos;
+    public GameObject[] bossPrefabs;
+    public Vector3[] bossSpawnPos;
 }
 
 [System.Serializable]

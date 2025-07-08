@@ -6,6 +6,7 @@ using System.Collections;
 using UnityEngine.UI;
 using KYG_skyPower;
 using System.Net.NetworkInformation;
+using UnityEngine.Experimental.GlobalIllumination;
 
 namespace YSK
 {
@@ -31,7 +32,14 @@ namespace YSK
         [Header("Transition Settings")]
         [SerializeField] private bool useGameSceneManagerTransition = true;
         [SerializeField] private bool enableTransition = true;
-        
+
+
+        //[Header("Directional Light Settings")]
+        //[SerializeField] private Color lightColor;
+        //[SerializeField] private Vector3 rotationEuler = new Vector3(50f, 30f, 0f);
+        //
+        //private Light dirLight;
+
         private bool isTransitioning = false;
 
         #region Unity Lifecycle
@@ -398,6 +406,9 @@ namespace YSK
             
             LoadStage(nextStage.mainStage, nextStage.subStage);
             Debug.Log($"다음 스테이지로 전환: {nextStage.mainStage}-{nextStage.subStage}");
+
+            //DirectionalLightChange(); 스테이지 환경 빛과 관련된 메서드
+
         }
 
         public void ClearCurrentStageAndNextWithTransition()
@@ -462,6 +473,25 @@ namespace YSK
             Debug.Log($"강제 스테이지 이동: {mainStageID}-{subStageID}");
             LoadStage(mainStageID, subStageID);
         }
+
+
+        //public void DirectionalLightChange(Color color, Vector rotationEuler)
+        //{
+        //    if (color == null)
+        //    {
+        //        color = Color.white; // 기본 색상
+        //    }
+        //
+        //    dirLight = GameObject.Find("Directional Light").GetComponent<Light>();
+        //
+        //    dirLight.color = color;
+        //    dirLight.intensity = 1.2f;
+        //    dirLight.shadows = LightShadows.Soft;
+        //
+        //    dirLight.transform.rotation = Quaternion.Euler(rotationEuler);
+        //}
+        
+
 
 
 

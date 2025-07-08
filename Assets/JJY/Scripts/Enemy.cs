@@ -1,3 +1,4 @@
+using JJY_Test;
 using JYL;
 using KYG_skyPower;
 using System;
@@ -21,10 +22,11 @@ public class Enemy : MonoBehaviour
     private Coroutine curFireCoroutine;
     public ObjectPool curObjectPool;
     public float bulletSpeed = 1f;
-    public float fireDelay = 1.5f;
+    // public float fireDelay = 1.5f;
 
     [Header("Hit Animation")]
     private Renderer modelRenderer;
+    private MaterialPropertyBlock mpb;
     private Color originalColor;
     private Coroutine flashCoroutine;
     [SerializeField] private Color flashColor = Color.white; // 피격 시 변경될 색상
@@ -34,14 +36,20 @@ public class Enemy : MonoBehaviour
     private Animator animator;
 
     [Header("Death Effect")]
-    public GameObject deathEffectPrefab;
+    public GameObject deathEffectPrefab; //이거 게임 오브젝트 맞음?
     public float destroyDelay;
     void Awake()
     {
         modelRenderer = GetComponentInChildren<Renderer>();
         if (modelRenderer != null)
         {
-            originalColor = modelRenderer.material.color;
+            mpb = new MaterialPropertyBlock();
+            modelRenderer.GetPropertyBlock(mpb);
+
+            if (modelRenderer.sharedMaterial.HasProperty("_BaseColor"))
+                originalColor = modelRenderer.sharedMaterial.GetColor("_BaseColor");
+            else
+                originalColor = Color.white;
         }
         animator = GetComponent<Animator>();
     }
@@ -76,17 +84,31 @@ public class Enemy : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            TakeDamage(1);
+            TakeDamage(599);
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
             AnimationFire();
         }
     }
+    public void DestoryAfterPathing()
+    {
+        // 여긴 죽음 이후에 폭발 이팩트, 아이템을 소환하지 않음. => animatoin에서 Path이후에 사라질 용도로 사용.
+        Destroy(gameObject);
+        SpawnManager.enemyCount--;
+
+        // Stage만드시는 분들을 위한 TestSpawner전용.
+        TestSpawneManager.enemyCount--;
+        Debug.Log($"Total Enemies : {TestSpawneManager.enemyCount}");
+    }
     private void Die()
     {
         SpawnManager.enemyCount--;
         AudioManager.Instance.PlaySFX("Death_Enemy");
+
+        // Stage만드시는 분들을 위한 TestSpawner전용.
+        TestSpawneManager.enemyCount--;
+        Debug.Log($"Total Enemies : {TestSpawneManager.enemyCount}");
         OnEnemyDied?.Invoke(transform.position);
 
         if (curFireCoroutine != null)
@@ -133,29 +155,33 @@ public class Enemy : MonoBehaviour
         //}
         //StartCoroutine(DestroyAfterDelay(destroyDelay));
     }
-    private IEnumerator DestroyAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        Destroy(gameObject);
-    }
-    IEnumerator ChangeFireMode()
-    {
-        while (autoFire)
-        {
-            int ranNum = UnityEngine.Random.Range(0, BulletPattern.Length);
-            curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, bulletSpeed, curObjectPool, enemyData.attackPower));
-            yield return new WaitForSeconds(fireDelay);
-            StopCoroutine(curFireCoroutine);
-            curFireCoroutine = null;
-        }
-    }
+    // private IEnumerator DestroyAfterDelay(float delay)
+    // {
+    //     yield return new WaitForSeconds(delay);
+    //     Destroy(gameObject);
+    // }
+    // IEnumerator ChangeFireMode()
+    // {
+    //     while (autoFire)
+    //     {
+    //         int ranNum = UnityEngine.Random.Range(0, BulletPattern.Length);
+    //         curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, bulletSpeed, curObjectPool, enemyData.attackPower));
+    //         yield return new WaitForSeconds(fireDelay);
+    //         StopCoroutine(curFireCoroutine);
+    //         curFireCoroutine = null;
+    //     }
+    // }
     private IEnumerator FlashEffectCoroutine()
     {
-        modelRenderer.material.color = flashColor;
+        if (mpb == null) yield break;
 
+        mpb.SetColor("_BaseColor", flashColor);
+        modelRenderer.SetPropertyBlock(mpb);
+        Debug.Log("반짝");
         yield return new WaitForSeconds(flashDuration);
-
-        modelRenderer.material.color = originalColor;
+        Debug.Log("반짝");
+        mpb.SetColor("_BaseColor", originalColor);
+        modelRenderer.SetPropertyBlock(mpb);
 
         flashCoroutine = null;
     }

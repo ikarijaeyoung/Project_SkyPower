@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 30022
   equipName: "\uC751\uAE09\uC758 \uD074\uB7ED \uD504\uB808\uC2A4\uD1A0"
-  type: 0
+  type: 2
   grade: 1
   setType: 1
-  icon: {fileID: 21300000, guid: 6ae2afa3e82ea744ab9f395ecf04450b, type: 3}
+  icon: {fileID: 21300000, guid: dbd1746ae65068c42be609d93c4ca740, type: 3}
   level: 1
   maxLevel: 1
   upgradeGold: 0

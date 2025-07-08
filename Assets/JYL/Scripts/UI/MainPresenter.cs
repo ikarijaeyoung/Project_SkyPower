@@ -58,9 +58,34 @@ namespace JYL
         //}
         private void SetPartyImage()
         {
-            charImg1.sprite = characterLoader.mainController.image;
-            charImg2.sprite = characterLoader.sub1Controller.image;
+            Color c = Color.white;
+            c.a = 0f;
+            if (characterLoader.mainController != null)
+            {
+                charImg1.sprite = characterLoader.mainController.image;
+            }
+            else
+            {
+                charImg1.color = c;
+            }
+
+            if (characterLoader.mainController != null)
+            {
+                charImg2.sprite = characterLoader.sub1Controller.image;
+            }
+            else
+            {
+                charImg2.color = c;
+            }
+
+            if (characterLoader.mainController != null)
+            {
             charImg3.sprite = characterLoader.sub2Controller.image;
+            }
+            else
+            {
+                charImg3.color = c;
+            }
         }
         private void CheckPopUp()
         {
@@ -68,6 +93,7 @@ namespace JYL
             {
                 onEnterMain += characterLoader.GetCharPrefab;
                 onEnterMain += SetPartyImage;
+                onEnterMain += UpdateUnitText;
             }
             else if (!PopUpUI.IsPopUpActive)
             {
@@ -76,6 +102,7 @@ namespace JYL
                 {
                     onEnterMain -= characterLoader.GetCharPrefab;
                     onEnterMain -= SetPartyImage;
+                    onEnterMain -= UpdateUnitText;
                 }
             }
         }
