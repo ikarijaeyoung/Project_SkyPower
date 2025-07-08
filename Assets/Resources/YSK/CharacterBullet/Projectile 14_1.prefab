@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1933496062543703757}
   - component: {fileID: 1459173408129559420}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Projectile 14_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,6 +58,14 @@ PrefabInstance:
     - target: {fileID: 1228652472414832, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
       propertyPath: m_Name
       value: Projectile 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715675216902642, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993799643894748, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4778643779538310, guid: ba755ba85dbee9942ae52a23a7338181, type: 3}
       propertyPath: m_LocalPosition.x

@@ -137,6 +137,10 @@ namespace JYL
                     gameObject.SetActive(false);
                 }
             }
+            if(canDeactive)
+            {
+                gameObject.SetActive(false);
+            }
         }
         private void OnDisable(){ }
         public void OnFire()

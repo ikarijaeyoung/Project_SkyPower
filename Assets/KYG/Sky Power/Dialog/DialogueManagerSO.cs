@@ -74,11 +74,13 @@ namespace KYG_skyPower
             }
 
             if (dialogDB == null || dialogDB.lines.Count == 0) return;
-
             isDialogueActive = true; // 대화 활성화 플래그 설정
             dialoguePanel.SetActive(true); // 패널 활성화
             currentIndex = 0; // 대화 인덱스 초기화
+            Debug.Log("여기 실행함.");
+            Manager.Game.PausedGame();
             Time.timeScale = 0f; // 일시정지 (게임 멈춤)
+            Debug.Log($"지금멈춤.{Time.timeScale}");
             ShowLine(); // 첫 번째 대사 표시
         }
 
@@ -188,6 +190,7 @@ namespace KYG_skyPower
         {
             isDialogueActive = false; // 대화 비활성화 플래그 설정
             dialoguePanel.SetActive(false); // 대화 UI 비활성화
+            Manager.Game.ResumeGame(); // 게임 재시작
             Time.timeScale = 1f; // 일시정지 해제 (게임 재시작)
         }
     }

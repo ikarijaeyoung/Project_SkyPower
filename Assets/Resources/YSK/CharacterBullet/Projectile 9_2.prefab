@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3287994031076327999}
   - component: {fileID: 3140862848530074756}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Projectile 9_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,9 +57,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3287994031076327999}
     m_Modifications:
+    - target: {fileID: 1113143600131104, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1569979447995748, guid: a3a05cba640514e479651ef865acddba, type: 3}
       propertyPath: m_Name
       value: Projectile 9 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1569979447995748, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679846206416546, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4909937937562004, guid: a3a05cba640514e479651ef865acddba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -130,9 +142,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3287994031076327999}
     m_Modifications:
+    - target: {fileID: 1113143600131104, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1569979447995748, guid: a3a05cba640514e479651ef865acddba, type: 3}
       propertyPath: m_Name
       value: Projectile 9 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1569979447995748, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679846206416546, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4909937937562004, guid: a3a05cba640514e479651ef865acddba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -218,9 +242,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3287994031076327999}
     m_Modifications:
+    - target: {fileID: 1113143600131104, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1569979447995748, guid: a3a05cba640514e479651ef865acddba, type: 3}
       propertyPath: m_Name
       value: Projectile 9 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1569979447995748, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679846206416546, guid: a3a05cba640514e479651ef865acddba, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4909937937562004, guid: a3a05cba640514e479651ef865acddba, type: 3}
       propertyPath: m_LocalPosition.x

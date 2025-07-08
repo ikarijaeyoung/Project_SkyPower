@@ -182,25 +182,25 @@ namespace LJ2
             switch (id)
             {
                 case 10001:
-                    ultDamage = (float)attackDamage * ((150f + 25f * Mathf.Pow((float)step, 2)) / 100f);
+                    ultDamage = (float)attackDamage * ((150f + 25f * Mathf.Pow((float)step, 2)) / 10f);
                     break;
                 case 10002:
-                    ultDamage = (float)attackDamage * ((120f + 20f * (float)step) / 100f);
+                    ultDamage = (float)attackDamage * ((120f + 20f * (float)step) / 10f);
                     break;
                 case 10003:
-                    ultDamage = (float)attackDamage * ((150f + 50f * (float)step) / 100f);
+                    ultDamage = (float)attackDamage * ((150f + 50f * (float)step) / 10f);
                     break;
                 case 10004:
-                    ultDamage = (float)attackDamage * ((130f + 30f * (float)step) / 100f);
+                    ultDamage = (float)attackDamage * ((130f + 30f * (float)step) / 10f);
                     break;
                 case 10005:
-                    ultDamage = (float)attackDamage * ((150f + (12.5f * Mathf.Pow((float)step, 2)) + (37.5f * (float)step)) / 100f);
+                    ultDamage = (float)attackDamage * ((150f + (12.5f * Mathf.Pow((float)step, 2)) + (37.5f * (float)step)) / 10f);
                     break;
                 case 10006:
-                    ultDamage = (float)attackDamage * ((150f + (12.5f * Mathf.Pow(step, 2)) + (37.5f * (float)step)) / 100f);
+                    ultDamage = (float)attackDamage * ((150f + (12.5f * Mathf.Pow(step, 2)) + (37.5f * (float)step)) / 10f);
                     break;
                 default:
-                    ultDamage = (float)attackDamage * ((150f + (50f * (float)step)) / 100f);
+                    ultDamage = (float)attackDamage * ((150f + (50f * (float)step)) / 10f);
                     break;
             }
         }
