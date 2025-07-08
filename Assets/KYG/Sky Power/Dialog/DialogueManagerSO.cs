@@ -1,63 +1,59 @@
-using KYG.SkyPower.Dialogue;
-using KYG_skyPower;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections.Generic;
 
-
-
-namespace KYG.SkyPower.Dialogue
+namespace KYG.SkyPower
 {
-    // DialogueManagerSO: 대사 관리 싱글톤
-    // - 대사 데이터, 현재 진행중인 대사 인덱스, 대사 재생 상태 관리
-    // - UIManager, GameManager 등에서 구독 가능
-    // - 대사 시작, 종료, 현재 대사 업데이트 이벤트 제공
-
-[CreateAssetMenu(fileName = "DialogueManagerSO", menuName = "Manager/DialogueManager")]
-public class DialogueManagerSO : SOSingleton<DialogueManagerSO>
-{
-    [Header("진행중 대사 데이터")]
-    public DialogueDataSO currentDialogue;
-    public int currentLineIndex;
-    public bool isDialoguePlaying;
-
-    // UIManager, GameManager 등에서 구독 가능
-    public UnityEvent<string, string> OnLineUpdated = new UnityEvent<string, string>();
-    public UnityEvent OnDialogueStarted = new UnityEvent();
-    public UnityEvent OnDialogueEnded = new UnityEvent();
-
-    public void StartDialogue(DialogueDataSO dialogue)
+    public class DialogueManager : MonoBehaviour
     {
-        currentDialogue = dialogue;
-        currentLineIndex = 0;
-        isDialoguePlaying = true;
-        OnDialogueStarted?.Invoke();
-        ShowCurrentLine();
-    }
+        public DialogDB dialogDB;                         // SO로 등록
+        public UnityEvent<DialogLine> OnDialogLine;       // UI/사운드/애니에서 구독
 
-    public void ShowCurrentLine()
-    {
-        if (!currentDialogue || currentLineIndex >= currentDialogue.lines.Count)
+        private Dictionary<int, DialogLine> lineDict;     // ID로 빠르게 검색
+        private int currentID;                            // 현재 대사 ID
+        public bool IsActive { get; private set; }        // 대화 진행중?
+
+        void Awake()
         {
-            EndDialogue();
-            return;
+            lineDict = new Dictionary<int, DialogLine>();
+            foreach (var line in dialogDB.lines)
+            {
+                if (line != null)
+                    lineDict[line.id] = line;
+            }
         }
-        var line = currentDialogue.lines[currentLineIndex];
-        OnLineUpdated?.Invoke(line.speaker, line.content);
-    }
 
-    public void NextLine()
-    {
-        if (!isDialoguePlaying) return;
-        currentLineIndex++;
-        ShowCurrentLine();
-    }
+        public void StartDialog(int startID)
+        {
+            currentID = startID;
+            IsActive = true;
+            ShowLine();
+        }
 
-    public void EndDialogue()
-    {
-        isDialoguePlaying = false;
-        OnDialogueEnded?.Invoke();
+        public void Next()
+        {
+            if (!IsActive) return;
+            if (!lineDict.ContainsKey(currentID)) { EndDialog(); return; }
+
+            var line = lineDict[currentID];
+            OnDialogLine?.Invoke(line);
+
+            if (line.nextID == 0 || !lineDict.ContainsKey(line.nextID))
+                EndDialog();
+            else
+                currentID = line.nextID;
+        }
+
+        void ShowLine()
+        {
+            if (!lineDict.ContainsKey(currentID)) { EndDialog(); return; }
+            OnDialogLine?.Invoke(lineDict[currentID]);
+        }
+
+        void EndDialog()
+        {
+            IsActive = false;
+            OnDialogLine?.Invoke(null);
+        }
     }
-}
 }

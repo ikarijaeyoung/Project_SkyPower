@@ -1,5 +1,6 @@
 using JJY_Test;
 using JYL;
+using KYG_skyPower;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -62,6 +63,7 @@ public class Enemy : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
+        AudioManager.Instance.PlaySFX("Hit_Enemy");
         if (flashCoroutine != null)
         {
             StopCoroutine(flashCoroutine);
@@ -73,7 +75,9 @@ public class Enemy : MonoBehaviour
         if (currentHP <= 0&&!isDead)
         {
             isDead = true;
+            AudioManager.Instance.PlaySFX("Death_Enemy");
             Die();
+            
         }
     }
     private void Update()
@@ -100,11 +104,11 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         SpawnManager.enemyCount--;
+        AudioManager.Instance.PlaySFX("Death_Enemy");
 
         // Stage만드시는 분들을 위한 TestSpawner전용.
         TestSpawneManager.enemyCount--;
         Debug.Log($"Total Enemies : {TestSpawneManager.enemyCount}");
-
         OnEnemyDied?.Invoke(transform.position);
 
         if (curFireCoroutine != null)
@@ -133,6 +137,7 @@ public class Enemy : MonoBehaviour
             }
         }
         Destroy(gameObject);
+        
         //if (modelRenderer != null)
         //{
         //    modelRenderer.enabled = false;

@@ -80,7 +80,11 @@ namespace KYG_skyPower
 
         }*/
 
-        
+        void Start()
+        {
+            AudioManager.Instance.PlayBGM("StarMenu_BGM");
+        }
+
         public void ResetState()
         {
             isGameOver = false;

@@ -229,7 +229,7 @@ MonoBehaviour:
   audioDB: {fileID: 11400000, guid: 60e708e759a94f749a2ea63b08044c8b, type: 2}
   bgmSource: {fileID: 1824571171}
   SFXSource: {fileID: 433100494}
-  defaultBGM: {fileID: 11400000, guid: e6c3ab0c13d6b184cbb8b5a0fd516444, type: 2}
+  defaultBGM: {fileID: 11400000, guid: 318a4ccfb163bb64db8a6b8cf3f759b0, type: 2}
 --- !u!4 &129594626
 Transform:
   m_ObjectHideFlags: 0

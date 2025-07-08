@@ -1,60 +1,68 @@
-using KYG.SkyPower.Dialogue;
-using System.Collections;
-using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
+using System.Collections.Generic;
 using System.IO;
 
-
-namespace KYG.SkyPower.Dialogue
+namespace KYG.SkyPower
 {
-    // CSV 파일을 읽어 ScriptableObject로 변환하는 에디터 스크립트
-    // CSV 파일은 "speaker, content" 형식으로 되어 있어야 합니다.
-    // 예시: "Player, Hello World!"
-
-public class DialogueCSVtoSO
-{
-    [MenuItem("Tools/CSV/Convert Dialogue CSV to SO")]
-    public static void Convert()
+    public class DialogCSVToSO
     {
-        // 1. 경로 설정 (필요시 경로 수정)
-        string csvPath = "Assets/Dialogues/Dialogue_Stage1.csv";
-        string soPath = "Assets/Dialogues/Dialogue_Stage1_SO.asset";
-
-        if (!File.Exists(csvPath))
+        [MenuItem("Tools/Dialog/CSV to SO")]
+        public static void Convert()
         {
-            Debug.LogError("CSV 파일을 찾을 수 없습니다: " + csvPath);
-            return;
-        }
+            string path = "Assets/Dialog/dialog.csv";
+            string[] lines = File.ReadAllLines(path);
 
-        // 2. CSV 읽기
-        var lines = File.ReadAllLines(csvPath);
+            DialogDB db = ScriptableObject.CreateInstance<DialogDB>();
+            db.lines = new List<DialogLine>();
 
-        // 3. DialogueDataSO 생성
-        var dialogueSO = ScriptableObject.CreateInstance<DialogueDataSO>();
-        dialogueSO.lines = new List<DialogueDataSO.Line>();
-
-        // 4. CSV 파싱 (1줄씩)
-        for (int i = 1; i < lines.Length; i++) // 0번째는 헤더
-        {
-            if (string.IsNullOrWhiteSpace(lines[i])) continue;
-            var tokens = lines[i].Split(',');
-
-            if (tokens.Length < 2) continue; // speaker, content
-            DialogueDataSO.Line line = new DialogueDataSO.Line
+            for (int i = 1; i < lines.Length; i++) // 첫 줄은 헤더
             {
-                speaker = tokens[0].Trim(),
-                content = tokens[1].Trim().Replace("\\n", "\n")
-            };
-            dialogueSO.lines.Add(line);
+                // 1. 빈줄 혹은 주석(앞이 # 등) 무시
+                if (string.IsNullOrWhiteSpace(lines[i])) continue;
+
+                string[] t = lines[i].Split(',');
+
+                // 2. 필드 개수 부족 방지 (예: 6 미만이면 건너뜀)
+                if (t.Length < 4)
+                {
+                    Debug.LogWarning($"줄 {i + 1}: 필드 수 부족 (발견: {t.Length}). 내용: \"{lines[i]}\". 건너뜁니다.");
+                    continue;
+                }
+
+                // 3. 숫자 파싱 방지코드
+                int idVal;
+                if (!int.TryParse(t[0].Trim(), out idVal))
+                {
+                    Debug.LogWarning($"줄 {i + 1}: id 파싱 실패. 내용: \"{lines[i]}\". 건너뜁니다.");
+                    continue;
+                }
+
+                int nextVal = 0;
+                string nextField = t[3].Trim();
+                if (nextField != "END" && !int.TryParse(nextField, out nextVal))
+                {
+                    Debug.LogWarning($"줄 {i + 1}: nextID 파싱 실패. 내용: \"{lines[i]}\". 건너뜁니다.");
+                    continue;
+                }
+
+                var line = new DialogLine()
+                {
+                    id = idVal,
+                    speaker = t[1].Trim(),
+                    portrait = Resources.Load<Sprite>($"Portraits/{t[2].Trim()}"),
+                    text = t[3].Trim(),
+                    //sound = Resources.Load<AudioClip>($"Sounds/{t[4].Trim()}"),
+                    //nextID = nextField == "END" ? 0 : nextVal
+                };
+                db.lines.Add(line);
+            
         }
-
-        // 5. SO 에셋 생성/저장
-        AssetDatabase.CreateAsset(dialogueSO, soPath);
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-
-        Debug.Log($"Dialogue SO 생성 완료: {soPath}");
+            AssetDatabase.CreateAsset(db, "Assets/Dialog/DialogDB.asset");
+            AssetDatabase.SaveAssets();
+            Debug.Log("DialogDB.asset 생성 완료");
+        }
     }
 }
-}
+#endif
