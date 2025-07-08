@@ -119,6 +119,7 @@ namespace KYG_skyPower
             if (isPaused || isGameOver) return;
             isPaused = true;
             Time.timeScale = 0f; // 전체 게임 정지
+            Debug.Log($"지금멈춤.{Time.timeScale}");
             onPause?.Invoke();
         }
 

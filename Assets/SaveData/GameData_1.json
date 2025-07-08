@@ -1,12 +1,12 @@
 {
     "playerName": "22111",
-    "gold": 23340,
+    "gold": 18976,
     "characterInventory": {
         "characters": [
             {
                 "id": 10001,
                 "level": 1,
-                "step": 0,
+                "step": 1,
                 "partySet": 3
             },
             {
@@ -25,7 +25,7 @@
                 "id": 10004,
                 "level": 1,
                 "step": 0,
-                "partySet": 3
+                "partySet": 0
             },
             {
                 "id": 10005,
@@ -55,7 +55,7 @@
                 "id": 10009,
                 "level": 1,
                 "step": 4,
-                "partySet": 0
+                "partySet": 3
             },
             {
                 "id": 10010,
@@ -96,7 +96,7 @@
             {
                 "id": 10016,
                 "level": 1,
-                "step": 1,
+                "step": 2,
                 "partySet": 3
             },
             {
@@ -120,7 +120,7 @@
             {
                 "id": 10020,
                 "level": 1,
-                "step": 2,
+                "step": 3,
                 "partySet": 3
             },
             {
@@ -138,19 +138,19 @@
             {
                 "id": 10023,
                 "level": 1,
-                "step": 1,
+                "step": 3,
                 "partySet": 3
             },
             {
                 "id": 10024,
                 "level": 1,
-                "step": 0,
+                "step": 2,
                 "partySet": 3
             },
             {
                 "id": 10025,
                 "level": 1,
-                "step": 2,
+                "step": 3,
                 "partySet": 3
             },
             {
@@ -162,13 +162,13 @@
             {
                 "id": 10027,
                 "level": 1,
-                "step": 1,
+                "step": 2,
                 "partySet": 2
             },
             {
                 "id": 10028,
                 "level": 1,
-                "step": 1,
+                "step": 3,
                 "partySet": 3
             },
             {
@@ -185,13 +185,13 @@
             "stage": 1,
             "score": 0,
             "unlock": true,
-            "isClear": false
+            "isClear": true
         },
         {
             "world": 1,
             "stage": 2,
             "score": 0,
-            "unlock": false,
+            "unlock": true,
             "isClear": false
         },
         {
@@ -444,8 +444,8 @@
         }
     ],
     "wearingId": [
-        0,
-        0,
-        0
+        30008,
+        30016,
+        30026
     ]
 }

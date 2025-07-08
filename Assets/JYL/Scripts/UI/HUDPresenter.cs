@@ -84,9 +84,10 @@ namespace JYL
                 Time.timeScale = 0;
             }
 
-            if (!PopUpUI.IsPopUpActive)
+            if (!PopUpUI.IsPopUpActive && !Manager.Game.isPaused)
             {
                 Time.timeScale = 1;
+                Debug.Log($"다시 풀림.{Time.timeScale}");
             }
         }
         private void LateUpdate() { }
