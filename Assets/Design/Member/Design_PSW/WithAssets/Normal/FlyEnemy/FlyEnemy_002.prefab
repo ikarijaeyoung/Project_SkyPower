@@ -348,7 +348,7 @@ MonoBehaviour:
   - {fileID: 8351155634875059923}
   - {fileID: 2878539099358117492}
   BulletPattern:
-  - {fileID: 11400000, guid: b98c1203178badd4b9672aee6fe15d4d, type: 2}
+  - {fileID: 11400000, guid: 8349a75419768044899b3c76cec273ea, type: 2}
   curObjectPool: {fileID: 0}
   bulletSpeed: 2
   flashColor: {r: 1, g: 1, b: 1, a: 1}
