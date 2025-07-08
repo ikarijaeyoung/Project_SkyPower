@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6e22353556ad464f9818ccbdc7f602e, type: 3}
   m_Name: FanShapeShot 1
   m_EditorClassIdentifier: 
-  shotCount: 8
+  shotCount: 9
   fireDelayBetweenShots: 0.1
   fanShapeangle: 90
   returnToPoolTimer: 5
