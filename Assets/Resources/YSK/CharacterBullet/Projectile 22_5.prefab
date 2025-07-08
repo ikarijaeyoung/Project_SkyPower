@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6380013673650891984}
   - component: {fileID: 7274039204846285717}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Projectile 22_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,6 +62,14 @@ PrefabInstance:
     - target: {fileID: 1034045548656336, guid: 680fbcaa08e3ac94ebabf8a0e427e8e0, type: 3}
       propertyPath: m_Name
       value: Projectile 22 (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1512875676520532, guid: 680fbcaa08e3ac94ebabf8a0e427e8e0, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1952641061867812, guid: 680fbcaa08e3ac94ebabf8a0e427e8e0, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4036995283409360, guid: 680fbcaa08e3ac94ebabf8a0e427e8e0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -126,6 +134,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Projectile 22 (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 1512875676520532, guid: 680fbcaa08e3ac94ebabf8a0e427e8e0, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1952641061867812, guid: 680fbcaa08e3ac94ebabf8a0e427e8e0, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4036995283409360, guid: 680fbcaa08e3ac94ebabf8a0e427e8e0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -188,6 +204,14 @@ PrefabInstance:
     - target: {fileID: 1034045548656336, guid: 680fbcaa08e3ac94ebabf8a0e427e8e0, type: 3}
       propertyPath: m_Name
       value: Projectile 22 (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1512875676520532, guid: 680fbcaa08e3ac94ebabf8a0e427e8e0, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1952641061867812, guid: 680fbcaa08e3ac94ebabf8a0e427e8e0, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4036995283409360, guid: 680fbcaa08e3ac94ebabf8a0e427e8e0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -252,6 +276,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Projectile 22 (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 1512875676520532, guid: 680fbcaa08e3ac94ebabf8a0e427e8e0, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1952641061867812, guid: 680fbcaa08e3ac94ebabf8a0e427e8e0, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4036995283409360, guid: 680fbcaa08e3ac94ebabf8a0e427e8e0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.8
@@ -314,6 +346,14 @@ PrefabInstance:
     - target: {fileID: 1034045548656336, guid: 680fbcaa08e3ac94ebabf8a0e427e8e0, type: 3}
       propertyPath: m_Name
       value: Projectile 22 (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1512875676520532, guid: 680fbcaa08e3ac94ebabf8a0e427e8e0, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1952641061867812, guid: 680fbcaa08e3ac94ebabf8a0e427e8e0, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4036995283409360, guid: 680fbcaa08e3ac94ebabf8a0e427e8e0, type: 3}
       propertyPath: m_LocalPosition.x

@@ -82,14 +82,14 @@ public class Enemy : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            TakeDamage(599);
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            AnimationFire();
-        }
+        //if (Input.GetKeyDown(KeyCode.A))
+        //{
+        //    TakeDamage(599);
+        //}
+        //if (Input.GetKeyDown(KeyCode.D))
+        //{
+        //    AnimationFire();
+        //}
     }
     public void DestoryAfterPathing()
     {

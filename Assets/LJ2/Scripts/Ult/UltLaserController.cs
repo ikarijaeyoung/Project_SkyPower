@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class UltLaserController : MonoBehaviour
@@ -25,6 +26,7 @@ public class UltLaserController : MonoBehaviour
     private void FixedUpdate()
     {
         currentTime += Time.fixedDeltaTime;
+
     }
 
     private void OnTriggerStay(Collider other)
