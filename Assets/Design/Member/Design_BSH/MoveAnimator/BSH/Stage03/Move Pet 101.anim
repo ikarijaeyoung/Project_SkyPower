@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MovePat03
+  m_Name: Move Pet 101
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -20,7 +20,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 8, y: 0, z: 5.142857}
+        value: {x: -7.48, y: 0, z: 3.4286}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -28,17 +28,17 @@ AnimationClip:
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 0.78333336
-        value: {x: 5.142857, y: 0, z: 5.142857}
-        inSlope: {x: -3.2653062, y: 0, z: 0}
-        outSlope: {x: -3.2653062, y: 0, z: 0}
+        time: 0.75
+        value: {x: 0.42318368, y: 0, z: -1.2107756}
+        inSlope: {x: 11.684156, y: 0, z: 0}
+        outSlope: {x: 11.684156, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 3.5
-        value: {x: -3.4285715, y: 0, z: 0}
+        time: 1.3333334
+        value: {x: 8.098875, y: 0, z: -1.2107756}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -74,7 +74,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 3.5
+    m_StopTime: 1.3333334
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -96,7 +96,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 8
+        value: -7.48
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -104,17 +104,17 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.78333336
-        value: 5.142857
-        inSlope: -3.2653062
-        outSlope: -3.2653062
+        time: 0.75
+        value: 0.42318368
+        inSlope: 11.684156
+        outSlope: 11.684156
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 3.5
-        value: -3.4285715
+        time: 1.3333334
+        value: 8.098875
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -142,6 +142,24 @@ AnimationClip:
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.75
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1.3333334
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -156,7 +174,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 5.142857
+        value: 3.4286
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -164,8 +182,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.78333336
-        value: 5.142857
+        time: 0.75
+        value: -1.2107756
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -173,8 +191,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 3.5
-        value: 0
+        time: 1.3333334
+        value: -1.2107756
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -193,16 +211,8 @@ AnimationClip:
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 1
-    functionName: AnimationFire
-    data: 
-    objectReferenceParameter: {fileID: 4344951356574126065, guid: 931d470595c6b224faca39abbae45ae4,
-      type: 3}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 2
-    functionName: AnimationFire
+  - time: 1.3333334
+    functionName: DestoryAfterPathing
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
