@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea6956187041d3e46b79c5fafc025520, type: 3}
   m_Name: SingleShotToPlayerPos
   m_EditorClassIdentifier: 
-  fireDelay: 1
+  returnToPoolTimer: 10

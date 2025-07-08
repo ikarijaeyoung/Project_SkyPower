@@ -17,4 +17,4 @@ MonoBehaviour:
   twistAnglePerSunflower: 30
   fireDelayBetweenShots: 0
   fireDelayBetweenSunflower: 0.2
-  returnToPoolTimer: 5
+  returnToPoolTimer: 10

@@ -14,15 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sequence:
   - enemyPrefab:
-    - {fileID: 8351887547980912979, guid: 4a978c4b530e163449a3d6cb2faf22bb, type: 3}
-    - {fileID: 8351887547980912979, guid: 4a978c4b530e163449a3d6cb2faf22bb, type: 3}
-    - {fileID: 8351887547980912979, guid: 4a978c4b530e163449a3d6cb2faf22bb, type: 3}
-    spawnPos:
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    spawnDelay: 3
-  - enemyPrefab:
     - {fileID: 5532545821888678440, guid: 4237dd5ab6e94514f9d1f7e376929820, type: 3}
     - {fileID: 5532545821888678440, guid: 76cd24f4a4d039d47a351bc665f303a1, type: 3}
     - {fileID: 5532545821888678440, guid: d74d788cd0f5a394c801e83389581a28, type: 3}

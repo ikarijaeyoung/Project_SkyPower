@@ -11,7 +11,8 @@ public class EnemyItem : MonoBehaviour
     private Transform player;
     public float magneticRange = 3f;
     public float magneticSpeed = 5f;
-    [SerializeField] private int addScore = 1;
+    [SerializeField] private int addScore = 10;
+    [SerializeField] private float destoryDelay = 10f;
 
     void Start()
     {
@@ -20,6 +21,7 @@ public class EnemyItem : MonoBehaviour
         {
             Debug.Log("EnemyItem : Player가 할당되지 않음.");
         }
+        StartCoroutine(AutoDestroy());
     }
     void Update()
     {
@@ -45,6 +47,11 @@ public class EnemyItem : MonoBehaviour
     void Collect()
     {
         ScoreManager.Instance.AddScore(addScore);
+        Destroy(gameObject);
+    }
+    private IEnumerator AutoDestroy()
+    {
+        yield return new WaitForSeconds(destoryDelay);
         Destroy(gameObject);
     }
 }
