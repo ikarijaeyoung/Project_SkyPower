@@ -297,6 +297,7 @@ namespace JYL
                     {
                         isDead = true;
                         Hp = 0;
+                        Debug.Log("게임 오버확인");
                         Manager.Game.SetGameOver();
                     }
                     hud.CurHp = Hp;

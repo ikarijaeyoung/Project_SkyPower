@@ -464,7 +464,7 @@ GameObject:
   - component: {fileID: 4624364919450319956}
   - component: {fileID: 8291686461595354302}
   m_Layer: 5
-  m_Name: StageClearText
+  m_Name: StageNumberText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -867,7 +867,7 @@ GameObject:
   - component: {fileID: 7498405587575024222}
   - component: {fileID: 7862201921644458573}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: StageClearFailText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
