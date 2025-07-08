@@ -1,6 +1,7 @@
 using JJY;
 using JYL;
 using KYG;
+using KYG_skyPower;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -58,6 +59,8 @@ public class UltShieldController : MonoBehaviour
     private void OnEnable()
     {
         Debug.Log("UltShieldController OnEnable »£√‚");
+        AudioManager.Instance.PlaySFX("Shield_01");
+
     }
 
     private void OnDisable()

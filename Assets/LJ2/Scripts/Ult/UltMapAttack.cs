@@ -12,7 +12,7 @@ public class UltMapAttack : MonoBehaviour
 
         foreach (Collider c in hits)
         {
-            Debug.Log("TakeDamage ½Ãµµ");
+            Debug.Log($"TakeDamage {attackDamage}");
             if (c.gameObject.GetComponent<Enemy>()) 
             { 
                 Enemy enemy = c.gameObject.GetComponent<Enemy>();

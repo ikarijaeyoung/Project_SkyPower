@@ -243,6 +243,7 @@ namespace JYL
             while (fireCounter>0)
             {
                 fireCounter--;
+                AudioManager.Instance.PlaySFX($"{mainCharController.attackSound}");
                 BulletPrefabController bulletPrefab = curBulletPool.ObjectOut() as BulletPrefabController;
                 bulletPrefab.transform.position = muzzlePoint.position;
                 bulletPrefab.ReturnToPool(bulletReturnTimer);
