@@ -1,6 +1,6 @@
 {
-    "playerName": "fff",
-    "gold": 531,
+    "playerName": "22111",
+    "gold": 700,
     "characterInventory": {
         "characters": [
             {
@@ -41,21 +41,21 @@
             },
             {
                 "id": 10007,
-                "level": 1,
+                "level": -1,
                 "step": 0,
                 "partySet": 3
             },
             {
                 "id": 10008,
-                "level": -1,
+                "level": 1,
                 "step": 0,
                 "partySet": 3
             },
             {
                 "id": 10009,
                 "level": 1,
-                "step": 2,
-                "partySet": 3
+                "step": 0,
+                "partySet": 0
             },
             {
                 "id": 10010,
@@ -65,15 +65,15 @@
             },
             {
                 "id": 10011,
-                "level": 1,
-                "step": 2,
-                "partySet": 1
+                "level": -1,
+                "step": 0,
+                "partySet": 3
             },
             {
                 "id": 10012,
-                "level": 1,
+                "level": -1,
                 "step": 0,
-                "partySet": 0
+                "partySet": 3
             },
             {
                 "id": 10013,
@@ -91,17 +91,17 @@
                 "id": 10015,
                 "level": 1,
                 "step": 0,
-                "partySet": 3
+                "partySet": 1
             },
             {
                 "id": 10016,
-                "level": 1,
+                "level": -1,
                 "step": 0,
                 "partySet": 3
             },
             {
                 "id": 10017,
-                "level": -1,
+                "level": 1,
                 "step": 0,
                 "partySet": 3
             },
@@ -113,19 +113,19 @@
             },
             {
                 "id": 10019,
-                "level": -1,
+                "level": 1,
                 "step": 0,
                 "partySet": 3
             },
             {
                 "id": 10020,
-                "level": 1,
-                "step": 1,
+                "level": -1,
+                "step": 0,
                 "partySet": 3
             },
             {
                 "id": 10021,
-                "level": 1,
+                "level": -1,
                 "step": 0,
                 "partySet": 3
             },
@@ -137,8 +137,8 @@
             },
             {
                 "id": 10023,
-                "level": 1,
-                "step": 1,
+                "level": -1,
+                "step": 0,
                 "partySet": 3
             },
             {
@@ -155,15 +155,15 @@
             },
             {
                 "id": 10026,
-                "level": 1,
-                "step": 1,
-                "partySet": 2
+                "level": -1,
+                "step": 0,
+                "partySet": 3
             },
             {
                 "id": 10027,
                 "level": 1,
                 "step": 0,
-                "partySet": 3
+                "partySet": 2
             },
             {
                 "id": 10028,
@@ -185,41 +185,41 @@
             "stage": 1,
             "score": 0,
             "unlock": true,
-            "isClear": true
+            "isClear": false
         },
         {
             "world": 1,
             "stage": 2,
             "score": 0,
-            "unlock": true,
-            "isClear": true
+            "unlock": false,
+            "isClear": false
         },
         {
             "world": 1,
             "stage": 3,
             "score": 0,
-            "unlock": true,
-            "isClear": true
+            "unlock": false,
+            "isClear": false
         },
         {
             "world": 1,
             "stage": 4,
             "score": 0,
-            "unlock": true,
-            "isClear": true
+            "unlock": false,
+            "isClear": false
         },
         {
             "world": 1,
             "stage": 5,
             "score": 0,
-            "unlock": true,
-            "isClear": true
+            "unlock": false,
+            "isClear": false
         },
         {
             "world": 2,
             "stage": 1,
             "score": 0,
-            "unlock": true,
+            "unlock": false,
             "isClear": false
         },
         {
@@ -328,7 +328,7 @@
         },
         {
             "id": 30002,
-            "level": 1
+            "level": -1
         },
         {
             "id": 30003,
@@ -344,7 +344,7 @@
         },
         {
             "id": 30006,
-            "level": 1
+            "level": -1
         },
         {
             "id": 30007,
@@ -352,11 +352,11 @@
         },
         {
             "id": 30008,
-            "level": 1
+            "level": -1
         },
         {
             "id": 30009,
-            "level": 1
+            "level": -1
         },
         {
             "id": 30010,
@@ -384,15 +384,15 @@
         },
         {
             "id": 30016,
-            "level": 1
+            "level": -1
         },
         {
             "id": 30017,
-            "level": 1
+            "level": -1
         },
         {
             "id": 30018,
-            "level": 1
+            "level": -1
         },
         {
             "id": 30019,
@@ -400,7 +400,7 @@
         },
         {
             "id": 30020,
-            "level": 1
+            "level": -1
         },
         {
             "id": 30021,
@@ -444,8 +444,8 @@
         }
     ],
     "wearingId": [
-        30008,
-        30018,
+        0,
+        0,
         0
     ]
 }

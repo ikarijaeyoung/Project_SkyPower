@@ -49,9 +49,9 @@ namespace JYL
                 hp = value;
                 onHpChanged?.Invoke(hp);
                 curBulletPool.ObjectOut();
+
             }
         }
-
         private int attackPower { get; set; }
         private float moveSpeed { get; set; }
         private bool isDead { get; set; } = false;
@@ -116,6 +116,14 @@ namespace JYL
         }
         private void Init()
         {
+            if (hud == null)
+            {
+                hud = FindObjectOfType<HUDPresenter>();
+            }
+            if(hud != null)
+            {
+                hud.SetPlayer(this);
+            }
             playerInput = GetComponent<PlayerInput>();
             charDataLoader = GetComponent<CharacterSaveLoader>();
             charDataLoader.GetCharPrefab();
@@ -132,6 +140,8 @@ namespace JYL
                 sub2CharController = charDataLoader.sub2Controller;
             }
             inGameController = Instantiate(mainCharController.gameObject, transform).GetComponent<CharactorController>();
+            hud.Init();
+
             // CharactorController character = gameObject.AddComponent<CharactorController>();
 
             // 오브젝트 풀 설정
@@ -206,11 +216,11 @@ namespace JYL
             Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
             if (viewportPos.z <= 0) return Vector2.zero;
 
-            if (viewportPos.x <= leftMargin+0.01f && inputDirection.x < 0) inputDirection.x = 0;
-            if (viewportPos.x >= rightMargin-0.01f && inputDirection.x > 0) inputDirection.x = 0;
+            if (viewportPos.x <= leftMargin+0.03f && inputDirection.x < 0) inputDirection.x = 0;
+            if (viewportPos.x >= rightMargin-0.03f && inputDirection.x > 0) inputDirection.x = 0;
 
-            if (viewportPos.y-0.01f <= 0 && inputDirection.y < 0) inputDirection.y = 0;
-            if (viewportPos.y+0.01f >= 1 && inputDirection.y > 0) inputDirection.y = 0;
+            if (viewportPos.y-0.03f <= 0 && inputDirection.y < 0) inputDirection.y = 0;
+            if (viewportPos.y+0.03f >= 1 && inputDirection.y > 0) inputDirection.y = 0;
 
             return inputDirection;
         }
