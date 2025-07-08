@@ -197,7 +197,7 @@ MonoBehaviour:
   dataManager: {fileID: 0}
   endPoint: {fileID: 1516153653}
   startPoint: {fileID: 1542986538}
-  speed: 3
+  speed: 25
   mapLength: 249
   useGameSceneManagerTransition: 1
   enableTransition: 0

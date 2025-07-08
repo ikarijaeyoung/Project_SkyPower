@@ -155,10 +155,6 @@ namespace JYL
                     imgIndex++;
                     
                     Image[] tmp = go.GetComponentsInChildren<Image>(true);
-                    Debug.Log($"tmp의 길이 {tmp.Length}");
-                    Debug.Log($"tmp 이름 1 : {tmp[0].gameObject.name}");
-                    Debug.Log($"2:{tmp[1].gameObject.name}");
-                    Debug.Log($"3:{tmp[2].gameObject.name}");
                     foreach (Image image in tmp)
                     {
                         if(image.gameObject.name == "CharIconImg")

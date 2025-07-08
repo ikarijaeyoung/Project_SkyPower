@@ -35,7 +35,7 @@ Transform:
   - {fileID: 6874617665216996593}
   - {fileID: 6050487642944727473}
   - {fileID: 3182970928500779610}
-  - {fileID: 8015433006881413472}
+  - {fileID: 7739482013557162759}
   - {fileID: 1664955111996639827}
   - {fileID: 7128491732462084227}
   m_Father: {fileID: 0}
@@ -78,6 +78,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   image: {fileID: 0}
   upgradeUnit: 0
+  attackSound: 
 --- !u!114 &4552368892127097802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,7 +123,7 @@ MonoBehaviour:
   bulletReturnTimer: 5
   bigBulletSpeed: 15
   manyBulletSpeed: 30
-  ultBulletTime: 3
+  ultBulletTime: 50
   bulletUpgradeTime: 5
   enemyBullet:
     serializedVersion: 2
@@ -137,7 +138,7 @@ MonoBehaviour:
   ultFire: {fileID: 1245939337628991872, guid: b591ebff4c96a8248858bbf7a07fd176, type: 3}
   ultFireController: {fileID: 0}
   defense: 1
---- !u!1001 &26259715799977559
+--- !u!1001 &291022218235417648
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -205,13 +206,13 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a8965262ae861b4ead53351321299a8, type: 3}
---- !u!4 &8015433006881413472 stripped
+--- !u!4 &7739482013557162759 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8025910177887852343, guid: 9a8965262ae861b4ead53351321299a8,
     type: 3}
-  m_PrefabInstance: {fileID: 26259715799977559}
+  m_PrefabInstance: {fileID: 291022218235417648}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &291022218235417648
+--- !u!1001 &610023455425922246
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -283,7 +284,7 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 7414216209414829235, guid: ffe91006e126db94fbf36c78a0cfa313,
     type: 3}
-  m_PrefabInstance: {fileID: 291022218235417648}
+  m_PrefabInstance: {fileID: 610023455425922246}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5451034520128039181
 PrefabInstance:

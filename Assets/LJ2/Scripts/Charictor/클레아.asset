@@ -34,7 +34,7 @@ MonoBehaviour:
   defense: 2
   ultCoolDefault: 80
   ultCoolReduce: 10
-  ultVisual: {fileID: 5666904647332067257, guid: e35f32215ffee724a9c3518300ebc22e,
+  ultVisual: {fileID: 5610772862033631708, guid: e35f32215ffee724a9c3518300ebc22e,
     type: 3}
   parry: 1
   parryCool: 3

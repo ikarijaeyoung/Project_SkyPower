@@ -94,6 +94,10 @@ namespace JYL
             {
                 parryTimer -= Time.deltaTime;
             }
+            if(Input.GetKeyDown(KeyCode.F)&&Input.GetKeyDown(KeyCode.J))
+            {
+                ultGage += 300;
+            }
         }
 
         private void FixedUpdate() { }
