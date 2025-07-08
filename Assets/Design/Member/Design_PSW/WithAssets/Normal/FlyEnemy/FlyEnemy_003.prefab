@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb39e66d9d10d045b169252a651b63d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyData: {fileID: 11400000, guid: 98d03020df3db694e87872fae7de0202, type: 2}
+  enemyData: {fileID: 11400000, guid: 9d642417d9dfd7e48830d627d0624781, type: 2}
   currentHP: 0
   autoFire: 1
   firePoints:
@@ -161,7 +161,7 @@ MonoBehaviour:
   - {fileID: 4560930891635522467}
   - {fileID: 5592570686921072667}
   BulletPattern:
-  - {fileID: 11400000, guid: 0ba79530155922a4a8a899ae198109eb, type: 2}
+  - {fileID: 11400000, guid: b98c1203178badd4b9672aee6fe15d4d, type: 2}
   curObjectPool: {fileID: 0}
   bulletSpeed: 2
   flashColor: {r: 1, g: 1, b: 1, a: 1}
