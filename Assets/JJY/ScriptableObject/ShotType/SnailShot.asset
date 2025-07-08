@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shotCount: 32
   fireDelayBetweenShots: 0.5
-  returnToPoolTimer: 5
+  returnToPoolTimer: 10

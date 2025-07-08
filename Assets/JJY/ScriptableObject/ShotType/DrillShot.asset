@@ -16,4 +16,4 @@ MonoBehaviour:
   drillCount: 3
   fireDelayBetweenBullets: 0.1
   fireDelayCycle: 0.1
-  returnToPoolTimer: 5
+  returnToPoolTimer: 10
