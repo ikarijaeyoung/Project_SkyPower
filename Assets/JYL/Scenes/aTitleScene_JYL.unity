@@ -675,10 +675,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageDataList:
-  - {fileID: 11400000, guid: 2ba523f15aa21e64c95bc39345306ac8, type: 2}
-  - {fileID: 11400000, guid: d9a0caef053decd4fa9c07aebcd4c90f, type: 2}
-  - {fileID: 11400000, guid: 1915c6c5d1e6e2540b2438d1cfc292b3, type: 2}
-  - {fileID: 11400000, guid: b2b23ed275b151945b3a2ea132927ddc, type: 2}
+  - {fileID: 11400000, guid: 5e15428839f0da842be961e90b50a269, type: 2}
+  - {fileID: 11400000, guid: 617c90efe8f46ae47a536ffebde8fb71, type: 2}
+  - {fileID: 11400000, guid: ea1e744c3561cf142bd9e8011c1a26a1, type: 2}
+  - {fileID: 11400000, guid: 3cc4bc690a609864b83308ec46390020, type: 2}
   runtimeData: []
 --- !u!4 &996621279
 Transform:

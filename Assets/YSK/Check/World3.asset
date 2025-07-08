@@ -23,7 +23,7 @@ MonoBehaviour:
     subStageName: 
     subStageLock: 0
     subStageScore: 0
-    stageEnemyData: {fileID: 0}
+    stageEnemyData: {fileID: 11400000, guid: 2233becaddf7af64e92133435012e5f2, type: 2}
     customMapPrefabs:
     - {fileID: 9008328495826410877, guid: c098b361bd597dd4b81dc46070f131b9, type: 3}
     - {fileID: 9008328495826410877, guid: c098b361bd597dd4b81dc46070f131b9, type: 3}
@@ -31,7 +31,7 @@ MonoBehaviour:
     subStageName: 
     subStageLock: 0
     subStageScore: 0
-    stageEnemyData: {fileID: 0}
+    stageEnemyData: {fileID: 11400000, guid: 71913fac449642748aaf958519eca720, type: 2}
     customMapPrefabs:
     - {fileID: 3150122496668814207, guid: 8d954335c21f4cc4493449e3ed7f9687, type: 3}
     - {fileID: 3150122496668814207, guid: 8d954335c21f4cc4493449e3ed7f9687, type: 3}
@@ -39,7 +39,7 @@ MonoBehaviour:
     subStageName: 
     subStageLock: 0
     subStageScore: 0
-    stageEnemyData: {fileID: 0}
+    stageEnemyData: {fileID: 11400000, guid: 282837a6043b7904ebea6e16611e13a0, type: 2}
     customMapPrefabs:
     - {fileID: 5316317230086782272, guid: 9a4092149594b7f45aa18fdaff74e62c, type: 3}
     - {fileID: 5316317230086782272, guid: 9a4092149594b7f45aa18fdaff74e62c, type: 3}
@@ -47,15 +47,15 @@ MonoBehaviour:
     subStageName: 
     subStageLock: 0
     subStageScore: 0
-    stageEnemyData: {fileID: 0}
+    stageEnemyData: {fileID: 11400000, guid: f3279567f3a003d4b8e90480985ff261, type: 2}
     customMapPrefabs:
     - {fileID: 3326243892134864293, guid: bf14bc5f30d80034d9a47a99fd075dab, type: 3}
     - {fileID: 3326243892134864293, guid: bf14bc5f30d80034d9a47a99fd075dab, type: 3}
-  - subStageID: 0
+  - subStageID: 5
     subStageName: 
     subStageLock: 0
     subStageScore: 0
-    stageEnemyData: {fileID: 0}
+    stageEnemyData: {fileID: 11400000, guid: 565d96a1d3ef64846a9b380dda6b9d63, type: 2}
     customMapPrefabs:
     - {fileID: 7616411774398470413, guid: 01fb1bd7b70888648b55028b577c2566, type: 3}
     - {fileID: 7616411774398470413, guid: 01fb1bd7b70888648b55028b577c2566, type: 3}
