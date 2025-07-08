@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using KYG_skyPower;
 using JYL;
-using Unity.VisualScripting;
+using KYG_skyPower;
+using UnityEngine;
 
 namespace LJ2
 {
@@ -35,7 +32,7 @@ namespace LJ2
         public float ultDamage;
         public int ultCool;
 
-        [SerializeField]public PooledObject bulletPrefab; // TODO : 경로지정
+        [SerializeField] public PooledObject bulletPrefab; // TODO : 경로지정
         public PooledObject ultBulletPrefab;
         public GameObject ultPrefab; // 리소스
 
@@ -99,12 +96,12 @@ namespace LJ2
         //        // 효과 타입별로 추가 구현 (Effect_Type 등)
         //    }
         //}
-        public void SetParameter()
+        public void SetParameter(int weapon, int armor)
         {
             // Data의 값을 그대로 가져옴
             // ultPrefab = characterData.ultVisual;
             // image = charictorData.image;
-            
+
             //EquipController weapon;
             //EquipController armor;
             //EquipController acce;
@@ -154,11 +151,11 @@ namespace LJ2
             partySet = characterSave.partySet;
 
             // Save의 값에 따라 Data의 값을 변경
-            if(partySet == PartySet.Main)
+            if (partySet == PartySet.Main)
             {
-                // TODO : 장비 스탯 추가 적용
-                Hp = characterData.hp + (characterData.hpPlus * (level - 1));// + armor.hp;
-                attackDamage = (int)(characterData.attackDamage + (characterData.damagePlus * (level - 1)));//+weapon.attackPower; 
+                Debug.Log($"{characterData.name}무기 공격력: {weapon}, 방어력:{armor}");
+                attackDamage = (int)(characterData.attackDamage + (characterData.damagePlus * (level - 1))) + weapon;
+                Hp = characterData.hp + (characterData.hpPlus * (level - 1)) + armor;
             }
             else
             {
@@ -197,31 +194,14 @@ namespace LJ2
         }
 
         // 업그레이드 가능할 때만 실행
-        public void LevelUp(int unit)
+        public void LevelUp()
         {
-            if (level < characterData.maxLevel)
-            {
-                
-                if (unit > upgradeUnit)
-                {
-                    unit -= upgradeUnit;
-                    level++;
+            level++;
 
-                    int index = Manager.Game.CurrentSave.characterInventory.characters.FindIndex(c => c.id == id);
-                    CharacterSave characterSave = Manager.Game.CurrentSave.characterInventory.characters[index];
-                    characterSave.level = level;
-                    Manager.Game.CurrentSave.characterInventory.characters[index] = characterSave;
-                }
-                else
-                {
-                    Debug.Log("업그레이드 유닛이 부족합니다.");
-                }
-
-            }
-            else
-            {
-                Debug.Log("최대 레벨에 도달했습니다.");
-            }
+            int index = Manager.Game.CurrentSave.characterInventory.characters.FindIndex(c => c.id == id);
+            CharacterSave characterSave = Manager.Game.CurrentSave.characterInventory.characters[index];
+            characterSave.level = level;
+            Manager.Game.CurrentSave.characterInventory.characters[index] = characterSave;
         }
 
         public void GetUpgradeUnit(int unit)
@@ -236,7 +216,7 @@ namespace LJ2
                 Debug.Log("업그레이드 가능 유닛이 부족합니다.");
             }
         }
-        public void StepUp() 
+        public void StepUp()
         {
             if (step < 4)
             {
@@ -276,8 +256,8 @@ namespace LJ2
 
         public void UseUlt()
         {
-            switch(id)
-            {                
+            switch (id)
+            {
                 case 10001:
                     ultimate.Laser(ultDamage);
                     break;
