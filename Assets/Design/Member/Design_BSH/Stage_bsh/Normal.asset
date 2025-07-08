@@ -15,4 +15,4 @@ MonoBehaviour:
   maxHP: 100
   enemyIcon: {fileID: 0}
   enemyType: 0
-  attackPower: 10
+  attackPower: 60
