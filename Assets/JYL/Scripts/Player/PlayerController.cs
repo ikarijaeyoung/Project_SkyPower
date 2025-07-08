@@ -140,7 +140,11 @@ namespace JYL
                 sub2CharController = charDataLoader.sub2Controller;
             }
             inGameController = Instantiate(mainCharController.gameObject, transform).GetComponent<CharactorController>();
-            hud.Init();
+            
+            hud.Init(); // HUD Init
+
+            if (leftUI == null) leftUI = hud.leftUI;
+            if (rightUI == null) rightUI = hud.rightUI;
 
             // CharactorController character = gameObject.AddComponent<CharactorController>();
 
@@ -216,11 +220,11 @@ namespace JYL
             Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
             if (viewportPos.z <= 0) return Vector2.zero;
 
-            if (viewportPos.x <= leftMargin+0.03f && inputDirection.x < 0) inputDirection.x = 0;
-            if (viewportPos.x >= rightMargin-0.03f && inputDirection.x > 0) inputDirection.x = 0;
+            if (viewportPos.x <= leftMargin+0.15f && inputDirection.x < 0) inputDirection.x = 0;
+            if (viewportPos.x >= rightMargin-0.15f && inputDirection.x > 0) inputDirection.x = 0;
 
-            if (viewportPos.y-0.03f <= 0 && inputDirection.y < 0) inputDirection.y = 0;
-            if (viewportPos.y+0.03f >= 1 && inputDirection.y > 0) inputDirection.y = 0;
+            if (viewportPos.y-0.01f <= 0 && inputDirection.y < 0) inputDirection.y = 0;
+            if (viewportPos.y+0.01f >= 1 && inputDirection.y > 0) inputDirection.y = 0;
 
             return inputDirection;
         }

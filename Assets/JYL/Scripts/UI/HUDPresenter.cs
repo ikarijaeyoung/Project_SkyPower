@@ -54,6 +54,9 @@ namespace JYL
         private Image ultIllust => GetUI<Image>("UltImg");
         private Image parryIllust => GetUI<Image>("ParryImg");
 
+        public RectTransform leftUI => GetUI<RectTransform>("LeftUIImg");
+        public RectTransform rightUI => GetUI<RectTransform>("RightUIImg");
+
         // private Animator ultAnimator => GetUI<Animator>("UltImg");
         private Animator ultAnimator => GetUI<Animator>("UltImg");
         private Animator parryAnimator => GetUI<Animator>("ParryImg");
