@@ -44,6 +44,8 @@ namespace LJ2
 
         public int upgradeUnit;
 
+        public string attackSound;
+
         private void Awake()
         {
             parrying = GetComponent<Parrying>();
@@ -132,6 +134,15 @@ namespace LJ2
             icon = characterData.icon;
             image = characterData.image;
 
+            switch (grade)
+            {
+                case Grade.SSR:
+                    attackSound = "Atk_Normal_SSR";
+                    break;
+                case Grade.R:
+                    attackSound = "Atk_Normal_R";
+                    break;
+            }
 
             // Save의 값을 그대로 가져옴  
 
@@ -163,6 +174,7 @@ namespace LJ2
                 attackDamage = (int)(characterData.attackDamage + (characterData.damagePlus * (level - 1)));
             }
 
+
             ultLevel = step + 1;
             ultCool = characterData.ultCoolDefault - (characterData.ultCoolReduce * step);
             upgradeUnit = characterData.upgradeUnitDefault + (characterData.upgradeUnitPlus * level);
@@ -170,25 +182,25 @@ namespace LJ2
             switch (id)
             {
                 case 10001:
-                    ultDamage = characterData.attackDamage * ((150 + 25 * Mathf.Pow(step, 2)) / 100);
+                    ultDamage = (float)attackDamage * ((150f + 25f * Mathf.Pow((float)step, 2)) / 100f);
                     break;
                 case 10002:
-                    ultDamage = characterData.attackDamage * ((120 + 20 * step) / 100);
+                    ultDamage = (float)attackDamage * ((120f + 20f * (float)step) / 100f);
                     break;
                 case 10003:
-                    ultDamage = characterData.attackDamage * ((150 + 50 * step) / 100);
+                    ultDamage = (float)attackDamage * ((150f + 50f * (float)step) / 100f);
                     break;
                 case 10004:
-                    ultDamage = characterData.attackDamage * ((130 + 30 * step) / 100);
+                    ultDamage = (float)attackDamage * ((130f + 30f * (float)step) / 100f);
                     break;
                 case 10005:
-                    ultDamage = characterData.attackDamage * ((150 + (12.5f * Mathf.Pow(step, 2)) + (37.5f * step)) / 100);
+                    ultDamage = (float)attackDamage * ((150f + (12.5f * Mathf.Pow((float)step, 2)) + (37.5f * (float)step)) / 100f);
                     break;
                 case 10006:
-                    ultDamage = characterData.attackDamage * ((150 + (12.5f * Mathf.Pow(step, 2)) + (37.5f * step)) / 100);
+                    ultDamage = (float)attackDamage * ((150f + (12.5f * Mathf.Pow(step, 2)) + (37.5f * (float)step)) / 100f);
                     break;
                 default:
-                    ultDamage = characterData.attackDamage * ((150 + 50 * step) / 100);
+                    ultDamage = (float)attackDamage * ((150f + (50f * (float)step)) / 100f);
                     break;
             }
         }
@@ -256,6 +268,7 @@ namespace LJ2
 
         public void UseUlt()
         {
+            AudioManager.Instance.PlaySFX("Atk_Ultimate");
             switch (id)
             {
                 case 10001:

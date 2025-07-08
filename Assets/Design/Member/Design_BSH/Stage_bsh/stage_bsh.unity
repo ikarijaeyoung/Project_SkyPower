@@ -356,7 +356,7 @@ PrefabInstance:
         type: 3}
       propertyPath: currentStage
       value: 
-      objectReference: {fileID: 11400000, guid: 282837a6043b7904ebea6e16611e13a0,
+      objectReference: {fileID: 11400000, guid: 71913fac449642748aaf958519eca720,
         type: 2}
     - target: {fileID: 304415726963608880, guid: 81acc7e3eb23c63498d5ceb6813d1cc4,
         type: 3}

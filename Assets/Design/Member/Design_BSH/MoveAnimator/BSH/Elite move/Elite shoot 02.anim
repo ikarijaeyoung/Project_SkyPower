@@ -253,7 +253,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 6.016667
+  - time: 5.9666667
     functionName: AnimationFire
     data: 
     objectReferenceParameter: {fileID: 0}
@@ -267,21 +267,21 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 8.566667
+  - time: 8.633333
     functionName: AnimationFire
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 8.966666
+  - time: 9.216666
     functionName: AnimationFire
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 10.883333
+  - time: 10.95
     functionName: AnimationFire
     data: 
     objectReferenceParameter: {fileID: 0}

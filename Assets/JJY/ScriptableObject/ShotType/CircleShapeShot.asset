@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: CircleShapeShot
   m_EditorClassIdentifier: 
   shotCount: 8
+  CircleCount: 3
   fireDelayBetweenShots: 0
-  returnToPoolTimer: 5
+  fireDelayBetweenCircle: 0.2
+  returnToPoolTimer: 10

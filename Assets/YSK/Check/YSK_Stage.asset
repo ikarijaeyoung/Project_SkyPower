@@ -14,13 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sequence:
   - enemyPrefab:
-    - {fileID: 8351887547980912979, guid: 82df83355a9424f45b8f28d7cb39fcd2, type: 3}
-    - {fileID: 8351887547980912979, guid: 7179472f5f7447740848216511a00d53, type: 3}
-    spawnPos:
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    spawnDelay: 3
-  - enemyPrefab:
     - {fileID: 5532545821888678440, guid: 6fef35a45ff11ef46a76a8c9eb28bafd, type: 3}
     - {fileID: 5532545821888678440, guid: 340d9930bc085dc4fa00a8f97b12b3c5, type: 3}
     - {fileID: 5532545821888678440, guid: 93279a75d8d07fe47bb5c21e9edeef8f, type: 3}
@@ -53,6 +46,13 @@ MonoBehaviour:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     spawnDelay: 0
+  - enemyPrefab:
+    - {fileID: 8351887547980912979, guid: 82df83355a9424f45b8f28d7cb39fcd2, type: 3}
+    - {fileID: 8351887547980912979, guid: 7179472f5f7447740848216511a00d53, type: 3}
+    spawnPos:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    spawnDelay: 3
   - enemyPrefab:
     - {fileID: 5532545821888678440, guid: 6fef35a45ff11ef46a76a8c9eb28bafd, type: 3}
     - {fileID: 5532545821888678440, guid: 340d9930bc085dc4fa00a8f97b12b3c5, type: 3}

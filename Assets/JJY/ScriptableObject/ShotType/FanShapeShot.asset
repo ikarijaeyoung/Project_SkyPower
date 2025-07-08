@@ -15,4 +15,4 @@ MonoBehaviour:
   shotCount: 7
   fireDelayBetweenShots: 0
   fanShapeangle: 45
-  returnToPoolTimer: 5
+  returnToPoolTimer: 10

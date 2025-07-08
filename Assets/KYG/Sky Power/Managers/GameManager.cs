@@ -106,6 +106,7 @@ namespace KYG_skyPower
             if (isGameCleared || isGameOver) return;
             isGameCleared = true;
             Time.timeScale = 1f;
+            Debug.Log("게임 클리어 상태로 변경");
             onGameClear?.Invoke();
             UIManager.Instance.ShowPopUp<StageClearPopUp>();
         }

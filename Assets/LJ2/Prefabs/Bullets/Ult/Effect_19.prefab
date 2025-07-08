@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8012875074528721697}
   - component: {fileID: 734889712812997963}
   - component: {fileID: 1708493707157732646}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5209182111593434329}
   - component: {fileID: 2666320559683239479}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Effect_19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,6 +205,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5209182111593434329}
     m_Modifications:
+    - target: {fileID: 58292936881470258, guid: a6cecb8402bda7e4c97ea5247db8710d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 58292937700656454, guid: a6cecb8402bda7e4c97ea5247db8710d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 58292937700656454, guid: a6cecb8402bda7e4c97ea5247db8710d,
         type: 3}
       propertyPath: m_IsActive
@@ -212,13 +222,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 58292937864893131, guid: a6cecb8402bda7e4c97ea5247db8710d,
         type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 58292937864893131, guid: a6cecb8402bda7e4c97ea5247db8710d,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 58292938412173471, guid: a6cecb8402bda7e4c97ea5247db8710d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 58292938863633687, guid: a6cecb8402bda7e4c97ea5247db8710d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1267622881173442705, guid: a6cecb8402bda7e4c97ea5247db8710d,
         type: 3}
       propertyPath: m_Name
       value: Effect_19_FlameBreath
+      objectReference: {fileID: 0}
+    - target: {fileID: 1267622881173442705, guid: a6cecb8402bda7e4c97ea5247db8710d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4388453758017755076, guid: a6cecb8402bda7e4c97ea5247db8710d,
         type: 3}

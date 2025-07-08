@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8012875074528721697}
   - component: {fileID: 734889712812997963}
   - component: {fileID: 1708493707157732646}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5209182111593434329}
   - component: {fileID: 7079804252905131729}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Effect_28
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,6 +205,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5209182111593434329}
     m_Modifications:
+    - target: {fileID: 763237811159765366, guid: fff2cc81c29ebc8489961bfc37ff455b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1723582478473367051, guid: fff2cc81c29ebc8489961bfc37ff455b,
         type: 3}
       propertyPath: looping
@@ -217,18 +222,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5713527118021029394, guid: fff2cc81c29ebc8489961bfc37ff455b,
         type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5713527118021029394, guid: fff2cc81c29ebc8489961bfc37ff455b,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6104107113015724244, guid: fff2cc81c29ebc8489961bfc37ff455b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6104107113015724250, guid: fff2cc81c29ebc8489961bfc37ff455b,
         type: 3}
       propertyPath: looping
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6104107113229620048, guid: fff2cc81c29ebc8489961bfc37ff455b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6104107113229620054, guid: fff2cc81c29ebc8489961bfc37ff455b,
         type: 3}
       propertyPath: looping
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6104107114445071217, guid: fff2cc81c29ebc8489961bfc37ff455b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6104107114445071217, guid: fff2cc81c29ebc8489961bfc37ff455b,
         type: 3}
@@ -244,6 +269,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Effect_28_PurifierBeam
+      objectReference: {fileID: 0}
+    - target: {fileID: 6104107114863222821, guid: fff2cc81c29ebc8489961bfc37ff455b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6104107114863222821, guid: fff2cc81c29ebc8489961bfc37ff455b,
         type: 3}

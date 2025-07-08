@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb39e66d9d10d045b169252a651b63d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyData: {fileID: 11400000, guid: 98d03020df3db694e87872fae7de0202, type: 2}
+  enemyData: {fileID: 11400000, guid: 9d642417d9dfd7e48830d627d0624781, type: 2}
   currentHP: 0
   autoFire: 1
   firePoints:
@@ -223,12 +223,12 @@ MonoBehaviour:
   - {fileID: 6381638192117193609}
   - {fileID: 6018092267486067874}
   BulletPattern:
-  - {fileID: 11400000, guid: 0ba79530155922a4a8a899ae198109eb, type: 2}
+  - {fileID: 11400000, guid: 8349a75419768044899b3c76cec273ea, type: 2}
   curObjectPool: {fileID: 0}
   bulletSpeed: 2
   flashColor: {r: 1, g: 1, b: 1, a: 1}
   flashDuration: 0.1
-  deathEffectPrefab: {fileID: 1991596720237968674, guid: 18cd71152053a034ea2ee7f606de38ec,
+  deathEffectPrefab: {fileID: 1991596720237968674, guid: c93377537c33e0e4bb71e7ad2a4cfa41,
     type: 3}
   destroyDelay: 0
 --- !u!95 &5120318936030198053

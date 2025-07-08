@@ -3,6 +3,8 @@ using UnityEditor;
 
 public class AnimationScaler : MonoBehaviour
 {
+#if UNITY_EDITOR  
+
     [MenuItem("Tools/Scale Animation Clip")]
     static void ScaleAnimationClip()
     {
@@ -37,4 +39,6 @@ public class AnimationScaler : MonoBehaviour
 
         Debug.Log("애니메이션 위치 크기 조정 완료!");
     }
+
+#endif
 }

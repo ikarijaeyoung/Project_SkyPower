@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed4526d1dc70ea042b1f8bbc61d6ae14, type: 3}
   m_Name: JJY_02_NormalEnemy
   m_EditorClassIdentifier: 
-  maxHP: 60
+  maxHP: 84
   enemyIcon: {fileID: 0}
   enemyType: 0
-  attackPower: 60
+  attackPower: 6

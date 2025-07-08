@@ -53,7 +53,7 @@ namespace JYL
         private int attackPower { get; set; }
         private float moveSpeed { get; set; }
         private bool isDead { get; set; } = false;
-        private bool isInvincible { get; set; } = false;
+        public bool isInvincible { get; set; } = false;
         private int fireAtOnce { get; set; } = 3;
         private int fireCounter { get; set; }
         private float canAttackTime { get; set; } = 0.4f;
@@ -257,6 +257,7 @@ namespace JYL
             while (fireCounter>0)
             {
                 fireCounter--;
+                AudioManager.Instance.PlaySFX($"{mainCharController.attackSound}");
                 BulletPrefabController bulletPrefab = curBulletPool.ObjectOut() as BulletPrefabController;
                 bulletPrefab.transform.position = muzzlePoint.position;
                 bulletPrefab.ReturnToPool(bulletReturnTimer);
