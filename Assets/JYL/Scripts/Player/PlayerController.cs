@@ -105,6 +105,8 @@ namespace JYL
         private void LateUpdate() { }
 
         private void OnDisable() => UnSubscribeEvents();
+
+        // 적과 충돌 시, 데미지 입음
         private void OnTriggerEnter(Collider other)
         {
             if(other.gameObject.layer == 8)
