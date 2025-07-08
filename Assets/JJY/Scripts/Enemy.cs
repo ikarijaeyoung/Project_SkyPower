@@ -98,8 +98,8 @@ public class Enemy : MonoBehaviour
         SpawnManager.enemyCount--;
 
         // Stage만드시는 분들을 위한 TestSpawner전용.
-        TestSpawneManager.enemyCount--;
-        Debug.Log($"Total Enemies : {TestSpawneManager.enemyCount}");
+        //TestSpawneManager.enemyCount--;
+        //Debug.Log($"Total Enemies : {TestSpawneManager.enemyCount}");
     }
     private void Die()
     {
@@ -107,8 +107,8 @@ public class Enemy : MonoBehaviour
         AudioManager.Instance.PlaySFX("Death_Enemy");
 
         // Stage만드시는 분들을 위한 TestSpawner전용.
-        TestSpawneManager.enemyCount--;
-        Debug.Log($"Total Enemies : {TestSpawneManager.enemyCount}");
+        //TestSpawneManager.enemyCount--;
+        //Debug.Log($"Total Enemies : {TestSpawneManager.enemyCount}");
         OnEnemyDied?.Invoke(transform.position);
 
         if (curFireCoroutine != null)

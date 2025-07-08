@@ -1,6 +1,6 @@
 {
     "playerName": "eqipT",
-    "gold": 995500,
+    "gold": 996912,
     "characterInventory": {
         "characters": [
             {
@@ -55,7 +55,7 @@
                 "id": 10009,
                 "level": 1,
                 "step": 0,
-                "partySet": 2
+                "partySet": 1
             },
             {
                 "id": 10010,
@@ -91,7 +91,7 @@
                 "id": 10015,
                 "level": 1,
                 "step": 0,
-                "partySet": 1
+                "partySet": 0
             },
             {
                 "id": 10016,
@@ -163,7 +163,7 @@
                 "id": 10027,
                 "level": 2,
                 "step": 0,
-                "partySet": 0
+                "partySet": 2
             },
             {
                 "id": 10028,
@@ -179,20 +179,20 @@
             "stage": 1,
             "score": 0,
             "unlock": true,
-            "isClear": false
+            "isClear": true
         },
         {
             "world": 1,
             "stage": 2,
             "score": 0,
-            "unlock": false,
-            "isClear": false
+            "unlock": true,
+            "isClear": true
         },
         {
             "world": 1,
             "stage": 3,
             "score": 0,
-            "unlock": false,
+            "unlock": true,
             "isClear": false
         },
         {
@@ -438,7 +438,11 @@
         }
     ],
     "wearingId": [
+<<<<<<< Updated upstream
         30001,
+=======
+        30010,
+>>>>>>> Stashed changes
         30012,
         30012
     ]
