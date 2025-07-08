@@ -24,6 +24,7 @@ namespace JYL
         private TMP_Text afterHp => GetUI<TMP_Text>("AfterHPText");
         private TMP_Text nowAp => GetUI<TMP_Text>("NowAPText");
         private TMP_Text afterAp => GetUI<TMP_Text>("AfterAPText");
+        private TMP_Text reqUnitText => GetUI<TMP_Text>("ReqUnitText");
 
         [SerializeField] private Sprite charEnhanceImg;
         [SerializeField] private Sprite wpEnhanceImg;
@@ -57,8 +58,8 @@ namespace JYL
             characterLoader = gameObject.GetOrAddComponent<CharacterSaveLoader>();
             characterLoader.GetCharPrefab();
             enhanceTypeImg.sprite = charEnhanceImg;
-            
 
+            reqUnitText.text = $"{characterLoader.mainController.upgradeUnit} Unit";
             nowLevel.text = $"{characterLoader.mainController.level}";
             nowHp.text = $"{(int)(characterLoader.mainController.characterData.hp + (characterLoader.mainController.characterData.hpPlus * (characterLoader.mainController.level - 1)))}";
             nowAp.text = $"{(int)(characterLoader.mainController.characterData.attackDamage + (characterLoader.mainController.characterData.damagePlus * (characterLoader.mainController.level - 1)))}";
@@ -105,7 +106,7 @@ namespace JYL
                     nowLevel.text = $"{equipController.weapon.level}";
                     nowHp.text = $"";
                     nowAp.text = $"{equipController.weapon.equipValue}";
-                    
+                    reqUnitText.text = $"{equipController.weapon.upgradeGold}";
                     // 레벨이 최대레벨보다 낮을 시
                     if (equipController.weapon.level < equipController.weapon.maxLevel)
                     {
@@ -141,7 +142,7 @@ namespace JYL
                     nowLevel.text = $"{equipController.armor.level}";
                     nowHp.text = $"{equipController.armor.equipValue}";
                     nowAp.text = $"";
-                    
+                    reqUnitText.text = $"{equipController.armor.upgradeGold}";
                     // 레벨이 최대레벨보다 낮을 경우
                     if (equipController.armor.level < equipController.armor.maxLevel)
                     {

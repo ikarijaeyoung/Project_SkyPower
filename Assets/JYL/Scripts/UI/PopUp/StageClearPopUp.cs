@@ -25,7 +25,6 @@ namespace JYL
         private void OnEnable() { UIManager.canClosePopUp = false; }
         private void OnDisable() { UIManager.canClosePopUp = true; }
 
-        // TODO : 테스트 필요
         private void SetNextStageBtn() // 버튼 활성화 여부.  다음 스테이지 정보가 없을 경우, 비활성화
         {
             stageNumText.text = $"STAGE {Manager.Game.selectWorldIndex} - {Manager.Game.selectStageIndex}";

@@ -58,6 +58,7 @@ namespace JYL
         private int fireCounter { get; set; }
         private float canAttackTime { get; set; } = 0.4f;
         private int ultGage { get; set; } = 0;
+        private int maxUltGage { get; set; } = 300;
 
         // 좌, 우 UI 사이즈
         private float leftMargin;
@@ -336,9 +337,9 @@ namespace JYL
 
         public void GetUltGage(int amount)
         {
-            if(ultGage + amount >100)
+            if(ultGage + amount >maxUltGage)
             {
-                ultGage = 100;
+                ultGage = maxUltGage;
                 hud.UltGage = 1f;
             }
             else
@@ -348,14 +349,14 @@ namespace JYL
                 {
                     Debug.Log("hud가 널");
                 }
-                hud.UltGage = (float)ultGage / 100;
+                hud.UltGage = (float)ultGage / maxUltGage;
             }
             
         }
 
         private void UseUlt(InputAction.CallbackContext ctx)
         {
-            if (ultGage >= 100)
+            if (ultGage >= maxUltGage)
             {
                 hud.UseUltimate();
                 inGameController.UseUlt();
