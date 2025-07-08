@@ -17,7 +17,7 @@ MonoBehaviour:
   type: 0
   grade: 0
   setType: 4
-  icon: {fileID: 21300000, guid: 5ab9bba52271cc14ca7fef420d7151a1, type: 3}
+  icon: {fileID: 21300000, guid: 7a0423ebb772b6649a41a5c06fcb7794, type: 3}
   level: 1
   maxLevel: 5
   upgradeGold: 1000

@@ -10,24 +10,6 @@ namespace LJ2
     {
         private int subStage { get; set; } = 5;
         protected override void Awake() => base.Awake();
-
-        // 정보 별 저장, 로드, 삭제 함수 따로 구현
-        //public void PlayerSave(CharictorSave target, int index)
-        //{
-        //    DataSaveController.Save(target, index);
-        //}
-
-        //public void PlayerLoad(CharictorSave target, int index)
-        //{
-        //    DataSaveController.Load(ref target, index);
-        //}
-
-        //public void PlayerDelete(CharictorSave target, int index)
-        //{
-        //    DataSaveController.Delete(target, index);
-        //}
-
-        // 현재 partial class로 구현된 GameData를 control하는 함수들
         
         public void GameSave(GameData target, int index, string name = "")
         {
@@ -36,7 +18,7 @@ namespace LJ2
                 target.playerName = name;
             }
             GameData saveTargetData = SaveStageInfo(target);
-            DataSaveController.Save(saveTargetData, index);
+            DataSaveController.Save(saveTargetData, index+1);
         }
 
         public void GameLoad(ref GameData target, int index)

@@ -31,6 +31,7 @@ namespace JYL
         {
             // 씬 넘어감 -> mainScene
             // 이전 UI들로 인해서 세이브파일은 선택되어 있음.
+            UIManager.Instance.CleanPopUp();
             Manager.SDM.SyncRuntimeDataWithStageInfo();
             SceneManager.LoadSceneAsync("bMainScene_JYL");
         }

@@ -98,7 +98,7 @@ namespace JYL
             Util.ExtractTrailNumber(eventData.pointerClick.name, out int index);
             // GameManager.Instance.selectSave.party[index] -> 캐릭터 ID
             // 캐릭터 컨트롤러 (캐릭터 ID)
-            UIManager.Instance.selectIndexUI = index;
+            UIManager.selectIndexUI = index;
             if(index == 1)
             {
                 int mainCharIndex = charDataList.FindIndex(c => c.partySet == PartySet.Main);
@@ -139,11 +139,10 @@ namespace JYL
                     GameObject go;
                     go = Instantiate(iconPrefab, parent);
                     go.name = $"StayCharImg{imgIndex + 1}";
-                    // TODO Add Test
                     AddUIToDictionary(go.gameObject);
                     imgIndex++;
                     go.GetComponentInChildren<Image>().sprite = character.icon;
-                    GetEvent($"{go.name}").Drag += BeginIconDrag;
+                    GetEvent($"{go.name}").BeginDrag += BeginIconDrag;
                     GetEvent($"{go.name}").Drag += IconDrag;
                     GetEvent($"{go.name}").EndDrag += OnIconDragEnd;
                     iconList.Add(go);
