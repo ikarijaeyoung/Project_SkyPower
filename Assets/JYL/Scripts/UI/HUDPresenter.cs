@@ -103,6 +103,7 @@ namespace JYL
             ultGage = 0;
 
             hpBar.value = (float)CurHp / maxHp;
+            Debug.Log($"{maxHp}_{CurHp}_{hpBar.value}");
 
             ultIllust.sprite = player.mainCharController.image;
             ultGageImg.sprite = player.mainCharController.icon;
@@ -116,6 +117,10 @@ namespace JYL
             StageEnemyData currentStage = Manager.SDM.runtimeData[Manager.Game.selectWorldIndex - 1].subStages[Manager.Game.selectStageIndex - 1].stageEnemyData;
             maxSeq = currentStage.sequence.Count - 1;
             onSeqChanged.AddListener(SetProgressBar);
+        }
+        public void HpSet() 
+        {
+
         }
         private void SetParry()
         {

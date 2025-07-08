@@ -48,8 +48,6 @@ namespace JYL
             {
                 hp = value;
                 onHpChanged?.Invoke(hp);
-                curBulletPool.ObjectOut();
-
             }
         }
         private int attackPower { get; set; }
@@ -141,6 +139,7 @@ namespace JYL
             }
             inGameController = Instantiate(mainCharController.gameObject, transform).GetComponent<CharactorController>();
             
+            CharacterParameterSetting();
             hud.Init(); // HUD Init
 
             if (leftUI == null) leftUI = hud.leftUI;
@@ -185,14 +184,13 @@ namespace JYL
                 Debug.LogWarning("오른쪽 UI 참조 안됐음");
             }
 
-            CharacterParameterSetting();
 
         }
         // 캐릭터 필드 세팅
         private void CharacterParameterSetting()
         {
             //mainCharController.model 생성
-            hp = mainCharController.Hp;
+            Hp = mainCharController.Hp;
             attackPower = mainCharController.attackDamage;
             moveSpeed = mainCharController.moveSpeed;
         }
