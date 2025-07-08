@@ -6,9 +6,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 namespace JYL
 {
+
     public class PartySetPopUp : BaseUI
     {
         private string iconPrefabPath = "JYL/UI/CharacterIconPrefab";
@@ -16,6 +18,9 @@ namespace JYL
         private Image mainIllustImg;
         private Image sub1IllustImg;
         private Image sub2IllustImg;
+        private Image[] psNImg;
+        private Image[] psSSRImg;
+
         private GameObject iconPrefab;
         private RectTransform parent;
         private List<GameObject> iconList;
@@ -35,10 +40,8 @@ namespace JYL
         private void OnEnable() { }
         void Start()
         {
-             // TODO : 상점 연결
-            GetEvent("PSCharImg1").Click += OpenInvenPopUp;
-            //GetEvent("PSCharImg2").Click += OpenInvenPopUp;
-            //GetEvent("PSCharImg3").Click += OpenInvenPopUp;
+            GetEvent("PSNImg1").Click += OpenInvenPopUp;
+            GetEvent("PSSSRImg1").Click += OpenInvenPopUp;
             CreateIcons();
             warningText.gameObject.SetActive(false);
         }
@@ -76,6 +79,13 @@ namespace JYL
         // 초기화
         private void Init()
         {
+            psNImg = new Image[3];
+            psSSRImg = new Image[3];
+            for(int i = 0; i<3;i++)
+            {
+                psNImg[i] = GetUI<Image>($"PSNImg{i+1}");
+                psSSRImg[i] = GetUI<Image>($"PSSSRImg{i+1}");
+            }
             characterLoader = GetComponent<CharacterSaveLoader>();
             charDict = new Dictionary<string, CharactorController>();
             charDataList = Manager.Game.CurrentSave.characterInventory.characters;
@@ -128,9 +138,11 @@ namespace JYL
             }
 
             int imgIndex = 0;
+
             isMainSet = false;
             isSub1Set = false;
             isSub2Set = false;
+
             foreach (CharactorController character in characterLoader.charactorController)
             {
                 // 레벨 1 이상인 경우에만 이벤트 등록. 소유중인 캐릭터들임
@@ -141,7 +153,61 @@ namespace JYL
                     go.name = $"StayCharImg{imgIndex + 1}";
                     AddUIToDictionary(go.gameObject);
                     imgIndex++;
-                    go.GetComponentInChildren<Image>().sprite = character.icon;
+                    
+                    Image[] tmp = go.GetComponentsInChildren<Image>(true);
+                    Debug.Log($"tmp의 길이 {tmp.Length}");
+                    Debug.Log($"tmp 이름 1 : {tmp[0].gameObject.name}");
+                    Debug.Log($"2:{tmp[1].gameObject.name}");
+                    Debug.Log($"3:{tmp[2].gameObject.name}");
+                    foreach (Image image in tmp)
+                    {
+                        if(image.gameObject.name == "CharIconImg")
+                        {
+                            image.sprite = character.icon;
+                        }
+                        if(character.grade == Grade.R)
+                        {
+                            if(image.gameObject.name == "RFrameImg")
+                            {
+                                image.gameObject.SetActive(true);
+                            }
+                            
+                        }
+                        else if(character.grade == Grade.SSR)
+                        {
+                            if (image.gameObject.name == "SSRFrameImg")
+                            {
+                                image.gameObject.SetActive(true);
+                            }
+                        }
+                    }
+                    //if (character.grade == Grade.R)
+                    //{
+                    //    frame.rFrame.gameObject.SetActive(true);
+                    //    frame.ssrFrame.gameObject.SetActive(false);
+                    //}
+                    //else if (character.grade == Grade.SSR)
+                    //{
+                    //    frame.rFrame.gameObject.SetActive(false);
+                    //    frame.ssrFrame.gameObject.SetActive(true);
+                    //}
+
+                    //CharacterIconPrefab frame = go.GetComponent<CharacterIconPrefab>();
+                    //frame.Init();
+                    //frame.charImg.sprite = character.icon;
+                    //fra
+                    //if(character.grade==Grade.R)
+                    //{
+                    //    frame.rFrame.gameObject.SetActive(true);
+                    //    frame.ssrFrame.gameObject.SetActive(false);
+                    //}
+                    //else if(character.grade == Grade.SSR)
+                    //{
+                    //    frame.rFrame.gameObject.SetActive(false);
+                    //    frame.ssrFrame.gameObject.SetActive(true);
+                    //}
+
+                    //go.GetComponentInChildren<Image>().sprite = character.icon;
                     GetEvent($"{go.name}").BeginDrag += BeginIconDrag;
                     GetEvent($"{go.name}").Drag += IconDrag;
                     GetEvent($"{go.name}").EndDrag += OnIconDragEnd;
@@ -157,14 +223,44 @@ namespace JYL
                 {
                     case PartySet.Main:
                         mainIllustImg.sprite = character.image;
-                        isMainSet = true;
+                        if(character.grade == Grade.R)
+                        {
+                            psNImg[0].gameObject.SetActive(true);
+                            psSSRImg[0].gameObject.SetActive(false);
+                        }
+                        else if(character.grade == Grade.SSR)
+                        {
+                            psNImg[0].gameObject.SetActive(false);
+                            psSSRImg[0].gameObject.SetActive(true);
+                        }
+                            isMainSet = true;
                         break;
                     case PartySet.Sub1:
                         sub1IllustImg.sprite = character.image;
+                        if (character.grade == Grade.R)
+                        {
+                            psNImg[1].gameObject.SetActive(true);
+                            psSSRImg[1].gameObject.SetActive(false);
+                        }
+                        else if (character.grade == Grade.SSR)
+                        {
+                            psNImg[1].gameObject.SetActive(false);
+                            psSSRImg[1].gameObject.SetActive(true);
+                        }
                         isSub1Set = true;
                         break;
                     case PartySet.Sub2:
                         sub2IllustImg.sprite = character.image;
+                        if (character.grade == Grade.R)
+                        {
+                            psNImg[2].gameObject.SetActive(true);
+                            psSSRImg[2].gameObject.SetActive(false);
+                        }
+                        else if (character.grade == Grade.SSR)
+                        {
+                            psNImg[2].gameObject.SetActive(false);
+                            psSSRImg[2].gameObject.SetActive(true);
+                        }
                         isSub2Set = true;
                         break;
                 }

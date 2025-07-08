@@ -1,6 +1,6 @@
 {
     "playerName": "22111",
-    "gold": 23340,
+    "gold": 50,
     "characterInventory": {
         "characters": [
             {
@@ -13,19 +13,19 @@
                 "id": 10002,
                 "level": 1,
                 "step": 0,
-                "partySet": 3
+                "partySet": 1
             },
             {
                 "id": 10003,
                 "level": 1,
                 "step": 0,
-                "partySet": 3
+                "partySet": 2
             },
             {
                 "id": 10004,
                 "level": 1,
                 "step": 0,
-                "partySet": 3
+                "partySet": 0
             },
             {
                 "id": 10005,
@@ -55,7 +55,7 @@
                 "id": 10009,
                 "level": 1,
                 "step": 4,
-                "partySet": 0
+                "partySet": 3
             },
             {
                 "id": 10010,
@@ -91,7 +91,7 @@
                 "id": 10015,
                 "level": 1,
                 "step": 4,
-                "partySet": 1
+                "partySet": 3
             },
             {
                 "id": 10016,
@@ -108,7 +108,7 @@
             {
                 "id": 10018,
                 "level": 1,
-                "step": 3,
+                "step": 4,
                 "partySet": 3
             },
             {
@@ -126,19 +126,19 @@
             {
                 "id": 10021,
                 "level": 1,
-                "step": 3,
+                "step": 4,
                 "partySet": 3
             },
             {
                 "id": 10022,
                 "level": 1,
-                "step": 2,
+                "step": 3,
                 "partySet": 3
             },
             {
                 "id": 10023,
                 "level": 1,
-                "step": 1,
+                "step": 2,
                 "partySet": 3
             },
             {
@@ -162,13 +162,13 @@
             {
                 "id": 10027,
                 "level": 1,
-                "step": 1,
-                "partySet": 2
+                "step": 2,
+                "partySet": 3
             },
             {
                 "id": 10028,
                 "level": 1,
-                "step": 1,
+                "step": 2,
                 "partySet": 3
             },
             {
@@ -332,7 +332,7 @@
         },
         {
             "id": 30003,
-            "level": 1
+            "level": 5
         },
         {
             "id": 30004,
@@ -384,7 +384,7 @@
         },
         {
             "id": 30016,
-            "level": 1
+            "level": 5
         },
         {
             "id": 30017,
@@ -444,8 +444,8 @@
         }
     ],
     "wearingId": [
-        0,
-        0,
-        0
+        30003,
+        30016,
+        30030
     ]
 }
