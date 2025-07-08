@@ -98,11 +98,14 @@ namespace JYL
         private List<CharactorController> CharGachaRoll(int num)
         {
             List<CharactorController> results = new List<CharactorController>(num);
+            // 리설트를 가챠로 채움
+
             return null;
         }
         private List<EquipInfo> EquipGachaRoll(int num)
         {
             List<EquipInfo> results = new List<EquipInfo>(num);
+            // 리설트를 가챠로 채움
             return null;
 
         }
