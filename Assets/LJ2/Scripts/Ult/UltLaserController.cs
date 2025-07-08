@@ -5,7 +5,7 @@ using UnityEngine;
 public class UltLaserController : MonoBehaviour
 {
     
-    [SerializeField] private float attackDelay;
+    [Range(0.1f, 1)][SerializeField] private float attackDelay;
     private float currentTime;
     private int attackDamage = 2;
 

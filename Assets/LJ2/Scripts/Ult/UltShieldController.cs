@@ -1,3 +1,4 @@
+using JJY;
 using JYL;
 using KYG;
 using System.Collections;
@@ -8,8 +9,8 @@ public class UltShieldController : MonoBehaviour
 {
     [SerializeField] public bool isReflect = true;
     private Vector3 reflect;
-
-    [SerializeField] private float attackDelay = 0.5f;
+    public float size = 3f;
+    [Range(0.1f, 1)][SerializeField] private float attackDelay = 0.5f;
     private float currentTime;
     private int attackDamage;
 
@@ -24,6 +25,14 @@ public class UltShieldController : MonoBehaviour
     private void FixedUpdate()
     {
         currentTime += Time.fixedDeltaTime;
+
+        Collider[] hits = Physics.OverlapSphere(transform.position, size, LayerMask.GetMask("EnemyBullet"));
+        foreach (Collider c in hits)
+        {
+            Debug.Log($"{c.gameObject.name} 제거 시도");
+            c.gameObject.SetActive(false);
+        }
+        hits = null;
     }
     public void AttackDamage(float damage)
     {
@@ -41,6 +50,19 @@ public class UltShieldController : MonoBehaviour
                 Debug.Log($"TakeDamage {enemyComponent.name} 시도");
                 enemyComponent.TakeDamage(attackDamage);
             }
+            
+
         }
+    }
+
+    private void OnEnable()
+    {
+        Debug.Log("UltShieldController OnEnable 호출");
+    }
+
+    private void OnDisable()
+    {
+        currentTime = 0;
+        Debug.Log("UltShieldController OnDisable 호출");
     }
 }

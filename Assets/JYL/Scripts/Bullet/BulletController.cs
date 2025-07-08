@@ -5,7 +5,7 @@ namespace JYL
 {
     public class BulletController : MonoBehaviour
     {
-        [Range(0.05f, 1f)][SerializeField] float ticTime = 0.5f;
+        [Range(0.05f, 1f)][SerializeField] float ticTime = 0.3f;
         [SerializeField] GameObject flash; // TODO: 총알 프리팹 하나하나 다 직접 달아줘야 함
         [SerializeField] GameObject hit;
         public Rigidbody rig;
@@ -19,7 +19,7 @@ namespace JYL
             ps = GetComponent<ParticleSystem>();
             if(ps == null)
             {
-                Debug.LogError("파티클 시스템이 없음");
+                Debug.LogWarning("파티클 시스템이 없음");
             }
             rig = GetComponent<Rigidbody>();
             col = GetComponent<Collider>();
@@ -141,8 +141,12 @@ namespace JYL
         private void OnDisable(){ }
         public void OnFire()
         {
-            ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            ps.Play(true);
+            if(ps != null)
+            {
+                ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                ps.Play(true);
+            }
+            
             if (flash != null)
             {
                 GameObject flashInstance = Instantiate(flash, transform.position, Quaternion.LookRotation(transform.forward));

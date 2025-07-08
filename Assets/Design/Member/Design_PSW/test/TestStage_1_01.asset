@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dea4c279c15f030438294df52bb78cf9, type: 3}
+  m_Name: TestStage_1_01
+  m_EditorClassIdentifier: 
+  sequence:
+  - enemyPrefab:
+    - {fileID: 8241989814549798838, guid: e26d34ad1272ffc43a387737eb30c6f3, type: 3}
+    - {fileID: 1845901084240929023, guid: 6559b6a760d8305448fbeca078f63bfb, type: 3}
+    - {fileID: 6063454703931446435, guid: cfe441deca142444cab96e2eaa461249, type: 3}
+    - {fileID: 629613758147164121, guid: f887e8c5b5a100049a407fadb16e1172, type: 3}
+    - {fileID: 5308799325583322293, guid: e9de181e70643214c9d169b9eaca41ba, type: 3}
+    spawnPos:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    spawnDelay: 2
+  bossPrefabs:
+  - {fileID: 6063454703931446435, guid: cfe441deca142444cab96e2eaa461249, type: 3}
+  - {fileID: 629613758147164121, guid: f887e8c5b5a100049a407fadb16e1172, type: 3}
+  - {fileID: 5308799325583322293, guid: e9de181e70643214c9d169b9eaca41ba, type: 3}
+  bossSpawnPos:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}

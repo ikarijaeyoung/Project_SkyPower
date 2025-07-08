@@ -112,7 +112,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0792cdc2784b3de4cad1e8ee9282678d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setUltDelay: 4
+  laserDelay: 4
+  fireDelay: 4
+  shieldDelay: 4
+  allDelay: 1
+  bigBulletDelay: 0.5
+  manyBulletDelay: 0.3
   playerController: {fileID: 0}
   bulletReturnTimer: 5
   bigBulletSpeed: 15
@@ -454,7 +459,7 @@ PrefabInstance:
     - target: {fileID: 8025910177887852343, guid: 9a8965262ae861b4ead53351321299a8,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8025910177887852343, guid: 9a8965262ae861b4ead53351321299a8,
         type: 3}
