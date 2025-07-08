@@ -1,6 +1,6 @@
 {
-    "playerName": "eqipT",
-    "gold": 995500,
+    "playerName": "22111",
+    "gold": 700,
     "characterInventory": {
         "characters": [
             {
@@ -47,7 +47,7 @@
             },
             {
                 "id": 10008,
-                "level": -1,
+                "level": 1,
                 "step": 0,
                 "partySet": 3
             },
@@ -55,7 +55,7 @@
                 "id": 10009,
                 "level": 1,
                 "step": 0,
-                "partySet": 2
+                "partySet": 0
             },
             {
                 "id": 10010,
@@ -101,7 +101,7 @@
             },
             {
                 "id": 10017,
-                "level": -1,
+                "level": 1,
                 "step": 0,
                 "partySet": 3
             },
@@ -113,7 +113,7 @@
             },
             {
                 "id": 10019,
-                "level": -1,
+                "level": 1,
                 "step": 0,
                 "partySet": 3
             },
@@ -161,14 +161,20 @@
             },
             {
                 "id": 10027,
-                "level": 2,
+                "level": 1,
                 "step": 0,
-                "partySet": 0
+                "partySet": 2
             },
             {
                 "id": 10028,
                 "level": -1,
-                "step": 1,
+                "step": 0,
+                "partySet": 3
+            },
+            {
+                "id": 10028,
+                "level": -1,
+                "step": 0,
                 "partySet": 3
             }
         ]
@@ -318,7 +324,7 @@
     "equipSave": [
         {
             "id": 30001,
-            "level": 10
+            "level": -1
         },
         {
             "id": 30002,
@@ -330,7 +336,7 @@
         },
         {
             "id": 30004,
-            "level": 3
+            "level": -1
         },
         {
             "id": 30005,
@@ -338,7 +344,7 @@
         },
         {
             "id": 30006,
-            "level": 3
+            "level": -1
         },
         {
             "id": 30007,
@@ -354,7 +360,7 @@
         },
         {
             "id": 30010,
-            "level": 4
+            "level": -1
         },
         {
             "id": 30011,
@@ -362,7 +368,7 @@
         },
         {
             "id": 30012,
-            "level": 7
+            "level": -1
         },
         {
             "id": 30013,
@@ -438,8 +444,8 @@
         }
     ],
     "wearingId": [
-        30004,
-        30012,
-        30012
+        0,
+        0,
+        0
     ]
 }

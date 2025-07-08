@@ -7,7 +7,7 @@ namespace JYL
 {
     public class HUDPresenter : BaseUI
     {
-        [SerializeField] PlayerController player;
+        private PlayerController player;
         [SerializeField] private Sprite ultSprite;
         [SerializeField] private Sprite parry1Sprite;
         [SerializeField] private Sprite parry2Sprite;
@@ -62,8 +62,13 @@ namespace JYL
         private Coroutine parry1CooldownRoutine;
         private Coroutine parry2CooldownRoutine;
 
+        private new void Awake()
+        {
+        }
+        private void OnEnable()
+        {
+        }
         void Start() { }
-        private void OnEnable() => Init();
         private void OnDisable() => onSeqChanged.RemoveListener(SetProgressBar);
 
         void Update()
@@ -82,8 +87,14 @@ namespace JYL
             }
         }
         private void LateUpdate() { }
-        private void Init()
+
+        public void SetPlayer(PlayerController playerController)
         {
+            player = playerController;
+        }
+        public void Init()
+        {
+            base.Awake();
             maxHp = player.Hp;
             CurHp = player.Hp;
             ultGage = 0;

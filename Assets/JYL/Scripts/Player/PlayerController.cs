@@ -23,6 +23,7 @@ namespace JYL
         [field:Header("Set Value")]
         [field:Range(10f,50f)][field:SerializeField] private float bulletSpeed { get; set; } = 20f;
         [Range(0.1f, 5)][SerializeField] float bulletReturnTimer = 2f;
+        [Range(0.1f,2f)][SerializeField] private float invincibleTime = 1f;
 
         public UnityEvent<int> onHpChanged;
         private PlayerInput playerInput;
@@ -48,14 +49,13 @@ namespace JYL
                 hp = value;
                 onHpChanged?.Invoke(hp);
                 curBulletPool.ObjectOut();
+
             }
         }
-
         private int attackPower { get; set; }
         private float moveSpeed { get; set; }
         private bool isDead { get; set; } = false;
-
-
+        private bool isInvincible { get; set; } = false;
         private int fireAtOnce { get; set; } = 3;
         private int fireCounter { get; set; }
         private float canAttackTime { get; set; } = 0.4f;
@@ -75,6 +75,8 @@ namespace JYL
 
         public ObjectPool curBulletPool => bulletPools[poolIndex];
         private Coroutine fireRoutine;
+        private Coroutine invincibleRoutine;
+        private Coroutine blinkRoutine;
 
         private void Awake()=> Init();
         private void OnEnable()
@@ -105,8 +107,23 @@ namespace JYL
         private void LateUpdate() { }
 
         private void OnDisable() => UnSubscribeEvents();
+        private void OnTriggerEnter(Collider other)
+        {
+            if(other.gameObject.layer == 8)
+            {
+                TakeDamage(mainCharController.Hp / 5);
+            }
+        }
         private void Init()
         {
+            if (hud == null)
+            {
+                hud = FindObjectOfType<HUDPresenter>();
+            }
+            if(hud != null)
+            {
+                hud.SetPlayer(this);
+            }
             playerInput = GetComponent<PlayerInput>();
             charDataLoader = GetComponent<CharacterSaveLoader>();
             charDataLoader.GetCharPrefab();
@@ -123,6 +140,8 @@ namespace JYL
                 sub2CharController = charDataLoader.sub2Controller;
             }
             inGameController = Instantiate(mainCharController.gameObject, transform).GetComponent<CharactorController>();
+            hud.Init();
+
             // CharactorController character = gameObject.AddComponent<CharactorController>();
 
             // 오브젝트 풀 설정
@@ -197,11 +216,11 @@ namespace JYL
             Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
             if (viewportPos.z <= 0) return Vector2.zero;
 
-            if (viewportPos.x <= leftMargin+0.01f && inputDirection.x < 0) inputDirection.x = 0;
-            if (viewportPos.x >= rightMargin-0.01f && inputDirection.x > 0) inputDirection.x = 0;
+            if (viewportPos.x <= leftMargin+0.03f && inputDirection.x < 0) inputDirection.x = 0;
+            if (viewportPos.x >= rightMargin-0.03f && inputDirection.x > 0) inputDirection.x = 0;
 
-            if (viewportPos.y-0.01f <= 0 && inputDirection.y < 0) inputDirection.y = 0;
-            if (viewportPos.y+0.01f >= 1 && inputDirection.y > 0) inputDirection.y = 0;
+            if (viewportPos.y-0.03f <= 0 && inputDirection.y < 0) inputDirection.y = 0;
+            if (viewportPos.y+0.03f >= 1 && inputDirection.y > 0) inputDirection.y = 0;
 
             return inputDirection;
         }
@@ -272,24 +291,43 @@ namespace JYL
 
         public void TakeDamage(int damage)
         {
-            Debug.Log($"체력 이만큼 닳음 : {damage}");
-            if(mainCharController.defense>0)
+            if(!isInvincible)
             {
-                mainCharController.defense -= 1;
-                return;
-            }
-            if(mainCharController.defense <=0)
-            {
-                Hp-=damage;
-                Debug.Log($"현재 체력 : {Hp}");
-                if(Hp <= 0&&!isDead)
+                Debug.Log($"체력 이만큼 닳음 : {damage}");
+                if (mainCharController.defense > 0)
                 {
-                    isDead = true;
-                    Hp = 0;
-                    Manager.Game.SetGameOver();
+                    mainCharController.defense -= 1;
+                    return;
                 }
-                hud.CurHp = Hp;
+                if (mainCharController.defense <= 0)
+                {
+                    AudioManager.Instance.PlaySFX("Hit_Player");
+                    Hp -= damage;
+                    Debug.Log($"현재 체력 : {Hp}");
+                    if (Hp <= 0 && !isDead)
+                    {
+                        isDead = true;
+                        Hp = 0;
+                        Debug.Log("게임 오버확인");
+                        Manager.Game.SetGameOver();
+                    }
+                    hud.CurHp = Hp;
+                }
+                invincibleRoutine = StartCoroutine(InvincibleRoutine());
             }
+
+        }
+
+        IEnumerator InvincibleRoutine()
+        {
+            isInvincible = true;
+            if (invincibleTime == 0) invincibleTime = 1f;
+            if(blinkRoutine == null)
+            blinkRoutine = StartCoroutine(BlinkAllRenderersCoroutine(inGameController.gameObject, Color.red, invincibleTime,10f));
+            yield return new WaitForSeconds(invincibleTime);
+            StopCoroutine(invincibleRoutine);
+            invincibleRoutine = null;
+            isInvincible = false;
         }
 
         public void GetUltGage(int amount)
@@ -352,6 +390,68 @@ namespace JYL
             parryAction2.started -= UseParry2;
             ScoreManager.Instance.onScoreChanged.RemoveListener(GetUltGage);
         }
+
+        private IEnumerator BlinkAllRenderersCoroutine(GameObject root, Color targetColor, float duration, float blinkSpeed)
+        {
+            var renderers = root.GetComponentsInChildren<Renderer>(true);
+            List<Color[]> originalColors = new List<Color[]>();
+            List<bool[]> hasColorProps = new List<bool[]>();
+
+            foreach (var renderer in renderers)
+            {
+                var colors = new Color[renderer.materials.Length];
+                var hasColor = new bool[renderer.materials.Length];
+
+                for (int i = 0; i < renderer.materials.Length; i++)
+                {
+                    var mat = renderer.materials[i];
+                    if (mat != null && mat.HasProperty("_Color"))
+                    {
+                        colors[i] = mat.color;
+                        hasColor[i] = true;
+                    }
+                }
+
+                originalColors.Add(colors);
+                hasColorProps.Add(hasColor);
+            }
+
+            float timer = 0f;
+            while (timer < duration)
+            {
+                float t = (Mathf.Sin(Time.time * blinkSpeed) + 1f) * 0.5f;
+                for (int r = 0; r < renderers.Length; r++)
+                {
+                    for (int m = 0; m < renderers[r].materials.Length; m++)
+                    {
+                        var mat = renderers[r].materials[m];
+                        if (mat != null && hasColorProps[r][m])
+                        {
+                            mat.color = Color.Lerp(originalColors[r][m], targetColor, t);
+                        }
+                    }
+                }
+
+                timer += Time.deltaTime;
+                yield return null;
+            }
+
+            // 원래 색상 복원
+            for (int r = 0; r < renderers.Length; r++)
+            {
+                for (int m = 0; m < renderers[r].materials.Length; m++)
+                {
+                    var mat = renderers[r].materials[m];
+                    if (mat != null && hasColorProps[r][m])
+                    {
+                        mat.color = originalColors[r][m];
+                    }
+                }
+            }
+            StopCoroutine(blinkRoutine);
+            blinkRoutine = null;
+        }
+
     }
 
 }

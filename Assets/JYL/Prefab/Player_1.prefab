@@ -188,13 +188,16 @@ MonoBehaviour:
   <muzzlePoint>k__BackingField: {fileID: 5960060613956268451}
   leftUI: {fileID: 0}
   rightUI: {fileID: 0}
+  <bulletSpeed>k__BackingField: 20
   bulletReturnTimer: 2
+  invincibleTime: 1
   onHpChanged:
     m_PersistentCalls:
       m_Calls: []
   mainCharController: {fileID: 0}
   sub1CharController: {fileID: 0}
   sub2CharController: {fileID: 0}
+  inGameController: {fileID: 0}
 --- !u!114 &8139530292015348620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,6 +245,7 @@ MonoBehaviour:
   mainController: {fileID: 0}
   sub1Controller: {fileID: 0}
   sub2Controller: {fileID: 0}
+  equipController: {fileID: 0}
 --- !u!1 &5640774715689364979
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,4 +323,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   poolObject: {fileID: 0}
-  poolSize: 5
+  poolSize: 10

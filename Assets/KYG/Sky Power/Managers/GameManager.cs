@@ -98,7 +98,7 @@ namespace KYG_skyPower
             isGameOver = true; // 게임 오버가 true면
             Time.timeScale = 0f; // 시간 정지 기능
             onGameOver?.Invoke();
-            Debug.Log("게임 오버");
+            UIManager.Instance.ShowPopUp<StageClearPopUp>();
         }
 
         public void SetGameClear()
@@ -108,8 +108,6 @@ namespace KYG_skyPower
             Time.timeScale = 1f;
             onGameClear?.Invoke();
             UIManager.Instance.ShowPopUp<StageClearPopUp>();
-            
-            Debug.Log("게임 클리어");
         }
 
         public void PausedGame()
@@ -118,7 +116,6 @@ namespace KYG_skyPower
             isPaused = true;
             Time.timeScale = 0f; // 전체 게임 정지
             onPause?.Invoke();
-            Debug.Log("일시 정지");
         }
 
         public void ResumeGame()
@@ -127,7 +124,6 @@ namespace KYG_skyPower
             isPaused = false;
             Time.timeScale = 1f; // 게임 시간 정상화
             onResume?.Invoke();
-            Debug.Log("게임 재개");
         }
 
         public void ResetStageIndex()

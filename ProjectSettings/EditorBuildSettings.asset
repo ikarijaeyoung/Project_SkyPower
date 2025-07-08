@@ -5,15 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 0
-    path: Assets/KYG/Prototype/Scenes/Test Scene.unity
-    guid: 724bcd2598ded4642ad5f0e6ca04073c
-  - enabled: 0
-    path: Assets/KYG/Prototype/Scenes/Test Scene2.unity
-    guid: 4429047150bc8b94fb3d78141e2b3417
   - enabled: 1
     path: Assets/JYL/Scenes/aTitleScene_JYL.unity
     guid: 742a7e75db19549479d39cf47ff5192e
