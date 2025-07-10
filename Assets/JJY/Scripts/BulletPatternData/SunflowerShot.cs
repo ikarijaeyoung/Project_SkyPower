@@ -7,13 +7,14 @@ using JYL;
 public class SunflowerShot : BulletPatternData
 {
     [Header("Sunflower Shot Settings")]
+    public float bulletSpeed = 1f;
     public int shotCount = 8;
     public int sunflowerCount = 3;
     public float twistAnglePerSunflower = 30f;
     public float fireDelayBetweenShots = 0f;
     public float fireDelayBetweenSunflower = 0.2f;
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool, int attackPower)
+    public override IEnumerator Shoot(Transform[] firePoints, ObjectPool pool, int attackPower)
     {
         Quaternion[] originalRotations = new Quaternion[firePoints.Length];
         for (int i = 0; i < firePoints.Length; i++)

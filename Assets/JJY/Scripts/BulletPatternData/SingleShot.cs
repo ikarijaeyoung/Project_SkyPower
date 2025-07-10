@@ -8,8 +8,9 @@ using System.Diagnostics.Tracing;
 public class SingleShot : BulletPatternData
 {
     [Header("Single Shot Settings")]
+    public float bulletSpeed = 1f;
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool, int attackPower)
+    public override IEnumerator Shoot(Transform[] firePoints, ObjectPool pool, int attackPower)
     {
         BulletPrefabController bulletPrefab = pool.ObjectOut() as BulletPrefabController;
         if (bulletPrefab != null)

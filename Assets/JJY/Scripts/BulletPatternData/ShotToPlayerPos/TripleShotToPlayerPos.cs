@@ -10,11 +10,12 @@ using JYL;
 public class TripleShotToPlayerPos : BulletPatternData
 {
     [Header("Triple Shot To Player Pos Settings")]
+    public float bulletSpeed = 1f;
     public int shotCount = 3;
     public float delayBetweenshots = 0.1f;
     Vector3 playerPos;
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool, int attackPower)
+    public override IEnumerator Shoot(Transform[] firePoints, ObjectPool pool, int attackPower)
     {
         playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
         Quaternion[] originRots = new Quaternion[firePoints.Length];

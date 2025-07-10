@@ -7,10 +7,11 @@ using JYL;
 public class SnailShot : BulletPatternData
 {
     [Header("Snail Shot Settings")]
+    public float bulletSpeed = 1f;
     public int shotCount = 8;
     public float fireDelayBetweenShots = 0.5f;
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool,int attackPower)
+    public override IEnumerator Shoot(Transform[] firePoints, ObjectPool pool,int attackPower)
     {
         for (int i = 0; i < shotCount; i++)
             {
