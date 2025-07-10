@@ -7,12 +7,13 @@ using JYL;
 public class CircleShapeShot : BulletPatternData
 {
     [Header("Circle Shape Shot Settings")]
+    public float bulletSpeed = 1f;
     public int shotCount = 8;
     public int CircleCount = 3;
     public float fireDelayBetweenShots = 0f;
     public float fireDelayBetweenCircle = 0.2f;
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool,int attackPower)
+    public override IEnumerator Shoot(Transform[] firePoints, ObjectPool pool,int attackPower)
     {
         for (int j = 0; j < CircleCount; j++)
         {

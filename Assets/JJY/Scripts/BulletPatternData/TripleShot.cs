@@ -10,10 +10,11 @@ using JYL;
 public class TripleShot : BulletPatternData
 {
     [Header("Triple Shot Settings")]
+    public float bulletSpeed = 1f;
     public int shotCount = 3;
     public float delayBetweenshots = 0.1f;
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool,int attackPower)
+    public override IEnumerator Shoot(Transform[] firePoints, ObjectPool pool,int attackPower)
     {
         for (int i = 0; i < shotCount; i++)
         {

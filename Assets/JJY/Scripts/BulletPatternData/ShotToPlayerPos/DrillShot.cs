@@ -8,13 +8,14 @@ using JYL;
 public class DrillShot : BulletPatternData
 {
     [Header("Drill Shot Settings")]
+    public float bulletSpeed = 1f;
     public int shotCount = 8;
     public int drillCount = 3;
     public float fireDelayBetweenBullets = 0.1f;
     public float fireDelayCycle = 0.2f;
     public float returnToPoolTimer = 5f;
     private Vector3 playerPos;
-    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool, int attackPower)
+    public override IEnumerator Shoot(Transform[] firePoints, ObjectPool pool, int attackPower)
     {
         playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
 

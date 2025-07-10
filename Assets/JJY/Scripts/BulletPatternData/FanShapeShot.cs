@@ -8,11 +8,12 @@ using Unity.VisualScripting.Antlr3.Runtime;
 public class FanShapeShot : BulletPatternData
 {
     [Header("Fan Shape Shot Settings")]
+    public float bulletSpeed = 1f;
     public int shotCount = 5; // 한 번에 발사할 총알의 개수
     public float fireDelayBetweenShots = 0.1f;
     public float fanShapeangle = 90;
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool, int attackPower)
+    public override IEnumerator Shoot(Transform[] firePoints, ObjectPool pool, int attackPower)
     {
         Quaternion[] originRots = new Quaternion[firePoints.Length];
         for (int i = 0; i < firePoints.Length; i++)

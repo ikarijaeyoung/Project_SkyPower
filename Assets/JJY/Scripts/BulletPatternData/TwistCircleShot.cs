@@ -7,13 +7,14 @@ using JYL;
 public class TwistCircleShot : BulletPatternData
 {
     [Header("Twist Circle Shot Settings")]
+    public float bulletSpeed = 1f;
     public int shotCount = 8;
     public int CircleCount = 5;
     public float fireDelayBetweenShots = 0f;
     public float fireDelayBetweenCircle = 0.5f;
     public float twistAnglePerCircle = 10f;
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool,int attackPower)
+    public override IEnumerator Shoot(Transform[] firePoints, ObjectPool pool,int attackPower)
     {
         Quaternion[] originalRotations = new Quaternion[firePoints.Length];
         for (int i = 0; i < firePoints.Length; i++)

@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
     public BulletPatternData[] BulletPattern;
     private Coroutine curFireCoroutine;
     public ObjectPool curObjectPool;
-    public float bulletSpeed = 1f;
+    // public float bulletSpeed = 1f;
     // public float fireDelay = 1.5f;
 
     [Header("Hit Animation")]
@@ -189,6 +189,6 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("지금 공격함");
         int ranNum = UnityEngine.Random.Range(0, BulletPattern.Length);
-        curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, bulletSpeed, curObjectPool, enemyData.attackPower));
+        curFireCoroutine = StartCoroutine(BulletPattern[ranNum].Shoot(firePoints, curObjectPool, enemyData.attackPower));
     }
 }
