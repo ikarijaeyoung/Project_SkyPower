@@ -54,6 +54,8 @@ namespace JYL
         private float moveSpeed { get; set; }
         private bool isDead { get; set; } = false;
         public bool isInvincible { get; set; } = false;
+        public bool isUsingUlt { get; set; } = false;
+
         private int fireAtOnce { get; set; } = 3;
         private int fireCounter { get; set; }
         private float canAttackTime { get; set; } = 0.4f;
@@ -295,7 +297,7 @@ namespace JYL
 
         public void TakeDamage(int damage)
         {
-            if(!isInvincible)
+            if(!isInvincible&&!isUsingUlt)
             {
                 Debug.Log($"체력 이만큼 닳음 : {damage}");
                 if (mainCharController.defense > 0)

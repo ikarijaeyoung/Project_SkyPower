@@ -82,14 +82,14 @@ public class Ultimate : MonoBehaviour
 
         ultLaser.SetActive(true);
         PlayerController.canAttack = false; // 공격 불가 상태로 변경
-        playerController.isInvincible = true; // 플레이어 무적 상태로 변경
+        playerController.isUsingUlt = true; // 플레이어 무적 상태로 변경
         Debug.Log("Laser Active");
         yield return new WaitForSeconds(laserDelay);
 
         ultLaser.SetActive(false);
         PlayerController.canAttack = true; // 공격 가능 상태로 변경
         Debug.Log("Laser Off");
-        playerController.isInvincible = false; // 플레이어 무적 상태 해제
+        playerController.isUsingUlt = false; // 플레이어 무적 상태 해제
         ultRoutine = null;
         yield break;
     }
@@ -110,13 +110,13 @@ public class Ultimate : MonoBehaviour
     {
         ultFire.SetActive(true);
         PlayerController.canAttack = false; // 공격 불가 상태로 변경
-        playerController.isInvincible = true; // 플레이어 무적 상태로 변경
+        playerController.isUsingUlt = true; // 플레이어 무적 상태로 변경
         Debug.Log("Laser Active");
         yield return new WaitForSeconds(laserDelay);
 
         ultFire.SetActive(false);
         PlayerController.canAttack = true; // 공격 가능 상태로 변경
-        playerController.isInvincible = false; // 플레이어 무적 상태 해제
+        playerController.isUsingUlt = false; // 플레이어 무적 상태 해제
         Debug.Log("Laser Off");
         ultRoutine = null;
         yield break;
@@ -135,12 +135,12 @@ public class Ultimate : MonoBehaviour
     {
         shield.SetActive(true);
         Debug.Log("Shield Active");
-        playerController.isInvincible = true; // 플레이어 무적 상태로 변경
+        playerController.isUsingUlt = true; // 플레이어 무적 상태로 변경
         yield return new WaitForSeconds(shieldDelay);
 
         shield.SetActive(false);
         Debug.Log("Shield Off");
-        playerController.isInvincible = false; // 플레이어 무적 상태 해제
+        playerController.isUsingUlt = false; // 플레이어 무적 상태 해제
         ultRoutine = null;
         yield break;
     }
@@ -160,7 +160,7 @@ public class Ultimate : MonoBehaviour
 
     private IEnumerator EraseCoroutine()
     {
-        playerController.isInvincible = true;
+        playerController.isUsingUlt = true;
         Collider[] hits = Physics.OverlapBox(ultAll.transform.position, ultAll.transform.localScale / 2f, Quaternion.identity, enemyBullet);
 
         foreach (Collider c in hits)
@@ -174,7 +174,7 @@ public class Ultimate : MonoBehaviour
         hits = null;
         ultRoutine = null;
 
-        playerController.isInvincible = false;
+        playerController.isUsingUlt = false;
         Debug.Log("코루틴 종료");
 
         yield break;
@@ -213,7 +213,7 @@ public class Ultimate : MonoBehaviour
     {
         Debug.Log($"UltFireCoroutine Damage: {damage}, Speed: {bulletSpeed}");
         PlayerController.canAttack = false; // 공격 불가 상태로 변경
-        playerController.isInvincible = true; // 플레이어 무적 상태로 변경
+        playerController.isUsingUlt = true; // 플레이어 무적 상태로 변경
         while (fireCounter > 0)
         {
             playerController.poolIndex = 1;
@@ -244,7 +244,7 @@ public class Ultimate : MonoBehaviour
         StopCoroutine(ultRoutine);
         Debug.Log("UltFireCoroutine Ended");
         PlayerController.canAttack = true; // 공격 가능 상태로 변경
-        playerController.isInvincible = false; // 플레이어 무적 상태 해제
+        playerController.isUsingUlt = false; // 플레이어 무적 상태 해제
         ultRoutine = null;
     }
 
@@ -266,14 +266,14 @@ public class Ultimate : MonoBehaviour
     {
         Debug.Log($"{PlayerController.canAttack}");
         Debug.Log("Upgrade Routine Started");
-        playerController.isInvincible = true; // 플레이어 무적 상태로 변경
+        playerController.isUsingUlt = true; // 플레이어 무적 상태로 변경
         playerController.poolIndex = 1;
         Debug.Log("Upgrade Bullet Shot");
         yield return new WaitForSeconds(bulletUpgradeTime);
 
         playerController.poolIndex = 0;
         Debug.Log("Normal Bullet Shot");
-        playerController.isInvincible = false; // 플레이어 무적 상태 해제
+        playerController.isUsingUlt = false; // 플레이어 무적 상태 해제
         ultRoutine = null;
         yield break;
     }
