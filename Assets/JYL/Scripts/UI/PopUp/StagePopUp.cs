@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using TMPro;
+using KYG_skyPower;
+using YSK;
 
 namespace JYL
 {
@@ -12,9 +14,9 @@ namespace JYL
         private TMP_Text stageText => GetUI<TMP_Text>("StageNameText");
         void Start()
         {
-            // 여기서 스테이지매니저에서 현재 스테이지의 정보를 받아온다.
-            // StageManager.Instance.curStage.name
-            stageText.text = $"STAGE 1-1";
+            int worldNum = Manager.Game.selectWorldIndex;
+            int subStageNum = Manager.Game.selectStageIndex;
+            stageText.text = $"STAGE {worldNum} - {subStageNum}";
             GetEvent("StageReBack").Click += RestartStage;
             GetEvent("StageQuitBack").Click += QuitStage;
         }
@@ -25,14 +27,12 @@ namespace JYL
         }
         private void RestartStage(PointerEventData eventData)
         {
-            // 스테이지 매니저의 리스타트 기능을 활용함
-            // StageManager.Instance.restart();
-            SceneManager.LoadSceneAsync("dStageScene_JYL");
+            UIManager.Instance.CleanPopUp();
+            Manager.GSM.ReloadCurrentStage();
         }
         private void QuitStage(PointerEventData eventData)
         {
-            // 스테이지 또는 씬 매니저의 기능을 통해 구현. 메인 씬으로 돌아간다
-            // StageManager.Instance.SceneChange();
+            UIManager.Instance.CleanPopUp();
             SceneManager.LoadSceneAsync("bMainScene_JYL");
         }
     }

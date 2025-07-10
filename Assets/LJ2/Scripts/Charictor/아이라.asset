@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5043dd61d89d6e247ada5222321b7ca1, type: 3}
+  m_Name: "\uC544\uC774\uB77C"
+  m_EditorClassIdentifier: 
+  id: 10022
+  grade: 1
+  characterName: "\uC544\uC774\uB77C"
+  characterModel: {fileID: 585568529332382, guid: bda425c995251994e8f6d84d6a5fa7d6,
+    type: 3}
+  elemental: 1
+  maxLevel: 30
+  hp: 100
+  hpPlus: 5
+  bulletPrefabs:
+  - {fileID: 183857747704877373, guid: 23e8a1be402574b40a2df4c525015f03, type: 3}
+  - {fileID: 2744130776811362667, guid: a0a5a6a8fddea8d4584ae78bce567704, type: 3}
+  - {fileID: 3988187906572094000, guid: 95c3eaeae275f094e9a6f2a2c77dec50, type: 3}
+  - {fileID: 6107887084493347849, guid: 672bb21242544844b81309ae3030ef62, type: 3}
+  - {fileID: 5898227351003812159, guid: 08f69565ebe9a5547bcc1682e54a0aef, type: 3}
+  attackDamage: 10
+  damagePlus: 5
+  attackSpeed: 1
+  moveSpeed: 100
+  defense: 1
+  ultCoolDefault: 100
+  ultCoolReduce: 10
+  ultVisual: {fileID: 4856827749028106880, guid: e90ac312efb039242bc3fbe9269974a5,
+    type: 3}
+  parry: 0
+  parryCool: 0
+  icon: {fileID: 21300000, guid: 31a02365bef2de7428b87f30e74b3fa6, type: 3}
+  image: {fileID: 21300000, guid: 91283fd33dab7cd428d5915161bb4845, type: 3}
+  upgradeUnitDefault: 2500
+  upgradeUnitPlus: 2500

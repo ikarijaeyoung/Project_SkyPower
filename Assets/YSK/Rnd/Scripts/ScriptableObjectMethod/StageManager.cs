@@ -5,6 +5,8 @@ using YSK;
 using System.Collections;
 using UnityEngine.UI;
 using KYG_skyPower;
+using System.Net.NetworkInformation;
+using UnityEngine.Experimental.GlobalIllumination;
 
 namespace YSK
 {
@@ -30,7 +32,14 @@ namespace YSK
         [Header("Transition Settings")]
         [SerializeField] private bool useGameSceneManagerTransition = true;
         [SerializeField] private bool enableTransition = true;
-        
+
+
+        //[Header("Directional Light Settings")]
+        //[SerializeField] private Color lightColor;
+        //[SerializeField] private Vector3 rotationEuler = new Vector3(50f, 30f, 0f);
+        //
+        //private Light dirLight;
+
         private bool isTransitioning = false;
 
         #region Unity Lifecycle
@@ -44,6 +53,7 @@ namespace YSK
         {
             Debug.Log("=== StageManager Start 시작 ===");
             InitializeComponents();
+            Manager.Game.onGameClear.AddListener(OnStageCompleted);
             Debug.Log("=== StageManager Start 완료 ===");
         }
 
@@ -51,6 +61,12 @@ namespace YSK
         {
             UpdateMovingMaps();
         }
+
+        private void OnDestroy()
+        {
+            Manager.Game.onGameClear.RemoveListener(OnStageCompleted);
+        }
+
 
         #endregion
 
@@ -110,8 +126,24 @@ namespace YSK
                 return;
 
             currentStage = stageDataList.Find(data => data.stageID == mainStageID);
+            if (currentStage != null)
+                Debug.Log($"현재 스테이지 이름: {currentStage.stageName} / ID: {currentStage.stageID}");
             SpawnMaps();
-            
+
+            if (currentStage != null)
+            {
+                Debug.Log($"현재 스테이지 이름: {currentStage.stageName} / ID: {currentStage.stageID}");
+            }
+            else
+            {
+                Debug.LogWarning($"스테이지 ID {mainStageID}에 해당하는 StageData가 없습니다!");
+            }
+
+            Debug.Log($"=== LoadStage 완료: {mainStageID}-{subStageID} ===");
+
+            DialogueManager.Instance.LoadDialogDBByStageID(currentStage.stageID, subStageID);
+            DialogueManager.Instance.StartDialogue();
+
             Debug.Log($"=== LoadStage 완료: {mainStageID}-{subStageID} ===");
         }
 
@@ -390,6 +422,9 @@ namespace YSK
             
             LoadStage(nextStage.mainStage, nextStage.subStage);
             Debug.Log($"다음 스테이지로 전환: {nextStage.mainStage}-{nextStage.subStage}");
+
+            //DirectionalLightChange(); 스테이지 환경 빛과 관련된 메서드
+
         }
 
         public void ClearCurrentStageAndNextWithTransition()
@@ -447,13 +482,7 @@ namespace YSK
 
         #region Public API
 
-        public void OnStageButtonClick(int mainStageID, int subStageID = 1)
-        {
-            if (!isTransitioning)
-            {
-                StartStageTransition(mainStageID, subStageID, false);
-            }
-        }
+
 
         public void ForceStage(int mainStageID, int subStageID)
         {
@@ -461,31 +490,50 @@ namespace YSK
             LoadStage(mainStageID, subStageID);
         }
 
-        public void ForceStageWithTransition(int mainStageID, int subStageID)
-        {
-            Debug.Log($"강제 스테이지 이동 (전환 화면 사용): {mainStageID}-{subStageID}");
-            StartStageTransition(mainStageID, subStageID, false);
-        }
+
+        //public void DirectionalLightChange(Color color, Vector rotationEuler)
+        //{
+        //    if (color == null)
+        //    {
+        //        color = Color.white; // 기본 색상
+        //    }
+        //
+        //    dirLight = GameObject.Find("Directional Light").GetComponent<Light>();
+        //
+        //    dirLight.color = color;
+        //    dirLight.intensity = 1.2f;
+        //    dirLight.shadows = LightShadows.Soft;
+        //
+        //    dirLight.transform.rotation = Quaternion.Euler(rotationEuler);
+        //}
+        
+
+
+
 
         public void OnStageCompleted()
         {
-            int currentMainStage = PlayerPrefs.GetInt("SelectedMainStage", 1);
-            int currentSubStage = PlayerPrefs.GetInt("SelectedSubStage", 1);
-            int score = Manager.Score.Score; // 현재 점수 가져오기
-
-            Debug.Log($"스테이지 완료: {currentMainStage}-{currentSubStage}, 점수: {score}");
+            int currentMainStage = Manager.Game.selectWorldIndex;
+            int currentSubStage = Manager.Game.selectStageIndex;
             
+            Debug.Log($"=== 스테이지 완료 처리 시작: {currentMainStage}-{currentSubStage} ===");
+
+            // 점수 가져오기
+            int score = Manager.Score?.Score ?? 0;
+            Debug.Log($"현재 점수: {score}");
+
+            // StageDataManager를 통한 완전한 처리
             if (dataManager != null)
             {
-                dataManager.UpdateStageScore(currentMainStage, currentSubStage, score);
-                dataManager.CompleteStage(currentMainStage, currentSubStage, Time.time);
-                UnlockNextStage(currentMainStage, currentSubStage);
+                dataManager.CompleteStageWithSave(currentMainStage, currentSubStage, score, Time.time);
+                Debug.Log("StageDataManager를 통한 완료 처리 완료");
             }
-            
-            if (Manager.Game != null)
+            else
             {
-                Manager.Game.SetGameClear();
+                Debug.LogError("StageDataManager가 null입니다!");
             }
+
+            Debug.Log($"=== 스테이지 완료 처리 완료: {currentMainStage}-{currentSubStage} ===");
         }
 
         public void ResetStageProgress()
@@ -497,11 +545,7 @@ namespace YSK
             Debug.Log("스테이지 진행 상태 초기화: 1-1");
         }
 
-        public void ChangeStage(int newStageID)
-        {
-            Debug.Log($"ChangeStage 호출: 스테이지 {newStageID}로 변경");
-            LoadStage(newStageID);
-        }
+
 
         #endregion
 

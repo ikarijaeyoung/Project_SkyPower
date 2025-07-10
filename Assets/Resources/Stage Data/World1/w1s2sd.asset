@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dea4c279c15f030438294df52bb78cf9, type: 3}
+  m_Name: w1s2sd
+  m_EditorClassIdentifier: 
+  sequence:
+  - enemyPrefab:
+    - {fileID: 8351887547980912979, guid: 47f2dc41e7f10454bac0511cba1befc1, type: 3}
+    - {fileID: 5532545821888678440, guid: a88b76ba5730bb84782f87cbf10cb7d4, type: 3}
+    - {fileID: 8140211205730494619, guid: cbd6574fd92f06747b03c0eb8422f4b9, type: 3}
+    - {fileID: 5532545821888678440, guid: ae8d3f3a5f638c641838f85466a9f510, type: 3}
+    - {fileID: 8140211205730494619, guid: cbd6574fd92f06747b03c0eb8422f4b9, type: 3}
+    - {fileID: 6907872983839026229, guid: d5bb8dd26b158774fa9c81e3198a5452, type: 3}
+    - {fileID: 6907872983839026229, guid: 3071af43ffeb7d244a299a3a30c57989, type: 3}
+    - {fileID: 4165575709432290385, guid: 30877865c56cc6a4da1ff6e1db4e0ac2, type: 3}
+    - {fileID: 4165575709432290385, guid: df126cab2d90d434886bf8bc86f5f9d0, type: 3}
+    - {fileID: 4165575709432290385, guid: e0731f39e7d03de498812be3f80a1cdb, type: 3}
+    spawnPos:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    spawnDelay: 2
+  - enemyPrefab:
+    - {fileID: 8351887547980912979, guid: ee2c4ed99d03f4843b1ce7d7febc9978, type: 3}
+    - {fileID: 5532545821888678440, guid: a88b76ba5730bb84782f87cbf10cb7d4, type: 3}
+    - {fileID: 8140211205730494619, guid: 2f8b5a95f7fff9346853dfdfb685a157, type: 3}
+    - {fileID: 6907872983839026229, guid: 6f711d290f6863e41add858a40f16bc8, type: 3}
+    - {fileID: 8140211205730494619, guid: cbd6574fd92f06747b03c0eb8422f4b9, type: 3}
+    - {fileID: 8351887547980912979, guid: 6e3177085889dbd488f11a8a3d5a641f, type: 3}
+    - {fileID: 6907872983839026229, guid: 3071af43ffeb7d244a299a3a30c57989, type: 3}
+    - {fileID: 8351887547980912979, guid: dc8031c487cbf8e45bdd10a7f1d5de05, type: 3}
+    - {fileID: 4165575709432290385, guid: df126cab2d90d434886bf8bc86f5f9d0, type: 3}
+    - {fileID: 8140211205730494619, guid: 26dc82a5e66f62249a7b2193d070190c, type: 3}
+    - {fileID: 8140211205730494619, guid: 26dc82a5e66f62249a7b2193d070190c, type: 3}
+    - {fileID: 8351887547980912979, guid: d8f6ab84365ebbf4ba4e862cbe3f09c5, type: 3}
+    - {fileID: 8140211205730494619, guid: 252b4de27c47f934e9cb9e351f563ddd, type: 3}
+    - {fileID: 8140211205730494619, guid: 26dc82a5e66f62249a7b2193d070190c, type: 3}
+    - {fileID: 6907872983839026229, guid: 11f4c7b5ff500ee4d957730dab4f3ecb, type: 3}
+    spawnPos:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    spawnDelay: 2
+  - enemyPrefab:
+    - {fileID: 8351887547980912979, guid: ee2c4ed99d03f4843b1ce7d7febc9978, type: 3}
+    - {fileID: 5532545821888678440, guid: a88b76ba5730bb84782f87cbf10cb7d4, type: 3}
+    - {fileID: 8140211205730494619, guid: cbd6574fd92f06747b03c0eb8422f4b9, type: 3}
+    - {fileID: 4165575709432290385, guid: 0163816fb233dc34b9ec93ab5a4cc6c7, type: 3}
+    - {fileID: 8140211205730494619, guid: cbd6574fd92f06747b03c0eb8422f4b9, type: 3}
+    - {fileID: 8351887547980912979, guid: 6e3177085889dbd488f11a8a3d5a641f, type: 3}
+    - {fileID: 6907872983839026229, guid: 3071af43ffeb7d244a299a3a30c57989, type: 3}
+    - {fileID: 8351887547980912979, guid: dc8031c487cbf8e45bdd10a7f1d5de05, type: 3}
+    - {fileID: 6907872983839026229, guid: 9956323dfbc34984d8d0debece16ebc0, type: 3}
+    - {fileID: 8140211205730494619, guid: 26dc82a5e66f62249a7b2193d070190c, type: 3}
+    - {fileID: 8140211205730494619, guid: 26dc82a5e66f62249a7b2193d070190c, type: 3}
+    - {fileID: 8351887547980912979, guid: 9feb524428e6dcf46b7e27fb0308cb70, type: 3}
+    - {fileID: 5532545821888678440, guid: bf2185f1d59cbad43b91beed96078337, type: 3}
+    - {fileID: 8140211205730494619, guid: 26dc82a5e66f62249a7b2193d070190c, type: 3}
+    - {fileID: 5532545821888678440, guid: 032f73f4fbd1af746a74bb2e0ede6120, type: 3}
+    - {fileID: 6907872983839026229, guid: 9956323dfbc34984d8d0debece16ebc0, type: 3}
+    - {fileID: 4165575709432290385, guid: 0163816fb233dc34b9ec93ab5a4cc6c7, type: 3}
+    - {fileID: 5532545821888678440, guid: 032f73f4fbd1af746a74bb2e0ede6120, type: 3}
+    - {fileID: 8140211205730494619, guid: 2f8b5a95f7fff9346853dfdfb685a157, type: 3}
+    - {fileID: 5532545821888678440, guid: bf2185f1d59cbad43b91beed96078337, type: 3}
+    spawnPos:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    spawnDelay: 1.5
+  bossPrefabs: []
+  bossSpawnPos: []

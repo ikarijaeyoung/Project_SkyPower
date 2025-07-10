@@ -16,7 +16,7 @@ namespace YSK
     public class GameSceneManager : Singleton<GameSceneManager>
     {
         [Header("Transition Settings")]
-        [SerializeField] private bool enableTransition = true;
+        [SerializeField] private bool enableTransition = false;
         [SerializeField] private bool showTransitionOnSceneStart;
         [SerializeField] private float minTransitionTime = 2f;
 
@@ -84,13 +84,60 @@ namespace YSK
                 ShowTransitionScreen();
                 StartCoroutine(HideTransitionScreenAfterDelay(1f));
             }
+
         }
+
+        private void OnEnable()
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+
+
+        private void OnDisable()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
+       
 
 
 
         #endregion
 
         #region Public API
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            // 씬이 로드된 후 BGM을 재생합니다.
+            SceneBGMPlay(scene.name);
+        }
+
+        public void SceneBGMPlay(string SceneName)
+        {
+            if (SceneName == "aTitleScene_JYL")
+            {
+                AudioManager.Instance.PlayBGM("StarMenu_BGM");
+            }
+            else if (SceneName == "bMainScene_JYL")
+            {
+                AudioManager.Instance.PlayBGM("StarMenu_BGM");
+            }
+            else if (SceneName == "cStoreScene_JYL")
+            {
+                AudioManager.Instance.PlayBGM("Shop_BGM");
+            }
+            else if (SceneName == "dStageScene_JYL")
+            {
+                AudioManager.Instance.PlayBGM("Stage1_BGM");
+            }
+           //else if (SceneName == "eResultScene_JYL")
+           //{
+           //    AudioManager.Instance.PlayBGM("Result_BGM");
+           //}
+
+        }
+
 
         /// <summary>
         /// Unity의 기본 SceneManager.LoadScene을 사용합니다.

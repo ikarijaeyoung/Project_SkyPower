@@ -4,40 +4,50 @@ using UnityEngine;
 using JYL;
 
 [CreateAssetMenu(fileName = "CircleShapeShot", menuName = "ScriptableObject/BulletPattern/CircleShapeShot")]
-
 public class CircleShapeShot : BulletPatternData
 {
     [Header("Circle Shape Shot Settings")]
     public int shotCount = 8;
+    public int CircleCount = 3;
     public float fireDelayBetweenShots = 0f;
+    public float fireDelayBetweenCircle = 0.2f;
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool)
+    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool,int attackPower)
     {
-        for (int i = 0; i < shotCount; i++)
+        for (int j = 0; j < CircleCount; j++)
         {
-            BulletPrefabController bullet = pool.ObjectOut() as BulletPrefabController;
-            bullet.objectPool = pool;
-
-            if (bullet != null)
+            for (int i = 0; i < shotCount; i++)
             {
-                // firePoints 인덱스가 배열 크기를 넘지 않도록 순환시킵니다.
-                // shotCount > firePoints == firePoints[i]에서 배열 범위 벗어남. => IndexOutOfRangeException Error.
-                Transform curFirePoint = firePoints[i % firePoints.Length];
+                BulletPrefabController bulletPrefab = pool.ObjectOut() as BulletPrefabController;
 
-                bullet.ReturnToPool(returnToPoolTimer);
+                //bulletPrefab.transform.position = gameObject.transform.position; 에너미 위치로 가져와야 함. 필요없을 수도 잇음
 
-                foreach (BulletInfo info in bullet.bulletInfo)
+                if (bulletPrefab != null)
                 {
-                    if (info.rig != null)
+                    // firePoints 인덱스가 배열 크기를 넘지 않도록 순환시킵니다.
+                    // shotCount > firePoints == firePoints[i]에서 배열 범위 벗어남. => IndexOutOfRangeException Error.
+                    Transform curFirePoint = firePoints[i % firePoints.Length];
+
+                    bulletPrefab.objectPool = pool;
+                    bulletPrefab.ReturnToPool(returnToPoolTimer);
+
+                    foreach (BulletInfo info in bulletPrefab.bulletInfo)
                     {
-                        info.trans.gameObject.SetActive(true);
-                        info.trans.position = firePoints[0].position;
-                        info.rig.velocity = Vector3.zero;
-                        info.rig.AddForce(curFirePoint.forward * bulletSpeed, ForceMode.Impulse);
+                        if (info.rig != null)
+                        {
+                            info.trans.gameObject.SetActive(true);
+                            info.trans.localPosition = info.originPos;
+                            info.trans.position = firePoints[i].position;
+                            info.trans.rotation = Quaternion.LookRotation(curFirePoint.forward);
+                            info.rig.velocity = Vector3.zero;
+                            info.bulletController.attackPower = attackPower;
+                            info.rig.AddForce(curFirePoint.forward * bulletSpeed, ForceMode.Impulse);
+                        }
                     }
                 }
+                yield return new WaitForSeconds(fireDelayBetweenShots);
             }
-            yield return new WaitForSeconds(fireDelayBetweenShots);
+            yield return new WaitForSeconds(fireDelayBetweenCircle);
         }
     }
 }
