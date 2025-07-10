@@ -25,9 +25,9 @@ namespace KYG_skyPower
         //public static EnemyManager Enemy => EnemyManager.Instance;
         //public static UIManager UI => UIManager.Instance;
         public static ScoreManager Score => ScoreManager.Instance;
-        public static DialogueManager Dialogue => DialogueManager.Instance;
+        // public static DialogueManager Dialogue => DialogueManager.Instance;
 
-        public static AudioManagerSO Audio => AudioManagerSO.Instance;
+        //public static AudioManagerSO Audio => AudioManagerSO.Instance;
 
         public static SceneChangerManagerSO SceneChanger => SceneChangerManagerSO.Instance;
 
@@ -52,6 +52,7 @@ namespace KYG_skyPower
             //Audio.Init();
             //SceneChanger.Init();
 
+            //SDM.Init();
             //Save.Init();
             Game.Init();
             //Input.Init();
@@ -61,7 +62,6 @@ namespace KYG_skyPower
             //UI.Init();
             Score.Init();
             //Dialogue.Init();
-            SDM.Init();
             GSM.Init();
         }
     }

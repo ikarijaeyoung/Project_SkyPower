@@ -12,8 +12,8 @@ namespace JYL
         
         void Start()
         {
-            data = Manager.Game.saveFiles[Manager.Game.currentSaveIndex];
-            GetUI<TMP_Text>("SaveFileData").text = $"{Manager.Game.saveFiles[Manager.Game.currentSaveIndex].playerName}";
+            data = Manager.Game.CurrentSave;
+            GetUI<TMP_Text>("SaveFileData").text = $"{Manager.Game.CurrentSave.playerName}";
             GetEvent("SaveDelBtn").Click += OnDelClick;
             GetEvent("SaveStartBtn").Click += OnStartClick;
         }
@@ -31,6 +31,7 @@ namespace JYL
         {
             // 씬 넘어감 -> mainScene
             // 이전 UI들로 인해서 세이브파일은 선택되어 있음.
+            UIManager.Instance.CleanPopUp();
             Manager.SDM.SyncRuntimeDataWithStageInfo();
             SceneManager.LoadSceneAsync("bMainScene_JYL");
         }

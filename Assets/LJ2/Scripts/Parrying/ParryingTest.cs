@@ -13,6 +13,8 @@ public class ParryingTest : MonoBehaviour
     [SerializeField] SphereCollider characterCollider;
     private Coroutine parryCoroutine;
 
+    [SerializeField] GameObject parryingEffectPrefab;
+
     public bool isReflect = true;
 
     public YieldInstruction coroutineDelay;
@@ -34,7 +36,6 @@ public class ParryingTest : MonoBehaviour
     public void Parrying()
     {
         Collider[] canParrying = Physics.OverlapSphere(transform.position, parryingRadius, enemyBullet);
-        Transform[] trasnforms = new Transform[canParrying.Length];
         Debug.Log("패링 진입");
         if (canParrying.Length > 0)
         {
@@ -46,33 +47,33 @@ public class ParryingTest : MonoBehaviour
                 Debug.Log("반복문 진입");
 
             }
-            parryCoroutine = StartCoroutine(EraseCoroutine());
+            parryCoroutine = StartCoroutine(InvincibleCoroutine());
 
         }
         else return;
-
-        if (isReflect)
-        {
-            foreach(Transform t in trasnforms)
-            {
-                Rigidbody rb = t.GetComponent<Rigidbody>();
-                if (rb != null)
-                {
-                    Vector3 reflectDirection = (t.position - transform.position).normalized;
-                    rb.AddForce(reflectDirection * 10f, ForceMode.Impulse);
-                    Debug.Log("반사 시도");
-                }
-            }
-        }
+        // 패링이 성공했을 때, 적 총알을 비활성화하고 코루틴을 시작합니다.
+        //if (isReflect)
+        //{
+        //    foreach(Transform t in trasnforms)
+        //    {
+        //        Rigidbody rb = t.GetComponent<Rigidbody>();
+        //        if (rb != null)
+        //        {
+        //            Vector3 reflectDirection = (t.position - transform.position).normalized;
+        //            rb.AddForce(reflectDirection * 10f, ForceMode.Impulse);
+        //            Debug.Log("반사 시도");
+        //        }
+        //    }
+        //}
     }
-    
+
     private IEnumerator InvincibleCoroutine()
     {
         Debug.Log("코루틴 진입");
 
-        characterCollider.enabled = false;
+        parryingEffectPrefab.SetActive(true);
         yield return coroutineDelay;
-        characterCollider.enabled = true;
+        parryingEffectPrefab.SetActive(false);
         parryCoroutine = null;
         yield break;
 
@@ -103,6 +104,6 @@ public class ParryingTest : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.black;
-        Gizmos.DrawWireSphere(transform.position, destroyRadius);
+        Gizmos.DrawWireSphere(transform.position, parryingRadius);
     }
 }

@@ -6,7 +6,7 @@ public class Parrying : MonoBehaviour
 {
     [SerializeField] bool isParrying = false;
     [SerializeField] float parryRadius = 1.1f;
-    [SerializeField] LayerMask enemyBullet;
+    [SerializeField, HideInInspector] LayerMask enemyBullet;
     [SerializeField] Collider characterCollider;
 
     private Coroutine parryCoroutine;
@@ -15,22 +15,28 @@ public class Parrying : MonoBehaviour
 
     [SerializeField] int shield = 3;
 
+    private Transform invincibleTransform;
+    [SerializeField] public GameObject invinciblePrefab;
+
     public void Awake()
     {
-        characterCollider = GetComponent<SphereCollider>();
+        characterCollider = GetComponent<Collider>();
         coroutineDelay = new WaitForSeconds(invincibleTime);
         enemyBullet = LayerMask.GetMask("EnemyBullet");
+        invinciblePrefab = transform.Find("InvincibleShield").gameObject;
     }
 
     public void Parry()
     {
         Collider[] canParry = Physics.OverlapSphere(transform.position, parryRadius, enemyBullet);
+        Debug.Log($"패리 가능 오브젝트 수 : {canParry.Length}");
         if (canParry.Length > 0)
         {
             isParrying = true;
-            
+
             foreach (Collider c in canParry)
             {
+                Debug.Log($"{c.gameObject.name} 패리 충돌체 이름");
                 c.gameObject.SetActive(false); // Deactivate enemy bullets
             }
         }
@@ -54,9 +60,10 @@ public class Parrying : MonoBehaviour
     {
         Debug.Log("코루틴 진입");
 
-        characterCollider.enabled = false;
+        invinciblePrefab.SetActive(true);
         yield return coroutineDelay;
-        characterCollider.enabled = true;
+
+        invinciblePrefab.SetActive(false);
         parryCoroutine = null;
         yield break;
 
@@ -73,5 +80,10 @@ public class Parrying : MonoBehaviour
         return getShield;
     }
 
-    // 반사된 총알을 적에게 발사하는 기능은 현재 구현되어 있지 않습니다.    
+    // 반사된 총알을 적에게 발사하는 기능은 현재 구현되어 있지 않습니다.
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, parryRadius);
+    }
 }

@@ -14,34 +14,45 @@ public class TripleShotToPlayerPos : BulletPatternData
     public float delayBetweenshots = 0.1f;
     Vector3 playerPos;
     public float returnToPoolTimer = 5f;
-    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool)
+    public override IEnumerator Shoot(Transform[] firePoints, float bulletSpeed, ObjectPool pool, int attackPower)
     {
         playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
+        Quaternion[] originRots = new Quaternion[firePoints.Length];
+        for (int i = 0; i < firePoints.Length; i++)
+        {
+            originRots[i] = firePoints[i].rotation;
+        }
         firePoints[0].LookAt(playerPos);
 
         for (int i = 0; i < shotCount; i++)
         {
-            BulletPrefabController bullet = pool.ObjectOut() as BulletPrefabController;
+            BulletPrefabController bulletPrefab = pool.ObjectOut() as BulletPrefabController;
 
-            bullet.objectPool = pool;
-
-            if (bullet != null)
+            if (bulletPrefab != null)
             {
-                bullet.ReturnToPool(returnToPoolTimer);
+                bulletPrefab.objectPool = pool;
+                bulletPrefab.ReturnToPool(returnToPoolTimer);
 
-                foreach (BulletInfo info in bullet.bulletInfo)
+                foreach (BulletInfo info in bulletPrefab.bulletInfo)
                 {
                     if (info.rig != null)
                     {
                         info.trans.gameObject.SetActive(true);
                         info.trans.localPosition = info.originPos;
                         info.trans.position = firePoints[0].position;
+                        // ÃÑ¾ËÀÇ forward¸¦ MuzzlepointÀÇ forward·Î ¸ÂÃã
+                        info.trans.rotation = firePoints[0].rotation;
                         info.rig.velocity = Vector3.zero;
+                        info.bulletController.attackPower = attackPower;
                         info.rig.AddForce(firePoints[0].forward * bulletSpeed, ForceMode.Impulse);
                     }
                 }
             }
             yield return new WaitForSeconds(delayBetweenshots);
+        }
+        for (int i = 0; i < firePoints.Length; i++)
+        {
+            firePoints[i].rotation = originRots[i];
         }
     }
 }

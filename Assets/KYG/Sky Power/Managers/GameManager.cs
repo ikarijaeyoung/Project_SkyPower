@@ -1,11 +1,12 @@
+using IO;
+using JYL;
+
+using LJ2;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
-using LJ2;
-using IO;
-
 
 namespace KYG_skyPower
 {
@@ -30,6 +31,7 @@ namespace KYG_skyPower
     public class GameManager : Singleton<GameManager>
     {
         public UnityEvent onGameOver, onPause, onResume, onGameClear;
+        
 
         public GameData[] saveFiles = new GameData[3]; // 세이브 파일 3개
 
@@ -80,7 +82,18 @@ namespace KYG_skyPower
 
         }*/
 
+        void Start()
+        {
+            AudioManager.Instance.PlayBGM("StarMenu_BGM");
+            DialogueManager.Instance.StartDialogue();
+        }
 
+        public void ResetState()
+        {
+            isGameOver = false;
+            isGameCleared = false;
+            isPaused = false;
+        }
 
         public void SetGameOver()
         {
@@ -88,16 +101,17 @@ namespace KYG_skyPower
             isGameOver = true; // 게임 오버가 true면
             Time.timeScale = 0f; // 시간 정지 기능
             onGameOver?.Invoke();
-            Debug.Log("게임 오버");
+            UIManager.Instance.ShowPopUp<StageClearPopUp>();
         }
 
         public void SetGameClear()
         {
             if (isGameCleared || isGameOver) return;
             isGameCleared = true;
-            Time.timeScale = 0f;
+            Time.timeScale = 1f;
+            Debug.Log("게임 클리어 상태로 변경");
             onGameClear?.Invoke();
-            Debug.Log("게임 클리어");
+            UIManager.Instance.ShowPopUp<StageClearPopUp>();
         }
 
         public void PausedGame()
@@ -105,8 +119,8 @@ namespace KYG_skyPower
             if (isPaused || isGameOver) return;
             isPaused = true;
             Time.timeScale = 0f; // 전체 게임 정지
+            Debug.Log($"지금멈춤.{Time.timeScale}");
             onPause?.Invoke();
-            Debug.Log("일시 정지");
         }
 
         public void ResumeGame()
@@ -115,13 +129,17 @@ namespace KYG_skyPower
             isPaused = false;
             Time.timeScale = 1f; // 게임 시간 정상화
             onResume?.Invoke();
-            Debug.Log("게임 재개");
         }
 
         public void ResetStageIndex()
         {
             selectWorldIndex = 0;
             selectStageIndex = 0;
+        }
+
+        public void SaveGameProgress()
+        {
+            Manager.Save.GameSave(CurrentSave, currentSaveIndex);
         }
         /*private void Update()
         {

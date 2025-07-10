@@ -1,18 +1,88 @@
-using System.Collections;
-using System.Collections.Generic;
+using KYG_skyPower;
+using LJ2;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace JYL
 {
     public class GachaPopUp : BaseUI
     {
-        // TODO: 뽑기를 진행 시, 뽑기 완료 결과를 어디선가 가져와야 한다.
-        // 가챠 뽑기 횟수 만큼, 해당 가챠 횟수에 해당하는 팝업이 필요함
-        // 시간이 부족하므로, 가챠 횟수만큼 UI 요소를 늘리는 것은 인벤토리(캐릭터창,장비창) 구현 후 한다.
-        private Sprite gachaImg;
-        void Start()
+        private Image gachaImg => GetUI<Image>("GachaImg1");
+        private Image equipImg => GetUI<Image>("EquipImg");
+        private Image equipNframe => GetUI<Image>("EquipNImg");
+        private Image equipLframe => GetUI<Image>("EquipLImg");
+        private Image charSSRframe => GetUI<Image>("CharSSRImg");
+        private Image charNframe => GetUI<Image>("CharNImg");
+        private Image cover1Img => GetUI<Image>("Cover1");
+        private CharacterSaveLoader chLoader;
+        private EquipController equipController;
+        private Animator animator;
+
+        private void Start()
         {
-            // 가챠 정보를 기준으로 스프라이트들의 이미지를 채운다
+            animator = GetComponentInChildren<Animator>();
+            if (StorePresenter.isCharGacha)
+            {
+                chLoader = gameObject.GetOrAddComponent<CharacterSaveLoader>();
+                chLoader.GetCharPrefab();
+
+                foreach (CharactorController character in chLoader.charactorController)
+                {
+                    if (character.id == StorePresenter.gachaResult[0])
+                    {
+                        gachaImg.gameObject.SetActive(true);
+                        gachaImg.sprite = character.image;
+                        if(character.grade == Grade.R)
+                        {
+                            charNframe.gameObject.SetActive(true);
+                        }
+                        else
+                        {
+                            charSSRframe.gameObject.SetActive(true);
+                        }
+                    }
+                }
+            }
+            else if(!StorePresenter.isCharGacha)
+            {
+                equipController = gameObject.GetOrAddComponent<EquipController>();
+                equipController.Init();
+                foreach(var data in equipController.equipData)
+                {
+                    if(data.id ==  StorePresenter.gachaResult[0])
+                    {
+                        equipImg.gameObject.SetActive(true);
+                        equipImg.sprite = data.icon;
+                        if(data.grade ==EquipGrade.Normal)
+                        {
+                            equipNframe.gameObject.SetActive(true);
+                        }
+                        else
+                        {
+                            equipLframe.gameObject.SetActive(true);
+                        }
+                    }
+                }
+            }
+
+            GetEvent("Cover1").Drag += dragCover;
+            GetEvent("Cover1").EndDrag += endDragCover;
+        }
+        private void OnDisable()
+        {
+            StorePresenter.isStoreReturn = true;
+            StorePresenter.isCharGacha = false;
+        }
+
+        private void dragCover(PointerEventData eventData)
+        {
+            cover1Img.transform.position = eventData.position;
+        }
+        private void endDragCover(PointerEventData eventData)
+        {
+            animator.Play("Disappear");
         }
     }
 }

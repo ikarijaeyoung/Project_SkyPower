@@ -10,30 +10,15 @@ namespace LJ2
     {
         private int subStage { get; set; } = 5;
         protected override void Awake() => base.Awake();
-
-        // 정보 별 저장, 로드, 삭제 함수 따로 구현
-        //public void PlayerSave(CharictorSave target, int index)
-        //{
-        //    DataSaveController.Save(target, index);
-        //}
-
-        //public void PlayerLoad(CharictorSave target, int index)
-        //{
-        //    DataSaveController.Load(ref target, index);
-        //}
-
-        //public void PlayerDelete(CharictorSave target, int index)
-        //{
-        //    DataSaveController.Delete(target, index);
-        //}
-
-        // 현재 partial class로 구현된 GameData를 control하는 함수들
-        public void GameSave(GameData target, int index, string name)
+        
+        public void GameSave(GameData target, int index, string name = "")
         {
-            
-            target.playerName = name;
+            if(name != "")
+            {
+                target.playerName = name;
+            }
             GameData saveTargetData = SaveStageInfo(target);
-            DataSaveController.Save(saveTargetData, index);
+            DataSaveController.Save(saveTargetData, index+1);
         }
 
         public void GameLoad(ref GameData target, int index)
@@ -48,16 +33,34 @@ namespace LJ2
 
         private GameData SaveStageInfo(GameData target)
         {
-            target.stageInfo = new StageInfo[Manager.SDM.runtimeData.Count * subStage];
-            for (int i = 0; i < Manager.SDM.runtimeData.Count * subStage; i++)
+            if (target.stageInfo == null)
             {
-                target.stageInfo[i] = new StageInfo
+                target.stageInfo = new StageInfo[Manager.SDM.runtimeData.Count * subStage];
+                for (int i = 0; i < Manager.SDM.runtimeData.Count * subStage; i++)
                 {
-                    world = 1 + i / subStage,
-                    stage = 1 + i % subStage,
-                    unlock = Manager.SDM.runtimeData[i / subStage].subStages[i % subStage].isUnlocked,
-                    isClear = Manager.SDM.runtimeData[i / subStage].subStages[i % subStage].isCompleted
-                };
+                    target.stageInfo[i] = new StageInfo
+                    {
+                        world = 1 + i / subStage,
+                        stage = 1 + i % subStage,
+                        unlock = Manager.SDM.runtimeData[i / subStage].subStages[i % subStage].isUnlocked,
+                        isClear = Manager.SDM.runtimeData[i / subStage].subStages[i % subStage].isCompleted
+                    };
+                }
+            }
+            else if (target.stageInfo != null)
+            {
+                StageInfo[] tmp = new StageInfo[Manager.SDM.runtimeData.Count * subStage];
+                for (int i = 0; i < Manager.SDM.runtimeData.Count * subStage; i++)
+                {
+                    tmp[i] = new StageInfo
+                    {
+                        world = 1 + i / subStage,
+                        stage = 1 + i % subStage,
+                        unlock = Manager.SDM.runtimeData[i / subStage].subStages[i % subStage].isUnlocked,
+                        isClear = Manager.SDM.runtimeData[i / subStage].subStages[i % subStage].isCompleted
+                    };
+                    target.stageInfo[i] = tmp[i];
+                }
             }
             return target;
         }
