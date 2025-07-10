@@ -52,10 +52,11 @@ public class Enemy : MonoBehaviour
                 originalColor = Color.white;
         }
         animator = GetComponent<Animator>();
+        Init(curObjectPool);
     }
     public void Init(ObjectPool objectPool)
     {
-        curObjectPool = objectPool;
+        //curObjectPool = objectPool;
         curObjectPool.CreatePool();
         currentHP = enemyData.maxHP;
         // autoFire = true;
@@ -82,14 +83,14 @@ public class Enemy : MonoBehaviour
     }
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.A))
-        //{
-        //    TakeDamage(599);
-        //}
-        //if (Input.GetKeyDown(KeyCode.D))
-        //{
-        //    AnimationFire();
-        //}
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+           TakeDamage(1);
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+           AnimationFire();
+        }
     }
     public void DestoryAfterPathing()
     {
