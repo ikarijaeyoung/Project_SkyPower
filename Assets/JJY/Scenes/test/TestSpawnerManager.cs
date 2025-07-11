@@ -52,7 +52,7 @@ namespace JJY_Test
             // 시퀀스 모두 클리어 시, 보스 n마리 스폰 (페이즈 수에 따라 다름.)
             for (int i = 0; i < currentStage.bossPrefabs.Length; i++)
             {
-                GameObject bossObj = Instantiate(currentStage.bossPrefabs[i], currentStage.bossSpawnPos[i], Quaternion.Euler(0, 180f, 0));
+                GameObject bossObj = Instantiate(currentStage.bossPrefabs[i], this.transform.position, Quaternion.Euler(0, 180f, 0));
                 Enemy enemy = bossObj.GetComponent<Enemy>();
                 EnemyType type = enemy.enemyData.enemyType;
 

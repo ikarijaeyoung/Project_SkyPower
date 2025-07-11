@@ -109,12 +109,12 @@ namespace KYG_skyPower
         {
             if (string.IsNullOrEmpty(name))
             {
-                Debug.LogWarning($"[AudioManager] 사운드 이름 없음!{name}");
+                // Debug.LogWarning($"[AudioManager] 사운드 이름 없음!{name}");
                 data = null;
                 return false;
             }
             if (audioDict != null && audioDict.TryGetValue(name, out data) && data != null) return true;
-            Debug.LogError($"[AudioManager] 사운드 데이터 없음: {name}");
+            // Debug.LogError($"[AudioManager] 사운드 데이터 없음: {name}");
             data = null;
             return false;
         }

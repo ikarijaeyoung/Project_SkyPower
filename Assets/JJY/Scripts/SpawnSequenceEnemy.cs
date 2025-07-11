@@ -27,7 +27,7 @@ public class SpawnSequenceEnemy : MonoBehaviour
     {
         for (int i = 0; i < info.enemyPrefab.Length; i++)
         {
-            GameObject enemyObj = Instantiate(info.enemyPrefab[i], info.spawnPos[i], Quaternion.Euler(0, 180f, 0));
+            GameObject enemyObj = Instantiate(info.enemyPrefab[i], this.transform.position, Quaternion.Euler(0, 180f, 0));
             Enemy enemy = enemyObj.GetComponent<Enemy>();
             EnemyType type = enemy.enemyData.enemyType;
             if (poolDic.TryGetValue(type, out ObjectPool pool))

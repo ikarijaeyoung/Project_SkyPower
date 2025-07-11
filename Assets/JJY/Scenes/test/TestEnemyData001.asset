@@ -10,14 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dea4c279c15f030438294df52bb78cf9, type: 3}
-  m_Name: StageSpawn00
+  m_Name: TestEnemyData001
   m_EditorClassIdentifier: 
   sequence:
-  - enemyPrefab:
-    - {fileID: 4344951356574126065, guid: 9ea5cf3a98cfd524799258cba7ec057d, type: 3}
-    spawnPos:
-    - {x: 0, y: 0, z: 0}
-    spawnDelay: 2
-  bossPrefab: {fileID: 354629375635999333, guid: 3fcf11ec11324844498e52e36abdd46f,
-    type: 3}
-  bossSpawnPos: {x: 0, y: 0, z: 0}
+  - enemyPrefab: []
+    spawnPos: []
+    spawnDelay: 0
+  bossPrefabs: []
+  bossSpawnPos: []
