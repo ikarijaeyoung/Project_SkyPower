@@ -64,11 +64,11 @@ namespace KYG_skyPower
             // 패널이 파괴됐거나 씬이 변경됐을 때 자동 복구
             if (dialoguePanel == null || !dialoguePanel)
             {
-                Debug.LogWarning("dialoguePanel이 유실되어 UI 재할당 시도");
+                //Debug.LogWarning("dialoguePanel이 유실되어 UI 재할당 시도");
                 AutoFindOrSpawnUI(); // UI 자동 할당 시도
                 if (dialoguePanel == null || !dialoguePanel) 
                 {
-                    Debug.LogError("dialoguePanel을 찾을 수 없습니다!");
+                    // Debug.LogError("dialoguePanel을 찾을 수 없습니다!");
                     return;
                 }
             }
@@ -93,9 +93,9 @@ namespace KYG_skyPower
         public void LoadDialogDBByStageID(int mainStageID, int subStageID)
         {
             string dialogDBName = $"Stage_{mainStageID}_{subStageID}";
-            dialogDB = Resources.Load<DialogDB>($"DialogDB/{dialogDBName}"); 
-            if (dialogDB == null)
-                Debug.LogWarning($"DialogDB '{dialogDBName}'를 찾을 수 없습니다!");
+            dialogDB = Resources.Load<DialogDB>($"DialogDB/{dialogDBName}");
+            //if (dialogDB == null)
+                // Debug.LogWarning($"DialogDB '{dialogDBName}'를 찾을 수 없습니다!");
         }
 
         private void AutoFindOrSpawnUI() // UI 자동 할당 또는 생성
@@ -122,7 +122,7 @@ namespace KYG_skyPower
                 return;
             }
 
-            Debug.LogWarning("DialogueManager: dialogueUIPrefab 또는 Panel을 찾을 수 없습니다!");
+            // Debug.LogWarning("DialogueManager: dialogueUIPrefab 또는 Panel을 찾을 수 없습니다!");
         }
 
         private void AutoAssignUIFields(GameObject root)
@@ -143,10 +143,10 @@ namespace KYG_skyPower
                 nextButton.onClick.AddListener(OnClickNext); // 반드시 DialogueManager의 메서드 연결!
             }
 
-            if (speakerImage == null) Debug.LogWarning("speakerImage 자동할당 실패");
-            if (speakerNameText == null) Debug.LogWarning("speakerNameText 자동할당 실패");
-            if (dialogueText == null) Debug.LogWarning("dialogueText 자동할당 실패");
-            if (nextButton == null) Debug.LogWarning("nextButton 자동할당 실패");
+            // if (speakerImage == null) Debug.LogWarning("speakerImage 자동할당 실패");
+            // if (speakerNameText == null) Debug.LogWarning("speakerNameText 자동할당 실패");
+            // if (dialogueText == null) Debug.LogWarning("dialogueText 자동할당 실패");
+            // if (nextButton == null) Debug.LogWarning("nextButton 자동할당 실패");
         }
 
         private void ShowLine()

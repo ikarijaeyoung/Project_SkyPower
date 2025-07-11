@@ -14,19 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sequence:
   - enemyPrefab:
-    - {fileID: 5532545821888678440, guid: c993bf62117afd641ac54fae9aa5df0f, type: 3}
-    - {fileID: 5532545821888678440, guid: c993bf62117afd641ac54fae9aa5df0f, type: 3}
-    - {fileID: 5532545821888678440, guid: c993bf62117afd641ac54fae9aa5df0f, type: 3}
-    spawnPos:
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
+    - {fileID: 4344951356574126065, guid: d260e66bb4582c24a825f94953cc58d1, type: 3}
+    - {fileID: 4344951356574126065, guid: d260e66bb4582c24a825f94953cc58d1, type: 3}
+    - {fileID: 4344951356574126065, guid: d260e66bb4582c24a825f94953cc58d1, type: 3}
     spawnDelay: 2
   bossPrefabs:
-  - {fileID: 8351887547980912979, guid: eb598ab919e43ac41a655e2a026403d2, type: 3}
-  - {fileID: 8351887547980912979, guid: df9cee1b811b5904b86c599fbc2f1558, type: 3}
-  - {fileID: 8351887547980912979, guid: e605b4eb7730b1943b816950555136de, type: 3}
-  bossSpawnPos:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
+  - {fileID: 4344951356574126065, guid: d260e66bb4582c24a825f94953cc58d1, type: 3}
+  - {fileID: 4344951356574126065, guid: d260e66bb4582c24a825f94953cc58d1, type: 3}
+  - {fileID: 4344951356574126065, guid: d260e66bb4582c24a825f94953cc58d1, type: 3}
