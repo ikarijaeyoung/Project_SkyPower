@@ -13,9 +13,15 @@ public class EnemyItem : MonoBehaviour
     public float magneticSpeed = 5f;
     [SerializeField] private int addScore = 10;
     [SerializeField] private float destoryDelay = 10f;
+    [SerializeField] private float checkInterval = 0.1f;
+
+    private float sqrPickupRadius;
+    private float checkTimer;
 
     void Start()
     {
+        sqrPickupRadius = magneticRange * magneticRange;
+        
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         if (player == null)
         {
@@ -23,7 +29,7 @@ public class EnemyItem : MonoBehaviour
         }
         StartCoroutine(AutoDestroy());
     }
-    void Update()
+    void FixedUpdate()
     {
         if (player == null)
         {
@@ -31,12 +37,25 @@ public class EnemyItem : MonoBehaviour
             return;
         }
 
-        float distance = Vector3.Distance(transform.position, player.position);
-        if (distance <= magneticRange)
+        checkTimer += Time.deltaTime;
+        if (checkTimer >= checkInterval)
         {
-            transform.position = Vector3.MoveTowards(transform.position, player.position, magneticSpeed * Time.deltaTime);
+            checkTimer = 0f;
+
+            Vector3 toPlayer = player.position - transform.position;
+            float sqrDist = toPlayer.sqrMagnitude;
+
+            if (sqrDist < sqrPickupRadius)
+            {
+                transform.position = Vector3.MoveTowards(
+                    transform.position,
+                    player.position,
+                    magneticSpeed * Time.deltaTime
+                );
+            }
         }
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
